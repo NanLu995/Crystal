@@ -28,267 +28,289 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ClientTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.HostTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.LoginTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.PasswordTextBox = new System.Windows.Forms.TextBox();
-            this.ProcessButton = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.ActionLabel = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.SpeedLabel = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.FileLabel = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.ListButton = new System.Windows.Forms.Button();
-            this.AllowCleanCheckBox = new System.Windows.Forms.CheckBox();
-            this.DownloadExistingButton = new System.Windows.Forms.Button();
-            this.btnFixGZ = new System.Windows.Forms.Button();
-            this.ProtocolDropDown = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            ClientTextBox = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            HostTextBox = new TextBox();
+            label3 = new Label();
+            LoginTextBox = new TextBox();
+            label4 = new Label();
+            PasswordTextBox = new TextBox();
+            ProcessButton = new Button();
+            progressBar1 = new ProgressBar();
+            ActionLabel = new Label();
+            label5 = new Label();
+            progressBar2 = new ProgressBar();
+            SpeedLabel = new Label();
+            label7 = new Label();
+            FileLabel = new Label();
+            label8 = new Label();
+            ListButton = new Button();
+            AllowCleanCheckBox = new CheckBox();
+            DownloadExistingButton = new Button();
+            btnFixGZ = new Button();
+            ProtocolDropDown = new ComboBox();
+            label6 = new Label();
+            SuspendLayout();
             // 
             // ClientTextBox
             // 
-            this.ClientTextBox.Location = new System.Drawing.Point(99, 12);
-            this.ClientTextBox.Name = "ClientTextBox";
-            this.ClientTextBox.Size = new System.Drawing.Size(254, 20);
-            this.ClientTextBox.TabIndex = 0;
+            ClientTextBox.Location = new Point(134, 21);
+            ClientTextBox.Margin = new Padding(4, 4, 4, 4);
+            ClientTextBox.Name = "ClientTextBox";
+            ClientTextBox.Size = new Size(345, 23);
+            ClientTextBox.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Client Directory:";
+            label1.AutoSize = true;
+            label1.Location = new Point(76, 25);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(47, 17);
+            label1.TabIndex = 1;
+            label1.Text = "客户端:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Host Address:";
+            label2.AutoSize = true;
+            label2.Location = new Point(61, 69);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 17);
+            label2.TabIndex = 4;
+            label2.Text = "主机地址:";
             // 
             // HostTextBox
             // 
-            this.HostTextBox.Location = new System.Drawing.Point(99, 38);
-            this.HostTextBox.Name = "HostTextBox";
-            this.HostTextBox.Size = new System.Drawing.Size(254, 20);
-            this.HostTextBox.TabIndex = 3;
+            HostTextBox.Location = new Point(134, 65);
+            HostTextBox.Margin = new Padding(4, 4, 4, 4);
+            HostTextBox.Name = "HostTextBox";
+            HostTextBox.Size = new Size(345, 23);
+            HostTextBox.TabIndex = 3;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(57, 67);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Login:";
+            label3.AutoSize = true;
+            label3.Location = new Point(90, 114);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(35, 17);
+            label3.TabIndex = 6;
+            label3.Text = "登录:";
             // 
             // LoginTextBox
             // 
-            this.LoginTextBox.Location = new System.Drawing.Point(99, 64);
-            this.LoginTextBox.Name = "LoginTextBox";
-            this.LoginTextBox.Size = new System.Drawing.Size(254, 20);
-            this.LoginTextBox.TabIndex = 5;
+            LoginTextBox.Location = new Point(134, 110);
+            LoginTextBox.Margin = new Padding(4, 4, 4, 4);
+            LoginTextBox.Name = "LoginTextBox";
+            LoginTextBox.Size = new Size(345, 23);
+            LoginTextBox.TabIndex = 5;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(37, 93);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Password:";
+            label4.AutoSize = true;
+            label4.Location = new Point(90, 158);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 17);
+            label4.TabIndex = 8;
+            label4.Text = "密码:";
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(99, 90);
-            this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Size = new System.Drawing.Size(254, 20);
-            this.PasswordTextBox.TabIndex = 7;
+            PasswordTextBox.Location = new Point(134, 154);
+            PasswordTextBox.Margin = new Padding(4, 4, 4, 4);
+            PasswordTextBox.Name = "PasswordTextBox";
+            PasswordTextBox.Size = new Size(345, 23);
+            PasswordTextBox.TabIndex = 7;
             // 
             // ProcessButton
             // 
-            this.ProcessButton.Location = new System.Drawing.Point(12, 139);
-            this.ProcessButton.Name = "ProcessButton";
-            this.ProcessButton.Size = new System.Drawing.Size(75, 23);
-            this.ProcessButton.TabIndex = 9;
-            this.ProcessButton.Text = "Process";
-            this.ProcessButton.UseVisualStyleBackColor = true;
-            this.ProcessButton.Click += new System.EventHandler(this.ProcessButton_Click);
+            ProcessButton.Location = new Point(16, 238);
+            ProcessButton.Margin = new Padding(4, 4, 4, 4);
+            ProcessButton.Name = "ProcessButton";
+            ProcessButton.Size = new Size(103, 39);
+            ProcessButton.TabIndex = 9;
+            ProcessButton.Text = "文件校验";
+            ProcessButton.UseVisualStyleBackColor = true;
+            ProcessButton.Click += ProcessButton_Click;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 182);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(372, 16);
-            this.progressBar1.TabIndex = 12;
+            progressBar1.Location = new Point(16, 311);
+            progressBar1.Margin = new Padding(4, 4, 4, 4);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(506, 27);
+            progressBar1.TabIndex = 12;
             // 
             // ActionLabel
             // 
-            this.ActionLabel.AutoSize = true;
-            this.ActionLabel.Location = new System.Drawing.Point(59, 166);
-            this.ActionLabel.Name = "ActionLabel";
-            this.ActionLabel.Size = new System.Drawing.Size(24, 13);
-            this.ActionLabel.TabIndex = 11;
-            this.ActionLabel.Text = "Idle";
+            ActionLabel.AutoSize = true;
+            ActionLabel.Location = new Point(80, 284);
+            ActionLabel.Margin = new Padding(4, 0, 4, 0);
+            ActionLabel.Name = "ActionLabel";
+            ActionLabel.Size = new Size(32, 17);
+            ActionLabel.TabIndex = 11;
+            ActionLabel.Text = "空闲";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 166);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Action:";
+            label5.AutoSize = true;
+            label5.Location = new Point(38, 284);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(35, 17);
+            label5.TabIndex = 10;
+            label5.Text = "操作:";
             // 
             // progressBar2
             // 
-            this.progressBar2.Location = new System.Drawing.Point(12, 238);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(372, 10);
-            this.progressBar2.TabIndex = 13;
+            progressBar2.Location = new Point(16, 407);
+            progressBar2.Margin = new Padding(4, 4, 4, 4);
+            progressBar2.Name = "progressBar2";
+            progressBar2.Size = new Size(506, 17);
+            progressBar2.TabIndex = 13;
             // 
             // SpeedLabel
             // 
-            this.SpeedLabel.AutoSize = true;
-            this.SpeedLabel.Location = new System.Drawing.Point(59, 222);
-            this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(24, 13);
-            this.SpeedLabel.TabIndex = 15;
-            this.SpeedLabel.Text = "Idle";
+            SpeedLabel.AutoSize = true;
+            SpeedLabel.Location = new Point(80, 379);
+            SpeedLabel.Margin = new Padding(4, 0, 4, 0);
+            SpeedLabel.Name = "SpeedLabel";
+            SpeedLabel.Size = new Size(32, 17);
+            SpeedLabel.TabIndex = 15;
+            SpeedLabel.Text = "空闲";
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 222);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Speed:";
+            label7.AutoSize = true;
+            label7.Location = new Point(38, 379);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(35, 17);
+            label7.TabIndex = 14;
+            label7.Text = "速度:";
             // 
             // FileLabel
             // 
-            this.FileLabel.AutoSize = true;
-            this.FileLabel.Location = new System.Drawing.Point(59, 209);
-            this.FileLabel.Name = "FileLabel";
-            this.FileLabel.Size = new System.Drawing.Size(24, 13);
-            this.FileLabel.TabIndex = 17;
-            this.FileLabel.Text = "Idle";
+            FileLabel.AutoSize = true;
+            FileLabel.Location = new Point(80, 357);
+            FileLabel.Margin = new Padding(4, 0, 4, 0);
+            FileLabel.Name = "FileLabel";
+            FileLabel.Size = new Size(32, 17);
+            FileLabel.TabIndex = 17;
+            FileLabel.Text = "空闲";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 209);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "File:";
+            label8.AutoSize = true;
+            label8.Location = new Point(38, 357);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(35, 17);
+            label8.TabIndex = 16;
+            label8.Text = "文件:";
             // 
             // ListButton
             // 
-            this.ListButton.Location = new System.Drawing.Point(309, 139);
-            this.ListButton.Name = "ListButton";
-            this.ListButton.Size = new System.Drawing.Size(75, 23);
-            this.ListButton.TabIndex = 20;
-            this.ListButton.Text = "Create List";
-            this.ListButton.UseVisualStyleBackColor = true;
-            this.ListButton.Click += new System.EventHandler(this.ListButton_Click);
+            ListButton.Location = new Point(419, 238);
+            ListButton.Margin = new Padding(4, 4, 4, 4);
+            ListButton.Name = "ListButton";
+            ListButton.Size = new Size(103, 39);
+            ListButton.TabIndex = 20;
+            ListButton.Text = "创建列表";
+            ListButton.UseVisualStyleBackColor = true;
+            ListButton.Click += ListButton_Click;
             // 
             // AllowCleanCheckBox
             // 
-            this.AllowCleanCheckBox.AutoSize = true;
-            this.AllowCleanCheckBox.Location = new System.Drawing.Point(99, 116);
-            this.AllowCleanCheckBox.Name = "AllowCleanCheckBox";
-            this.AllowCleanCheckBox.Size = new System.Drawing.Size(98, 17);
-            this.AllowCleanCheckBox.TabIndex = 22;
-            this.AllowCleanCheckBox.Text = "Allow Clean Up";
-            this.AllowCleanCheckBox.UseVisualStyleBackColor = true;
+            AllowCleanCheckBox.AutoSize = true;
+            AllowCleanCheckBox.Location = new Point(134, 199);
+            AllowCleanCheckBox.Margin = new Padding(4, 4, 4, 4);
+            AllowCleanCheckBox.Name = "AllowCleanCheckBox";
+            AllowCleanCheckBox.Size = new Size(75, 21);
+            AllowCleanCheckBox.TabIndex = 22;
+            AllowCleanCheckBox.Text = "允许整理";
+            AllowCleanCheckBox.UseVisualStyleBackColor = true;
             // 
             // DownloadExistingButton
             // 
-            this.DownloadExistingButton.Location = new System.Drawing.Point(169, 139);
-            this.DownloadExistingButton.Name = "DownloadExistingButton";
-            this.DownloadExistingButton.Size = new System.Drawing.Size(134, 23);
-            this.DownloadExistingButton.TabIndex = 23;
-            this.DownloadExistingButton.Text = "Download Existing Data";
-            this.DownloadExistingButton.UseVisualStyleBackColor = true;
-            this.DownloadExistingButton.Click += new System.EventHandler(this.DownloadExistingButton_Click);
+            DownloadExistingButton.Location = new Point(232, 238);
+            DownloadExistingButton.Margin = new Padding(4, 4, 4, 4);
+            DownloadExistingButton.Name = "DownloadExistingButton";
+            DownloadExistingButton.Size = new Size(182, 39);
+            DownloadExistingButton.TabIndex = 23;
+            DownloadExistingButton.Text = "下载现有数据";
+            DownloadExistingButton.UseVisualStyleBackColor = true;
+            DownloadExistingButton.Click += DownloadExistingButton_Click;
             // 
             // btnFixGZ
             // 
-            this.btnFixGZ.Location = new System.Drawing.Point(93, 139);
-            this.btnFixGZ.Name = "btnFixGZ";
-            this.btnFixGZ.Size = new System.Drawing.Size(75, 23);
-            this.btnFixGZ.TabIndex = 24;
-            this.btnFixGZ.Text = "Fix *.gz";
-            this.btnFixGZ.UseVisualStyleBackColor = true;
-            this.btnFixGZ.Click += new System.EventHandler(this.btnFixGZ_Click);
+            btnFixGZ.Location = new Point(124, 238);
+            btnFixGZ.Margin = new Padding(4, 4, 4, 4);
+            btnFixGZ.Name = "btnFixGZ";
+            btnFixGZ.Size = new Size(103, 39);
+            btnFixGZ.TabIndex = 24;
+            btnFixGZ.Text = "修复列表";
+            btnFixGZ.UseVisualStyleBackColor = true;
+            btnFixGZ.Click += BtnFixGZ_Click;
             // 
             // ProtocolDropDown
             // 
-            this.ProtocolDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ProtocolDropDown.FormattingEnabled = true;
-            this.ProtocolDropDown.Items.AddRange(new object[] {
-            "Ftp",
-            "SFtp"});
-            this.ProtocolDropDown.Location = new System.Drawing.Point(262, 114);
-            this.ProtocolDropDown.Name = "ProtocolDropDown";
-            this.ProtocolDropDown.Size = new System.Drawing.Size(91, 21);
-            this.ProtocolDropDown.TabIndex = 25;
+            ProtocolDropDown.DropDownStyle = ComboBoxStyle.DropDownList;
+            ProtocolDropDown.FormattingEnabled = true;
+            ProtocolDropDown.Items.AddRange(new object[] { "Ftp", "SFtp" });
+            ProtocolDropDown.Location = new Point(357, 195);
+            ProtocolDropDown.Margin = new Padding(4, 4, 4, 4);
+            ProtocolDropDown.Name = "ProtocolDropDown";
+            ProtocolDropDown.Size = new Size(123, 25);
+            ProtocolDropDown.TabIndex = 25;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(207, 117);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 13);
-            this.label6.TabIndex = 26;
-            this.label6.Text = "Protocol:";
+            label6.AutoSize = true;
+            label6.Location = new Point(313, 200);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(35, 17);
+            label6.TabIndex = 26;
+            label6.Text = "协议:";
             // 
             // AMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 257);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.ProtocolDropDown);
-            this.Controls.Add(this.btnFixGZ);
-            this.Controls.Add(this.DownloadExistingButton);
-            this.Controls.Add(this.AllowCleanCheckBox);
-            this.Controls.Add(this.ListButton);
-            this.Controls.Add(this.FileLabel);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.SpeedLabel);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.ActionLabel);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.ProcessButton);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.PasswordTextBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.LoginTextBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.HostTextBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.ClientTextBox);
-            this.Name = "AMain";
-            this.Text = "Auto Patcher Admin";
-            this.Load += new System.EventHandler(this.AMain_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(533, 439);
+            Controls.Add(label6);
+            Controls.Add(ProtocolDropDown);
+            Controls.Add(btnFixGZ);
+            Controls.Add(DownloadExistingButton);
+            Controls.Add(AllowCleanCheckBox);
+            Controls.Add(ListButton);
+            Controls.Add(FileLabel);
+            Controls.Add(label8);
+            Controls.Add(SpeedLabel);
+            Controls.Add(label7);
+            Controls.Add(progressBar2);
+            Controls.Add(progressBar1);
+            Controls.Add(ActionLabel);
+            Controls.Add(label5);
+            Controls.Add(ProcessButton);
+            Controls.Add(label4);
+            Controls.Add(PasswordTextBox);
+            Controls.Add(label3);
+            Controls.Add(LoginTextBox);
+            Controls.Add(label2);
+            Controls.Add(HostTextBox);
+            Controls.Add(label1);
+            Controls.Add(ClientTextBox);
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "AMain";
+            Text = "自动更新管理窗口";
+            Load += AMain_Load;
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

@@ -798,7 +798,7 @@ namespace Client.MirScenes.Dialogs
             if (Info.Name.Contains("_"))
             {
                 string[] splitName = name.Split('_');
-                name=string.Empty;
+                name = string.Empty;
                 for (int s = 0; s < splitName.Count(); s++)
                 {
                     if (splitName[s] == string.Empty) continue;

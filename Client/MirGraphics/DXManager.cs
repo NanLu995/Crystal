@@ -519,6 +519,8 @@ namespace Client.MirGraphics
                 }
 
                 DXManager.FloorTexture = null;
+                // TODO: 移植代码，待测试
+                GameScene.Scene.MapControl.FloorValid = false;
 
                 if (DXManager.FloorSurface != null && !DXManager.FloorSurface.Disposed)
                 {

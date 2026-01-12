@@ -69,7 +69,7 @@ namespace Client.MirControls
                 NotControl = true,
                 ForeColour = Color.Gray,
                 Font = new Font(Settings.FontName, 7F),
-                Text = "STOCK:"
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.StockLabel)
             };
 
             stockLabel = new MirLabel
@@ -266,6 +266,7 @@ namespace Client.MirControls
             nameLabel.Text = Item.Info.FriendlyName;
             nameLabel.Text = nameLabel.Text.Length > 17 ? nameLabel.Text.Substring(0, 17) : nameLabel.Text;
             nameLabel.ForeColour = GameScene.Scene.GradeNameColor(Item.Info.Grade);
+            quantity.Text = Quantity.ToString();
             if (Item.CanBuyGold)
                 goldLabel.Text = (Item.GoldPrice * Quantity).ToString("###,###,##0");
             if (Item.CanBuyCredit)

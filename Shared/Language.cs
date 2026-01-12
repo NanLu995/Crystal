@@ -253,6 +253,7 @@ public enum ClientTextKeys
     FileDownload_Failure,
     LauncherHostSettingFormatError,
     LauncherBrowserFormatError,
+    BuildVersionLabel,
     LowLevel,
     LowGold,
     LevelUp,
@@ -267,6 +268,7 @@ public enum ClientTextKeys
     NoMentorship,
     YouNoBagSpace,
     YouMustSelectPaymentType,
+    StockLabel,
     ConfirmBuyItemCredits,
     YouCantAffordSelectedItem,
     ConfirmPurchaseItemGold,
@@ -2945,7 +2947,9 @@ public static class GameLanguage
                 "Please Check Launcher BROWSER Setting is formatted correctly.\nCan be caused by missing or extra slashes and spelling mistakes.\nThis error can be ignored."
             },
 
+            { nameof(ClientTextKeys.BuildVersionLabel), "Build: {0}.{1}.{2}" },
             { nameof(ClientTextKeys.YouMustSelectPaymentType), "You MUST select a payment type!" },
+            { nameof(ClientTextKeys.StockLabel), "STOCK:" },
             { nameof(ClientTextKeys.ConfirmBuyItemCredits), "Are you sure would you like to buy {1} x \n{0}({3}) for {2} Credits?" },
             { nameof(ClientTextKeys.YouCantAffordSelectedItem), "You can't afford the selected item." },
             { nameof(ClientTextKeys.ConfirmPurchaseItemGold), "Are you sure would you like to buy{1} x \n{0}({3}) for {2} Gold?" },
