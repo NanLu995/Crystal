@@ -107,16 +107,16 @@ namespace Server
         {
             try
             {
-                Text = $"Total: {Envir.LastCount}, Real: {Envir.LastRealCount}";
-                PlayersLabel.Text = $"Players: {Envir.Players.Count}";
-                MonsterLabel.Text = $"Monsters: {Envir.MonsterCount}";
-                ConnectionsLabel.Text = $"Connections: {Envir.Connections.Count}";
-                BlockedIPsLabel.Text = $"Blocked IPs: {Envir.IPBlocks.Count(x => x.Value > Envir.Now)}";
-                UpTimeLabel.Text = $"Uptime: {Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 / 24}d:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 % 24}h:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 % 60}m:{Envir.Stopwatch.ElapsedMilliseconds / 1000 % 60}s";
+                Text = $"总计: {Envir.LastCount}, 实计: {Envir.LastRealCount}";
+                PlayersLabel.Text = $"在线角色: {Envir.Players.Count}";
+                MonsterLabel.Text = $"刷新怪物: {Envir.MonsterCount}";
+                ConnectionsLabel.Text = $"连线登录: {Envir.Connections.Count}";
+                BlockedIPsLabel.Text = $"屏蔽锁定 IPs: {Envir.IPBlocks.Count(x => x.Value > Envir.Now)}";
+                UpTimeLabel.Text = $"运行时间: {Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 / 24}日:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 % 24}小时:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 % 60}分钟:{Envir.Stopwatch.ElapsedMilliseconds / 1000 % 60}秒";
 
                 if (Settings.Multithreaded && (Envir.MobThreads != null))
                 {
-                    CycleDelayLabel.Text = $"CycleDelays: {Envir.LastRunTime:0000}";
+                    CycleDelayLabel.Text = $"延迟周期: {Envir.LastRunTime:0000}";
                     for (int i = 0; i < Envir.MobThreads.Length; i++)
                     {
                         if (Envir.MobThreads[i] == null) break;
@@ -125,7 +125,7 @@ namespace Server
                     }
                 }
                 else
-                    CycleDelayLabel.Text = $"CycleDelay: {Envir.LastRunTime}";
+                    CycleDelayLabel.Text = $"延迟周期: {Envir.LastRunTime}";
 
                 while (!MessageQueue.MessageLog.IsEmpty)
                 {
@@ -452,7 +452,7 @@ namespace Server
         {
             if (!SMain.Envir.Running)
             {
-                MessageBox.Show("Server must be running to tune monsters", "Notice",
+                MessageBox.Show("服务器运行必须调整怪物", "注意",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
@@ -666,5 +666,34 @@ namespace Server
 
             PlayersOnlineListView.Sort();
         }
+		
+        #region Monsters Tab
+        private void LoadMonstersButton_Click(object sender, EventArgs e)
+        {
+            MonsterListView.Items.Clear();
+            for (int i = 0; i < Envir.MapList.Count; i++)
+            {
+                var map = Envir.MapList[i];
+                ListViewItem ListItem = new ListViewItem(i.ToString()) { Tag = this };
+
+                ListItem.SubItems.Add(map.Info.Title);
+                ListItem.SubItems.Add(map.Info.FileName);
+                ListItem.SubItems.Add(map.GetAllMonstersObjectsCount().ToString());
+                int totalSpawnsCount = 0;
+                int errorCount = 0;
+
+                foreach (var spawn in map.Respawns)
+                {
+                    totalSpawnsCount += spawn.Info.Count;
+                    errorCount += spawn.ErrorCount;
+                }
+
+                ListItem.SubItems.Add(totalSpawnsCount.ToString());
+                ListItem.SubItems.Add(errorCount.ToString());
+
+                MonsterListView.Items.Add(ListItem);
+            }
+        }
+        #endregion
     }
 }

@@ -24,11 +24,11 @@ namespace Server
         {
             InitializeComponent();
 
-            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof (ItemType)).Cast<object>().ToArray());
+            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
             IGradeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemGrade)).Cast<object>().ToArray());
-            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredType)).Cast<object>().ToArray());
-            RClassComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredClass)).Cast<object>().ToArray());
-            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredGender)).Cast<object>().ToArray());
+            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredType)).Cast<object>().ToArray());
+            RClassComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredClass)).Cast<object>().ToArray());
+            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredGender)).Cast<object>().ToArray());
             ISetComboBox.Items.AddRange(Enum.GetValues(typeof(ItemSet)).Cast<object>().ToArray());
 
             ITypeFilterComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
@@ -42,45 +42,45 @@ namespace Server
         {
             if ((ITypeComboBox.SelectedItem != null) && ((ItemType)ITypeComboBox.SelectedItem == ItemType.Gem))
             {
-                tabControl1.TabPages[3].Text = "Usable on";
-                ParalysischeckBox.Text = "Weapon";
-                TeleportcheckBox.Text = "Armour";
-                ClearcheckBox.Text = "Helmet";
-                ProtectioncheckBox.Text = "Necklace";
-                RevivalcheckBox.Text = "Bracelet";
-                MusclecheckBox.Text = "Ring";
-                FlamecheckBox.Text = "Amulet";
-                HealingcheckBox.Text = "Belt";
-                ProbecheckBox.Text = "Boots";
-                SkillcheckBox.Text = "Stone";
-                NoDuraLosscheckBox.Text = "Torch";
-                PickaxecheckBox.Text = "Unused";
-                label50.Text = "Base rate%";
-                label52.Text = "Success drop";
-                label51.Text = "Max stats (all)";
-                label49.Text = "Max gem stat";
-                BlinkcheckBox.Text = "Unsure?";
+                tabControl1.TabPages[3].Text = "可赋能在";
+                ParalysischeckBox.Text = "武器";
+                TeleportcheckBox.Text = "盔甲";
+                ClearcheckBox.Text = "头盔";
+                ProtectioncheckBox.Text = "项链";
+                RevivalcheckBox.Text = "手镯";
+                MusclecheckBox.Text = "戒指";
+                FlamecheckBox.Text = "护身符";
+                HealingcheckBox.Text = "腰带";
+                ProbecheckBox.Text = "鞋子";
+                SkillcheckBox.Text = "守护石";
+                NoDuraLosscheckBox.Text = "照明";
+                PickaxecheckBox.Text = "鹤嘴锄";
+                label50.Text = "成功概率";
+                label52.Text = "摧毁概率";
+                label51.Text = "最大状态";
+                label49.Text = "宝玉状态";
+                BlinkcheckBox.Text = "不确定性";
             }
             else
             {
-                tabControl1.TabPages[3].Text = "Special Stats";
-                ParalysischeckBox.Text = "Paralysis ring";
-                TeleportcheckBox.Text = "Teleport ring";
-                ClearcheckBox.Text = "Clear ring";
-                ProtectioncheckBox.Text = "Protection ring";
-                RevivalcheckBox.Text = "Revival ring";
-                MusclecheckBox.Text = "Muscle ring";
-                FlamecheckBox.Text = "Flame ring";
-                HealingcheckBox.Text = "Healing ring";
-                ProbecheckBox.Text = "Probe necklace";
-                SkillcheckBox.Text = "Skill necklace";
-                NoDuraLosscheckBox.Text = "No dura loss";
-                PickaxecheckBox.Text = "Pickaxe";
-                label50.Text = "Critical rate:";
-                label52.Text = "Reflect:";
-                label51.Text = "Critical Dmg:";
-                label49.Text = "HP Drain:";
-                BlinkcheckBox.Text = "Blink";
+                tabControl1.TabPages[3].Text = "特殊状态";
+                ParalysischeckBox.Text = "麻痹戒指";
+                TeleportcheckBox.Text = "传送戒指";
+                ClearcheckBox.Text = "隐身戒指";
+                ProtectioncheckBox.Text = "护身戒指";
+                RevivalcheckBox.Text = "复活戒指";
+                MusclecheckBox.Text = "超负载戒指";
+                FlamecheckBox.Text = "火焰戒指";
+                HealingcheckBox.Text = "治愈戒指";
+                ProbecheckBox.Text = "探测项链";
+                SkillcheckBox.Text = "技巧项链";
+                NoDuraLosscheckBox.Text = "永不掉落";
+                PickaxecheckBox.Text = "鹤嘴锄";
+                label50.Text = "暴击率";
+                label52.Text = "反弹伤害";
+                label51.Text = "暴击伤害";
+                label49.Text = "吸血数率";
+                BlinkcheckBox.Text = "瞬移技能";
             }
         }
 
@@ -120,7 +120,7 @@ namespace Server
                 RTypeComboBox.SelectedItem = null;
                 RAmountTextBox.Text = string.Empty;
                 RClassComboBox.SelectedItem = null;
-                RGenderComboBox.SelectedItem = null;            
+                RGenderComboBox.SelectedItem = null;
                 LightTextBox.Text = string.Empty;
                 LightIntensitytextBox.Text = string.Empty;
 
@@ -146,7 +146,7 @@ namespace Server
                 HWeightTextBox.Text = string.Empty;
                 BWeightText.Text = string.Empty;
                 EffectTextBox.Text = string.Empty;
-                
+
                 PoisonRecoverytextBox.Text = string.Empty;
                 SpellRecoverytextBox.Text = string.Empty;
                 MagicResisttextBox.Text = string.Empty;
@@ -286,7 +286,7 @@ namespace Server
             LevelBasedcheckbox.Checked = info.LevelBased;
             ClassBasedcheckbox.Checked = info.ClassBased;
 
-            
+
             Bind_dontstorecheckbox.Checked = info.Bind.HasFlag(BindMode.DontStore);
             Bind_dontupgradecheckbox.Checked = info.Bind.HasFlag(BindMode.DontUpgrade);
             Bind_dontrepaircheckbox.Checked = info.Bind.HasFlag(BindMode.DontRepair);
@@ -299,6 +299,7 @@ namespace Server
             BindOnEquipcheckbox.Checked = info.Bind.HasFlag(BindMode.BindOnEquip);
             BreakOnDeathcheckbox.Checked = info.Bind.HasFlag(BindMode.BreakOnDeath);
             NoWeddingRingcheckbox.Checked = info.Bind.HasFlag(BindMode.NoWeddingRing);
+            NoHerocheckbox.Checked = info.Bind.HasFlag(BindMode.NoHero);
             unableToRent_CheckBox.Checked = info.Bind.HasFlag(BindMode.UnableToRent);
             unableToDisassemble_CheckBox.Checked = info.Bind.HasFlag(BindMode.UnableToDisassemble);
             noMailBox.Checked = info.Bind.HasFlag(BindMode.NoMail);
@@ -306,7 +307,7 @@ namespace Server
             NeedIdentifycheckbox.Checked = info.NeedIdentify;
             ShowGroupPickupcheckbox.Checked = info.ShowGroupPickup;
             globalDropNotify_CheckBox.Checked = info.GlobalDropNotify;
-            
+
 
             ParalysischeckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Paralize);
             TeleportcheckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Teleport);
@@ -412,6 +413,7 @@ namespace Server
                 if (BindOnEquipcheckbox.Checked != info.Bind.HasFlag(BindMode.BindOnEquip)) BindOnEquipcheckbox.CheckState = CheckState.Indeterminate;
                 if (BreakOnDeathcheckbox.Checked != info.Bind.HasFlag(BindMode.BreakOnDeath)) BreakOnDeathcheckbox.CheckState = CheckState.Indeterminate;
                 if (NoWeddingRingcheckbox.Checked != info.Bind.HasFlag(BindMode.NoWeddingRing)) NoWeddingRingcheckbox.CheckState = CheckState.Indeterminate;
+                if (NoHerocheckbox.Checked != info.Bind.HasFlag(BindMode.NoHero)) NoHerocheckbox.CheckState = CheckState.Indeterminate;
 
                 if (unableToRent_CheckBox.Checked != info.Bind.HasFlag(BindMode.UnableToRent))
                     unableToRent_CheckBox.CheckState = CheckState.Indeterminate;
@@ -442,7 +444,7 @@ namespace Server
                 if (CanAwaken.Checked != info.CanAwakening) CanAwaken.CheckState = CheckState.Indeterminate;
                 if (TooltipTextBox.Text != info.ToolTip) TooltipTextBox.Text = string.Empty;
                 if (BlinkcheckBox.Checked != info.Unique.HasFlag(SpecialItemMode.Blink)) BlinkcheckBox.CheckState = CheckState.Indeterminate;
-        }
+            }
             RefreshUniqueTab();
         }
 
@@ -460,7 +462,8 @@ namespace Server
                     ITypeFilterComboBox.SelectedIndex == ITypeFilterComboBox.Items.Count - 1 ||
                     Envir.ItemInfoList[i].Type == (ItemType)ITypeFilterComboBox.SelectedItem)
                     ItemInfoListBox.Items.Add(Envir.ItemInfoList[i]);
-            };
+            }
+            ;
             for (int i = 0; i < selected.Count; i++) ItemInfoListBox.SetSelected(i, selected[i]);
 
             ItemInfoListBox.SelectedIndexChanged += ItemInfoListBox_SelectedIndexChanged;
@@ -495,7 +498,7 @@ namespace Server
         {
             if (_selectedItemInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Items?", "Remove Items?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否要删除所选物品", "删除物品", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedItemInfos.Count; i++) Envir.Remove(_selectedItemInfos[i]);
 
@@ -524,7 +527,7 @@ namespace Server
             if (ActiveControl != sender) return;
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].RequiredType = (RequiredType) RTypeComboBox.SelectedItem;
+                _selectedItemInfos[i].RequiredType = (RequiredType)RTypeComboBox.SelectedItem;
         }
         private void RGenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -566,6 +569,14 @@ namespace Server
         }
         private void ImageTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (sender is TextBox textBox)
+            {
+                if (!string.IsNullOrEmpty(textBox.Text) && ushort.TryParse(textBox.Text, out ushort imageNumber))
+                {
+                    LoadImage(imageNumber);
+                }
+            }
+
             if (ActiveControl != sender) return;
 
             ushort temp;
@@ -580,6 +591,21 @@ namespace Server
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Image = temp;
+        }
+        private void LoadImage(ushort imageValue)
+        {
+            string filename = $"{imageValue}.bmp";
+            string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "Items", filename);
+
+            if (File.Exists(imagePath))
+            {
+                using FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+                ItemsPreview.Image = Image.FromStream(fs);
+            }
+            else
+            {
+                ItemsPreview.Image = null;
+            }
         }
         private void DuraTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -683,9 +709,9 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-            
+
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15)*15);
+                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15) * 15);
         }
         private void MinACTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1605,6 +1631,46 @@ namespace Server
                 _selectedItemInfos[i].Stats[Stat.CriticalRate] = temp;
         }
 
+        private void TxtSearchItem_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchForItem();
+            }
+        }
+
+        private void btnClearItemSearch_Click(object sender, EventArgs e)
+        {
+            ResetItemList();
+        }
+
+        private void ResetItemList()
+        {
+            TxtSearchItem.Text = "";
+            ItemInfoListBox.Items.Clear();
+            if (Envir.ItemInfoList != null)
+            {
+                foreach (ItemInfo item in Envir.ItemInfoList)
+                {
+                    ItemInfoListBox.Items.Add(item);
+                }
+            }
+        }
+
+        private void SearchForItem()
+        {
+            List<ItemInfo> results = Envir.ItemInfoList.FindAll(x => x.Name.ToLower().Contains(TxtSearchItem.Text.ToLower()));
+
+            if (results.Count > 0)
+            {
+                ItemInfoListBox.Items.Clear();
+                foreach (ItemInfo item in results)
+                {
+                    ItemInfoListBox.Items.Add(item);
+                }
+            }
+        }
+
         private void CriticalDamagetextBox_TextChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
@@ -1902,6 +1968,13 @@ namespace Server
                 _selectedItemInfos[i].Bind = (NoWeddingRingcheckbox.Checked ? _selectedItemInfos[i].Bind |= BindMode.NoWeddingRing : _selectedItemInfos[i].Bind ^= BindMode.NoWeddingRing);
         }
 
+        private void NoHerocheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+            for (int i = 0; i < _selectedItemInfos.Count; i++)
+                _selectedItemInfos[i].Bind = (NoHerocheckbox.Checked ? _selectedItemInfos[i].Bind |= BindMode.NoHero : _selectedItemInfos[i].Bind ^= BindMode.NoHero);
+        }
+
         private void unableToRent_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender)
@@ -1956,6 +2029,23 @@ namespace Server
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Slots = temp;
+        }
+
+        private void TxtSearchItem_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(TxtSearchItem.Text))
+            {
+                SearchForItem();
+            }
+            else
+            {
+                ResetItemList();
+            }
+        }
+
+        private void label32_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

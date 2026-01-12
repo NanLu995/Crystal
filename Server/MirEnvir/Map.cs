@@ -70,6 +70,31 @@ namespace Server.MirEnvir
             return false;
         }
 
+        public int GetAllMonstersObjectsCount()
+        {
+            int mobCount = 0;
+
+            foreach (var cell in Cells)
+            {
+                if (cell.Objects == null || !cell.Objects.Any())
+                {
+                    continue;
+                }
+
+                foreach (var obj in cell.Objects)
+                {
+                    if (obj == null)
+                        continue;
+
+                    if (obj.Race == ObjectType.Monster)
+                    {
+                        mobCount++;
+                    }
+                }
+            }
+            return mobCount;
+        }
+
         private byte FindType(byte[] input)
         {
             //c# custom map format
@@ -776,12 +801,12 @@ namespace Server.MirEnvir
                         {
                             respawn.ErrorCount++;
 
-                            Logger.GetLogger(LogType.Spawn).Info($"Failed to spawn: " +
-                                $"mapindex: {respawn.Map.Info.Index}, " +
-                                $"mob info: index: {respawn.Info.MonsterIndex}, " +
-                                $"name: {respawn.Monster.Name}, " +
-                                $"spawncoords ({respawn.Info.Location.X}:{respawn.Info.Location.Y}), " +
-                                $"range {respawn.Info.Spread}");
+                            Logger.GetLogger(LogType.Spawn).Info($"怪物刷新失败: " +
+                                $"地图编号: {respawn.Map.Info.Index}, " +
+                                $"怪物名称: {respawn.Monster.Name}, " +
+                                $"怪物信息: index: {respawn.Info.MonsterIndex}, " +
+                                $"刷新坐标 ({respawn.Info.Location.X}:{respawn.Info.Location.Y}), " +
+                                $"范围 {respawn.Info.Spread}");
                         }
 
                     }
@@ -833,7 +858,8 @@ namespace Server.MirEnvir
             if (squareEdgeLength > 1)
             {
                 spread = (int)((squareEdgeLength - 1) / 2);
-            } else
+            }
+            else
             {
                 spread = fallBackSpread; // 3x3
             }

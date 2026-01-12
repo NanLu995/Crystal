@@ -32,9 +32,9 @@ namespace LibraryViewer
         {
             ImageBox.Image = null;
 
-            WidthLabel.Text = "<No Image>";
-            HeightLabel.Text = "<No Image>";
-            LibNameLabel.Text = "<No Selection>";
+            WidthLabel.Text = "<空>";
+            HeightLabel.Text = "<空>";
+            LibNameLabel.Text = "<暂无选择>";
             LibCountLabel.Text = ImageList.Images.Count.ToString();
         }
 
@@ -71,9 +71,11 @@ namespace LibraryViewer
 
             //DebugBox.Text += "Showfront: "+showFrontSide.ToString() + "\r\n";
             //DebugBox.Text += "Prefix: "+Prefix + "\r\n";
+            //DebugBox.Text += "显示正面: " + showFrontSide.ToString() + "\r\n";
+            //DebugBox.Text += "前缀: " + Prefix + "\r\n";
             Program.LoadFailed = false;
 
-            MessageBox.Show("This can take a while.\n Press 'OK' to Start.");
+            MessageBox.Show("运行可能需要一段时间\n 点击确定开始");
 
             
             Stopwatch sw = Stopwatch.StartNew();//Timing
@@ -106,9 +108,9 @@ namespace LibraryViewer
 
 
             if (ImageList.Images.Count < 1)
-                MessageBox.Show("No images seem to be found.\nMake sure you choose the right prefix!");
+                MessageBox.Show("找不到图像\n确定选择了正确的前缀?");
             else
-                MessageBox.Show("Folder processing finally finished.\nTime Taken: " + sw.Elapsed.TotalMilliseconds + "ms");
+                MessageBox.Show("文件处理完成\n消耗时间: " + sw.Elapsed.TotalMilliseconds + "ms");
         }
 
         private void PreviewListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -207,6 +209,10 @@ namespace LibraryViewer
                             break;
                     }
                     break;
+                default:
+                    if (showFrontSide) getImageIndex = 16;
+                    else getImageIndex = 0;
+                    break;
             }
             if ((_library.Images.Count - 1) < getImageIndex) getImageIndex = 0;//<-- Prevents NullReferenceException
 
@@ -259,7 +265,7 @@ namespace LibraryViewer
 
             }
 
-            MessageBox.Show("Image export complete.", "Image export", MessageBoxButtons.OK);
+            MessageBox.Show("图像导出完成", "导出图像", MessageBoxButtons.OK);
         }
     }
 

@@ -28,219 +28,239 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Spread = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.Y = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DoneButton = new System.Windows.Forms.Button();
-            this.X = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Delay = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.Count = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.RoutePath = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.Direction = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.RDelay = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            Spread = new TextBox();
+            label3 = new Label();
+            Y = new TextBox();
+            label2 = new Label();
+            DoneButton = new Button();
+            X = new TextBox();
+            label1 = new Label();
+            Delay = new TextBox();
+            label4 = new Label();
+            Count = new TextBox();
+            label5 = new Label();
+            label6 = new Label();
+            RoutePath = new TextBox();
+            label7 = new Label();
+            Direction = new TextBox();
+            label8 = new Label();
+            RDelay = new TextBox();
+            label9 = new Label();
+            label10 = new Label();
+            SuspendLayout();
             // 
             // Spread
             // 
-            this.Spread.Location = new System.Drawing.Point(71, 64);
-            this.Spread.Name = "Spread";
-            this.Spread.Size = new System.Drawing.Size(53, 20);
-            this.Spread.TabIndex = 13;
-            this.Spread.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Chk);
+            Spread.Location = new Point(83, 84);
+            Spread.Margin = new Padding(4, 4, 4, 4);
+            Spread.Name = "Spread";
+            Spread.Size = new Size(61, 23);
+            Spread.TabIndex = 13;
+            Spread.KeyPress += Chk;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 67);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Spread:";
+            label3.AutoSize = true;
+            label3.Location = new Point(32, 88);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(35, 17);
+            label3.TabIndex = 12;
+            label3.Text = "展开:";
             // 
             // Y
             // 
-            this.Y.Location = new System.Drawing.Point(71, 38);
-            this.Y.Name = "Y";
-            this.Y.Size = new System.Drawing.Size(53, 20);
-            this.Y.TabIndex = 11;
-            this.Y.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Chk);
+            Y.Location = new Point(83, 50);
+            Y.Margin = new Padding(4, 4, 4, 4);
+            Y.Name = "Y";
+            Y.Size = new Size(61, 23);
+            Y.TabIndex = 11;
+            Y.KeyPress += Chk;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Y:";
+            label2.AutoSize = true;
+            label2.Location = new Point(49, 54);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(18, 17);
+            label2.TabIndex = 10;
+            label2.Text = "Y:";
             // 
             // DoneButton
             // 
-            this.DoneButton.Location = new System.Drawing.Point(179, 130);
-            this.DoneButton.Name = "DoneButton";
-            this.DoneButton.Size = new System.Drawing.Size(105, 24);
-            this.DoneButton.TabIndex = 9;
-            this.DoneButton.Text = "Done";
-            this.DoneButton.UseVisualStyleBackColor = true;
-            this.DoneButton.Click += new System.EventHandler(this.DoneButton_Click);
+            DoneButton.Location = new Point(209, 170);
+            DoneButton.Margin = new Padding(4, 4, 4, 4);
+            DoneButton.Name = "DoneButton";
+            DoneButton.Size = new Size(122, 31);
+            DoneButton.TabIndex = 9;
+            DoneButton.Text = "完成";
+            DoneButton.UseVisualStyleBackColor = true;
+            DoneButton.Click += DoneButton_Click;
             // 
             // X
             // 
-            this.X.Location = new System.Drawing.Point(71, 12);
-            this.X.Name = "X";
-            this.X.Size = new System.Drawing.Size(53, 20);
-            this.X.TabIndex = 8;
-            this.X.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Chk);
+            X.Location = new Point(83, 16);
+            X.Margin = new Padding(4, 4, 4, 4);
+            X.Name = "X";
+            X.Size = new Size(61, 23);
+            X.TabIndex = 8;
+            X.KeyPress += Chk;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(41, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "X:";
+            label1.AutoSize = true;
+            label1.Location = new Point(48, 20);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(19, 17);
+            label1.TabIndex = 7;
+            label1.Text = "X:";
             // 
             // Delay
             // 
-            this.Delay.Location = new System.Drawing.Point(184, 38);
-            this.Delay.Name = "Delay";
-            this.Delay.Size = new System.Drawing.Size(53, 20);
-            this.Delay.TabIndex = 17;
-            this.Delay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Chk);
+            Delay.Location = new Point(215, 50);
+            Delay.Margin = new Padding(4, 4, 4, 4);
+            Delay.Name = "Delay";
+            Delay.Size = new Size(61, 23);
+            Delay.TabIndex = 17;
+            Delay.KeyPress += Chk;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(141, 41);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Delay:";
+            label4.AutoSize = true;
+            label4.Location = new Point(163, 54);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 17);
+            label4.TabIndex = 16;
+            label4.Text = "延迟:";
             // 
             // Count
             // 
-            this.Count.Location = new System.Drawing.Point(184, 12);
-            this.Count.Name = "Count";
-            this.Count.Size = new System.Drawing.Size(53, 20);
-            this.Count.TabIndex = 15;
-            this.Count.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Chk);
+            Count.Location = new Point(215, 16);
+            Count.Margin = new Padding(4, 4, 4, 4);
+            Count.Name = "Count";
+            Count.Size = new Size(61, 23);
+            Count.TabIndex = 15;
+            Count.KeyPress += Chk;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(140, 15);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Count:";
+            label5.AutoSize = true;
+            label5.Location = new Point(163, 20);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(35, 17);
+            label5.TabIndex = 14;
+            label5.Text = "总数:";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(243, 41);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 13);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "(mins)";
+            label6.AutoSize = true;
+            label6.Location = new Point(284, 54);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(43, 17);
+            label6.TabIndex = 18;
+            label6.Text = "(分钟)";
             // 
             // RoutePath
             // 
-            this.RoutePath.Location = new System.Drawing.Point(184, 90);
-            this.RoutePath.Name = "RoutePath";
-            this.RoutePath.Size = new System.Drawing.Size(100, 20);
-            this.RoutePath.TabIndex = 19;
+            RoutePath.Location = new Point(215, 118);
+            RoutePath.Margin = new Padding(4, 4, 4, 4);
+            RoutePath.Name = "RoutePath";
+            RoutePath.Size = new Size(116, 23);
+            RoutePath.TabIndex = 19;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(141, 93);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 13);
-            this.label7.TabIndex = 20;
-            this.label7.Text = "Route:";
+            label7.AutoSize = true;
+            label7.Location = new Point(163, 122);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(35, 17);
+            label7.TabIndex = 20;
+            label7.Text = "线路:";
             // 
             // Direction
             // 
-            this.Direction.Location = new System.Drawing.Point(71, 90);
-            this.Direction.Name = "Direction";
-            this.Direction.Size = new System.Drawing.Size(53, 20);
-            this.Direction.TabIndex = 21;
+            Direction.Location = new Point(83, 118);
+            Direction.Margin = new Padding(4, 4, 4, 4);
+            Direction.Name = "Direction";
+            Direction.Size = new Size(61, 23);
+            Direction.TabIndex = 21;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(35, 93);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 13);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "Dir:";
+            label8.AutoSize = true;
+            label8.Location = new Point(32, 122);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(35, 17);
+            label8.TabIndex = 22;
+            label8.Text = "方向:";
             // 
             // RDelay
             // 
-            this.RDelay.Location = new System.Drawing.Point(184, 64);
-            this.RDelay.Name = "RDelay";
-            this.RDelay.Size = new System.Drawing.Size(53, 20);
-            this.RDelay.TabIndex = 23;
+            RDelay.Location = new Point(215, 84);
+            RDelay.Margin = new Padding(4, 4, 4, 4);
+            RDelay.Name = "RDelay";
+            RDelay.Size = new Size(61, 23);
+            RDelay.TabIndex = 23;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(133, 67);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(45, 13);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "RDelay:";
+            label9.AutoSize = true;
+            label9.Location = new Point(155, 88);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(43, 17);
+            label9.TabIndex = 24;
+            label9.Text = "R延时:";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(243, 67);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(34, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "(mins)";
+            label10.AutoSize = true;
+            label10.Location = new Point(284, 88);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(40, 17);
+            label10.TabIndex = 25;
+            label10.Text = "(分钟)";
             // 
             // RespawnsDetailForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 166);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.RDelay);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.Direction);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.RoutePath);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.Delay);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.Count);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.Spread);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.Y);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.DoneButton);
-            this.Controls.Add(this.X);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximizeBox = false;
-            this.Name = "RespawnsDetailForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Respawns";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(355, 217);
+            Controls.Add(label10);
+            Controls.Add(label9);
+            Controls.Add(RDelay);
+            Controls.Add(label8);
+            Controls.Add(Direction);
+            Controls.Add(label7);
+            Controls.Add(RoutePath);
+            Controls.Add(label6);
+            Controls.Add(Delay);
+            Controls.Add(label4);
+            Controls.Add(Count);
+            Controls.Add(label5);
+            Controls.Add(Spread);
+            Controls.Add(label3);
+            Controls.Add(Y);
+            Controls.Add(label2);
+            Controls.Add(DoneButton);
+            Controls.Add(X);
+            Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Margin = new Padding(4, 4, 4, 4);
+            MaximizeBox = false;
+            Name = "RespawnsDetailForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "复活";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

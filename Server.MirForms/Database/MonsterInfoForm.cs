@@ -28,7 +28,7 @@ namespace Server
         {
             if (_selectedMonsterInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Monsters?", "Remove Monsters?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定怪物信息", "删除怪物", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++) Envir.Remove(_selectedMonsterInfos[i]);
 
@@ -102,6 +102,9 @@ namespace Server
             ImageComboBox.SelectedItem = null;
             ImageComboBox.SelectedItem = info.Image;
             fileNameLabel.Text = ((int)info.Image).ToString() + ".Lib";
+            int imageValue = (int)info.Image;
+            LoadImage(imageValue);
+
             AITextBox.Text = info.AI.ToString();
             EffectTextBox.Text = info.Effect.ToString();
             LevelTextBox.Text = info.Level.ToString();
@@ -603,7 +606,7 @@ namespace Server
 
             if (!data.StartsWith("Monster", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Monster Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是怪物信息");
                 return;
             }
 
@@ -646,6 +649,22 @@ namespace Server
                 fileNameLabel.Text = ((int)((Monster)ImageComboBox.SelectedItem)).ToString() + ".Lib";
             }
         }
+        private void LoadImage(int imageValue)
+        {
+            string filename = $"{imageValue}.bmp";
+            string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "Monsters", filename);
+
+            if (File.Exists(imagePath))
+            {
+                using FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+
+                MonstersPreview.Image = Image.FromStream(fs);
+            }
+            else
+            {
+                MonstersPreview.Image = null;
+            }
+        }
 
         private void ExportAllButton_Click(object sender, EventArgs e)
         {
@@ -666,7 +685,7 @@ namespace Server
 
             File.WriteAllLines(MonsterListPath, list);
 
-            MessageBox.Show(monsterInfos.Count() + " Items have been exported");
+            MessageBox.Show(monsterInfos.Count() + " 信息已导出");
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -715,6 +734,33 @@ namespace Server
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
                 _selectedMonsterInfos[i].DropPath = text;
+        }
+        private void TxtSearchMonster_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = TxtSearchMonster.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                ResetMonsterList();
+                return;
+            }
+
+            MonsterInfo foundMonster = Envir.MonsterInfoList.FirstOrDefault(info => info.Name.Equals(searchText, StringComparison.OrdinalIgnoreCase));
+
+            if (foundMonster != null)
+            {
+                MonsterInfoListBox.SelectedItem = foundMonster;
+            }
+        }
+
+        private void ResetMonsterList()
+        {
+            MonsterInfoListBox.Items.Clear();
+            foreach (var monsterInfo in Envir.MonsterInfoList)
+            {
+                MonsterInfoListBox.Items.Add(monsterInfo);
+            }
+            TxtSearchMonster.Text = string.Empty;
         }
     }
 }

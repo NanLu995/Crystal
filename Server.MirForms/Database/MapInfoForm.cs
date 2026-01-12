@@ -749,7 +749,7 @@ namespace Server
         {
             if (_selectedSafeZoneInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected SafeZones?", "Remove SafeZones?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的安全区", "删除安全区", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedSafeZoneInfos.Count; i++) _info.SafeZones.Remove(_selectedSafeZoneInfos[i]);
 
@@ -833,7 +833,7 @@ namespace Server
         {
             if (_selectedRespawnInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Respawns?", "Remove Respawns?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的刷怪点", "删除刷怪点", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedRespawnInfos.Count; i++) _info.Respawns.Remove(_selectedRespawnInfos[i]);
 
@@ -951,6 +951,7 @@ namespace Server
             {
                 if (chkRespawnEnableTick.Checked)
                 {
+					//你绝不能将respawnticks设置为0，否则整个程序都会出问题
                     _selectedRespawnInfos[i].RespawnTicks = Math.Max((ushort)1, temp);
                     _selectedRespawnInfos[i].Delay = 0;
                 }
@@ -1002,7 +1003,7 @@ namespace Server
 
             if (!data.StartsWith("Respawn", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Respawn Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是刷怪点信息");
                 return;
             }
 
@@ -1034,7 +1035,7 @@ namespace Server
         {
             if (_selectedMovementInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Movements?", "Remove Movements?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的地图出入点", "删除地图出入点", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMovementInfos.Count; i++) _info.Movements.Remove(_selectedMovementInfos[i]);
 
@@ -1156,7 +1157,7 @@ namespace Server
 
             if (!data.StartsWith("Map", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Map Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是有效信息");
                 return;
             }
 
@@ -1357,7 +1358,7 @@ namespace Server
         {
             if (_selectedMineZones.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected MineZones?", "Remove MineZones?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定矿区", "删除矿区", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMineZones.Count; i++) _info.MineZones.Remove(_selectedMineZones[i]);
             UpdateMineZoneInterface();
@@ -1465,6 +1466,7 @@ namespace Server
 
             MirForms.ConvertMapInfo.End();
             UpdateInterface(true);
+            MessageBox.Show("地图数据导入完成");
 
         }
         private void ExportMapInfoButton_Click(object sender, EventArgs e)
@@ -1532,7 +1534,7 @@ namespace Server
                     }
                 }
             }
-            MessageBox.Show("Map Info Export Complete");
+            MessageBox.Show("地图数据导出完成");
         }
         private String PrintMapAttributes(MapInfo map)
         {
@@ -1608,7 +1610,7 @@ namespace Server
             if (!hasImported) return;
 
             UpdateInterface(true);
-            MessageBox.Show("MonGen Import complete");
+            MessageBox.Show("刷怪数据导入完成");
         }
         private void ExportMonGenButton_Click(object sender, EventArgs e)
         {
@@ -1645,7 +1647,7 @@ namespace Server
                     }
                 }
             }
-            MessageBox.Show("MonGen Export complete");
+            MessageBox.Show("刷怪数据导出完成");
         }
 
         private void VisualizerButton_Click(object sender, EventArgs e)
@@ -1861,7 +1863,7 @@ namespace Server
             RefreshMovementList();
         }
 
-        private void lstParticles_SelectedIndexChanged(object sender, EventArgs e)
+        private void LstParticles_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
 

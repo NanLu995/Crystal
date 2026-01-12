@@ -299,7 +299,7 @@ namespace Server.MirForms
 
                             if (toMap < 0)
                             {
-                                errors.Add("Destination Map Failed on line: " + lines[k] + "");
+                                errors.Add("目标地图连接失败: " + lines[k] + "");
                                 continue;
                             }
 
@@ -373,7 +373,7 @@ namespace Server.MirForms
         }
         public static void End()
         {
-            SMain.Enqueue(String.Join("MapInfo Import Report:", errors.Count > 0 ? "" : "No Errors"));
+            SMain.Enqueue(String.Join("地图信息导入报告:", errors.Count > 0 ? "" : "导入地图信息完成"));
             foreach (String error in errors)
                 SMain.Enqueue(error);
         }

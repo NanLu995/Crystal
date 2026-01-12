@@ -164,11 +164,11 @@ namespace Server
             }
             else if (SelectedItems[0].Stock == 0)
             {
-                LeftinStock_label.Text = "Infinite";
+                LeftinStock_label.Text = "无限的";
             }
             else if (Individual_checkbox.Checked)
             {
-                LeftinStock_label.Text = "Can't calc individual levels";
+                LeftinStock_label.Text = "不能计算单个级别";
             }
         }
 
@@ -230,7 +230,7 @@ namespace Server
         {
             if (SelectedItems.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Items?", "Remove Items?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("确定要删除选定物品", "删除商城物品", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < SelectedItems.Count; i++) Envir.Remove(SelectedItems[i]);
 
@@ -355,12 +355,12 @@ namespace Server
         {
             if (SMain.Envir.Running)
             {
-                if (MessageBox.Show("Reseting purchase logs cannot be reverted and will set stock levels back to defaults, This will take effect instantly.", "Remove Logs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+                if (MessageBox.Show("重置购买日志无法恢复，库存将设置为默认值，操作立即生效", "删除日志", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
                 SMain.Envir.ClearGameshopLog();
             }
             else
             {
-                if (MessageBox.Show("Reseting purchase logs cannot be reverted and will set stock levels back to defaults, This will take effect when you start the server", "Remove Logs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+                if (MessageBox.Show("重置购买日志无法恢复，库存将设置为默认值，启动服务器时生效", "删除日志", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
                 SMain.Envir.ResetGS = true;
             }
         }
@@ -407,7 +407,7 @@ namespace Server
         {
             if (SMain.EditEnvir.ItemInfoList == null || SMain.EditEnvir.ItemInfoList.Count == 0)
             {
-                MessageBox.Show("No items available to add.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("没有物品可添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -498,7 +498,7 @@ namespace Server
         {
             if (GameShopListBox.Items.Count == 0)
             {
-                MessageBox.Show("No items to export.", "Export Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("没有物品可导出", "导出失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -537,7 +537,7 @@ namespace Server
 
             File.WriteAllLines(saveDialog.FileName, lines);
 
-            MessageBox.Show("Export complete.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("导出完成", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

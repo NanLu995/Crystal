@@ -45,7 +45,7 @@ namespace Server
         {
             if (_selectedNPCInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected NPCs?", "Remove NPCs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否要删除选定的NPC", "删除NPC", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedNPCInfos.Count; i++) Envir.Remove(_selectedNPCInfos[i]);
 
@@ -289,7 +289,7 @@ namespace Server
 
             if (!data.StartsWith("NPC", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not NPC Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是NPC信息");
                 return;
             }
 
@@ -336,7 +336,7 @@ namespace Server
                     sw.WriteLine(NPCs[j].ToText());
                 }
             }
-            MessageBox.Show("NPC Export complete");
+            MessageBox.Show("NPC数据导出完成");
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -349,7 +349,7 @@ namespace Server
 
             if (ofd.FileName == string.Empty) return;
 
-            Path = ofd.FileName;            
+            Path = ofd.FileName;
 
             foreach (var m in File.ReadAllLines(Path).Skip(1))
             {
@@ -361,7 +361,7 @@ namespace Server
             }
 
             UpdateInterface();
-            MessageBox.Show("NPC Import complete");
+            MessageBox.Show("NPC数据导入完成");
         }
 
         private void OpenNButton_Click(object sender, EventArgs e)
@@ -649,5 +649,10 @@ namespace Server
             }
         }
         #endregion
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -101,28 +101,28 @@ namespace Server
             // 
             // CreateButton
             // 
-            CreateButton.Location = new Point(14, 14);
+            CreateButton.Location = new Point(14, 12);
             CreateButton.Margin = new Padding(4, 3, 4, 3);
             CreateButton.Name = "CreateButton";
-            CreateButton.Size = new Size(88, 27);
+            CreateButton.Size = new Size(88, 31);
             CreateButton.TabIndex = 9;
-            CreateButton.Text = "Create";
+            CreateButton.Text = "创建账户";
             CreateButton.UseVisualStyleBackColor = true;
             CreateButton.Click += CreateButton_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(14, 48);
+            label1.Location = new Point(14, 54);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(98, 15);
+            label1.Size = new Size(76, 17);
             label1.TabIndex = 11;
-            label1.Text = "Filter Account ID:";
+            label1.Text = "匹配账户 ID:";
             // 
             // FilterTextBox
             // 
-            FilterTextBox.Location = new Point(125, 45);
+            FilterTextBox.Location = new Point(93, 51);
             FilterTextBox.Margin = new Padding(4, 3, 4, 3);
             FilterTextBox.Name = "FilterTextBox";
             FilterTextBox.Size = new Size(116, 23);
@@ -130,12 +130,12 @@ namespace Server
             // 
             // RefreshButton
             // 
-            RefreshButton.Location = new Point(678, 45);
+            RefreshButton.Location = new Point(678, 47);
             RefreshButton.Margin = new Padding(4, 3, 4, 3);
             RefreshButton.Name = "RefreshButton";
-            RefreshButton.Size = new Size(88, 27);
+            RefreshButton.Size = new Size(88, 31);
             RefreshButton.TabIndex = 13;
-            RefreshButton.Text = "Refresh";
+            RefreshButton.Text = "刷新";
             RefreshButton.UseVisualStyleBackColor = true;
             RefreshButton.Click += RefreshButton_Click;
             // 
@@ -178,20 +178,20 @@ namespace Server
             AccountInfoPanel.Controls.Add(label3);
             AccountInfoPanel.Controls.Add(AccountIDTextBox);
             AccountInfoPanel.Controls.Add(label2);
-            AccountInfoPanel.Location = new Point(14, 277);
+            AccountInfoPanel.Location = new Point(14, 314);
             AccountInfoPanel.Margin = new Padding(4, 3, 4, 3);
             AccountInfoPanel.Name = "AccountInfoPanel";
-            AccountInfoPanel.Size = new Size(1248, 243);
+            AccountInfoPanel.Size = new Size(1248, 275);
             AccountInfoPanel.TabIndex = 14;
             // 
             // Delaccbtn
             // 
-            Delaccbtn.Location = new Point(694, 207);
+            Delaccbtn.Location = new Point(745, 235);
             Delaccbtn.Margin = new Padding(4, 3, 4, 3);
             Delaccbtn.Name = "Delaccbtn";
-            Delaccbtn.Size = new Size(88, 27);
+            Delaccbtn.Size = new Size(88, 31);
             Delaccbtn.TabIndex = 40;
-            Delaccbtn.Text = "Delete Acc";
+            Delaccbtn.Text = "删除账户";
             Delaccbtn.UseVisualStyleBackColor = true;
             Delaccbtn.Click += Delaccbtn_Click;
             // 
@@ -202,45 +202,45 @@ namespace Server
             CharactersListView.Location = new Point(701, 0);
             CharactersListView.Name = "CharactersListView";
             CharactersListView.Scrollable = false;
-            CharactersListView.Size = new Size(546, 163);
+            CharactersListView.Size = new Size(546, 184);
             CharactersListView.TabIndex = 39;
             CharactersListView.UseCompatibleStateImageBehavior = false;
             CharactersListView.View = View.Details;
             // 
             // characterName
             // 
-            characterName.Text = "Name";
+            characterName.Text = "名称";
             characterName.Width = 80;
             // 
             // characterClass
             // 
-            characterClass.Text = "Class";
+            characterClass.Text = "职业";
             characterClass.Width = 80;
             // 
             // characterLevel
             // 
-            characterLevel.Text = "Level";
+            characterLevel.Text = "等级";
             // 
             // characterPKPoints
             // 
-            characterPKPoints.Text = "PKPoints";
+            characterPKPoints.Text = "PK点数";
             characterPKPoints.Width = 59;
             // 
             // characterGuild
             // 
-            characterGuild.Text = "Guild";
+            characterGuild.Text = "所属公会";
             characterGuild.Width = 100;
             // 
             // characterStatus
             // 
-            characterStatus.Text = "Status";
+            characterStatus.Text = "账户角色状态";
             characterStatus.Width = 163;
             // 
             // LastIPSearch
             // 
-            LastIPSearch.Location = new Point(583, 81);
+            LastIPSearch.Location = new Point(583, 92);
             LastIPSearch.Name = "LastIPSearch";
-            LastIPSearch.Size = new Size(25, 23);
+            LastIPSearch.Size = new Size(25, 26);
             LastIPSearch.TabIndex = 38;
             LastIPSearch.Text = "🔎";
             LastIPSearch.UseVisualStyleBackColor = true;
@@ -248,9 +248,9 @@ namespace Server
             // 
             // CreationIPSearch
             // 
-            CreationIPSearch.Location = new Point(583, 21);
+            CreationIPSearch.Location = new Point(583, 24);
             CreationIPSearch.Name = "CreationIPSearch";
-            CreationIPSearch.Size = new Size(25, 23);
+            CreationIPSearch.Size = new Size(25, 26);
             CreationIPSearch.TabIndex = 37;
             CreationIPSearch.Text = "🔎";
             CreationIPSearch.UseVisualStyleBackColor = true;
@@ -259,86 +259,86 @@ namespace Server
             // PasswordChangeCheckBox
             // 
             PasswordChangeCheckBox.AutoSize = true;
-            PasswordChangeCheckBox.Location = new Point(216, 50);
+            PasswordChangeCheckBox.Location = new Point(216, 57);
             PasswordChangeCheckBox.Margin = new Padding(4, 3, 4, 3);
             PasswordChangeCheckBox.Name = "PasswordChangeCheckBox";
-            PasswordChangeCheckBox.Size = new Size(110, 19);
+            PasswordChangeCheckBox.Size = new Size(99, 21);
             PasswordChangeCheckBox.TabIndex = 34;
-            PasswordChangeCheckBox.Text = "Require Change";
+            PasswordChangeCheckBox.Text = "首次登录变更";
             PasswordChangeCheckBox.UseVisualStyleBackColor = true;
             PasswordChangeCheckBox.CheckedChanged += PasswordChangeCheckBox_CheckedChanged;
             // 
             // setPasswordButton
             // 
-            setPasswordButton.Location = new Point(111, 47);
+            setPasswordButton.Location = new Point(111, 53);
             setPasswordButton.Margin = new Padding(4, 3, 4, 3);
             setPasswordButton.Name = "setPasswordButton";
-            setPasswordButton.Size = new Size(98, 27);
+            setPasswordButton.Size = new Size(98, 31);
             setPasswordButton.TabIndex = 33;
-            setPasswordButton.Text = "Set Password";
+            setPasswordButton.Text = "设置密码";
             setPasswordButton.UseVisualStyleBackColor = true;
             setPasswordButton.Click += button1_Click;
             // 
             // AdminCheckBox
             // 
             AdminCheckBox.AutoSize = true;
-            AdminCheckBox.Location = new Point(241, 20);
+            AdminCheckBox.Location = new Point(241, 23);
             AdminCheckBox.Margin = new Padding(4, 3, 4, 3);
             AdminCheckBox.Name = "AdminCheckBox";
-            AdminCheckBox.Size = new Size(99, 19);
+            AdminCheckBox.Size = new Size(87, 21);
             AdminCheckBox.TabIndex = 32;
-            AdminCheckBox.Text = "Administrator";
+            AdminCheckBox.Text = "管理员模式";
             AdminCheckBox.UseVisualStyleBackColor = true;
             AdminCheckBox.CheckedChanged += AdminCheckBox_CheckedChanged;
             // 
             // PermBanButton
             // 
-            PermBanButton.Location = new Point(598, 207);
+            PermBanButton.Location = new Point(650, 235);
             PermBanButton.Margin = new Padding(4, 3, 4, 3);
             PermBanButton.Name = "PermBanButton";
-            PermBanButton.Size = new Size(88, 27);
+            PermBanButton.Size = new Size(88, 31);
             PermBanButton.TabIndex = 31;
-            PermBanButton.Text = "Perm Ban";
+            PermBanButton.Text = "禁用一月";
             PermBanButton.UseVisualStyleBackColor = true;
             PermBanButton.Click += PermBanButton_Click;
             // 
             // WeekBanButton
             // 
-            WeekBanButton.Location = new Point(502, 207);
+            WeekBanButton.Location = new Point(555, 235);
             WeekBanButton.Margin = new Padding(4, 3, 4, 3);
             WeekBanButton.Name = "WeekBanButton";
-            WeekBanButton.Size = new Size(88, 27);
+            WeekBanButton.Size = new Size(88, 31);
             WeekBanButton.TabIndex = 30;
-            WeekBanButton.Text = "Week Ban";
+            WeekBanButton.Text = "禁用一周";
             WeekBanButton.UseVisualStyleBackColor = true;
             WeekBanButton.Click += WeekBanButton_Click;
             // 
             // DayBanButton
             // 
-            DayBanButton.Location = new Point(407, 207);
+            DayBanButton.Location = new Point(460, 235);
             DayBanButton.Margin = new Padding(4, 3, 4, 3);
             DayBanButton.Name = "DayBanButton";
-            DayBanButton.Size = new Size(88, 27);
+            DayBanButton.Size = new Size(88, 31);
             DayBanButton.TabIndex = 29;
-            DayBanButton.Text = "Day Ban";
+            DayBanButton.Text = "禁用一日";
             DayBanButton.UseVisualStyleBackColor = true;
             DayBanButton.Click += DayBanButton_Click;
             // 
             // BannedCheckBox
             // 
             BannedCheckBox.AutoSize = true;
-            BannedCheckBox.Location = new Point(610, 180);
+            BannedCheckBox.Location = new Point(610, 204);
             BannedCheckBox.Margin = new Padding(4, 3, 4, 3);
             BannedCheckBox.Name = "BannedCheckBox";
-            BannedCheckBox.Size = new Size(66, 19);
+            BannedCheckBox.Size = new Size(51, 21);
             BannedCheckBox.TabIndex = 28;
-            BannedCheckBox.Text = "Banned";
+            BannedCheckBox.Text = "禁用";
             BannedCheckBox.UseVisualStyleBackColor = true;
             BannedCheckBox.CheckedChanged += BannedCheckBox_CheckedChanged;
             // 
             // ExpiryDateTextBox
             // 
-            ExpiryDateTextBox.Location = new Point(460, 178);
+            ExpiryDateTextBox.Location = new Point(460, 202);
             ExpiryDateTextBox.Margin = new Padding(4, 3, 4, 3);
             ExpiryDateTextBox.Name = "ExpiryDateTextBox";
             ExpiryDateTextBox.Size = new Size(139, 23);
@@ -348,16 +348,16 @@ namespace Server
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(378, 181);
+            label14.Location = new Point(372, 205);
             label14.Margin = new Padding(4, 0, 4, 0);
             label14.Name = "label14";
-            label14.Size = new Size(69, 15);
+            label14.Size = new Size(83, 17);
             label14.TabIndex = 26;
-            label14.Text = "Expiry Date:";
+            label14.Text = "账户解封日期:";
             // 
             // BanReasonTextBox
             // 
-            BanReasonTextBox.Location = new Point(460, 148);
+            BanReasonTextBox.Location = new Point(460, 168);
             BanReasonTextBox.Margin = new Padding(4, 3, 4, 3);
             BanReasonTextBox.Name = "BanReasonTextBox";
             BanReasonTextBox.Size = new Size(223, 23);
@@ -367,16 +367,16 @@ namespace Server
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(372, 151);
+            label13.Location = new Point(372, 171);
             label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
-            label13.Size = new Size(71, 15);
+            label13.Size = new Size(83, 17);
             label13.TabIndex = 24;
-            label13.Text = "Ban Reason:";
+            label13.Text = "账户禁用事由:";
             // 
             // LastDateTextBox
             // 
-            LastDateTextBox.Location = new Point(460, 110);
+            LastDateTextBox.Location = new Point(460, 125);
             LastDateTextBox.Margin = new Padding(4, 3, 4, 3);
             LastDateTextBox.Name = "LastDateTextBox";
             LastDateTextBox.ReadOnly = true;
@@ -386,16 +386,16 @@ namespace Server
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(387, 113);
+            label11.Location = new Point(372, 128);
             label11.Margin = new Padding(4, 0, 4, 0);
             label11.Name = "label11";
-            label11.Size = new Size(58, 15);
+            label11.Size = new Size(83, 17);
             label11.TabIndex = 22;
-            label11.Text = "Last Date:";
+            label11.Text = "最后登录日期:";
             // 
             // LastIPTextBox
             // 
-            LastIPTextBox.Location = new Point(460, 80);
+            LastIPTextBox.Location = new Point(460, 91);
             LastIPTextBox.Margin = new Padding(4, 3, 4, 3);
             LastIPTextBox.Name = "LastIPTextBox";
             LastIPTextBox.ReadOnly = true;
@@ -405,16 +405,16 @@ namespace Server
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(402, 83);
+            label12.Location = new Point(381, 94);
             label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
-            label12.Size = new Size(44, 15);
+            label12.Size = new Size(74, 17);
             label12.TabIndex = 20;
-            label12.Text = "Last IP:";
+            label12.Text = "近期登录 IP:";
             // 
             // CreationDateTextBox
             // 
-            CreationDateTextBox.Location = new Point(460, 50);
+            CreationDateTextBox.Location = new Point(460, 57);
             CreationDateTextBox.Margin = new Padding(4, 3, 4, 3);
             CreationDateTextBox.Name = "CreationDateTextBox";
             CreationDateTextBox.ReadOnly = true;
@@ -424,16 +424,16 @@ namespace Server
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(365, 53);
+            label9.Location = new Point(372, 60);
             label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new Size(82, 15);
+            label9.Size = new Size(83, 17);
             label9.TabIndex = 18;
-            label9.Text = "Creation Date:";
+            label9.Text = "账户创建日期:";
             // 
             // CreationIPTextBox
             // 
-            CreationIPTextBox.Location = new Point(460, 20);
+            CreationIPTextBox.Location = new Point(460, 23);
             CreationIPTextBox.Margin = new Padding(4, 3, 4, 3);
             CreationIPTextBox.Name = "CreationIPTextBox";
             CreationIPTextBox.ReadOnly = true;
@@ -443,16 +443,16 @@ namespace Server
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(380, 23);
+            label10.Location = new Point(381, 26);
             label10.Margin = new Padding(4, 0, 4, 0);
             label10.Name = "label10";
-            label10.Size = new Size(68, 15);
+            label10.Size = new Size(74, 17);
             label10.TabIndex = 16;
-            label10.Text = "Creation IP:";
+            label10.Text = "创建账户 IP:";
             // 
             // EMailTextBox
             // 
-            EMailTextBox.Location = new Point(111, 208);
+            EMailTextBox.Location = new Point(111, 236);
             EMailTextBox.Margin = new Padding(4, 3, 4, 3);
             EMailTextBox.Name = "EMailTextBox";
             EMailTextBox.Size = new Size(223, 23);
@@ -462,16 +462,16 @@ namespace Server
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(14, 211);
+            label8.Location = new Point(37, 239);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(84, 15);
+            label8.Size = new Size(71, 17);
             label8.TabIndex = 14;
-            label8.Text = "EMail Address:";
+            label8.Text = "EMail 地址:";
             // 
             // AnswerTextBox
             // 
-            AnswerTextBox.Location = new Point(111, 178);
+            AnswerTextBox.Location = new Point(111, 202);
             AnswerTextBox.Margin = new Padding(4, 3, 4, 3);
             AnswerTextBox.Name = "AnswerTextBox";
             AnswerTextBox.Size = new Size(153, 23);
@@ -481,16 +481,16 @@ namespace Server
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(51, 181);
+            label7.Location = new Point(49, 205);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(49, 15);
+            label7.Size = new Size(59, 17);
             label7.TabIndex = 12;
-            label7.Text = "Answer:";
+            label7.Text = "密码答案:";
             // 
             // QuestionTextBox
             // 
-            QuestionTextBox.Location = new Point(111, 148);
+            QuestionTextBox.Location = new Point(111, 168);
             QuestionTextBox.Margin = new Padding(4, 3, 4, 3);
             QuestionTextBox.Name = "QuestionTextBox";
             QuestionTextBox.Size = new Size(153, 23);
@@ -500,16 +500,16 @@ namespace Server
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(43, 151);
+            label6.Location = new Point(49, 171);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(58, 15);
+            label6.Size = new Size(59, 17);
             label6.TabIndex = 10;
-            label6.Text = "Question:";
+            label6.Text = "密码问题:";
             // 
             // BirthDateTextBox
             // 
-            BirthDateTextBox.Location = new Point(111, 118);
+            BirthDateTextBox.Location = new Point(111, 134);
             BirthDateTextBox.Margin = new Padding(4, 3, 4, 3);
             BirthDateTextBox.Name = "BirthDateTextBox";
             BirthDateTextBox.Size = new Size(84, 23);
@@ -519,16 +519,16 @@ namespace Server
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(37, 121);
+            label5.Location = new Point(49, 137);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(62, 15);
+            label5.Size = new Size(59, 17);
             label5.TabIndex = 8;
-            label5.Text = "Birth Date:";
+            label5.Text = "出生日期:";
             // 
             // UserNameTextBox
             // 
-            UserNameTextBox.Location = new Point(111, 88);
+            UserNameTextBox.Location = new Point(111, 100);
             UserNameTextBox.Margin = new Padding(4, 3, 4, 3);
             UserNameTextBox.Name = "UserNameTextBox";
             UserNameTextBox.Size = new Size(116, 23);
@@ -538,26 +538,26 @@ namespace Server
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(30, 91);
+            label4.Location = new Point(49, 103);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(68, 15);
+            label4.Size = new Size(59, 17);
             label4.TabIndex = 6;
-            label4.Text = "User Name:";
+            label4.Text = "账户名称:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(38, 50);
+            label3.Location = new Point(73, 57);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(60, 15);
+            label3.Size = new Size(35, 17);
             label3.TabIndex = 4;
-            label3.Text = "Password:";
+            label3.Text = "密码:";
             // 
             // AccountIDTextBox
             // 
-            AccountIDTextBox.Location = new Point(111, 16);
+            AccountIDTextBox.Location = new Point(111, 18);
             AccountIDTextBox.Margin = new Padding(4, 3, 4, 3);
             AccountIDTextBox.Name = "AccountIDTextBox";
             AccountIDTextBox.Size = new Size(116, 23);
@@ -567,26 +567,26 @@ namespace Server
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(29, 20);
+            label2.Location = new Point(60, 23);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(69, 15);
+            label2.Size = new Size(48, 17);
             label2.TabIndex = 2;
-            label2.Text = "Account ID:";
+            label2.Text = "账户ID:";
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(250, 48);
+            label15.Location = new Point(270, 54);
             label15.Margin = new Padding(4, 0, 4, 0);
             label15.Name = "label15";
-            label15.Size = new Size(71, 15);
+            label15.Size = new Size(59, 17);
             label15.TabIndex = 15;
-            label15.Text = "Filter Player:";
+            label15.Text = "匹配玩家:";
             // 
             // FilterPlayerTextBox
             // 
-            FilterPlayerTextBox.Location = new Point(331, 45);
+            FilterPlayerTextBox.Location = new Point(331, 51);
             FilterPlayerTextBox.Margin = new Padding(4, 3, 4, 3);
             FilterPlayerTextBox.Name = "FilterPlayerTextBox";
             FilterPlayerTextBox.Size = new Size(116, 23);
@@ -599,10 +599,10 @@ namespace Server
             AccountInfoListView.Columns.AddRange(new ColumnHeader[] { indexHeader, accountIDHeader, userNameHeader, adminHeader, bannedHeader, banReasonHeader, expiryDateHeader, Gold, GameGold });
             AccountInfoListView.FullRowSelect = true;
             AccountInfoListView.GridLines = true;
-            AccountInfoListView.Location = new Point(12, 75);
+            AccountInfoListView.Location = new Point(12, 85);
             AccountInfoListView.Margin = new Padding(4, 3, 4, 3);
             AccountInfoListView.Name = "AccountInfoListView";
-            AccountInfoListView.Size = new Size(1249, 194);
+            AccountInfoListView.Size = new Size(1249, 219);
             AccountInfoListView.Sorting = SortOrder.Ascending;
             AccountInfoListView.TabIndex = 8;
             AccountInfoListView.UseCompatibleStateImageBehavior = false;
@@ -611,67 +611,67 @@ namespace Server
             // 
             // indexHeader
             // 
-            indexHeader.Text = "Index";
+            indexHeader.Text = "序号";
             // 
             // accountIDHeader
             // 
-            accountIDHeader.Text = "Account ID";
+            accountIDHeader.Text = "账户 ID";
             accountIDHeader.Width = 92;
             // 
             // userNameHeader
             // 
-            userNameHeader.Text = "User Name";
+            userNameHeader.Text = "账户名称";
             userNameHeader.Width = 75;
             // 
             // adminHeader
             // 
-            adminHeader.Text = "Administrator";
+            adminHeader.Text = "管理员";
             adminHeader.Width = 73;
             // 
             // bannedHeader
             // 
-            bannedHeader.Text = "Banned";
+            bannedHeader.Text = "禁用";
             bannedHeader.Width = 54;
             // 
             // banReasonHeader
             // 
-            banReasonHeader.Text = "Ban Reason";
+            banReasonHeader.Text = "禁用原因";
             banReasonHeader.Width = 74;
             // 
             // expiryDateHeader
             // 
-            expiryDateHeader.Text = "Expiry Date";
+            expiryDateHeader.Text = "封禁日期";
             expiryDateHeader.Width = 81;
             // 
             // Gold
             // 
-            Gold.Text = "Gold";
+            Gold.Text = "金币";
             Gold.Width = 100;
             // 
             // GameGold
             // 
-            GameGold.Text = "GameGold";
+            GameGold.Text = "信用币";
             GameGold.Width = 70;
             // 
             // MatchFilterCheckBox
             // 
             MatchFilterCheckBox.AutoSize = true;
-            MatchFilterCheckBox.Location = new Point(774, 50);
+            MatchFilterCheckBox.Location = new Point(774, 52);
             MatchFilterCheckBox.Margin = new Padding(4, 3, 4, 3);
             MatchFilterCheckBox.Name = "MatchFilterCheckBox";
-            MatchFilterCheckBox.Size = new Size(89, 19);
+            MatchFilterCheckBox.Size = new Size(75, 21);
             MatchFilterCheckBox.TabIndex = 17;
-            MatchFilterCheckBox.Text = "Match Filter";
+            MatchFilterCheckBox.Text = "匹配筛选";
             MatchFilterCheckBox.UseVisualStyleBackColor = true;
             // 
             // WipeCharButton
             // 
-            WipeCharButton.Location = new Point(108, 14);
+            WipeCharButton.Location = new Point(108, 12);
             WipeCharButton.Margin = new Padding(4, 3, 4, 3);
             WipeCharButton.Name = "WipeCharButton";
-            WipeCharButton.Size = new Size(134, 27);
+            WipeCharButton.Size = new Size(134, 31);
             WipeCharButton.TabIndex = 18;
-            WipeCharButton.Text = "Wipe All Characters";
+            WipeCharButton.Text = "删除所有账户";
             WipeCharButton.UseVisualStyleBackColor = true;
             WipeCharButton.Click += WipeCharButton_Click;
             // 
@@ -688,13 +688,13 @@ namespace Server
             TotalServerGold.AutoSize = true;
             TotalServerGold.Location = new Point(252, 19);
             TotalServerGold.Name = "TotalServerGold";
-            TotalServerGold.Size = new Size(98, 15);
+            TotalServerGold.Size = new Size(95, 17);
             TotalServerGold.TabIndex = 21;
-            TotalServerGold.Text = "Total Server Gold:";
+            TotalServerGold.Text = "服务器金币总数:";
             // 
             // ServerCreditTextBox
             // 
-            ServerCreditTextBox.Location = new Point(624, 19);
+            ServerCreditTextBox.Location = new Point(627, 16);
             ServerCreditTextBox.Name = "ServerCreditTextBox";
             ServerCreditTextBox.ReadOnly = true;
             ServerCreditTextBox.Size = new Size(153, 23);
@@ -703,15 +703,15 @@ namespace Server
             // TotalServerCredit
             // 
             TotalServerCredit.AutoSize = true;
-            TotalServerCredit.Location = new Point(520, 22);
+            TotalServerCredit.Location = new Point(520, 19);
             TotalServerCredit.Name = "TotalServerCredit";
-            TotalServerCredit.Size = new Size(105, 15);
+            TotalServerCredit.Size = new Size(107, 17);
             TotalServerCredit.TabIndex = 23;
-            TotalServerCredit.Text = "Total Server Credit:";
+            TotalServerCredit.Text = "服务器信用币总数:";
             // 
             // FilterIPTextBox
             // 
-            FilterIPTextBox.Location = new Point(541, 45);
+            FilterIPTextBox.Location = new Point(541, 51);
             FilterIPTextBox.Margin = new Padding(4, 3, 4, 3);
             FilterIPTextBox.Name = "FilterIPTextBox";
             FilterIPTextBox.Size = new Size(116, 23);
@@ -720,18 +720,18 @@ namespace Server
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(460, 48);
+            label16.Location = new Point(490, 54);
             label16.Margin = new Padding(4, 0, 4, 0);
             label16.Name = "label16";
-            label16.Size = new Size(49, 15);
+            label16.Size = new Size(46, 17);
             label16.TabIndex = 25;
-            label16.Text = "Filter IP:";
+            label16.Text = "匹配IP:";
             // 
             // AccountInfoForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1276, 532);
+            ClientSize = new Size(1276, 603);
             Controls.Add(FilterIPTextBox);
             Controls.Add(label16);
             Controls.Add(ServerCreditTextBox);
@@ -750,7 +750,7 @@ namespace Server
             Controls.Add(AccountInfoListView);
             Margin = new Padding(4, 3, 4, 3);
             Name = "AccountInfoForm";
-            Text = "AccountInfoForm";
+            Text = "账户信息窗口";
             FormClosed += AccountInfoForm_FormClosed;
             AccountInfoPanel.ResumeLayout(false);
             AccountInfoPanel.PerformLayout();

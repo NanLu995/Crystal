@@ -42,7 +42,7 @@ namespace Server
             SaveDelayTextBox.Text = Settings.SaveDelay.ToString();
 
             ServerVersionLabel.Text = Application.ProductVersion;
-            DBVersionLabel.Text = MirEnvir.Envir.LoadVersion.ToString() + ((MirEnvir.Envir.LoadVersion < MirEnvir.Envir.Version) ? " (Update needed)" : "");
+            DBVersionLabel.Text = MirEnvir.Envir.LoadVersion.ToString() + ((MirEnvir.Envir.LoadVersion < MirEnvir.Envir.Version) ? " (需要更新)" : "");
             maxConnectionsPerIP.Text = Settings.MaxIP.ToString();
             expRateInput.Value = Math.Round((decimal)Settings.ExpRate, 2);
             dropRateInput.Value = Math.Round((decimal)Settings.DropRate, 2);
