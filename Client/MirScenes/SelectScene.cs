@@ -198,7 +198,7 @@ namespace Client.MirScenes
 
             LastAccessLabel = new MirLabel
             {
-                Location = new Point(265, 609),
+                Location = new Point(265, 611),
                 Parent = Background,
                 Size = new Size(180, 21),
                 DrawFormat = TextFormatFlags.Left | TextFormatFlags.VerticalCenter,

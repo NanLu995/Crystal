@@ -18,7 +18,7 @@ namespace Client.MirScenes.Dialogs
         public int SelectedCreatureSlot = -1;
         public MirControl HoverLabelParent = null;
 
-        private readonly Regex CreatureNameReg = new Regex(@"^[A-Za-z0-9]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
+        private readonly Regex CreatureNameReg = new Regex(@"^[A-Za-z0-9\u4E00-\u9FA5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
 
         private MirAnimatedControl CreatureImage;
         public long SwitchAnimTime;

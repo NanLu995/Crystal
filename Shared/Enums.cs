@@ -25,8 +25,8 @@ public enum WeatherSetting : ushort
     Leaves = 128, // 黄色花瓣 = 128,
     FireyLeaves = 256, // 红色花瓣 = 256,
     PurpleLeaves = 512, // 粉色花瓣 = 512,
-    沙尘 = 1024,
-    沙雾 = 2048,
+    // 沙尘 = 1024,
+    // 沙雾 = 2048,
 }
 public enum PanelType : byte
 {
@@ -225,9 +225,9 @@ public enum IntelligentCreatureType : byte
     AngryBird = 12, // 愤怒的小鸟 = 12,
     Foxey = 13, // 阿福 = 13,
     MedicalRat = 14, // 治疗拉拉 = 14,
-    猫咪超人 = 15,
-    龙宝宝 = 16,
-    蛇宝宝 = 17,
+    // 猫咪超人 = 15,
+    // 龙宝宝 = 16,
+    // 蛇宝宝 = 17,
 }
 
 //2 blank mob files
@@ -975,10 +975,10 @@ public enum ItemType : byte
     SiegeAmmo = 41, //TODO
     /// <summary> 封印 </summary>
     SealedHero = 42,
-    攻击型绝技 = 43,
-    防御型绝技 = 44,
-    技能型绝技 = 45,
-    绝技材料 = 46
+    // 攻击型绝技 = 43,
+    // 防御型绝技 = 44,
+    // 技能型绝技 = 45,
+    // 绝技材料 = 46
 }
 
 public enum MirGridType : byte
@@ -1255,8 +1255,8 @@ public enum ItemSet : byte
     DarkGhost = 38,
     /// <summary> 强青玉套 </summary>
     BlueFrostH = 39,
-    双戒套装 = 40,
-    昆仑套装 = 41
+    // 双戒套装 = 40,
+    // 昆仑套装 = 41
 }
 
 public enum Spell : byte

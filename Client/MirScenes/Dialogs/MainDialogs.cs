@@ -974,7 +974,7 @@ namespace Client.MirScenes.Dialogs
                     string[] parts = l.Text.Split(':', ' ');
                     if (parts.Length == 0) return;
 
-                    string name = Regex.Replace(parts[0], "[^A-Za-z0-9]", "");
+                    string name = Regex.Replace(parts[0], "[^A-Za-z0-9\u4E00-\u9FA5]", "");
 
                     ChatTextBox.SetFocus();
                     ChatTextBox.Text = string.Format("/{0} ", name);
@@ -2189,7 +2189,6 @@ namespace Client.MirScenes.Dialogs
                     RealItem = Functions.GetRealItem(WeaponCell.Item.Info, Level, Class, GameScene.ItemInfoList);
                     Libraries.StateItems.Draw(RealItem.Image, new Point(DisplayLocation.X, DisplayLocation.Y - 20),
                     Color.White, true, 1F);
-
                 }
 
                 if (HelmetCell.Item != null)

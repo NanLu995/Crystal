@@ -12,6 +12,7 @@ using Effect = Client.MirObjects.Effect;
 using Client.MirScenes.Dialogs;
 using Client.Utils;
 using Client.MirGraphics.Particles;
+using System.Text.RegularExpressions;
 
 namespace Client.MirScenes
 {
@@ -95,9 +96,12 @@ namespace Client.MirScenes
         public DuraStatusDialog DuraStatusPanel;
         public TradeDialog TradeDialog;
         public GuestTradeDialog GuestTradeDialog;
+        //public GroupStatusDialog GroupStatusPanel;
+        //public GroupHealthPanel GroupHealthPanel;
 
         public HeroMenuPanel HeroMenuPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
+        //public HeroAIDialog HeroAIDialog;
         public SocketDialog SocketDialog;
 
         public List<SkillBarDialog> SkillBarDialogs = new List<SkillBarDialog>();
@@ -5759,10 +5763,38 @@ namespace Client.MirScenes
         {
             MirInputBox inputBox = new MirInputBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EnterGuildNameLengthLimit));
             inputBox.InputTextBox.TextBox.KeyPress += (o, e) =>
-            {
-                string Allowed = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                if (!Allowed.Contains(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {        
+                // string Allowed = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                // if (!Allowed.Contains(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+                //     e.Handled = true;        
+				if (char.IsControl(e.KeyChar))
+                {
+                    return;
+                }
+                char inputChar = e.KeyChar;
+
+                if (!char.IsLetterOrDigit(inputChar) && inputChar != '\u4E00' && inputChar != '\u9FA5')
+                {
+                    ChatDialog.ReceiveChat("字符不被认可", ChatType.System);
                     e.Handled = true;
+                    return;
+                }
+                string newText = inputBox.InputTextBox.Text + e.KeyChar;
+
+                int englishCount = Regex.Matches(newText, @"[A-Za-z0-9]").Count;
+
+                bool containsNonEnglish = !Regex.IsMatch(newText, @"^[A-Za-z0-9]*$");
+
+                if (newText.Length > 7 && containsNonEnglish)
+                {
+                    ChatDialog.ReceiveChat("不能超过7个字符", ChatType.System);
+                    e.Handled = true;
+                }
+                else if (englishCount > 14)
+                {
+                    ChatDialog.ReceiveChat("不能超过14个字符", ChatType.System);
+                    e.Handled = true;
+                }
             };
             inputBox.OKButton.Click += (o, e) =>
             {
@@ -12355,6 +12387,23 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(RainEngine);
 
                         break;
+                    // case WeatherSetting.飘雪:
+                    //     textures = new List<ParticleImageInfo>();
+                    //     textures.Add(new ParticleImageInfo(Libraries.Weather, 43, 20, 50));
+
+                    //     ParticleEngine snowFlurry = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Snow);
+                    //     Vector2 snowFlurryVelocity = new Vector2(1F, -1F);
+
+                    //     for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
+                    //         for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
+                    //         {
+                    //             Particle part = snowFlurry.GenerateNewParticle(ParticleType.Snow);
+                    //             part.Position = new Vector2(x, y);
+                    //             part.Velocity = snowFlurryVelocity;
+                    //         }
+                    //     snowFlurry.GenerateParticles = false;
+                    //     GameScene.Scene.ParticleEngines.Add(snowFlurry);
+                    //     break;
                     case WeatherSetting.Fog:
                         List<ParticleImageInfo> ftextures = new List<ParticleImageInfo>();
                         ftextures.Add(new ParticleImageInfo(Libraries.Weather, 0));

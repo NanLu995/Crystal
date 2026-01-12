@@ -148,9 +148,9 @@ namespace Client.MirGraphics.Particles
                 else if (Position.X > Settings.ScreenWidth + ImageInfo.Size.Width)
                     Position -= xreset;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
