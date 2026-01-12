@@ -998,6 +998,7 @@
     "BirthDateDescription": "描述：出生日期。\n 格式：{0}。\n 长度：10 个字符。\n 可选字段。",
     "SecretQuestionDescription": "描述：密保问题。\n 可用字符：全部。\n 长度：在 0 到 30 个字符之间。\n 可选字段。",
     "SecretAnswerDescription": "描述：密保答案。\n 可用字符：全部。\n 长度：在 0 到 30 个字符之间。\n 可选字段。",
+    "CouldNotClosePatcherInUpdating": "更新期间无法关闭自动修补程序。",
     "CouldNotGetDisplayResolutions": "无法获取显示分辨率。",
     "GetDisplayResolutionIssue": "获取显示分辨率出错。",
     "ClientNotSupportSettingResolution": "客户端不支持 {0}。分辨率已设置为 1024x768。",

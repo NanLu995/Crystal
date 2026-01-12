@@ -998,6 +998,7 @@
     "BirthDateDescription": " Description: Birth Date.\n Format: {0}.\n Length: 10 characters.\n Optional Field.",
     "SecretQuestionDescription": " Description: Secret Question.\n Accepted characters: All.\n Length: between 0 and 30 characters.\n Optional Field.",
     "SecretAnswerDescription": " Description: Secret Answer.\n Accepted characters: All.\n Length: between 0 and 30 characters.\n Optional Field.",
+    "CouldNotClosePatcherInUpdating": "Failed to close AutoPatcher during update.",
     "CouldNotGetDisplayResolutions": "Could not get display resolutions",
     "GetDisplayResolutionIssue": "Get Display Resolution Issue",
     "ClientNotSupportSettingResolution": "Client does not support {0}. Setting Resolution to 1024x768.",

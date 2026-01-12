@@ -96,7 +96,7 @@ namespace Client
                             }
 
                         if (stopwatch.ElapsedMilliseconds <= 3000) continue;
-                        MessageBox.Show("Failed to close AutoPatcher during update.");
+                        MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CouldNotClosePatcherInUpdating));
                         return true;
                     }
                 }
