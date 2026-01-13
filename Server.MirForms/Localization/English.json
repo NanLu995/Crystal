@@ -294,6 +294,7 @@
     "PetsNotAllowedOnMap": "Pets are not allowed on this map. They will wait here.",
     "IntelligentCreaturesNotAllowedOnMap": "Intelligent creatures are not allowed on this map. Your companion has been dismissed.",
     "HeroesNotAllowedOnMap": "Heroes are not allowed on this map. Your Hero has been unsummoned.",
+    "HeroDesummonCountdown": "Your Hero recently left combat. Please wait {0} seconds before desummoning.",
     "SoloMapCannotInvite": "You cannot invite on solo maps.",
     "SoloMapTargetCannotAccept": "{0} cannot accept invites on solo maps.",
     "SoloMapCannotAccept": "You cannot accept invites on solo maps.",

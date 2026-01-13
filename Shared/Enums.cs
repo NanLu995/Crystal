@@ -1153,7 +1153,7 @@ public enum RequiredClass : byte
     /// <summary> 战法道 </summary>
     WarWizTao = Warrior | Wizard | Taoist,
     /// <summary> 战刺 </summary>
-    WarAss = Warrior | Assassin,
+    //WarAss = Warrior | Assassin,
     /// <summary> 全职业 </summary>
     None = WarWizTao | Assassin | Archer
 }
@@ -2051,9 +2051,9 @@ public enum HeroBehaviour : byte
     CounterAttack = 1, // 反击 = 1,
     Follow = 2, // 跟随 = 2,
     Custom = 3, // 自定 = 3,
-    守护 = 4,
-    跑回 = 5,
-    瞬回 = 6
+    //守护 = 4,
+    //跑回 = 5,
+    //瞬回 = 6
 }
 
 public enum SpellToggleState: sbyte

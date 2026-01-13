@@ -294,6 +294,7 @@
     "PetsNotAllowedOnMap": "此地图禁止携带宠物，它们将留在这里等待你。",
     "IntelligentCreaturesNotAllowedOnMap": "此地图禁止召唤仆从，你的伙伴已被遣散。",
     "HeroesNotAllowedOnMap": "此地图禁止英雄参战，你的英雄已被收回。",
+    "HeroDesummonCountdown": "你的英雄刚结束战斗，请等待 {0} 秒后再解除召唤。",
     "SoloMapCannotInvite": "单人地图中无法邀请他人组队。",
     "SoloMapTargetCannotAccept": "{0} 无法在单人地图中接受邀请。",
     "SoloMapCannotAccept": "你无法在单人地图中接受邀请。",
