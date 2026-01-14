@@ -276,7 +276,7 @@ namespace Client.MirControls
             else stockLabel.Text = Item.Stock.ToString();
             countLabel.Text = Item.Count.ToString();
 
-            if (Item.Info.Type == ItemType.Mount || Item.Info.Type == ItemType.Weapon || Item.Info.Type == ItemType.Armour || Item.Info.Type == ItemType.Transform)
+            if (Item.Info.Type == ItemType.坐骑 || Item.Info.Type == ItemType.武器 || Item.Info.Type == ItemType.盔甲 || Item.Info.Type == ItemType.时装)
             {
                 PreviewItem.Visible = true;
                 BuyItem.Location = new Point(75, 122);
@@ -443,10 +443,10 @@ namespace Client.MirControls
         public void UpdateViewer()
         {
             this.Visible = true;
-            if (ViewerItem.Info.Type == ItemType.Weapon) DrawWeapon();
-            if (ViewerItem.Info.Type == ItemType.Armour) DrawArmour();
-            if (ViewerItem.Info.Type == ItemType.Mount) DrawMount();
-            if (ViewerItem.Info.Type == ItemType.Transform) DrawTransform();
+            if (ViewerItem.Info.Type == ItemType.武器) DrawWeapon();
+            if (ViewerItem.Info.Type == ItemType.盔甲) DrawArmour();
+            if (ViewerItem.Info.Type == ItemType.坐骑) DrawMount();
+            if (ViewerItem.Info.Type == ItemType.时装) DrawTransform();
         }
 
         private void GameShopViewer_BeforeDraw(object sender, EventArgs e)
@@ -458,12 +458,12 @@ namespace Client.MirControls
         {
             WeaponImage.Visible = false;
             WeaponImage2.Visible = false;
-            if (GameScene.User.Equipment[(int)EquipmentSlot.Armour] != null)
-                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.Armour].Info.Shape];
+            if (GameScene.User.Equipment[(int)EquipmentSlot.盔甲] != null)
+                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.盔甲].Info.Shape];
             else
                 PreviewImage.Library = Libraries.CArmours[0];
 
-            if (GameScene.User.Gender == MirGender.Male)
+            if (GameScene.User.Gender == MirGender.男性)
                 PreviewImage.Index = 448 + (8 * (Direction - 1));
             else
                 PreviewImage.Index = 1256 + (8 * (Direction - 1));
@@ -484,12 +484,12 @@ namespace Client.MirControls
         {
             MountImage.Visible = false;
 
-            if (GameScene.User.Equipment[(int)EquipmentSlot.Armour] != null)
-                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.Armour].Info.Shape];
+            if (GameScene.User.Equipment[(int)EquipmentSlot.盔甲] != null)
+                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.盔甲].Info.Shape];
             else
                 PreviewImage.Library = Libraries.CArmours[0];
 
-            if (GameScene.User.Gender == MirGender.Male)
+            if (GameScene.User.Gender == MirGender.男性)
                 PreviewImage.Index = 32 + (6 * (Direction - 1));
             else
                 PreviewImage.Index = 840 + (6 * (Direction - 1));
@@ -564,7 +564,7 @@ namespace Client.MirControls
             WeaponImage2.Visible = false;
             MountImage.Visible = false;
 
-            if (ViewerItem.Info.RequiredGender == RequiredGender.Male)
+            if (ViewerItem.Info.RequiredGender == RequiredGender.男性)
                 PreviewImage.Index = 32 + (6 * (Direction - 1));
             else
                 PreviewImage.Index = 840 + (6 * (Direction - 1));

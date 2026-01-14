@@ -103,7 +103,7 @@ namespace Client.MirScenes.Dialogs
 
         void FishingDialog_BeforeDraw(object sender, EventArgs e)
         {
-            UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.Weapon];
+            UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.武器];
 
             if (MapObject.User.HasFishingRod && item != null)
             {
@@ -116,7 +116,7 @@ namespace Client.MirScenes.Dialogs
             int FishingImage = 0;
             if (MapObject.User.HasFishingRod)
             {
-                UserItem rod = MapObject.User.Equipment[(int)EquipmentSlot.Weapon];
+                UserItem rod = MapObject.User.Equipment[(int)EquipmentSlot.武器];
 
                 if (GameScene.User.Weapon == 49)
                     FishingImage = 1333;
@@ -320,7 +320,7 @@ namespace Client.MirScenes.Dialogs
 
             if (MapObject.User.HasFishingRod)
             {
-                UserItem rod = MapObject.User.Equipment[(int)EquipmentSlot.Weapon];
+                UserItem rod = MapObject.User.Equipment[(int)EquipmentSlot.武器];
 
                 if (rod == null || rod.Slots.Length < 5 || rod.Slots[(int)FishingSlot.Reel] == null)
                 {

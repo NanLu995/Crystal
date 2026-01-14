@@ -135,7 +135,7 @@ namespace Server
             MineComboBox.SelectedIndex = mi.MineIndex;
             MusicTextBox.Text = mi.Music.ToString();
 
-            if (mi.WeatherParticles != WeatherSetting.None)
+            if (mi.WeatherParticles != WeatherSetting.无效果)
             {
                 for (int i = 0; i < lstParticles.Items.Count; i++)
                 {
@@ -1867,7 +1867,7 @@ namespace Server
         {
             if (ActiveControl != sender) return;
 
-            WeatherSetting newvalue = WeatherSetting.None;
+            WeatherSetting newvalue = WeatherSetting.无效果;
             foreach (WeatherSetting item in lstParticles.SelectedItems)
                 newvalue = newvalue | item;
 

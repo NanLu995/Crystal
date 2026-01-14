@@ -420,7 +420,7 @@ namespace Client.MirScenes
 
             if (GameScene.HoverItem != null)
             {
-                if (GameScene.SelectedCell != null && GameScene.SelectedCell.Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Gem && CMain.Ctrl)
+                if (GameScene.SelectedCell != null && GameScene.SelectedCell.Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.宝玉神珠 && CMain.Ctrl)
                 {
                     CMain.SetMouseCursor(MouseCursor.Upgrade);
                 }
@@ -2221,7 +2221,7 @@ namespace Client.MirScenes
         {
             User = new UserObject(p.ObjectID);
             User.Load(p);
-            MainDialog.PModeLabel.Visible = User.Class == MirClass.Wizard || User.Class == MirClass.Taoist;
+            MainDialog.PModeLabel.Visible = User.Class == MirClass.法师 || User.Class == MirClass.道士;
             HasHero = p.HasHero;
             HeroBehaviourPanel.UpdateBehaviour(p.HeroBehaviour);
             Gold = p.Gold;
@@ -2849,9 +2849,9 @@ namespace Client.MirScenes
                     return;
             }
 
-            if (p.Grid == MirGridType.Inventory && (p.Item.Info.Type == ItemType.Potion || p.Item.Info.Type == ItemType.Scroll || p.Item.Info.Type == ItemType.Amulet || (p.Item.Info.Type == ItemType.Script && p.Item.Info.Effect == 1)))
+            if (p.Grid == MirGridType.Inventory && (p.Item.Info.Type == ItemType.药水 || p.Item.Info.Type == ItemType.卷轴 || p.Item.Info.Type == ItemType.护身符 || (p.Item.Info.Type == ItemType.特殊消耗品 && p.Item.Info.Effect == 1)))
             {
-                if (p.Item.Info.Type == ItemType.Potion || p.Item.Info.Type == ItemType.Scroll || (p.Item.Info.Type == ItemType.Script && p.Item.Info.Effect == 1))
+                if (p.Item.Info.Type == ItemType.药水 || p.Item.Info.Type == ItemType.卷轴 || (p.Item.Info.Type == ItemType.特殊消耗品 && p.Item.Info.Effect == 1))
                 {
                     for (int i = 0; i < 4; i++)
                     {
@@ -2861,7 +2861,7 @@ namespace Client.MirScenes
                         return;
                     }
                 }
-                else if (p.Item.Info.Type == ItemType.Amulet)
+                else if (p.Item.Info.Type == ItemType.护身符)
                 {
                     for (int i = 4; i < GameScene.User.BeltIdx; i++)
                     {
@@ -3440,7 +3440,7 @@ namespace Client.MirScenes
             {
                 PlayerObject player = (PlayerObject)attacker;
                 weapon = player.Weapon;
-                if (player.Class == MirClass.Assassin && weapon > -1)
+                if (player.Class == MirClass.刺客 && weapon > -1)
                     weapon = 1;
             }
             action.Params.Add(weapon);
@@ -3473,7 +3473,7 @@ namespace Client.MirScenes
                 {
                     PlayerObject player = (PlayerObject)attacker;
                     weapon = player.Weapon;
-                    if (player.Class == MirClass.Assassin && weapon > -1)
+                    if (player.Class == MirClass.刺客 && weapon > -1)
                         weapon = 1;
                 }
                 action.Params.Add(weapon);
@@ -3574,7 +3574,7 @@ namespace Client.MirScenes
                 User.RefreshStats();
                 switch (item.Info.Type)
                 {
-                    case ItemType.Mount:
+                    case ItemType.坐骑:
                         ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FriendlyNoLongerLoyal), item.Info.FriendlyName), ChatType.System);
                         break;
                     default:
@@ -6061,11 +6061,11 @@ namespace Client.MirScenes
 
         private void HeroCreateRequest(S.HeroCreateRequest p)
         {
-            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.Warrior];
-            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.Wizard];
-            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.Taoist];
-            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.Assassin];
-            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.Archer];
+            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.战士];
+            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.法师];
+            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.道士];
+            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.刺客];
+            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.弓箭];
 
             NewHeroDialog.Show();
         }
@@ -6735,7 +6735,7 @@ namespace Client.MirScenes
                 }
             }
 
-            if (item.Info.Type == ItemType.Potion || item.Info.Type == ItemType.Scroll || (item.Info.Type == ItemType.Script && item.Info.Effect == 1))
+            if (item.Info.Type == ItemType.药水 || item.Info.Type == ItemType.卷轴 || (item.Info.Type == ItemType.特殊消耗品 && item.Info.Effect == 1))
             {
                 for (int i = 0; i < User.BeltIdx - 2; i++)
                 {
@@ -6744,7 +6744,7 @@ namespace Client.MirScenes
                     return;
                 }
             }
-            else if (item.Info.Type == ItemType.Amulet)
+            else if (item.Info.Type == ItemType.护身符)
             {
                 for (int i = 4; i < User.BeltIdx; i++)
                 {
@@ -6810,15 +6810,15 @@ namespace Client.MirScenes
         {
             switch (grade)
             {
-                case ItemGrade.Common:
+                case ItemGrade.普通:
                     return Color.Yellow;
-                case ItemGrade.Rare:
+                case ItemGrade.宝物:
                     return Color.DeepSkyBlue;
-                case ItemGrade.Legendary:
+                case ItemGrade.圣物:
                     return Color.DarkOrange;
-                case ItemGrade.Mythical:
+                case ItemGrade.神物:
                     return Color.Plum;
-                case ItemGrade.Heroic:
+                case ItemGrade.英雄:
                     return Color.Red;
                 default:
                     return Color.Yellow;
@@ -6860,21 +6860,21 @@ namespace Client.MirScenes
             string GradeString = "";
             switch (HoverItem.Info.Grade)
             {
-                case ItemGrade.None:
+                case ItemGrade.无等级:
                     break;
-                case ItemGrade.Common:
+                case ItemGrade.普通:
                     GradeString = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemGradeCommon);
                     break;
-                case ItemGrade.Rare:
+                case ItemGrade.宝物:
                     GradeString = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemGradeRare);
                     break;
-                case ItemGrade.Legendary:
+                case ItemGrade.圣物:
                     GradeString = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemGradeLegendary);
                     break;
-                case ItemGrade.Mythical:
+                case ItemGrade.神物:
                     GradeString = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemGradeMythical);
                     break;
-                case ItemGrade.Heroic:
+                case ItemGrade.英雄:
                     GradeString = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemGradeHeroic);
                     break;
             }
@@ -6885,7 +6885,7 @@ namespace Client.MirScenes
                 Location = new Point(4, 4),
                 OutLine = true,
                 Parent = ItemLabel,
-                Text = HoverItem.Info.Grade != ItemGrade.None ? string.Format("{0}{1}{2}", HoverItem.Info.FriendlyName, "\n", GradeString) : HoverItem.Info.FriendlyName,
+                Text = HoverItem.Info.Grade != ItemGrade.无等级 ? string.Format("{0}{1}{2}", HoverItem.Info.FriendlyName, "\n", GradeString) : HoverItem.Info.FriendlyName,
             };
 
             if (HoverItem.RefineAdded > 0)
@@ -6900,32 +6900,32 @@ namespace Client.MirScenes
             {
                 switch (HoverItem.Info.Type)
                 {
-                    case ItemType.Amulet:
+                    case ItemType.护身符:
                         if (HoverItem.CurrentDura > 0 || HoverItem.MaxDura > 0)
                             text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UsageCurrentMax, HoverItem.CurrentDura, HoverItem.MaxDura);
                         break;
-                    case ItemType.Ore:
+                    case ItemType.矿石:
                         if (HoverItem.CurrentDura > 0)
                             text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PurityValue, Math.Floor(HoverItem.CurrentDura / 1000M));
                         break;
-                    case ItemType.Meat:
+                    case ItemType.肉:
                         if (HoverItem.CurrentDura > 0)
                             text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.QualityValue, Math.Floor(HoverItem.CurrentDura / 1000M));
                         break;
-                    case ItemType.Mount:
+                    case ItemType.坐骑:
                         if (HoverItem.CurrentDura > 0 || HoverItem.MaxDura > 0)
                             text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LoyaltyValues, HoverItem.CurrentDura, HoverItem.MaxDura);
                         break;
-                    case ItemType.Food:
+                    case ItemType.坐骑食物:
                         if (HoverItem.CurrentDura > 0)
                             text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NutritionValue, HoverItem.CurrentDura);
                         break;
-                    case ItemType.Gem:
-                    case ItemType.Potion:
-                    case ItemType.Transform:
-                    case ItemType.SealedHero:
+                    case ItemType.宝玉神珠:
+                    case ItemType.药水:
+                    case ItemType.时装:
+                    case ItemType.英雄封印:
                         break;
-                    case ItemType.Pets:
+                    case ItemType.宠物:
                         if ((HoverItem.Info.Shape == 26 || HoverItem.Info.Shape == 28) && HoverItem.CurrentDura > 0)//WonderDrug, Knapsack
                         {
                             string strTime = Functions.PrintTimeSpanFromSeconds((HoverItem.CurrentDura * 3600), false);
@@ -6944,123 +6944,123 @@ namespace Client.MirScenes
             string baseText = string.Empty;
             switch (HoverItem.Info.Type)
             {
-                case ItemType.Nothing:
+                case ItemType.杂物:
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeWeapon);
                     break;
-                case ItemType.Armour:
+                case ItemType.盔甲:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeArmour);
                     break;
-                case ItemType.Helmet:
+                case ItemType.头盔:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeHelmet);
                     break;
-                case ItemType.Necklace:
+                case ItemType.项链:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeNecklace);
                     break;
-                case ItemType.Bracelet:
+                case ItemType.手镯:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBracelet);
                     break;
-                case ItemType.Ring:
+                case ItemType.戒指:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeRing);
                     break;
-                case ItemType.Amulet:
+                case ItemType.护身符:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeAmulet);
                     break;
-                case ItemType.Belt:
+                case ItemType.腰带:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBelt);
                     break;
-                case ItemType.Boots:
+                case ItemType.靴子:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBoots);
                     break;
-                case ItemType.Stone:
+                case ItemType.守护石:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeStone);
                     break;
-                case ItemType.Torch:
+                case ItemType.照明物:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeTorch);
                     break;
-                case ItemType.Potion:
+                case ItemType.药水:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypePotion);
                     break;
-                case ItemType.Ore:
+                case ItemType.矿石:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeOre);
                     break;
-                case ItemType.Meat:
+                case ItemType.肉:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMeat);
                     break;
-                case ItemType.CraftingMaterial:
+                case ItemType.制作材料:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeCraftingMaterial);
                     break;
-                case ItemType.Scroll:
+                case ItemType.卷轴:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeScroll);
                     break;
-                case ItemType.Gem:
+                case ItemType.宝玉神珠:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeGem);
                     break;
-                case ItemType.Mount:
+                case ItemType.坐骑:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMount);
                     break;
-                case ItemType.Book:
+                case ItemType.技能书:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBook);
                     break;
-                case ItemType.Script:
+                case ItemType.特殊消耗品:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeScript);
                     break;
-                case ItemType.Reins:
+                case ItemType.缰绳:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeReins);
                     break;
-                case ItemType.Bells:
+                case ItemType.铃铛:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBells);
                     break;
-                case ItemType.Saddle:
+                case ItemType.马鞍:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeSaddle);
                     break;
-                case ItemType.Ribbon:
+                case ItemType.蝴蝶结:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeRibbon);
                     break;
-                case ItemType.Mask:
+                case ItemType.面罩:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMask);
                     break;
-                case ItemType.Food:
+                case ItemType.坐骑食物:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeFood);
                     break;
-                case ItemType.Hook:
+                case ItemType.鱼钩:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeHook);
                     break;
-                case ItemType.Float:
+                case ItemType.鱼漂:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeFloat);
                     break;
-                case ItemType.Bait:
+                case ItemType.鱼饵:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeBait);
                     break;
-                case ItemType.Finder:
+                case ItemType.探鱼器:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeFinder);
                     break;
-                case ItemType.Reel:
+                case ItemType.摇轮:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeReel);
                     break;
-                case ItemType.Fish:
+                case ItemType.鱼:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeFish);
                     break;
-                case ItemType.Quest:
+                case ItemType.任务物品:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeQuest);
                     break;
-                case ItemType.Awakening:
+                case ItemType.觉醒物品:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeAwakening);
                     break;
-                case ItemType.Pets:
+                case ItemType.宠物:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypePets);
                     break;
-                case ItemType.Transform:
+                case ItemType.时装:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeTransform);
                     break;
-                case ItemType.Deco:
+                case ItemType.装饰:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeDeco);
                     break;
-                case ItemType.MonsterSpawn:
+                case ItemType.宠物蛋:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMonsterSpawn);
                     break;
-                case ItemType.SealedHero:
+                case ItemType.英雄封印:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeSealedHero);
                     break;
             }
@@ -7153,14 +7153,14 @@ namespace Client.MirScenes
 
             switch (HoverItem.Info.Type)
             {
-                case ItemType.Hook:
-                case ItemType.Float:
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Reel:
+                case ItemType.鱼钩:
+                case ItemType.鱼漂:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.摇轮:
                     fishingItem = true;
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     if (Globals.FishingRodShapes.Contains(HoverItem.Info.Shape))
                         fishingItem = true;
                     break;
@@ -7178,7 +7178,7 @@ namespace Client.MirScenes
             #region Dura gem
             minValue = realItem.Durability;
 
-            if (minValue > 0 && realItem.Type == ItemType.Gem)
+            if (minValue > 0 && realItem.Type == ItemType.宝玉神珠)
             {
                 switch (realItem.Shape)
                 {
@@ -7215,7 +7215,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DC, minValue, maxValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AddsDC, minValue + maxValue + addValue);
@@ -7244,7 +7244,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MC, minValue, maxValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AddsMC, minValue + maxValue + addValue);
@@ -7273,7 +7273,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SC, minValue, maxValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AddsSC, minValue + maxValue + addValue);
@@ -7304,15 +7304,15 @@ namespace Client.MirScenes
             {
                 count++;
 
-                if (realItem.Type == ItemType.Pets && realItem.Shape == 28)
+                if (realItem.Type == ItemType.宠物 && realItem.Shape == 28)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BagWeightPercent, minValue + addValue);
                 }
-                else if (realItem.Type == ItemType.Potion && realItem.Shape == 4)
+                else if (realItem.Type == ItemType.药水 && realItem.Shape == 4)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ExpPercent, minValue + addValue);
                 }
-                else if (realItem.Type == ItemType.Potion && realItem.Shape == 5)
+                else if (realItem.Type == ItemType.药水 && realItem.Shape == 5)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DropPercent, minValue + addValue);
                 }
@@ -7349,7 +7349,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Accuracy, minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AddsAccuracyValue, minValue + maxValue + addValue);
@@ -7407,7 +7407,7 @@ namespace Client.MirScenes
                 string plus = (addValue + minValue < 0) ? String.Empty : "+";
 
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                 {
                     string negative = "+";
                     if (addValue < 0) negative = String.Empty;
@@ -7445,7 +7445,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FreezingPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 }
@@ -7477,7 +7477,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.PoisonPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 }
@@ -7507,7 +7507,7 @@ namespace Client.MirScenes
             maxValue = 0;
             addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.CriticalRate] : 0;
 
-            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
+            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
                 count++;
                 MirLabel CRITICALRATELabel = new MirLabel
@@ -7539,7 +7539,7 @@ namespace Client.MirScenes
             maxValue = 0;
             addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.CriticalDamage] : 0;
 
-            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
+            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
                 count++;
                 MirLabel CRITICALDAMAGELabel = new MirLabel
@@ -7565,7 +7565,7 @@ namespace Client.MirScenes
             maxValue = 0;
             addValue = 0;
 
-            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
+            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
                 count++;
                 MirLabel ReflectLabel = new MirLabel
@@ -7590,7 +7590,7 @@ namespace Client.MirScenes
             maxValue = 0;
             addValue = 0;
 
-            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
+            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
                 count++;
                 MirLabel HPdrainLabel = new MirLabel
@@ -7769,14 +7769,14 @@ namespace Client.MirScenes
 
             switch (HoverItem.Info.Type)
             {
-                case ItemType.Hook:
-                case ItemType.Float:
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Reel:
+                case ItemType.鱼钩:
+                case ItemType.鱼漂:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.摇轮:
                     fishingItem = true;
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     if (HoverItem.Info.Shape == 49 || HoverItem.Info.Shape == 50)
                         fishingItem = true;
                     break;
@@ -7800,7 +7800,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AC), minValue, maxValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddsAC), minValue + maxValue + addValue);
@@ -7817,12 +7817,12 @@ namespace Client.MirScenes
 
                 if (fishingItem)
                 {
-                    if (HoverItem.Info.Type == ItemType.Float)
+                    if (HoverItem.Info.Type == ItemType.鱼漂)
                     {
                         ACLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.NibbleChance), minValue, maxValue + addValue) +
                                        (addValue > 0 ? $" (+{addValue})" : String.Empty);
                     }
-                    else if (HoverItem.Info.Type == ItemType.Finder)
+                    else if (HoverItem.Info.Type == ItemType.探鱼器)
                     {
                         ACLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FinderIncrease), minValue, maxValue + addValue) +
                                        (addValue > 0 ? $" (+{addValue})" : String.Empty);
@@ -7848,7 +7848,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MAC), minValue, maxValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddsMAC), minValue + maxValue + addValue);
@@ -7876,7 +7876,7 @@ namespace Client.MirScenes
 
             #region MAXHP
 
-            if (HoverItem.Info.Type != ItemType.MonsterSpawn)
+            if (HoverItem.Info.Type != ItemType.宠物蛋)
             {
                 minValue = realItem.Stats[Stat.HP];
                 maxValue = 0;
@@ -7892,7 +7892,7 @@ namespace Client.MirScenes
                         Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                         OutLine = true,
                         Parent = ItemLabel,
-                        //Text = string.Format(realItem.Type == ItemType.Potion ? "HP + {0} Recovery" : "MAXHP + {0}", minValue + addValue)
+                        //Text = string.Format(realItem.Type == ItemType.药水 ? "HP + {0} Recovery" : "MAXHP + {0}", minValue + addValue)
                         Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MaxHpPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : String.Empty)
                     };
 
@@ -7919,7 +7919,7 @@ namespace Client.MirScenes
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
-                    //Text = string.Format(realItem.Type == ItemType.Potion ? "MP + {0} Recovery" : "MAXMP + {0}", minValue + addValue)
+                    //Text = string.Format(realItem.Type == ItemType.药水 ? "MP + {0} Recovery" : "MAXMP + {0}", minValue + addValue)
                     Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MaxMpPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : String.Empty)
                 };
 
@@ -8115,7 +8115,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.Agility), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddsAgilityPlus), minValue + maxValue + addValue);
@@ -8171,7 +8171,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.PoisonResistPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : String.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddPoisonResistPlus), minValue + maxValue + addValue);
@@ -8200,7 +8200,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                if (HoverItem.Info.Type != ItemType.Gem)
+                if (HoverItem.Info.Type != ItemType.宝玉神珠)
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MagicResistPlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : String.Empty);
                 else
                     text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddMagicResistPlus), minValue + maxValue + addValue);
@@ -8464,7 +8464,7 @@ namespace Client.MirScenes
             maxValue = 0;
             addValue = 0;
 
-            if (HoverItem.Info.Type == ItemType.Potion && HoverItem.Info.Durability > 0)
+            if (HoverItem.Info.Type == ItemType.药水 && HoverItem.Info.Durability > 0)
             {
                 count++;
                 MirLabel TNRLabel = new MirLabel
@@ -8481,7 +8481,7 @@ namespace Client.MirScenes
                     Math.Max(ItemLabel.Size.Height, TNRLabel.DisplayRectangle.Bottom));
             }
 
-            if (HoverItem.Info.Type == ItemType.Transform && HoverItem.Info.Durability > 0)
+            if (HoverItem.Info.Type == ItemType.时装 && HoverItem.Info.Durability > 0)
             {
                 count++;
                 MirLabel TNRLabel = new MirLabel
@@ -8568,7 +8568,7 @@ namespace Client.MirScenes
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
-                    Text = string.Format(realItem.Type != ItemType.Armour ? "{0} + {1}~{2}" : "MAX {0} + {1}", HoverItem.Awake.Type.ToLocalizedString(), HoverItem.Awake.GetAwakeValue(), HoverItem.Awake.GetAwakeValue())
+                    Text = string.Format(realItem.Type != ItemType.盔甲 ? "{0} + {1}~{2}" : "MAX {0} + {1}", HoverItem.Awake.Type.ToLocalizedString(), HoverItem.Awake.GetAwakeValue(), HoverItem.Awake.GetAwakeValue())
                 };
 
                 ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, AWAKE_TOTAL_VALUELabel.DisplayRectangle.Right + 4),
@@ -8590,7 +8590,7 @@ namespace Client.MirScenes
                         Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                         OutLine = true,
                         Parent = ItemLabel,
-                        Text = string.Format(realItem.Type != ItemType.Armour ? "Level {0} : {1} + {2}~{3}" : "Level {0} : MAX {1} + {2}~{3}", i + 1, HoverItem.Awake.Type.ToLocalizedString(), HoverItem.Awake.GetAwakeLevelValue(i), HoverItem.Awake.GetAwakeLevelValue(i))
+                        Text = string.Format(realItem.Type != ItemType.盔甲 ? "Level {0} : {1} + {2}~{3}" : "Level {0} : MAX {1} + {2}~{3}", i + 1, HoverItem.Awake.Type.ToLocalizedString(), HoverItem.Awake.GetAwakeLevelValue(i), HoverItem.Awake.GetAwakeLevelValue(i))
                     };
 
                     ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, AWAKE_LEVEL_VALUELabel.DisplayRectangle.Right + 4),
@@ -8646,7 +8646,7 @@ namespace Client.MirScenes
                 MirLabel SOCKETLabel = new MirLabel
                 {
                     AutoSize = true,
-                    ForeColour = (count > realItem.Slots && !realItem.IsFishingRod && realItem.Type != ItemType.Mount) ? Color.Cyan : Color.White,
+                    ForeColour = (count > realItem.Slots && !realItem.IsFishingRod && realItem.Type != ItemType.坐骑) ? Color.Cyan : Color.White,
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
@@ -8805,31 +8805,31 @@ namespace Client.MirScenes
             #endregion
 
             #region CLASS
-            if (realItem.RequiredClass != RequiredClass.None)
+            if (realItem.RequiredClass != RequiredClass.全职业)
             {
                 count++;
                 Color colour = Color.White;
 
                 switch (MapObject.User.Class)
                 {
-                    case MirClass.Warrior:
-                        if (!realItem.RequiredClass.HasFlag(RequiredClass.Warrior))
+                    case MirClass.战士:
+                        if (!realItem.RequiredClass.HasFlag(RequiredClass.战士))
                             colour = Color.Red;
                         break;
-                    case MirClass.Wizard:
-                        if (!realItem.RequiredClass.HasFlag(RequiredClass.Wizard))
+                    case MirClass.法师:
+                        if (!realItem.RequiredClass.HasFlag(RequiredClass.法师))
                             colour = Color.Red;
                         break;
-                    case MirClass.Taoist:
-                        if (!realItem.RequiredClass.HasFlag(RequiredClass.Taoist))
+                    case MirClass.道士:
+                        if (!realItem.RequiredClass.HasFlag(RequiredClass.道士))
                             colour = Color.Red;
                         break;
-                    case MirClass.Assassin:
-                        if (!realItem.RequiredClass.HasFlag(RequiredClass.Assassin))
+                    case MirClass.刺客:
+                        if (!realItem.RequiredClass.HasFlag(RequiredClass.刺客))
                             colour = Color.Red;
                         break;
-                    case MirClass.Archer:
-                        if (!realItem.RequiredClass.HasFlag(RequiredClass.Archer))
+                    case MirClass.弓箭:
+                        if (!realItem.RequiredClass.HasFlag(RequiredClass.弓箭))
                             colour = Color.Red;
                         break;
                 }
@@ -9225,7 +9225,7 @@ namespace Client.MirScenes
 
             #region Gems
 
-            if (HoverItem.Info.Type == ItemType.Gem)
+            if (HoverItem.Info.Type == ItemType.宝玉神珠)
             {
                 #region UseOn text
                 count++;
@@ -9455,7 +9455,7 @@ namespace Client.MirScenes
 
             #region CANTAWAKEN
 
-            //if ((HoverItem.Info.CanAwakening != true) && (HoverItem.Info.Type != ItemType.Gem))
+            //if ((HoverItem.Info.CanAwakening != true) && (HoverItem.Info.Type != ItemType.宝玉神珠))
             //{
             //    count++;
             //    MirLabel CANTAWAKENINGLabel = new MirLabel
@@ -9615,7 +9615,7 @@ namespace Client.MirScenes
 
             #region GEM
 
-            if (realItem.Type == ItemType.Gem)
+            if (realItem.Type == ItemType.宝玉神珠)
             {
                 string text = "";
 
@@ -9662,7 +9662,7 @@ namespace Client.MirScenes
 
             #region SPLITUP
 
-            if (realItem.StackSize > 1 && realItem.Type != ItemType.Gem)
+            if (realItem.StackSize > 1 && realItem.Type != ItemType.宝玉神珠)
             {
                 count++;
                 MirLabel SPLITUPLabel = new MirLabel
@@ -9720,7 +9720,7 @@ namespace Client.MirScenes
 
             #region TOOLTIP
 
-            if (realItem.Type == ItemType.Scroll && realItem.Shape == 7)//Credit Scroll
+            if (realItem.Type == ItemType.卷轴 && realItem.Shape == 7)//Credit Scroll
             {
                 HoverItem.Info.ToolTip = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AddsCreditsToAccount), HoverItem.Info.Price);
             }
@@ -10373,7 +10373,7 @@ namespace Client.MirScenes
         public bool Lightning, Fire;
         public byte MapDarkLight;
         public long LightningTime, FireTime;
-        public WeatherSetting Weather = WeatherSetting.None;
+        public WeatherSetting Weather = WeatherSetting.无效果;
         public bool FloorValid, LightsValid;
 
         public long OutputDelay;
@@ -11493,7 +11493,7 @@ namespace Client.MirScenes
                 {
                     GameScene.LogTime = CMain.Time + Globals.LogDelay;
 
-                    if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
+                    if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
                     {
                         if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                         {
@@ -11590,7 +11590,7 @@ namespace Client.MirScenes
                                 MapObject target = null;
                                 if (MapObject.MouseObject is MonsterObject || MapObject.MouseObject is PlayerObject) target = MapObject.MouseObject;
 
-                                if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
+                                if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
                                 {
                                     if (target != null)
                                     {
@@ -11620,7 +11620,7 @@ namespace Client.MirScenes
                             return;
                         }
 
-                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.Archer && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
+                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.弓箭 && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
                         {
                             if (Functions.InRange(MapObject.MouseObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                             {
@@ -11655,7 +11655,7 @@ namespace Client.MirScenes
                         //mine
                         if (!ValidPoint(Functions.PointMove(User.CurrentLocation, direction, 1)))
                         {
-                            if ((MapObject.User.Equipment[(int)EquipmentSlot.Weapon] != null) && (MapObject.User.Equipment[(int)EquipmentSlot.Weapon].Info.CanMine))
+                            if ((MapObject.User.Equipment[(int)EquipmentSlot.武器] != null) && (MapObject.User.Equipment[(int)EquipmentSlot.武器].Info.CanMine))
                             {
                                 if (direction != User.Direction)
                                 {
@@ -11783,7 +11783,7 @@ namespace Client.MirScenes
             if (((!MapObject.TargetObject.Name.EndsWith(")") && !(MapObject.TargetObject is PlayerObject)) || !CMain.Shift) &&
                 (MapObject.TargetObject.Name.EndsWith(")") || !(MapObject.TargetObject is MonsterObject))) return;
             if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, 1)) return;
-            if (User.Class == MirClass.Archer && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
+            if (User.Class == MirClass.弓箭 && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
             direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation);
 
             if (!CanWalk(direction, out direction)) return;
@@ -12183,7 +12183,7 @@ namespace Client.MirScenes
         {
             if (GameScene.User.RidingMount)
             {
-                UserItem item = GameScene.User.Equipment[(int)EquipmentSlot.Mount];
+                UserItem item = GameScene.User.Equipment[(int)EquipmentSlot.坐骑];
                 if (item == null || item.Slots.Length < 4 || item.Slots[(int)MountSlot.Bells] == null) return false;
             }
 
@@ -12310,7 +12310,7 @@ namespace Client.MirScenes
                 //{
                 switch (itemWeather)
                 {
-                    case WeatherSetting.Leaves:
+                    case WeatherSetting.黄色花瓣:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
@@ -12329,7 +12329,7 @@ namespace Client.MirScenes
                         LeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(LeavesEngine2);
                         break;
-                    case WeatherSetting.FireyLeaves:
+                    case WeatherSetting.红色花瓣:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
@@ -12348,7 +12348,7 @@ namespace Client.MirScenes
                         FLeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(FLeavesEngine2);
                         break;
-                    case WeatherSetting.Rain:
+                    case WeatherSetting.雨天:
                         textures = new List<ParticleImageInfo>();
                         //Rain
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 164, 150, 50));
@@ -12369,7 +12369,7 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(RainEngine2);
                         break;
 
-                    case WeatherSetting.Snow:
+                    case WeatherSetting.飘雪:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 43, 20, 50));
 
@@ -12404,7 +12404,7 @@ namespace Client.MirScenes
                     //     snowFlurry.GenerateParticles = false;
                     //     GameScene.Scene.ParticleEngines.Add(snowFlurry);
                     //     break;
-                    case WeatherSetting.Fog:
+                    case WeatherSetting.雾天:
                         List<ParticleImageInfo> ftextures = new List<ParticleImageInfo>();
                         ftextures.Add(new ParticleImageInfo(Libraries.Weather, 0));
                         ParticleEngine fengine = new ParticleEngine(ftextures, new Vector2(0, 0), ParticleType.Fog);
@@ -12423,21 +12423,21 @@ namespace Client.MirScenes
                         fengine.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(fengine);
                         break;
-                    case WeatherSetting.RedEmber:
+                    case WeatherSetting.红色余烬:
                         var rtextures = new List<ParticleImageInfo>();
                         rtextures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
 
                         var rengine = new ParticleEngine(rtextures, new Vector2(0, 0), ParticleType.RedFogEmber);
                         GameScene.Scene.ParticleEngines.Add(rengine);
                         break;
-                    case WeatherSetting.WhiteEmber:
+                    case WeatherSetting.白色余烬:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
                         var whiteEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.WhiteEmber);
                         GameScene.Scene.ParticleEngines.Add(whiteEmberEngine);
                         break;
-                    case WeatherSetting.PurpleLeaves:
+                    case WeatherSetting.粉色花瓣:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
@@ -12458,7 +12458,7 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(pEmberEngine);
                         break;
 
-                    case WeatherSetting.YellowEmber:
+                    case WeatherSetting.黄色余烬:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 100));
@@ -12466,7 +12466,7 @@ namespace Client.MirScenes
                         var yellowEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.YellowEmber);
                         GameScene.Scene.ParticleEngines.Add(yellowEmberEngine);
                         break;
-                    case WeatherSetting.FireParticle:
+                    case WeatherSetting.火焰粒子:
 
                         textures = new List<ParticleImageInfo>();
                         //textures.Add(new ParticleImageInfo(Libraries.StateEffect, 640)); << TODO - Win

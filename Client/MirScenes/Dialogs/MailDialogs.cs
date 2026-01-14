@@ -901,7 +901,7 @@ namespace Client.MirScenes.Dialogs
                 for (int i = 0; i < GameScene.User.Inventory.Length; i++)
                 {
                     UserItem item = GameScene.User.Inventory[i];
-                    if (item == null || item.Info.Type != ItemType.Nothing || item.Info.Shape != 1) continue;
+                    if (item == null || item.Info.Type != ItemType.杂物 || item.Info.Shape != 1) continue;
 
                     Stamped = true;
                     break;

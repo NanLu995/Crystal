@@ -342,7 +342,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (Dead && !(item.Info.Type == ItemType.Scroll && item.Info.Shape == 6))
+            if (Dead && !(item.Info.Type == ItemType.卷轴 && item.Info.Shape == 6))
             {
                 Owner.Enqueue(p);
                 return;
@@ -350,7 +350,7 @@ namespace Server.MirObjects
 
             switch (item.Info.Type)
             {
-                case ItemType.Potion:
+                case ItemType.药水:
                     switch (item.Info.Shape)
                     {
                         case 0: //NormalPotion
@@ -417,7 +417,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Scroll:
+                case ItemType.卷轴:
                     UserItem temp;
                     switch (item.Info.Shape)
                     {
@@ -429,7 +429,7 @@ namespace Server.MirObjects
                             }
                             break;
                         case 4: //RepairOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Owner.Enqueue(p);
@@ -449,7 +449,7 @@ namespace Server.MirObjects
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
                         case 5: //WarGodOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Owner.Enqueue(p);
@@ -493,7 +493,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Book:
+                case ItemType.技能书:
                     UserMagic magic = new UserMagic((Spell)item.Info.Shape);
 
                     if (magic.Info == null)
@@ -506,8 +506,8 @@ namespace Server.MirObjects
                     SendMagicInfo(magic);
                     RefreshStats();
                     break;
-                case ItemType.Food:
-                    temp = Info.Equipment[(int)EquipmentSlot.Mount];
+                case ItemType.坐骑食物:
+                    temp = Info.Equipment[(int)EquipmentSlot.坐骑];
                     if (temp == null || temp.MaxDura == temp.CurrentDura)
                     {
                         Owner.Enqueue(p);
@@ -531,12 +531,12 @@ namespace Server.MirObjects
 
                     RefreshStats();
                     break;                
-                case ItemType.Transform: //Transforms
+                case ItemType.时装: //Transforms
                     {
                         AddBuff(BuffType.Transform, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
                     }
                     break;
-                case ItemType.Deco:
+                case ItemType.装饰:
 
                     DecoObject decoOb = new DecoObject
                     {
@@ -551,7 +551,7 @@ namespace Server.MirObjects
                     Owner.Enqueue(decoOb.GetInfo());
 
                     break;
-                case ItemType.MonsterSpawn:
+                case ItemType.宠物蛋:
 
                     var monsterID = item.Info.Stats[Stat.HP];
                     var spawnAsPet = item.Info.Shape == 1;
@@ -596,7 +596,7 @@ namespace Server.MirObjects
                     if (!monster.Spawn(CurrentMap, Front))
                         monster.Spawn(CurrentMap, CurrentLocation);
                     break;
-                case ItemType.SiegeAmmo:
+                case ItemType.攻城弹药:
                     //TODO;
                     break;
                 default:
@@ -618,7 +618,7 @@ namespace Server.MirObjects
             {
                 LastRevivalTime = Envir.Time + 300000;
 
-                for (var i = (int)EquipmentSlot.RingL; i <= (int)EquipmentSlot.RingR; i++)
+                for (var i = (int)EquipmentSlot.左戒指; i <= (int)EquipmentSlot.右戒指; i++)
                 {
                     var item = Info.Equipment[i];
 
@@ -874,7 +874,7 @@ namespace Server.MirObjects
         protected virtual void ProcessSearch()
         {
             if (Envir.Time < SearchTime) return;
-            if (Owner.Info.HeroBehaviour == HeroBehaviour.Follow || !Mount.CanAttack) return;
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || !Mount.CanAttack) return;
 
             SearchTime = Envir.Time + SearchDelay;
 
@@ -1087,7 +1087,7 @@ namespace Server.MirObjects
                                     if (!ob.IsAttackTarget(Owner)) continue;
                                     if (ob.Hidden && (!CoolEye || Level < ob.Level)) continue;
                                     if (ob.Master != null && Target != ob) continue;
-                                    if (Owner.Info.HeroBehaviour == HeroBehaviour.CounterAttack && ob.Target != this && ob.Target != Owner) continue;
+                                    if (Owner.Info.HeroBehaviour == HeroBehaviour.反击 && ob.Target != this && ob.Target != Owner) continue;
 
                                     Target = ob;
                                     return;

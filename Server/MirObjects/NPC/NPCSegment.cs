@@ -1496,56 +1496,56 @@ namespace Server.MirObjects
                     newValue = player.Account.Credit.ToString(CultureInfo.InvariantCulture);
                     break;
                 case "ARMOUR":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Armour] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Armour].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoArmour);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.盔甲] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.盔甲].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoArmour);
                     break;
                 case "WEAPON":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Weapon] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Weapon].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoWeapon);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.武器] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.武器].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoWeapon);
                     break;
                 case "RING_L":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.RingL] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.RingL].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoRing);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.左戒指] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.左戒指].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoRing);
                     break;
                 case "RING_R":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.RingR] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.RingR].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoRing);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.右戒指] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.右戒指].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoRing);
                     break;
                 case "BRACELET_L":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.BraceletL] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.BraceletL].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBracelet);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.左手镯] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.左手镯].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBracelet);
                     break;
                 case "BRACELET_R":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.BraceletR] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.BraceletR].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBracelet);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.右手镯] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.右手镯].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBracelet);
                     break;
                 case "NECKLACE":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Necklace] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Necklace].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoNecklace);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.项链] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.项链].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoNecklace);
                     break;
                 case "BELT":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Belt] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Belt].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBelt);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.腰带] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.腰带].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBelt);
                     break;
                 case "BOOTS":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Boots] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Boots].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBoots);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.靴子] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.靴子].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoBoots);
                     break;
                 case "HELMET":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Helmet] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Helmet].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoHelmet);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.头盔] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.头盔].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoHelmet);
                     break;
                 case "AMULET":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Amulet] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Amulet].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoAmulet);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.护身符] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.护身符].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoAmulet);
                     break;
                 case "STONE":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Stone] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Stone].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoStone);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.守护石] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.守护石].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoStone);
                     break;
                 case "TORCH":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Torch] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Torch].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoTorch);
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.照明物] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.照明物].FriendlyName : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NoTorch);
                     break;
 
                 case "DATE":
@@ -1584,13 +1584,13 @@ namespace Server.MirObjects
                     }
                     else
                     {
-                        newValue = $"{player.Info.Equipment[(int)EquipmentSlot.Mount].CurrentDura} ({player.Info.Equipment[(int)EquipmentSlot.Mount].MaxDura})";
+                        newValue = $"{player.Info.Equipment[(int)EquipmentSlot.坐骑].CurrentDura} ({player.Info.Equipment[(int)EquipmentSlot.坐骑].MaxDura})";
                     }
                     break;
                 case "MOUNT":
                     if (player.Mount.HasMount)
                     {
-                        newValue = player.Info.Equipment[(int)EquipmentSlot.Mount].FriendlyName;
+                        newValue = player.Info.Equipment[(int)EquipmentSlot.坐骑].FriendlyName;
                     }
                     else
                     {
@@ -3574,11 +3574,11 @@ namespace Server.MirObjects
                         {
                             switch (player.Info.Gender)
                             {
-                                case MirGender.Male:
-                                    player.Info.Gender = MirGender.Female;
+                                case MirGender.男性:
+                                    player.Info.Gender = MirGender.女性;
                                     break;
-                                case MirGender.Female:
-                                    player.Info.Gender = MirGender.Male;
+                                case MirGender.女性:
+                                    player.Info.Gender = MirGender.男性;
                                     break;
                             }
                         }
@@ -3608,20 +3608,20 @@ namespace Server.MirObjects
 
                             switch (mirClass)
                             {
-                                case MirClass.Warrior:
-                                    player.Info.Class = MirClass.Warrior;
+                                case MirClass.战士:
+                                    player.Info.Class = MirClass.战士;
                                     break;
-                                case MirClass.Taoist:
-                                    player.Info.Class = MirClass.Taoist;
+                                case MirClass.道士:
+                                    player.Info.Class = MirClass.道士;
                                     break;
-                                case MirClass.Wizard:
-                                    player.Info.Class = MirClass.Wizard;
+                                case MirClass.法师:
+                                    player.Info.Class = MirClass.法师;
                                     break;
-                                case MirClass.Assassin:
-                                    player.Info.Class = MirClass.Assassin;
+                                case MirClass.刺客:
+                                    player.Info.Class = MirClass.刺客;
                                     break;
-                                case MirClass.Archer:
-                                    player.Info.Class = MirClass.Archer;
+                                case MirClass.弓箭:
+                                    player.Info.Class = MirClass.弓箭;
                                     break;
                             }
                         }
@@ -4255,7 +4255,7 @@ namespace Server.MirObjects
 
                             if (!conquest.WarIsOn)
                             {
-                                conquest.StartType = ConquestType.Forced;
+                                conquest.StartType = ConquestType.强制启动;
                                 conquest.StartWar(conquest.GameType);
 
                                 MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.WarStarted), conquest.Info.Name));

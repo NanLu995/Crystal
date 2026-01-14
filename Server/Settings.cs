@@ -284,8 +284,8 @@ namespace Server
         public static uint GoodsBuyBackMaxStored = 20;
         public static bool GoodsHideAddedStats = true;
 
-        public static BaseStats[] ClassBaseStats = new BaseStats[5] { new BaseStats(MirClass.Warrior), new BaseStats(MirClass.Wizard), new BaseStats(MirClass.Taoist), new BaseStats(MirClass.Assassin), new BaseStats(MirClass.Archer) };
-        public static BaseStats[] HeroBaseStats = new BaseStats[5] { new BaseStats(MirClass.Warrior), new BaseStats(MirClass.Wizard), new BaseStats(MirClass.Taoist), new BaseStats(MirClass.Assassin), new BaseStats(MirClass.Archer) };
+        public static BaseStats[] ClassBaseStats = new BaseStats[5] { new BaseStats(MirClass.战士), new BaseStats(MirClass.法师), new BaseStats(MirClass.道士), new BaseStats(MirClass.刺客), new BaseStats(MirClass.弓箭) };
+        public static BaseStats[] HeroBaseStats = new BaseStats[5] { new BaseStats(MirClass.战士), new BaseStats(MirClass.法师), new BaseStats(MirClass.道士), new BaseStats(MirClass.刺客), new BaseStats(MirClass.弓箭) };
 
         public static List<RandomItemStat> RandomItemStatsList = new List<RandomItemStat>();
         public static List<MineSet> MineSetList = new List<MineSet>();
@@ -1049,13 +1049,13 @@ namespace Server
             if (!File.Exists(Path.Combine(ConfigPath, "RandomItemStats.ini")))
             {
                 RandomItemStatsList.Add(new RandomItemStat());
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Weapon));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Armour));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Helmet));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Necklace));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Bracelet));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Ring));
-                RandomItemStatsList.Add(new RandomItemStat(ItemType.Belt));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.武器));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.盔甲));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.头盔));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.项链));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.手镯));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.戒指));
+                RandomItemStatsList.Add(new RandomItemStat(ItemType.腰带));
                 SaveRandomItemStats();
                 return;
             }
@@ -1438,7 +1438,7 @@ namespace Server
                 Awake.AwakeChanceMax[i] = reader.ReadByte("Value", "ChanceMax_" + ((ItemGrade)(i + 1)).ToString(), Awake.AwakeChanceMax[i]);
             }
 
-            for (int i = 0; i < (int)AwakeType.HPMP; i++)
+            for (int i = 0; i < (int)AwakeType.生命值魔法值; i++)
             {
                 List<byte>[] value = new List<byte>[2];
 
@@ -1485,7 +1485,7 @@ namespace Server
 
             if (Awake.AwakeMaterials.Count == 0)
             {
-                for (int i = 0; i < (int)AwakeType.HPMP; i++)
+                for (int i = 0; i < (int)AwakeType.生命值魔法值; i++)
                 {
                     for (int j = 0; j < 5; j++)
                     {
@@ -1496,7 +1496,7 @@ namespace Server
             }
             else
             {
-                for (int i = 0; i < (int)AwakeType.HPMP; i++)
+                for (int i = 0; i < (int)AwakeType.生命值魔法值; i++)
                 {
                     List<byte>[] value = Awake.AwakeMaterials[i];
 

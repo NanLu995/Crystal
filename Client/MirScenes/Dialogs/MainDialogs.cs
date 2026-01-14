@@ -29,7 +29,7 @@ namespace Client.MirScenes.Dialogs
 
         public bool HPOnly
         {
-            get { return User != null && User.Class == MirClass.Warrior && User.Level < 26; }
+            get { return User != null && User.Class == MirClass.战士 && User.Level < 26; }
         }
 
         public MainDialog()
@@ -2178,7 +2178,7 @@ namespace Client.MirScenes.Dialogs
                     {
                         int wingOffset = RealItem.Effect == 1 ? 2 : 4;
 
-                        int genderOffset = MapObject.User.Gender == MirGender.Male ? 0 : 1;
+                        int genderOffset = MapObject.User.Gender == MirGender.男性 ? 0 : 1;
 
                         Libraries.Prguse2.DrawBlend(1200 + wingOffset + genderOffset, new Point(DisplayLocation.X, DisplayLocation.Y - 20), Color.White, true, 1F);
                     }
@@ -2195,10 +2195,10 @@ namespace Client.MirScenes.Dialogs
                     Libraries.StateItems.Draw(HelmetCell.Item.Info.Image, new Point(DisplayLocation.X, DisplayLocation.Y - 20), Color.White, true, 1F);
                 else
                 {
-                    int hair = 441 + Hair + (Class == MirClass.Assassin ? 20 : 0) + (Gender == MirGender.Male ? 0 : 40);
+                    int hair = 441 + Hair + (Class == MirClass.刺客 ? 20 : 0) + (Gender == MirGender.男性 ? 0 : 40);
 
-                    int offSetX = Class == MirClass.Assassin ? (Gender == MirGender.Male ? 6 : 4) : 0;
-                    int offSetY = Class == MirClass.Assassin ? (Gender == MirGender.Male ? 25 : 18) : 0;
+                    int offSetX = Class == MirClass.刺客 ? (Gender == MirGender.男性 ? 6 : 4) : 0;
+                    int offSetY = Class == MirClass.刺客 ? (Gender == MirGender.男性 ? 25 : 18) : 0;
 
                     Libraries.Prguse.Draw(hair, new Point(DisplayLocation.X + offSetX, DisplayLocation.Y + offSetY - 20), Color.White, true, 1F);
                 }
@@ -2360,7 +2360,7 @@ namespace Client.MirScenes.Dialogs
 
             WeaponCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Weapon,
+                ItemSlot = (int)EquipmentSlot.武器,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(123, 7),
@@ -2368,7 +2368,7 @@ namespace Client.MirScenes.Dialogs
 
             ArmorCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Armour,
+                ItemSlot = (int)EquipmentSlot.盔甲,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(163, 7),
@@ -2376,7 +2376,7 @@ namespace Client.MirScenes.Dialogs
 
             HelmetCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Helmet,
+                ItemSlot = (int)EquipmentSlot.头盔,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 7),
@@ -2385,7 +2385,7 @@ namespace Client.MirScenes.Dialogs
 
             TorchCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Torch,
+                ItemSlot = (int)EquipmentSlot.照明物,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 134),
@@ -2393,7 +2393,7 @@ namespace Client.MirScenes.Dialogs
 
             NecklaceCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Necklace,
+                ItemSlot = (int)EquipmentSlot.项链,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 98),
@@ -2401,28 +2401,28 @@ namespace Client.MirScenes.Dialogs
 
             BraceletLCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.BraceletL,
+                ItemSlot = (int)EquipmentSlot.左手镯,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(8, 170),
             };
             BraceletRCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.BraceletR,
+                ItemSlot = (int)EquipmentSlot.右手镯,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 170),
             };
             RingLCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.RingL,
+                ItemSlot = (int)EquipmentSlot.左戒指,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(8, 206),
             };
             RingRCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.RingR,
+                ItemSlot = (int)EquipmentSlot.右戒指,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 206),
@@ -2430,7 +2430,7 @@ namespace Client.MirScenes.Dialogs
 
             AmuletCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Amulet,
+                ItemSlot = (int)EquipmentSlot.护身符,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(8, 242),
@@ -2438,14 +2438,14 @@ namespace Client.MirScenes.Dialogs
 
             BootsCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Boots,
+                ItemSlot = (int)EquipmentSlot.靴子,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(48, 242),
             };
             BeltCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Belt,
+                ItemSlot = (int)EquipmentSlot.腰带,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(88, 242),
@@ -2453,7 +2453,7 @@ namespace Client.MirScenes.Dialogs
 
             StoneCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Stone,
+                ItemSlot = (int)EquipmentSlot.守护石,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(128, 242),
@@ -2461,7 +2461,7 @@ namespace Client.MirScenes.Dialogs
 
             MountCell = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Mount,
+                ItemSlot = (int)EquipmentSlot.坐骑,
                 GridType = MirGridType.Inspect,
                 Parent = CharacterPage,
                 Location = new Point(203, 62),
@@ -2470,25 +2470,25 @@ namespace Client.MirScenes.Dialogs
 
         public void RefreshInferface(bool IsHero)
         {
-            int offSet = Gender == MirGender.Male ? 0 : 1;
+            int offSet = Gender == MirGender.男性 ? 0 : 1;
 
             CharacterPage.Index = 340 + offSet;
 
             switch (Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     ClassImage.Index = 100;// + offSet * 5;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     ClassImage.Index = 101;// + offSet * 5;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     ClassImage.Index = 102;// + offSet * 5;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     ClassImage.Index = 103;// + offSet * 5;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     ClassImage.Index = 104;// + offSet * 5;
                     break;
             }
@@ -4019,7 +4019,7 @@ namespace Client.MirScenes.Dialogs
 
             switch (item.Info.Type)
             {
-                case ItemType.Amulet: //Based on stacks of 5000
+                case ItemType.护身符: //Based on stacks of 5000
                     if (item.Count > AmuletWarning)
                         Amulet.Index = 2134;
                     if (item.Count <= AmuletWarning)
@@ -4029,7 +4029,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.Count == 0)
                         Amulet.Index = -1;
                     break;
-                case ItemType.Armour:
+                case ItemType.盔甲:
                     if (item.CurrentDura > Warning)
                         Armour.Index = 2149;
                     if (item.CurrentDura <= Warning)
@@ -4039,7 +4039,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Armour.Index = -1;
                     break;
-                case ItemType.Belt:
+                case ItemType.腰带:
                     if (item.CurrentDura > Warning)
                         Belt.Index = 2158;
                     if (item.CurrentDura <= Warning)
@@ -4049,7 +4049,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Belt.Index = -1;
                     break;
-                case ItemType.Boots:
+                case ItemType.靴子:
                     if (item.CurrentDura > Warning)
                         Boots.Index = 2152;
                     if (item.CurrentDura <= Warning)
@@ -4059,8 +4059,8 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Boots.Index = -1;
                     break;
-                case ItemType.Bracelet:
-                    if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.BraceletR].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.BraceletR].Item.UniqueID)
+                case ItemType.手镯:
+                    if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.右手镯].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.右手镯].Item.UniqueID)
                     {
                         if (item.CurrentDura > Warning)
                             RightBracelet.Index = 2143;
@@ -4071,7 +4071,7 @@ namespace Client.MirScenes.Dialogs
                         if (item.CurrentDura == 0)
                             RightBracelet.Index = -1;
                     }
-                    else if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.BraceletL].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.BraceletL].Item.UniqueID)
+                    else if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.左手镯].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.左手镯].Item.UniqueID)
                     {
                         if (item.CurrentDura > Warning)
                             LeftBracelet.Index = 2143;
@@ -4083,7 +4083,7 @@ namespace Client.MirScenes.Dialogs
                             LeftBracelet.Index = -1;
                     }
                     break;
-                case ItemType.Helmet:
+                case ItemType.头盔:
                     if (item.CurrentDura > Warning)
                         Helmet.Index = 2155;
                     if (item.CurrentDura <= Warning)
@@ -4093,7 +4093,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Helmet.Index = -1;
                     break;
-                case ItemType.Necklace:
+                case ItemType.项链:
                     if (item.CurrentDura > Warning)
                         Necklace.Index = 2122;
                     if (item.CurrentDura <= Warning)
@@ -4103,8 +4103,8 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Necklace.Index = -1;
                     break;
-                case ItemType.Ring:
-                    if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.RingR].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.RingR].Item.UniqueID)
+                case ItemType.戒指:
+                    if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.右戒指].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.右戒指].Item.UniqueID)
                     {
                         if (item.CurrentDura > Warning)
                             RightRing.Index = 2131;
@@ -4115,7 +4115,7 @@ namespace Client.MirScenes.Dialogs
                         if (item.CurrentDura == 0)
                             RightRing.Index = -1;
                     }
-                    else if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.RingL].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.RingL].Item.UniqueID)
+                    else if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.左戒指].Item != null && item.UniqueID == GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.左戒指].Item.UniqueID)
                     {
                         if (item.CurrentDura > Warning)
                             LeftRing.Index = 2131;
@@ -4127,11 +4127,11 @@ namespace Client.MirScenes.Dialogs
                             LeftRing.Index = -1;
                     }
                     break;
-                case ItemType.Stone:
+                case ItemType.守护石:
                     if (item.CurrentDura == 0)
                         Stone.Index = 2137;
                     break;
-                case ItemType.Mount:
+                case ItemType.坐骑:
                     if (item.CurrentDura > Warning)
                         Mount.Index = 2140;
                     if (item.CurrentDura <= Warning)
@@ -4141,7 +4141,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Mount.Index = -1;
                     break;
-                case ItemType.Torch:
+                case ItemType.照明物:
                     if (item.CurrentDura > Warning)
                         Torch.Index = 2146;
                     if (item.CurrentDura <= Warning)
@@ -4151,7 +4151,7 @@ namespace Client.MirScenes.Dialogs
                     if (item.CurrentDura == 0)
                         Torch.Index = -1;
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     if (item.CurrentDura > Warning)
                         Weapon.Index = 2125;
                     if (item.CurrentDura <= Warning)

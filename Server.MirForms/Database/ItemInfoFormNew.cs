@@ -643,7 +643,7 @@ namespace Server.Database
 
             var filterType = ((KeyValuePair<string, string>)drpFilterType.SelectedItem).Value;
 
-            if (filterType == global::ItemType.Gem.ToString())
+            if (filterType == global::ItemType.宝玉神珠.ToString())
             {
                 SwapGemContext(true);
             }
@@ -925,8 +925,8 @@ namespace Server.Database
             row.Cells["ItemType"].Value = (ItemType)0;
             row.Cells["ItemGrade"].Value = (ItemGrade)0;
             row.Cells["ItemRequiredType"].Value = (RequiredType)0;
-            row.Cells["ItemRequiredGender"].Value = RequiredGender.None;
-            row.Cells["ItemRequiredClass"].Value = RequiredClass.None;
+            row.Cells["ItemRequiredGender"].Value = RequiredGender.性别不限;
+            row.Cells["ItemRequiredClass"].Value = RequiredClass.全职业;
             row.Cells["ItemSet"].Value = (ItemSet)0;
             row.Cells["ItemRandomStatsId"].Value = (byte)0;
             row.Cells["ItemRequiredAmount"].Value = (byte)0;
@@ -1081,7 +1081,7 @@ namespace Server.Database
                 itemInfoGridView.CurrentRow.Index != -1)
             {
                 var itemType = itemInfoGridView.CurrentRow.Cells["ItemType"];
-                bool isGemSelected = (global::ItemType)itemType.Value == global::ItemType.Gem;
+                bool isGemSelected = (global::ItemType)itemType.Value == global::ItemType.宝玉神珠;
                 SwapGemContext(isGemSelected);
             }
         }

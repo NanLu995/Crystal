@@ -80,9 +80,9 @@ namespace Client.MirControls
                     case MirGridType.GuestTrade:
                         return GuestTradeDialog.GuestItems;
                     case MirGridType.Mount:
-                        return MapObject.User.Equipment[(int)EquipmentSlot.Mount].Slots;
+                        return MapObject.User.Equipment[(int)EquipmentSlot.坐骑].Slots;
                     case MirGridType.Fishing:
-                        return MapObject.User.Equipment[(int)EquipmentSlot.Weapon].Slots;
+                        return MapObject.User.Equipment[(int)EquipmentSlot.武器].Slots;
                     case MirGridType.QuestInventory:
                         return MapObject.User.QuestInventory;
                     case MirGridType.AwakenItem:
@@ -374,7 +374,7 @@ namespace Client.MirControls
             if (Locked || GridType == MirGridType.Inspect || GridType == MirGridType.TrustMerchant || GridType == MirGridType.GuildStorage || GridType == MirGridType.Craft) return;
 
             if (!HeroGridType && MapObject.User.Fishing) return;
-            if (MapObject.User.RidingMount && Item.Info.Type != ItemType.Scroll && Item.Info.Type != ItemType.Potion && Item.Info.Type != ItemType.Torch) return;
+            if (MapObject.User.RidingMount && Item.Info.Type != ItemType.卷轴 && Item.Info.Type != ItemType.药水 && Item.Info.Type != ItemType.照明物) return;
 
             if (GridType == MirGridType.BuyBack)
             {
@@ -415,133 +415,133 @@ namespace Client.MirControls
 
             switch (Item.Info.Type)
             {
-                case ItemType.Weapon:
-                    if (dialog.Grid[(int)EquipmentSlot.Weapon].CanWearItem(actor, Item))
+                case ItemType.武器:
+                    if (dialog.Grid[(int)EquipmentSlot.武器].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Weapon });
-                        dialog.Grid[(int)EquipmentSlot.Weapon].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.武器 });
+                        dialog.Grid[(int)EquipmentSlot.武器].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Armour:
-                    if (dialog.Grid[(int)EquipmentSlot.Armour].CanWearItem(actor, Item))
+                case ItemType.盔甲:
+                    if (dialog.Grid[(int)EquipmentSlot.盔甲].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Armour });
-                        dialog.Grid[(int)EquipmentSlot.Armour].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.盔甲 });
+                        dialog.Grid[(int)EquipmentSlot.盔甲].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Helmet:
-                    if (dialog.Grid[(int)EquipmentSlot.Helmet].CanWearItem(actor, Item))
+                case ItemType.头盔:
+                    if (dialog.Grid[(int)EquipmentSlot.头盔].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Helmet });
-                        dialog.Grid[(int)EquipmentSlot.Helmet].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.头盔 });
+                        dialog.Grid[(int)EquipmentSlot.头盔].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Necklace:
-                    if (dialog.Grid[(int)EquipmentSlot.Necklace].CanWearItem(actor, Item))
+                case ItemType.项链:
+                    if (dialog.Grid[(int)EquipmentSlot.项链].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Necklace });
-                        dialog.Grid[(int)EquipmentSlot.Necklace].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.项链 });
+                        dialog.Grid[(int)EquipmentSlot.项链].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Bracelet:
-                    if ((dialog.Grid[(int)EquipmentSlot.BraceletR].Item == null || dialog.Grid[(int)EquipmentSlot.BraceletR].Item.Info.Type == ItemType.Amulet) && dialog.Grid[(int)EquipmentSlot.BraceletR].CanWearItem(actor, Item))
+                case ItemType.手镯:
+                    if ((dialog.Grid[(int)EquipmentSlot.右手镯].Item == null || dialog.Grid[(int)EquipmentSlot.右手镯].Item.Info.Type == ItemType.护身符) && dialog.Grid[(int)EquipmentSlot.右手镯].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.BraceletR });
-                        dialog.Grid[(int)EquipmentSlot.BraceletR].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.右手镯 });
+                        dialog.Grid[(int)EquipmentSlot.右手镯].Locked = true;
                         Locked = true;
                     }
-                    else if (dialog.Grid[(int)EquipmentSlot.BraceletL].CanWearItem(actor, Item))
+                    else if (dialog.Grid[(int)EquipmentSlot.左手镯].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.BraceletL });
-                        dialog.Grid[(int)EquipmentSlot.BraceletL].Locked = true;
-                        Locked = true;
-                    }
-                    break;
-                case ItemType.Ring:
-                    if (dialog.Grid[(int)EquipmentSlot.RingR].Item == null && dialog.Grid[(int)EquipmentSlot.RingR].CanWearItem(actor, Item))
-                    {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.RingR });
-                        dialog.Grid[(int)EquipmentSlot.RingR].Locked = true;
-                        Locked = true;
-                    }
-                    else if (dialog.Grid[(int)EquipmentSlot.RingL].CanWearItem(actor, Item))
-                    {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.RingL });
-                        dialog.Grid[(int)EquipmentSlot.RingL].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.左手镯 });
+                        dialog.Grid[(int)EquipmentSlot.左手镯].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Amulet:
+                case ItemType.戒指:
+                    if (dialog.Grid[(int)EquipmentSlot.右戒指].Item == null && dialog.Grid[(int)EquipmentSlot.右戒指].CanWearItem(actor, Item))
+                    {
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.右戒指 });
+                        dialog.Grid[(int)EquipmentSlot.右戒指].Locked = true;
+                        Locked = true;
+                    }
+                    else if (dialog.Grid[(int)EquipmentSlot.左戒指].CanWearItem(actor, Item))
+                    {
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.左戒指 });
+                        dialog.Grid[(int)EquipmentSlot.左戒指].Locked = true;
+                        Locked = true;
+                    }
+                    break;
+                case ItemType.护身符:
                     //if (Item.Info.Shape == 0) return;
 
-                    if (dialog.Grid[(int)EquipmentSlot.Amulet].Item != null && Item.Info.Type == ItemType.Amulet)
+                    if (dialog.Grid[(int)EquipmentSlot.护身符].Item != null && Item.Info.Type == ItemType.护身符)
                     {
-                        if (dialog.Grid[(int)EquipmentSlot.Amulet].Item.Info == Item.Info && dialog.Grid[(int)EquipmentSlot.Amulet].Item.Count < dialog.Grid[(int)EquipmentSlot.Amulet].Item.Info.StackSize)
+                        if (dialog.Grid[(int)EquipmentSlot.护身符].Item.Info == Item.Info && dialog.Grid[(int)EquipmentSlot.护身符].Item.Count < dialog.Grid[(int)EquipmentSlot.护身符].Item.Info.StackSize)
                         {
-                            Network.Enqueue(new C.MergeItem { GridFrom = GridType, GridTo = GridType == MirGridType.HeroInventory ? MirGridType.HeroEquipment : MirGridType.Equipment, IDFrom = Item.UniqueID, IDTo = dialog.Grid[(int)EquipmentSlot.Amulet].Item.UniqueID });
+                            Network.Enqueue(new C.MergeItem { GridFrom = GridType, GridTo = GridType == MirGridType.HeroInventory ? MirGridType.HeroEquipment : MirGridType.Equipment, IDFrom = Item.UniqueID, IDTo = dialog.Grid[(int)EquipmentSlot.护身符].Item.UniqueID });
 
                             Locked = true;
                             return;
                         }
                     }
 
-                    if (dialog.Grid[(int)EquipmentSlot.Amulet].CanWearItem(actor, Item))
+                    if (dialog.Grid[(int)EquipmentSlot.护身符].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Amulet });
-                        dialog.Grid[(int)EquipmentSlot.Amulet].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.护身符 });
+                        dialog.Grid[(int)EquipmentSlot.护身符].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Belt:
-                    if (dialog.Grid[(int)EquipmentSlot.Belt].CanWearItem(actor, Item))
+                case ItemType.腰带:
+                    if (dialog.Grid[(int)EquipmentSlot.腰带].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Belt });
-                        dialog.Grid[(int)EquipmentSlot.Belt].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.腰带 });
+                        dialog.Grid[(int)EquipmentSlot.腰带].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Boots:
-                    if (dialog.Grid[(int)EquipmentSlot.Boots].CanWearItem(actor, Item))
+                case ItemType.靴子:
+                    if (dialog.Grid[(int)EquipmentSlot.靴子].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Boots });
-                        dialog.Grid[(int)EquipmentSlot.Boots].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.靴子 });
+                        dialog.Grid[(int)EquipmentSlot.靴子].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Stone:
-                    if (dialog.Grid[(int)EquipmentSlot.Stone].CanWearItem(actor, Item))
+                case ItemType.守护石:
+                    if (dialog.Grid[(int)EquipmentSlot.守护石].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Stone });
-                        dialog.Grid[(int)EquipmentSlot.Stone].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.守护石 });
+                        dialog.Grid[(int)EquipmentSlot.守护石].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Torch:
-                    if (dialog.Grid[(int)EquipmentSlot.Torch].CanWearItem(actor, Item))
+                case ItemType.照明物:
+                    if (dialog.Grid[(int)EquipmentSlot.照明物].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Torch });
-                        dialog.Grid[(int)EquipmentSlot.Torch].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.照明物 });
+                        dialog.Grid[(int)EquipmentSlot.照明物].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Potion:
-                case ItemType.Scroll:
-                case ItemType.Book:
-                case ItemType.Food:
-                case ItemType.Script:
-                case ItemType.Pets:
-                case ItemType.Transform:
-                case ItemType.Deco:
-                case ItemType.MonsterSpawn:
-                case ItemType.SealedHero:
+                case ItemType.药水:
+                case ItemType.卷轴:
+                case ItemType.技能书:
+                case ItemType.坐骑食物:
+                case ItemType.特殊消耗品:
+                case ItemType.宠物:
+                case ItemType.时装:
+                case ItemType.装饰:
+                case ItemType.宠物蛋:
+                case ItemType.英雄封印:
                     if (CanUseItem() && (GridType == MirGridType.Inventory || GridType == MirGridType.HeroInventory))
                     {
                         if (CMain.Time < GameScene.UseItemTime) return;
-                        if (Item.Info.Type == ItemType.Potion && Item.Info.Shape == 4)
+                        if (Item.Info.Type == ItemType.药水 && Item.Info.Shape == 4)
                         {
                             MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AreYouWantUsePotion), MirMessageBoxButtons.YesNo);
                             messageBox.YesButton.Click += (o, e) =>
@@ -599,25 +599,25 @@ namespace Client.MirControls
                         Locked = true;
                     }
                     break;
-                case ItemType.Mount:
-                    if (dialog.Grid[(int)EquipmentSlot.Mount].CanWearItem(actor, Item))
+                case ItemType.坐骑:
+                    if (dialog.Grid[(int)EquipmentSlot.坐骑].CanWearItem(actor, Item))
                     {
-                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.Mount });
-                        dialog.Grid[(int)EquipmentSlot.Mount].Locked = true;
+                        Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.坐骑 });
+                        dialog.Grid[(int)EquipmentSlot.坐骑].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Reins:
-                case ItemType.Bells:
-                case ItemType.Ribbon:
-                case ItemType.Saddle:
-                case ItemType.Mask:
-                case ItemType.Hook:
-                case ItemType.Float:
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Reel:
-                case ItemType.Socket:
+                case ItemType.缰绳:
+                case ItemType.铃铛:
+                case ItemType.蝴蝶结:
+                case ItemType.马鞍:
+                case ItemType.面罩:
+                case ItemType.鱼钩:
+                case ItemType.鱼漂:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.摇轮:
+                case ItemType.镶嵌宝石:
                     UseSlotItem();
                     break;
             }
@@ -634,19 +634,19 @@ namespace Client.MirControls
 
             switch (Item.Info.Type)
             {
-                case ItemType.Socket:
-                    if (GameScene.SelectedItem != null && !GameScene.SelectedItem.Info.IsFishingRod && GameScene.SelectedItem.Info.Type != ItemType.Mount)
+                case ItemType.镶嵌宝石:
+                    if (GameScene.SelectedItem != null && !GameScene.SelectedItem.Info.IsFishingRod && GameScene.SelectedItem.Info.Type != ItemType.坐骑)
                     {
                         switch (Item.Info.Shape)
                         {
                             case 1:
-                                if (GameScene.SelectedItem.Info.Type != ItemType.Weapon) return;
+                                if (GameScene.SelectedItem.Info.Type != ItemType.武器) return;
                                 break;
                             case 2:
-                                if (GameScene.SelectedItem.Info.Type != ItemType.Armour) return;
+                                if (GameScene.SelectedItem.Info.Type != ItemType.盔甲) return;
                                 break;
                             case 3:
-                                if (GameScene.SelectedItem.Info.Type != ItemType.Ring && GameScene.SelectedItem.Info.Type != ItemType.Bracelet && GameScene.SelectedItem.Info.Type != ItemType.Necklace) return;
+                                if (GameScene.SelectedItem.Info.Type != ItemType.戒指 && GameScene.SelectedItem.Info.Type != ItemType.手镯 && GameScene.SelectedItem.Info.Type != ItemType.项链) return;
                                 break;
                         }
 
@@ -666,80 +666,80 @@ namespace Client.MirControls
                         }
                     }
                     break;
-                case ItemType.Reins:
+                case ItemType.缰绳:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Reins].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Mount];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.坐骑];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)MountSlot.Reins, GridTo = MirGridType.Mount, ToUniqueID = toItem.UniqueID });
                         mountDialog.Grid[(int)MountSlot.Reins].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Bells:
+                case ItemType.铃铛:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Bells].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Mount];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.坐骑];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)MountSlot.Bells, GridTo = MirGridType.Mount, ToUniqueID = toItem.UniqueID });
                         mountDialog.Grid[(int)MountSlot.Bells].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Ribbon:
+                case ItemType.蝴蝶结:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Ribbon].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Mount];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.坐骑];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)MountSlot.Ribbon, GridTo = MirGridType.Mount, ToUniqueID = toItem.UniqueID });
                         mountDialog.Grid[(int)MountSlot.Ribbon].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Saddle:
+                case ItemType.马鞍:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Saddle].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Mount];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.坐骑];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)MountSlot.Saddle, GridTo = MirGridType.Mount, ToUniqueID = toItem.UniqueID });
                         mountDialog.Grid[(int)MountSlot.Saddle].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Mask:
+                case ItemType.面罩:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Mask].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Mount];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.坐骑];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)MountSlot.Mask, GridTo = MirGridType.Mount, ToUniqueID = toItem.UniqueID });
                         mountDialog.Grid[(int)MountSlot.Mask].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Hook:
+                case ItemType.鱼钩:
                     fishingDialog = GameScene.Scene.FishingDialog;
                     if (fishingDialog.Grid[(int)FishingSlot.Hook].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Weapon];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.武器];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)FishingSlot.Hook, GridTo = MirGridType.Fishing, ToUniqueID = toItem.UniqueID });
                         fishingDialog.Grid[(int)FishingSlot.Hook].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Float:
+                case ItemType.鱼漂:
                     fishingDialog = GameScene.Scene.FishingDialog;
                     if (fishingDialog.Grid[(int)FishingSlot.Float].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Weapon];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.武器];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)FishingSlot.Float, GridTo = MirGridType.Fishing, ToUniqueID = toItem.UniqueID });
                         fishingDialog.Grid[(int)FishingSlot.Float].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Bait:
+                case ItemType.鱼饵:
                     fishingDialog = GameScene.Scene.FishingDialog;
 
-                    if (fishingDialog.Grid[(int)FishingSlot.Bait].Item != null && Item.Info.Type == ItemType.Bait)
+                    if (fishingDialog.Grid[(int)FishingSlot.Bait].Item != null && Item.Info.Type == ItemType.鱼饵)
                     {
                         if (fishingDialog.Grid[(int)FishingSlot.Bait].Item.Info == Item.Info && fishingDialog.Grid[(int)FishingSlot.Bait].Item.Count < fishingDialog.Grid[(int)FishingSlot.Bait].Item.Info.StackSize)
                         {
@@ -754,27 +754,27 @@ namespace Client.MirControls
 
                     if (fishingDialog.Grid[(int)FishingSlot.Bait].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Weapon];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.武器];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)FishingSlot.Bait, GridTo = MirGridType.Fishing, ToUniqueID = toItem.UniqueID });
                         fishingDialog.Grid[(int)FishingSlot.Bait].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Finder:
+                case ItemType.探鱼器:
                     fishingDialog = GameScene.Scene.FishingDialog;
                     if (fishingDialog.Grid[(int)FishingSlot.Finder].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Weapon];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.武器];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)FishingSlot.Finder, GridTo = MirGridType.Fishing, ToUniqueID = toItem.UniqueID });
                         fishingDialog.Grid[(int)FishingSlot.Finder].Locked = true;
                         Locked = true;
                     }
                     break;
-                case ItemType.Reel:
+                case ItemType.摇轮:
                     fishingDialog = GameScene.Scene.FishingDialog;
                     if (fishingDialog.Grid[(int)FishingSlot.Reel].CanWearItem(GameScene.User, Item))
                     {
-                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.Weapon];
+                        var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.武器];
                         Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)FishingSlot.Reel, GridTo = MirGridType.Fishing, ToUniqueID = toItem.UniqueID });
                         fishingDialog.Grid[(int)FishingSlot.Reel].Locked = true;
                         Locked = true;
@@ -794,7 +794,7 @@ namespace Client.MirControls
                 if (itemCell.Item == null) count++;
             }
 
-            if (Item == null || count < 1 || (MapObject.User.RidingMount && Item.Info.Type != ItemType.Torch)) return;
+            if (Item == null || count < 1 || (MapObject.User.RidingMount && Item.Info.Type != ItemType.照明物)) return;
 
             if (Item.Info.StackSize > 1)
             {
@@ -825,7 +825,7 @@ namespace Client.MirControls
             {
                 MirItemCell itemCell;
 
-                if (Item.Info.Type == ItemType.Amulet)
+                if (Item.Info.Type == ItemType.护身符)
                 {
                     itemCell = i < GameScene.User.BeltIdx ? GameScene.Scene.BeltDialog.Grid[i] : GameScene.Scene.InventoryDialog.Grid[i - GameScene.User.BeltIdx];
                 }
@@ -842,15 +842,15 @@ namespace Client.MirControls
 
                     if (GridType == MirGridType.Fishing)
                     {
-                        if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.Weapon].Item == null) return;
+                        if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.武器].Item == null) return;
 
-                        fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.Weapon].Item.UniqueID;
+                        fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.武器].Item.UniqueID;
                     }
                     else if (GridType == MirGridType.Mount)
                     {
-                        if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.Mount].Item == null) return;
+                        if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.坐骑].Item == null) return;
 
-                        fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.Mount].Item.UniqueID;
+                        fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.坐骑].Item.UniqueID;
                     }
                     else
                     {
@@ -885,7 +885,7 @@ namespace Client.MirControls
                 if (itemCell.Item == null) count++;
             }
 
-            if (Item == null || count < 1 || (MapObject.Hero.RidingMount && Item.Info.Type != ItemType.Torch)) return;
+            if (Item == null || count < 1 || (MapObject.Hero.RidingMount && Item.Info.Type != ItemType.照明物)) return;
 
             if (Item.Info.StackSize > 1)
             {
@@ -916,7 +916,7 @@ namespace Client.MirControls
             {
                 MirItemCell itemCell;
 
-                if (Item.Info.Type == ItemType.Amulet)
+                if (Item.Info.Type == ItemType.护身符)
                 {
                     itemCell = i < GameScene.User.HeroBeltIdx ? GameScene.Scene.HeroBeltDialog.Grid[i] : GameScene.Scene.HeroInventoryDialog.Grid[i - GameScene.User.HeroBeltIdx];
                 }
@@ -995,7 +995,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Equipment
                             case MirGridType.Equipment: //From Equipment
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1039,7 +1039,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Storage
                             case MirGridType.Storage: //From Storage
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1110,7 +1110,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Trade
                             case MirGridType.Trade: //From Trade
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1175,7 +1175,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Refine
                             case MirGridType.Refine: //From AwakenItem
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1252,7 +1252,7 @@ namespace Client.MirControls
                             case MirGridType.HeroInventory:
                                 if (GameScene.Hero == null || GameScene.Hero.Dead)
                                     return;
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1312,7 +1312,7 @@ namespace Client.MirControls
                         if (GameScene.SelectedCell.GridType != MirGridType.Inventory && GameScene.SelectedCell.GridType != MirGridType.Storage) return;
 
 
-                        if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                        if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                         {
                             if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                             {
@@ -1663,10 +1663,10 @@ namespace Client.MirControls
                                 //baseitem
                                 case 0:
                                     {
-                                        if ((GameScene.SelectedCell.Item.Info.Type == ItemType.Weapon ||
-                                            GameScene.SelectedCell.Item.Info.Type == ItemType.Helmet ||
-                                            GameScene.SelectedCell.Item.Info.Type == ItemType.Armour) &&
-                                            GameScene.SelectedCell.Item.Info.Grade != ItemGrade.None &&
+                                        if ((GameScene.SelectedCell.Item.Info.Type == ItemType.武器 ||
+                                            GameScene.SelectedCell.Item.Info.Type == ItemType.头盔 ||
+                                            GameScene.SelectedCell.Item.Info.Type == ItemType.盔甲) &&
+                                            GameScene.SelectedCell.Item.Info.Grade != ItemGrade.无等级 &&
                                             _itemSlot == 0)
                                         {
                                             if (Item == null)
@@ -1704,7 +1704,7 @@ namespace Client.MirControls
                                         {
                                             case MirGridType.Inventory:
                                                 {
-                                                    if (GameScene.SelectedCell.Item.Info.Type == ItemType.Awakening &&
+                                                    if (GameScene.SelectedCell.Item.Info.Type == ItemType.觉醒物品 &&
                                                         GameScene.SelectedCell.Item.Info.Shape < 200 && NPCAwakeDialog.ItemsIdx[_itemSlot] == 0)
                                                     {
                                                         Item = GameScene.SelectedCell.Item;
@@ -1748,7 +1748,7 @@ namespace Client.MirControls
                                 //AllCashItem Korea Server Not Implementation.
                                 case 5:
                                 case 6:
-                                    if (GameScene.SelectedCell.Item.Info.Type == ItemType.Awakening &&
+                                    if (GameScene.SelectedCell.Item.Info.Type == ItemType.觉醒物品 &&
                                             GameScene.SelectedCell.Item.Info.Shape == 200)
                                     {
                                         Item = GameScene.SelectedCell.Item;
@@ -1856,7 +1856,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Hero Equipment
                             case MirGridType.HeroEquipment:
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1900,7 +1900,7 @@ namespace Client.MirControls
                             #endregion
                             #region From Inventory
                             case MirGridType.Inventory:
-                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                                if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                                 {
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
@@ -1968,7 +1968,7 @@ namespace Client.MirControls
                         if (GameScene.Hero == null || GameScene.Hero.Dead)
                             return;
 
-                        if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.Amulet)
+                        if (Item != null && GameScene.SelectedCell.Item.Info.Type == ItemType.护身符)
                         {
                             if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                             {
@@ -1999,7 +1999,7 @@ namespace Client.MirControls
                         if (GameScene.SelectedCell.GridType != MirGridType.HeroInventory) return;
                         if (GameScene.Hero == null || GameScene.Hero.Dead)
                             return;
-                        if (GameScene.SelectedCell.Item.Info.Type != ItemType.Potion || GameScene.SelectedCell.Item.Info.Shape > 1)
+                        if (GameScene.SelectedCell.Item.Info.Type != ItemType.药水 || GameScene.SelectedCell.Item.Info.Shape > 1)
                             return;
 
                         Network.Enqueue(new C.SetAutoPotItem { Grid = GridType, ItemIndex = GameScene.SelectedCell.Item.Info.Index });
@@ -2023,28 +2023,28 @@ namespace Client.MirControls
 
             switch (Item.Info.Type)
             {
-                case ItemType.Weapon:
+                case ItemType.武器:
                     SoundManager.PlaySound(SoundList.ClickWeapon);
                     break;
-                case ItemType.Armour:
+                case ItemType.盔甲:
                     SoundManager.PlaySound(SoundList.ClickArmour);
                     break;
-                case ItemType.Helmet:
+                case ItemType.头盔:
                     SoundManager.PlaySound(SoundList.ClickHelmet);
                     break;
-                case ItemType.Necklace:
+                case ItemType.项链:
                     SoundManager.PlaySound(SoundList.ClickNecklace);
                     break;
-                case ItemType.Bracelet:
+                case ItemType.手镯:
                     SoundManager.PlaySound(SoundList.ClickBracelet);
                     break;
-                case ItemType.Ring:
+                case ItemType.戒指:
                     SoundManager.PlaySound(SoundList.ClickRing);
                     break;
-                case ItemType.Boots:
+                case ItemType.靴子:
                     SoundManager.PlaySound(SoundList.ClickBoots);
                     break;
-                case ItemType.Potion:
+                case ItemType.药水:
                     SoundManager.PlaySound(SoundList.ClickDrug);
                     break;
                 default:
@@ -2066,7 +2066,7 @@ namespace Client.MirControls
 
         private bool CanRemoveItem(UserItem i)
         {
-            if(MapObject.User.RidingMount && i.Info.Type != ItemType.Torch)
+            if(MapObject.User.RidingMount && i.Info.Type != ItemType.照明物)
             {
                 return false;
             }
@@ -2092,33 +2092,33 @@ namespace Client.MirControls
 
             switch ((EquipmentSlot)ItemSlot)
             {
-                case EquipmentSlot.Weapon:
-                    return type == ItemType.Weapon;
-                case EquipmentSlot.Armour:
-                    return type == ItemType.Armour;
-                case EquipmentSlot.Helmet:
-                    return type == ItemType.Helmet;
-                case EquipmentSlot.Torch:
-                    return type == ItemType.Torch;
-                case EquipmentSlot.Necklace:
-                    return type == ItemType.Necklace;
-                case EquipmentSlot.BraceletL:
-                    return i.Info.Type == ItemType.Bracelet;
-                case EquipmentSlot.BraceletR:
-                    return i.Info.Type == ItemType.Bracelet || i.Info.Type == ItemType.Amulet;
-                case EquipmentSlot.RingL:
-                case EquipmentSlot.RingR:
-                    return type == ItemType.Ring;
-                case EquipmentSlot.Amulet:
-                    return type == ItemType.Amulet;// && i.Info.Shape > 0;
-                case EquipmentSlot.Boots:
-                    return type == ItemType.Boots;
-                case EquipmentSlot.Belt:
-                    return type == ItemType.Belt;
-                case EquipmentSlot.Stone:
-                    return type == ItemType.Stone;
-                case EquipmentSlot.Mount:
-                    return type == ItemType.Mount;
+                case EquipmentSlot.武器:
+                    return type == ItemType.武器;
+                case EquipmentSlot.盔甲:
+                    return type == ItemType.盔甲;
+                case EquipmentSlot.头盔:
+                    return type == ItemType.头盔;
+                case EquipmentSlot.照明物:
+                    return type == ItemType.照明物;
+                case EquipmentSlot.项链:
+                    return type == ItemType.项链;
+                case EquipmentSlot.左手镯:
+                    return i.Info.Type == ItemType.手镯;
+                case EquipmentSlot.右手镯:
+                    return i.Info.Type == ItemType.手镯 || i.Info.Type == ItemType.护身符;
+                case EquipmentSlot.左戒指:
+                case EquipmentSlot.右戒指:
+                    return type == ItemType.戒指;
+                case EquipmentSlot.护身符:
+                    return type == ItemType.护身符;// && i.Info.Shape > 0;
+                case EquipmentSlot.靴子:
+                    return type == ItemType.靴子;
+                case EquipmentSlot.腰带:
+                    return type == ItemType.腰带;
+                case EquipmentSlot.守护石:
+                    return type == ItemType.守护石;
+                case EquipmentSlot.坐骑:
+                    return type == ItemType.坐骑;
                 default:
                     return false;
             }
@@ -2134,15 +2134,15 @@ namespace Client.MirControls
 
             switch (actor.Gender)
             {
-                case MirGender.Male:
-                    if (!Item.Info.RequiredGender.HasFlag(RequiredGender.Male))
+                case MirGender.男性:
+                    if (!Item.Info.RequiredGender.HasFlag(RequiredGender.男性))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotFemale), ChatType.System);
                         return false;
                     }
                     break;
-                case MirGender.Female:
-                    if (!Item.Info.RequiredGender.HasFlag(RequiredGender.Female))
+                case MirGender.女性:
+                    if (!Item.Info.RequiredGender.HasFlag(RequiredGender.女性))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotMale), ChatType.System);
                         return false;
@@ -2152,36 +2152,36 @@ namespace Client.MirControls
 
             switch (actor.Class)
             {
-                case MirClass.Warrior:
-                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.Warrior))
+                case MirClass.战士:
+                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Wizard:
-                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.Wizard))
+                case MirClass.法师:
+                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Taoist:
-                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.Taoist))
+                case MirClass.道士:
+                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Assassin:
-                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.Assassin))
+                case MirClass.刺客:
+                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Archer:
-                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.Archer))
+                case MirClass.弓箭:
+                    if (!Item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
@@ -2279,23 +2279,23 @@ namespace Client.MirControls
 
             switch (Item.Info.Type)
             {
-                case ItemType.Saddle:
-                case ItemType.Ribbon:
-                case ItemType.Bells:
-                case ItemType.Mask:
-                case ItemType.Reins:
-                    if (actor.Equipment[(int)EquipmentSlot.Mount] == null)
+                case ItemType.马鞍:
+                case ItemType.蝴蝶结:
+                case ItemType.铃铛:
+                case ItemType.面罩:
+                case ItemType.缰绳:
+                    if (actor.Equipment[(int)EquipmentSlot.坐骑] == null)
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveMountEquipped), ChatType.System);
                         return false;
                     }
                     break;
-                case ItemType.Hook:
-                case ItemType.Float:
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Reel:
-                    if (actor.Equipment[(int)EquipmentSlot.Weapon] == null || !actor.Equipment[(int)EquipmentSlot.Weapon].Info.IsFishingRod)
+                case ItemType.鱼钩:
+                case ItemType.鱼漂:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.摇轮:
+                    if (actor.Equipment[(int)EquipmentSlot.武器] == null || !actor.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveFishingRodEquipped), ChatType.System);
                         return false;
@@ -2316,15 +2316,15 @@ namespace Client.MirControls
 
             switch (actor.Gender)
             {
-                case MirGender.Male:
-                    if (!i.Info.RequiredGender.HasFlag(RequiredGender.Male))
+                case MirGender.男性:
+                    if (!i.Info.RequiredGender.HasFlag(RequiredGender.男性))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotFemale), ChatType.System);
                         return false;
                     }
                     break;
-                case MirGender.Female:
-                    if (!i.Info.RequiredGender.HasFlag(RequiredGender.Female))
+                case MirGender.女性:
+                    if (!i.Info.RequiredGender.HasFlag(RequiredGender.女性))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotMale), ChatType.System);
                         return false;
@@ -2334,36 +2334,36 @@ namespace Client.MirControls
 
             switch (actor.Class)
             {
-                case MirClass.Warrior:
-                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.Warrior))
+                case MirClass.战士:
+                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Wizard:
-                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.Wizard))
+                case MirClass.法师:
+                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Taoist:
-                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.Taoist))
+                case MirClass.道士:
+                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Assassin:
-                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.Assassin))
+                case MirClass.刺客:
+                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Archer:
-                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.Archer))
+                case MirClass.弓箭:
+                    if (!i.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
@@ -2459,7 +2459,7 @@ namespace Client.MirControls
                     break;
             }
 
-            if (i.Info.Type == ItemType.Weapon || i.Info.Type == ItemType.Torch)
+            if (i.Info.Type == ItemType.武器 || i.Info.Type == ItemType.照明物)
             {
                 if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentHandWeight > actor.Stats[Stat.HandWeight])
                 {
@@ -2478,27 +2478,27 @@ namespace Client.MirControls
 
             switch (i.Info.Type)
             {
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Hook:
-                case ItemType.Reel:
-                case ItemType.Float:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.鱼钩:
+                case ItemType.摇轮:
+                case ItemType.鱼漂:
                     if (!actor.HasFishingRod)
                     {
                         return false;
                     }
                     break;
-                case ItemType.Bells:
-                case ItemType.Reins:
-                case ItemType.Ribbon:
-                case ItemType.Saddle:
+                case ItemType.铃铛:
+                case ItemType.缰绳:
+                case ItemType.蝴蝶结:
+                case ItemType.马鞍:
                     if (actor.MountType < 0)
                     {
                         return false;
                     }
                     break;
-                case ItemType.Socket:
-                    if (GameScene.SelectedItem == null || GameScene.SelectedItem.Info.Type == ItemType.Mount || (GameScene.SelectedItem.Info.Type == ItemType.Weapon && GameScene.SelectedItem.Info.IsFishingRod))
+                case ItemType.镶嵌宝石:
+                    if (GameScene.SelectedItem == null || GameScene.SelectedItem.Info.Type == ItemType.坐骑 || (GameScene.SelectedItem.Info.Type == ItemType.武器 && GameScene.SelectedItem.Info.IsFishingRod))
                     {
                         return false;
                     }

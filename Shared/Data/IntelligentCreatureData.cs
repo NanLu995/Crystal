@@ -54,7 +54,7 @@ public class IntelligentCreatureItemFilter
     public bool PetPickupAccessories = false;
     public bool PetPickupOthers = false;
 
-    public ItemGrade PickupGrade = ItemGrade.None;
+    public ItemGrade PickupGrade = ItemGrade.无等级;
 
     public IntelligentCreatureItemFilter()
     {

@@ -299,7 +299,7 @@ namespace Server.MirObjects
 
                             switch (Class)
                             {
-                                case (MirClass.Assassin):
+                                case (MirClass.刺客):
 
                                     if (Info.Name != Settings.AssassinCloneName)
                                     {
@@ -319,7 +319,7 @@ namespace Server.MirObjects
 
                             switch (Class)
                             {
-                                case (MirClass.Wizard):
+                                case (MirClass.法师):
 
                                     if (pet.Name == Settings.CloneName)
                                     {
@@ -335,7 +335,7 @@ namespace Server.MirObjects
 
                                     break;
 
-                                case (MirClass.Taoist):
+                                case (MirClass.道士):
                                     if (pet.Name == Settings.SkeletonName || pet.Name == Settings.AngelName || pet.Name == Settings.ShinsuName)
                                         Info.Pets.Add(new PetInfo(pet));
 
@@ -579,7 +579,7 @@ namespace Server.MirObjects
             {
                 LastRevivalTime = Envir.Time + 300000;
 
-                for (var i = (int)EquipmentSlot.RingL; i <= (int)EquipmentSlot.RingR; i++)
+                for (var i = (int)EquipmentSlot.左戒指; i <= (int)EquipmentSlot.右戒指; i++)
                 {
                     var item = Info.Equipment[i];
 
@@ -604,7 +604,7 @@ namespace Server.MirObjects
                 }
                 else if (Envir.Time > BrownTime && PKPoints < 200)
                 {
-                    UserItem weapon = hitter.Info.Equipment[(byte)EquipmentSlot.Weapon];
+                    UserItem weapon = hitter.Info.Equipment[(byte)EquipmentSlot.武器];
 
                     hitter.PKPoints = Math.Min(int.MaxValue, LastHitter.PKPoints + 100);
                     hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderPlayer), Name), ChatType.System);
@@ -678,7 +678,7 @@ namespace Server.MirObjects
                         continue;
 
                     // TODO: Check this.
-                    if ((item.WeddingRing != -1) && (Info.Equipment[(int)EquipmentSlot.RingL].UniqueID == item.UniqueID))
+                    if ((item.WeddingRing != -1) && (Info.Equipment[(int)EquipmentSlot.左戒指].UniqueID == item.UniqueID))
                         continue;
 
                     if (item.SealedInfo != null && item.SealedInfo.ExpiryDate > Envir.Now)
@@ -1257,7 +1257,7 @@ namespace Server.MirObjects
                     case false when Settings.PetSave is false:
                         switch (Class)
                         {
-                            case (MirClass.Wizard):
+                            case (MirClass.法师):
                                 if (monster.Info.Name == Settings.CloneName)
                                 {
                                     monster.ActionTime = Envir.Time + 1000;
@@ -2238,11 +2238,11 @@ namespace Server.MirObjects
 
                         switch (data.Gender)
                         {
-                            case MirGender.Male:
-                                data.Gender = MirGender.Female;
+                            case MirGender.男性:
+                                data.Gender = MirGender.女性;
                                 break;
-                            case MirGender.Female:
-                                data.Gender = MirGender.Male;
+                            case MirGender.女性:
+                                data.Gender = MirGender.男性;
                                 break;
                         }
 
@@ -2504,7 +2504,7 @@ namespace Server.MirObjects
                             return;
                         }
 
-                        if (ItemSets.Any(set => set.Set == ItemSet.Recall && set.SetComplete))
+                        if (ItemSets.Any(set => set.Set == ItemSet.记忆套装 && set.SetComplete))
                         {
                             LastRecallTime = Envir.Time + 180000;
                             for (var i = 1; i < GroupMembers.Count(); i++)
@@ -2541,7 +2541,7 @@ namespace Server.MirObjects
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CannotRecallSeconds), (LastRecallTime - Envir.Time) / 1000), ChatType.System);
                             return;
                         }
-                        if (ItemSets.Any(set => set.Set == ItemSet.Recall && set.SetComplete))
+                        if (ItemSets.Any(set => set.Set == ItemSet.记忆套装 && set.SetComplete))
                         {
                             if (parts.Length < 2) return;
                             player = Envir.GetPlayer(parts[1]);
@@ -2588,14 +2588,14 @@ namespace Server.MirObjects
                             return;
                         }
 
-                        if (Info.Equipment[(int)EquipmentSlot.RingL] == null)
+                        if (Info.Equipment[(int)EquipmentSlot.左戒指] == null)
                         {
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NeedWeddingRingForRecall), ChatType.System);
                             return;
                         }
 
 
-                        if (Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing == Info.Married)
+                        if (Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing == Info.Married)
                         {
                             CharacterInfo Lover = Envir.GetCharacterInfo(Info.Married);
 
@@ -2621,14 +2621,14 @@ namespace Server.MirObjects
                                 return;
                             }
 
-                            if (player.Info.Equipment[(int)EquipmentSlot.RingL] == null)
+                            if (player.Info.Equipment[(int)EquipmentSlot.左戒指] == null)
                             {
                                 player.ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.NeedWeddingRingRecall), Lover.Name)), ChatType.System);
                                 ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.NotWearingWeddingRing), Lover.Name)), ChatType.System);
                                 return;
                             }
 
-                            if (player.Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing != player.Info.Married)
+                            if (player.Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing != player.Info.Married)
                             {
                                 player.ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.NeedWeddingRingForRecallOnLeft), Lover.Name)), ChatType.System);
                                 ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.NotWearingWeddingRing), Lover.Name)), ChatType.System);
@@ -3869,7 +3869,7 @@ namespace Server.MirObjects
 
                             if (tempConq != null)
                             {
-                                tempConq.StartType = ConquestType.Forced;
+                                tempConq.StartType = ConquestType.强制启动;
                                 tempConq.WarIsOn = !tempConq.WarIsOn;
                                 tempConq.GuildInfo.AttackerID = MyGuild.Guildindex;
                             }
@@ -4401,8 +4401,8 @@ namespace Server.MirObjects
         }
         private UserItem GetBait(int count)
         {
-            UserItem item = Info.Equipment[(int)EquipmentSlot.Weapon];
-            if (item == null || item.Info.Type != ItemType.Weapon || !item.Info.IsFishingRod) return null;
+            UserItem item = Info.Equipment[(int)EquipmentSlot.武器];
+            if (item == null || item.Info.Type != ItemType.武器 || !item.Info.IsFishingRod) return null;
 
             UserItem bait = item.Slots[(int)FishingSlot.Bait];
 
@@ -4412,8 +4412,8 @@ namespace Server.MirObjects
         }
         private UserItem GetFishingItem(FishingSlot type)
         {
-            UserItem item = Info.Equipment[(int)EquipmentSlot.Weapon];
-            if (item == null || item.Info.Type != ItemType.Weapon || !item.Info.IsFishingRod) return null;
+            UserItem item = Info.Equipment[(int)EquipmentSlot.武器];
+            if (item == null || item.Info.Type != ItemType.武器 || !item.Info.IsFishingRod) return null;
 
             UserItem fishingItem = item.Slots[(int)type];
 
@@ -4423,13 +4423,13 @@ namespace Server.MirObjects
         }
         private void DeleteFishingItem(FishingSlot type)
         {
-            UserItem item = Info.Equipment[(int)EquipmentSlot.Weapon];
-            if (item == null || item.Info.Type != ItemType.Weapon || !item.Info.IsFishingRod) return;
+            UserItem item = Info.Equipment[(int)EquipmentSlot.武器];
+            if (item == null || item.Info.Type != ItemType.武器 || !item.Info.IsFishingRod) return;
 
-            UserItem slotItem = Info.Equipment[(int)EquipmentSlot.Weapon].Slots[(int)type];
+            UserItem slotItem = Info.Equipment[(int)EquipmentSlot.武器].Slots[(int)type];
 
             Enqueue(new S.DeleteItem { UniqueID = slotItem.UniqueID, Count = 1 });
-            Info.Equipment[(int)EquipmentSlot.Weapon].Slots[(int)type] = null;
+            Info.Equipment[(int)EquipmentSlot.武器].Slots[(int)type] = null;
 
             Report.ItemChanged(slotItem, 1, 1);
         }
@@ -4817,10 +4817,10 @@ namespace Server.MirObjects
             switch (gridTo)
             {
                 case MirGridType.Mount:
-                    item = Info.Equipment[(int)EquipmentSlot.Mount];
+                    item = Info.Equipment[(int)EquipmentSlot.坐骑];
                     break;
                 case MirGridType.Fishing:
-                    item = Info.Equipment[(int)EquipmentSlot.Weapon];
+                    item = Info.Equipment[(int)EquipmentSlot.武器];
                     break;
                 case MirGridType.Socket:
                     UserItem temp2;
@@ -4925,13 +4925,13 @@ namespace Server.MirObjects
                 return;
             }
 
-            if ((item.Info.IsFishingRod || item.Info.Type == ItemType.Mount) && temp.Info.Type == ItemType.Socket)
+            if ((item.Info.IsFishingRod || item.Info.Type == ItemType.坐骑) && temp.Info.Type == ItemType.镶嵌宝石)
             {
                 Enqueue(p);
                 return;
             }
 
-            if (gridTo == MirGridType.Socket && temp.Info.Type != ItemType.Socket)
+            if (gridTo == MirGridType.Socket && temp.Info.Type != ItemType.镶嵌宝石)
             {
                 Enqueue(p);
                 return;
@@ -4954,21 +4954,21 @@ namespace Server.MirObjects
                 switch (temp.Info.Shape)
                 {
                     case 1:
-                        if (item.Info.Type != ItemType.Weapon)
+                        if (item.Info.Type != ItemType.武器)
                         {
                             Enqueue(p);
                             return;
                         }
                         break;
                     case 2:
-                        if (item.Info.Type != ItemType.Armour)
+                        if (item.Info.Type != ItemType.盔甲)
                         {
                             Enqueue(p);
                             return;
                         }
                         break;
                     case 3:
-                        if (item.Info.Type != ItemType.Ring && item.Info.Type != ItemType.Bracelet && item.Info.Type != ItemType.Necklace)
+                        if (item.Info.Type != ItemType.戒指 && item.Info.Type != ItemType.手镯 && item.Info.Type != ItemType.项链)
                         {
                             Enqueue(p);
                             return;
@@ -5173,10 +5173,10 @@ namespace Server.MirObjects
             switch (grid)
             {
                 case MirGridType.Mount:
-                    temp = Info.Equipment[(int)EquipmentSlot.Mount];
+                    temp = Info.Equipment[(int)EquipmentSlot.坐骑];
                     break;
                 case MirGridType.Fishing:
-                    temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                    temp = Info.Equipment[(int)EquipmentSlot.武器];
                     break;
                 case MirGridType.Socket:
                     UserItem temp2;
@@ -5772,7 +5772,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (Dead && !(item.Info.Type == ItemType.Scroll && item.Info.Shape == 6))
+            if (Dead && !(item.Info.Type == ItemType.卷轴 && item.Info.Shape == 6))
             {
                 Enqueue(p);
                 return;
@@ -5780,7 +5780,7 @@ namespace Server.MirObjects
 
             switch (item.Info.Type)
             {
-                case ItemType.Potion:
+                case ItemType.药水:
                     switch (item.Info.Shape)
                     {
                         case 0: //NormalPotion
@@ -5847,7 +5847,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Scroll:
+                case ItemType.卷轴:
                     UserItem temp;
                     switch (item.Info.Shape)
                     {
@@ -5892,7 +5892,7 @@ namespace Server.MirObjects
                             }
                             break;
                         case 4: //RepairOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Enqueue(p);
@@ -5912,7 +5912,7 @@ namespace Server.MirObjects
                             Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
                         case 5: //WarGodOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Enqueue(p);
@@ -6029,7 +6029,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Book:
+                case ItemType.技能书:
                     UserMagic magic = new UserMagic((Spell)item.Info.Shape);
 
                     if (magic.Info == null)
@@ -6042,11 +6042,11 @@ namespace Server.MirObjects
                     SendMagicInfo(magic);
                     RefreshStats();
                     break;
-                case ItemType.Script:
+                case ItemType.特殊消耗品:
                     CallDefaultNPC(DefaultNPCType.UseItem, item.Info.Shape);
                     break;
-                case ItemType.Food:
-                    temp = Info.Equipment[(int)EquipmentSlot.Mount];
+                case ItemType.坐骑食物:
+                    temp = Info.Equipment[(int)EquipmentSlot.坐骑];
                     if (temp == null || temp.MaxDura == temp.CurrentDura)
                     {
                         Enqueue(p);
@@ -6070,7 +6070,7 @@ namespace Server.MirObjects
 
                     RefreshStats();
                     break;
-                case ItemType.Pets:
+                case ItemType.宠物:
                     if (item.Info.Shape >= 20)
                     {
                         switch (item.Info.Shape)
@@ -6202,12 +6202,12 @@ namespace Server.MirObjects
                         Enqueue(petInfo.GetInfo());
                     }
                     break;
-                case ItemType.Transform: //Transforms
+                case ItemType.时装: //Transforms
                     {
                         AddBuff(BuffType.Transform, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
                     }
                     break;
-                case ItemType.Deco:
+                case ItemType.装饰:
 
                     DecoObject decoOb = new DecoObject
                     {
@@ -6222,7 +6222,7 @@ namespace Server.MirObjects
                     Enqueue(decoOb.GetInfo());
 
                     break;
-                case ItemType.MonsterSpawn:
+                case ItemType.宠物蛋:
 
                     var monsterID = item.Info.Stats[Stat.HP];
                     var spawnAsPet = item.Info.Shape == 1;
@@ -6267,10 +6267,10 @@ namespace Server.MirObjects
                     if (!monster.Spawn(CurrentMap, Front))
                         monster.Spawn(CurrentMap, CurrentLocation);
                     break;
-                case ItemType.SiegeAmmo:
+                case ItemType.攻城弹药:
                     //TODO;
                     break;
-                case ItemType.SealedHero:
+                case ItemType.英雄封印:
                     HeroInfo heroInfo = Envir.GetHeroInfo(item.AddedStats[Stat.Hero]);
                     if (heroInfo == null || !AddHero(heroInfo))
                     {
@@ -6380,9 +6380,9 @@ namespace Server.MirObjects
             Enqueue(p);
             Enqueue(new S.SplitItem { Item = temp, Grid = grid });
 
-            if (grid == MirGridType.Inventory && (temp.Info.Type == ItemType.Potion || temp.Info.Type == ItemType.Scroll || temp.Info.Type == ItemType.Amulet || (temp.Info.Type == ItemType.Script && temp.Info.Effect == 1)))
+            if (grid == MirGridType.Inventory && (temp.Info.Type == ItemType.药水 || temp.Info.Type == ItemType.卷轴 || temp.Info.Type == ItemType.护身符 || (temp.Info.Type == ItemType.特殊消耗品 && temp.Info.Effect == 1)))
             {
-                if (temp.Info.Type == ItemType.Potion || temp.Info.Type == ItemType.Scroll || (temp.Info.Type == ItemType.Script && temp.Info.Effect == 1))
+                if (temp.Info.Type == ItemType.药水 || temp.Info.Type == ItemType.卷轴 || (temp.Info.Type == ItemType.特殊消耗品 && temp.Info.Effect == 1))
                 {
                     for (int i = PotionBeltMinimum; i < PotionBeltMaximum; i++)
                     {
@@ -6392,7 +6392,7 @@ namespace Server.MirObjects
                         return;
                     }
                 }
-                else if (temp.Info.Type == ItemType.Amulet)
+                else if (temp.Info.Type == ItemType.护身符)
                 {
                     for (int i = AmuletBeltMinimum; i < AmuletBeltMaximum; i++)
                     {
@@ -6456,12 +6456,12 @@ namespace Server.MirObjects
                     arrayFrom = Info.Equipment;
                     break;
                 case MirGridType.Fishing:
-                    if (Info.Equipment[(int)EquipmentSlot.Weapon] == null || !Info.Equipment[(int)EquipmentSlot.Weapon].Info.IsFishingRod)
+                    if (Info.Equipment[(int)EquipmentSlot.武器] == null || !Info.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
                         Enqueue(p);
                         return;
                     }
-                    arrayFrom = Info.Equipment[(int)EquipmentSlot.Weapon].Slots;
+                    arrayFrom = Info.Equipment[(int)EquipmentSlot.武器].Slots;
                     break;
                 case MirGridType.HeroInventory:
                     if (!HasHero || !HeroSpawned)
@@ -6515,12 +6515,12 @@ namespace Server.MirObjects
                     arrayTo = Info.Equipment;
                     break;
                 case MirGridType.Fishing:
-                    if (Info.Equipment[(int)EquipmentSlot.Weapon] == null || !Info.Equipment[(int)EquipmentSlot.Weapon].Info.IsFishingRod)
+                    if (Info.Equipment[(int)EquipmentSlot.武器] == null || !Info.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
                         Enqueue(p);
                         return;
                     }
-                    arrayTo = Info.Equipment[(int)EquipmentSlot.Weapon].Slots;
+                    arrayTo = Info.Equipment[(int)EquipmentSlot.武器].Slots;
                     break;
                 case MirGridType.HeroInventory:
                     if (!HasHero || !HeroSpawned)
@@ -6596,13 +6596,13 @@ namespace Server.MirObjects
                 }
             }
 
-            if (tempTo.Info.Type != ItemType.Amulet && (gridFrom == MirGridType.Equipment || gridTo == MirGridType.Equipment))
+            if (tempTo.Info.Type != ItemType.护身符 && (gridFrom == MirGridType.Equipment || gridTo == MirGridType.Equipment))
             {
                 Enqueue(p);
                 return;
             }
 
-            if (tempTo.Info.Type != ItemType.Bait && (gridFrom == MirGridType.Fishing || gridTo == MirGridType.Fishing))
+            if (tempTo.Info.Type != ItemType.鱼饵 && (gridFrom == MirGridType.Fishing || gridTo == MirGridType.Fishing))
             {
                 Enqueue(p);
                 return;
@@ -6696,7 +6696,7 @@ namespace Server.MirObjects
 
             bool canRepair = false, canUpgrade = false, canSlotUpgrade = false, canSeal = false;
 
-            if (tempFrom.Info.Type != ItemType.Gem)
+            if (tempFrom.Info.Type != ItemType.宝玉神珠)
             {
                 Enqueue(p);
                 return;
@@ -6717,17 +6717,17 @@ namespace Server.MirObjects
 
                     switch (tempTo.Info.Type)
                     {
-                        case ItemType.Weapon:
-                        case ItemType.Necklace:
-                        case ItemType.Ring:
-                        case ItemType.Bracelet:
+                        case ItemType.武器:
+                        case ItemType.项链:
+                        case ItemType.戒指:
+                        case ItemType.手镯:
                             if (tempFrom.Info.Shape == 1 || tempFrom.Info.Shape == 5)
                                 canRepair = true;
                             break;
-                        case ItemType.Armour:
-                        case ItemType.Helmet:
-                        case ItemType.Boots:
-                        case ItemType.Belt:
+                        case ItemType.盔甲:
+                        case ItemType.头盔:
+                        case ItemType.靴子:
+                        case ItemType.腰带:
                             if (tempFrom.Info.Shape == 2 || tempFrom.Info.Shape == 6)
                                 canRepair = true;
                             break;
@@ -7656,7 +7656,7 @@ namespace Server.MirObjects
                     return false;
             }
 
-            if (RidingMount && item.Info.Type != ItemType.Torch)
+            if (RidingMount && item.Info.Type != ItemType.照明物)
             {
                 return false;
             }
@@ -8220,7 +8220,7 @@ namespace Server.MirObjects
         {
             return (UserMatch || !info.Expired && !info.Sold)
                 && (!UserMatch || ((MarketPanelType == MarketPanelType.Auction && info.ItemType == MarketItemType.Auction) || (MarketPanelType != MarketPanelType.Auction && info.ItemType == MarketItemType.Consign)))
-                && ((MatchType == ItemType.Nothing || info.Item.Info.Type == MatchType)
+                && ((MatchType == ItemType.杂物 || info.Item.Info.Type == MatchType)
                 && (info.Item.Info.Shape >= MinShapes && info.Item.Info.Shape <= MaxShapes)
                 && (string.IsNullOrWhiteSpace(MatchName) || info.Item.Info.Name.Replace(" ", "").IndexOf(MatchName, StringComparison.OrdinalIgnoreCase) >= 0));
         }
@@ -8285,7 +8285,7 @@ namespace Server.MirObjects
 
             if (MarketPanelType == MarketPanelType.GameShop)
             {
-                //Search = Envir.GameShopList.Where(x => (MatchType == ItemType.Nothing || x.Info.Type == MatchType)
+                //Search = Envir.GameShopList.Where(x => (MatchType == ItemType.杂物 || x.Info.Type == MatchType)
                 //&& (x.Info.Shape >= MinShapes && x.Info.Shape <= MaxShapes)
                 //&& (string.IsNullOrWhiteSpace(MatchName) || x.Info.Name.Replace(" ", "").IndexOf(MatchName, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
@@ -8709,7 +8709,7 @@ namespace Server.MirObjects
             if (NPCPage == null || !String.Equals(NPCPage.Key, NPCScript.AwakeningKey, StringComparison.CurrentCultureIgnoreCase))
                 return;
 
-            if (type == AwakeType.None) return;
+            if (type == AwakeType.无) return;
 
             for (int i = 0; i < Info.Inventory.Length; i++)
             {
@@ -8936,7 +8936,7 @@ namespace Server.MirObjects
 
         public void AwakeningNeedMaterials(ulong UniqueID, AwakeType type)
         {
-            if (type == AwakeType.None) return;
+            if (type == AwakeType.无) return;
 
             if (Awake.AwakeMaterials.Count < (int)type)
             {
@@ -8972,7 +8972,7 @@ namespace Server.MirObjects
                         foreach (ItemInfo info in Envir.ItemInfoList)
                         {
                             if (item.Info.Grade == info.Grade &&
-                                info.Type == ItemType.Awakening)
+                                info.Type == ItemType.觉醒物品)
                             {
                                 if (info.Shape == (short)type - 1)
                                 {
@@ -9027,7 +9027,7 @@ namespace Server.MirObjects
                 if (materialItem != null)
                 {
                     if (materialItem.Info.Grade == item.Info.Grade &&
-                        materialItem.Info.Type == ItemType.Awakening)
+                        materialItem.Info.Type == ItemType.觉醒物品)
                     {
                         if (materialItem.Info.Shape == ((int)type - 1) &&
                             materialCount[0] - currentCount[0] != 0)
@@ -9071,7 +9071,7 @@ namespace Server.MirObjects
                 if (Info.Inventory[i] != null)
                 {
                     if (Info.Inventory[i].Info.Grade == item.Info.Grade &&
-                        Info.Inventory[i].Info.Type == ItemType.Awakening)
+                        Info.Inventory[i].Info.Type == ItemType.觉醒物品)
                     {
                         if (Info.Inventory[i].Info.Shape == ((int)type - 1) &&
                             currentCount[0] > 0)
@@ -9643,7 +9643,7 @@ namespace Server.MirObjects
 
                         foreach (var item in Info.Inventory.Where(item => item != null && item.Info == Required.Item))
                         {
-                            if ((Required.Item.Type == ItemType.Ore) && (item.CurrentDura / 1000 > Required.Amount))
+                            if ((Required.Item.Type == ItemType.矿石) && (item.CurrentDura / 1000 > Required.Amount))
                             {
                                 count = 0;
                                 break;
@@ -9660,7 +9660,7 @@ namespace Server.MirObjects
                                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.RequiredToCreateGuild), Required.Item.FriendlyName), ChatType.System);
                             else
                             {
-                                if (Required.Item.Type == ItemType.Ore)
+                                if (Required.Item.Type == ItemType.矿石)
                                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ItemPurityRequiredForGuildCreation), Required.Item.FriendlyName, Required.Amount / 1000), ChatType.System);
                                 else
                                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.InsufficientNeedCreateGuild), Required.Item.FriendlyName, Required.Amount), ChatType.System);
@@ -9692,7 +9692,7 @@ namespace Server.MirObjects
                             if (item == null) continue;
                             if (item.Info != Required.Item) continue;
 
-                            if ((Required.Item.Type == ItemType.Ore) && (item.CurrentDura / 1000 > Required.Amount))
+                            if ((Required.Item.Type == ItemType.矿石) && (item.CurrentDura / 1000 > Required.Amount))
                             {
                                 Enqueue(new S.DeleteItem { UniqueID = item.UniqueID, Count = item.Count });
                                 Info.Inventory[o] = null;
@@ -10864,7 +10864,7 @@ namespace Server.MirObjects
 
         public void FishingCast(bool cast, bool cancel = false)
         {
-            UserItem rod = Info.Equipment[(int)EquipmentSlot.Weapon];
+            UserItem rod = Info.Equipment[(int)EquipmentSlot.武器];
 
             byte flexibilityStat = 0;
             sbyte successStat = 0;
@@ -10922,29 +10922,29 @@ namespace Server.MirObjects
 
                 switch (realItem.Type)
                 {
-                    case ItemType.Hook:
+                    case ItemType.鱼钩:
                         {
                             flexibilityStat = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, flexibilityStat + temp.AddedStats[Stat.CriticalRate] + realItem.Stats[Stat.CriticalRate])));
                         }
                         break;
-                    case ItemType.Float:
+                    case ItemType.鱼漂:
                         {
                             nibbleMin = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, nibbleMin + realItem.Stats[Stat.MinAC])));
                             nibbleMax = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, nibbleMax + realItem.Stats[Stat.MaxAC])));
                         }
                         break;
-                    case ItemType.Bait:
+                    case ItemType.鱼饵:
                         {
                             successStat = (sbyte)Math.Max(sbyte.MinValue, (Math.Min(sbyte.MaxValue, successStat + realItem.Stats[Stat.MaxAC])));
                         }
                         break;
-                    case ItemType.Finder:
+                    case ItemType.探鱼器:
                         {
                             failedAddSuccessMin = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, failedAddSuccessMin + realItem.Stats[Stat.MinAC])));
                             failedAddSuccessMax = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, failedAddSuccessMax + realItem.Stats[Stat.MaxAC])));
                         }
                         break;
-                    case ItemType.Reel:
+                    case ItemType.摇轮:
                         {
                             FishingAutoReelChance = (sbyte)Math.Max(sbyte.MinValue, (Math.Min(sbyte.MaxValue, FishingAutoReelChance + realItem.Stats[Stat.MaxMAC])));
                             successStat = (sbyte)Math.Max(sbyte.MinValue, (Math.Min(sbyte.MaxValue, successStat + realItem.Stats[Stat.MaxAC])));
@@ -11083,7 +11083,7 @@ namespace Server.MirObjects
         }
         public void FishingChangeAutocast(bool autoCast)
         {
-            UserItem rod = Info.Equipment[(int)EquipmentSlot.Weapon];
+            UserItem rod = Info.Equipment[(int)EquipmentSlot.武器];
 
             if (rod == null || !rod.Info.IsFishingRod) return;
 
@@ -11326,7 +11326,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (quest.Info.Type != QuestType.Repeatable)
+            if (quest.Info.Type != QuestType.重复)
             {
                 Info.CompletedQuests.Add(quest.Index);
                 GetCompletedQuests();
@@ -11674,7 +11674,7 @@ namespace Server.MirObjects
                 {
                     UserItem item = Info.Inventory[i];
 
-                    if (item == null || item.Info.Type != ItemType.Nothing || item.Info.Shape != 1 || item.Count < 1) continue;
+                    if (item == null || item.Info.Type != ItemType.杂物 || item.Info.Shape != 1 || item.Count < 1) continue;
 
                     hasStamp = true;
 
@@ -12205,7 +12205,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (dropItem.Info.Type == ItemType.Pets && dropItem.Info.Shape == 26)
+            if (dropItem.Info.Type == ItemType.宠物 && dropItem.Info.Shape == 26)
             {
                 dropItem = CreateDynamicWonderDrug(boxtype, dropItem);
             }
@@ -12564,7 +12564,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if ((Info.Inventory[index].Info.Type != ItemType.Weapon) && (Settings.OnlyRefineWeapon))
+            if ((Info.Inventory[index].Info.Type != ItemType.武器) && (Settings.OnlyRefineWeapon))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ItemCannotBeRefined), Info.Inventory[index].FriendlyName), ChatType.System);
                 return;
@@ -12625,7 +12625,7 @@ namespace Server.MirObjects
                 ingredient = Info.Refine[i];
 
                 if (ingredient == null) continue;
-                if (ingredient.Info.Type == ItemType.Weapon)
+                if (ingredient.Info.Type == ItemType.武器)
                 {
                     Info.Refine[i] = null;
                     continue;
@@ -12654,7 +12654,7 @@ namespace Server.MirObjects
             if ((totalDC == 0) && (totalMC == 0) && (totalSC == 0))
             {
                 Info.CurrentRefine.RefineSuccessChance = 0;
-                //Info.CurrentRefine.RefinedValue = RefinedValue.None;
+                //Info.CurrentRefine.RefinedValue = RefinedValue.无;
                 Info.CurrentRefine.RefineAdded = Settings.RefineIncrease;
 
                 if (Settings.RefineTime == 0)
@@ -12672,7 +12672,7 @@ namespace Server.MirObjects
             if (oreAmount == 0)
             {
                 Info.CurrentRefine.RefineSuccessChance = 0;
-                //Info.CurrentRefine.RefinedValue = RefinedValue.None;
+                //Info.CurrentRefine.RefinedValue = RefinedValue.无;
                 Info.CurrentRefine.RefineAdded = Settings.RefineIncrease;
                 if (Settings.RefineTime == 0)
                 {
@@ -12690,19 +12690,19 @@ namespace Server.MirObjects
 
             if ((totalDC > totalMC) && (totalDC > totalSC))
             {
-                Info.CurrentRefine.RefinedValue = RefinedValue.DC;
+                Info.CurrentRefine.RefinedValue = RefinedValue.物理攻击;
                 refineStat = totalDC;
             }
 
             if ((totalMC > totalDC) && (totalMC > totalSC))
             {
-                Info.CurrentRefine.RefinedValue = RefinedValue.MC;
+                Info.CurrentRefine.RefinedValue = RefinedValue.魔法攻击;
                 refineStat = totalMC;
             }
 
             if ((totalSC > totalDC) && (totalSC > totalMC))
             {
-                Info.CurrentRefine.RefinedValue = RefinedValue.SC;
+                Info.CurrentRefine.RefinedValue = RefinedValue.道术攻击;
                 refineStat = totalSC;
             }
 
@@ -12737,7 +12737,7 @@ namespace Server.MirObjects
             int successChance = (itemSuccess + oreSuccess + luckSuccess + baseSuccess);
 
             addedStats = (byte)(Info.CurrentRefine.AddedStats[Stat.MaxDC] + Info.CurrentRefine.AddedStats[Stat.MaxMC] + Info.CurrentRefine.AddedStats[Stat.MaxSC]);
-            if (Info.CurrentRefine.Info.Type == ItemType.Weapon) addedStats = (short)(addedStats * Settings.RefineWepStatReduce);
+            if (Info.CurrentRefine.Info.Type == ItemType.武器) addedStats = (short)(addedStats * Settings.RefineWepStatReduce);
             else addedStats = (short)(addedStats * Settings.RefineItemStatReduce);
             if (addedStats > 50) addedStats = 50;
 
@@ -12825,7 +12825,7 @@ namespace Server.MirObjects
 
             if (Envir.Random.Next(1, 100) > Info.Inventory[index].RefineSuccessChance)
             {
-                Info.Inventory[index].RefinedValue = RefinedValue.None;
+                Info.Inventory[index].RefinedValue = RefinedValue.无;
             }
 
             if (Envir.Random.Next(1, 100) < Settings.RefineCritChance)
@@ -12833,33 +12833,33 @@ namespace Server.MirObjects
                 Info.Inventory[index].RefineAdded = (byte)(Info.Inventory[index].RefineAdded * Settings.RefineCritIncrease);
             }
 
-            if ((Info.Inventory[index].RefinedValue == RefinedValue.DC) && (Info.Inventory[index].RefineAdded > 0))
+            if ((Info.Inventory[index].RefinedValue == RefinedValue.物理攻击) && (Info.Inventory[index].RefineAdded > 0))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CongratulationsExtraDC), Info.Inventory[index].FriendlyName, Info.Inventory[index].RefineAdded), ChatType.System);
                 Info.Inventory[index].AddedStats[Stat.MaxDC] = (int)Math.Min(int.MaxValue, Info.Inventory[index].AddedStats[Stat.MaxDC] + Info.Inventory[index].RefineAdded);
                 Info.Inventory[index].RefineAdded = 0;
-                Info.Inventory[index].RefinedValue = RefinedValue.None;
+                Info.Inventory[index].RefinedValue = RefinedValue.无;
                 Info.Inventory[index].RefineSuccessChance = 0;
 
             }
-            else if ((Info.Inventory[index].RefinedValue == RefinedValue.MC) && (Info.Inventory[index].RefineAdded > 0))
+            else if ((Info.Inventory[index].RefinedValue == RefinedValue.魔法攻击) && (Info.Inventory[index].RefineAdded > 0))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CongratulationsExtraMC), Info.Inventory[index].FriendlyName, Info.Inventory[index].RefineAdded), ChatType.System);
                 Info.Inventory[index].AddedStats[Stat.MaxMC] = (int)Math.Min(int.MaxValue, Info.Inventory[index].AddedStats[Stat.MaxMC] + Info.Inventory[index].RefineAdded);
                 Info.Inventory[index].RefineAdded = 0;
-                Info.Inventory[index].RefinedValue = RefinedValue.None;
+                Info.Inventory[index].RefinedValue = RefinedValue.无;
                 Info.Inventory[index].RefineSuccessChance = 0;
 
             }
-            else if ((Info.Inventory[index].RefinedValue == RefinedValue.SC) && (Info.Inventory[index].RefineAdded > 0))
+            else if ((Info.Inventory[index].RefinedValue == RefinedValue.道术攻击) && (Info.Inventory[index].RefineAdded > 0))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CongratulationsExtraSC), Info.Inventory[index].FriendlyName, Info.Inventory[index].RefineAdded), ChatType.System);
                 Info.Inventory[index].AddedStats[Stat.MaxSC] = (int)Math.Min(int.MaxValue, Info.Inventory[index].AddedStats[Stat.MaxSC] + Info.Inventory[index].RefineAdded);
                 Info.Inventory[index].RefineAdded = 0;
-                Info.Inventory[index].RefinedValue = RefinedValue.None;
+                Info.Inventory[index].RefinedValue = RefinedValue.无;
                 Info.Inventory[index].RefineSuccessChance = 0;
             }
-            else if ((Info.Inventory[index].RefinedValue == RefinedValue.None) && (Info.Inventory[index].RefineAdded > 0))
+            else if ((Info.Inventory[index].RefinedValue == RefinedValue.无) && (Info.Inventory[index].RefineAdded > 0))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ItemSmashedOnTest), Info.Inventory[index].FriendlyName), ChatType.System);
                 Enqueue(new S.RefineItem { UniqueID = Info.Inventory[index].UniqueID });
@@ -12890,25 +12890,25 @@ namespace Server.MirObjects
             Info.Married = 0;
             Info.MarriedDate = Envir.Now;
 
-            if (Info.Equipment[(int)EquipmentSlot.RingL] != null)
+            if (Info.Equipment[(int)EquipmentSlot.左戒指] != null)
             {
-                Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing = -1;
-                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.RingL] });
+                Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = -1;
+                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.左戒指] });
             }
 
             GetRelationship(false);
 
             lover.Married = 0;
             lover.MarriedDate = Envir.Now;
-            if (lover.Equipment[(int)EquipmentSlot.RingL] != null)
-                lover.Equipment[(int)EquipmentSlot.RingL].WeddingRing = -1;
+            if (lover.Equipment[(int)EquipmentSlot.左戒指] != null)
+                lover.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = -1;
 
             if (player != null)
             {
                 player.GetRelationship(false);
                 player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ForcefullyDivorced), ChatType.System);
-                if (player.Info.Equipment[(int)EquipmentSlot.RingL] != null)
-                    player.Enqueue(new S.RefreshItem { Item = player.Info.Equipment[(int)EquipmentSlot.RingL] });
+                if (player.Info.Equipment[(int)EquipmentSlot.左戒指] != null)
+                    player.Enqueue(new S.RefreshItem { Item = player.Info.Equipment[(int)EquipmentSlot.左戒指] });
             }
         }
 
@@ -12920,19 +12920,19 @@ namespace Server.MirObjects
                 return false;
             }
 
-            if (Info.Equipment[(int)EquipmentSlot.RingL] == null)
+            if (Info.Equipment[(int)EquipmentSlot.左戒指] == null)
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NeedRingOnLeftFinger), ChatType.System);
                 return false;
             }
 
-            if (Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing != -1)
+            if (Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing != -1)
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.AlreadyWearingWeddingRing), ChatType.System);
                 return false;
             }
 
-            if (Info.Equipment[(int)EquipmentSlot.RingL].Info.Bind.HasFlag(BindMode.NoWeddingRing))
+            if (Info.Equipment[(int)EquipmentSlot.左戒指].Info.Bind.HasFlag(BindMode.NoWeddingRing))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotUseRingType), ChatType.System);
                 return false;
@@ -12945,8 +12945,8 @@ namespace Server.MirObjects
         {
             if (CheckMakeWeddingRing())
             {
-                Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing = Info.Married;
-                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.RingL] });
+                Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = Info.Married;
+                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.左戒指] });
             }
         }
 
@@ -12957,7 +12957,7 @@ namespace Server.MirObjects
             if (NPCPage == null || (!String.Equals(NPCPage.Key, NPCScript.ReplaceWedRingKey, StringComparison.CurrentCultureIgnoreCase))) return;
 
             UserItem temp = null;
-            UserItem CurrentRing = Info.Equipment[(int)EquipmentSlot.RingL];
+            UserItem CurrentRing = Info.Equipment[(int)EquipmentSlot.左戒指];
 
             if (CurrentRing == null)
             {
@@ -12986,13 +12986,13 @@ namespace Server.MirObjects
             temp = Info.Inventory[index];
 
 
-            if (temp.Info.Type != ItemType.Ring)
+            if (temp.Info.Type != ItemType.戒指)
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotReplaceWeddingRing), ChatType.System);
                 return;
             }
 
-            if (!CanEquipItem(temp, (int)EquipmentSlot.RingL))
+            if (!CanEquipItem(temp, (int)EquipmentSlot.左戒指))
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotEquipItemInUse), ChatType.System);
                 return;
@@ -13019,13 +13019,13 @@ namespace Server.MirObjects
             temp.WeddingRing = Info.Married;
             CurrentRing.WeddingRing = -1;
 
-            Info.Equipment[(int)EquipmentSlot.RingL] = temp;
+            Info.Equipment[(int)EquipmentSlot.左戒指] = temp;
             Info.Inventory[index] = CurrentRing;
 
-            Enqueue(new S.EquipItem { Grid = MirGridType.Inventory, UniqueID = temp.UniqueID, To = (int)EquipmentSlot.RingL, Success = true });
+            Enqueue(new S.EquipItem { Grid = MirGridType.Inventory, UniqueID = temp.UniqueID, To = (int)EquipmentSlot.左戒指, Success = true });
 
             Enqueue(new S.RefreshItem { Item = Info.Inventory[index] });
-            Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.RingL] });
+            Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.左戒指] });
 
         }
 
@@ -13278,18 +13278,18 @@ namespace Server.MirObjects
 
             DivorceProposal.Info.Married = 0;
             DivorceProposal.Info.MarriedDate = Envir.Now;
-            if (DivorceProposal.Info.Equipment[(int)EquipmentSlot.RingL] != null)
+            if (DivorceProposal.Info.Equipment[(int)EquipmentSlot.左戒指] != null)
             {
-                DivorceProposal.Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing = -1;
-                DivorceProposal.Enqueue(new S.RefreshItem { Item = DivorceProposal.Info.Equipment[(int)EquipmentSlot.RingL] });
+                DivorceProposal.Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = -1;
+                DivorceProposal.Enqueue(new S.RefreshItem { Item = DivorceProposal.Info.Equipment[(int)EquipmentSlot.左戒指] });
             }
 
             Info.Married = 0;
             Info.MarriedDate = Envir.Now;
-            if (Info.Equipment[(int)EquipmentSlot.RingL] != null)
+            if (Info.Equipment[(int)EquipmentSlot.左戒指] != null)
             {
-                Info.Equipment[(int)EquipmentSlot.RingL].WeddingRing = -1;
-                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.RingL] });
+                Info.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = -1;
+                Enqueue(new S.RefreshItem { Item = Info.Equipment[(int)EquipmentSlot.左戒指] });
             }
 
             DivorceProposal.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.YouAreDivorced), Info.Name), ChatType.System);
@@ -13859,7 +13859,7 @@ namespace Server.MirObjects
             }
             else if (CurrentMap.tempConquest != null)
             {
-                if (checkPalace && CurrentMap.Info.Index == CurrentMap.tempConquest.PalaceMap.Info.Index && CurrentMap.tempConquest.GameType == ConquestGame.CapturePalace)
+                if (checkPalace && CurrentMap.Info.Index == CurrentMap.tempConquest.PalaceMap.Info.Index && CurrentMap.tempConquest.GameType == ConquestGame.占领皇宫)
                     CurrentMap.tempConquest.TakeConquest(this);
 
                 EnterSabuk();
@@ -14408,11 +14408,11 @@ namespace Server.MirObjects
 
             HeroObject hero = CurrentHero.Class switch
             {
-                MirClass.Warrior => new WarriorHero(CurrentHero, this),
-                MirClass.Wizard => new WizardHero(CurrentHero, this),
-                MirClass.Taoist => new TaoistHero(CurrentHero, this),
-                MirClass.Assassin => new AssassinHero(CurrentHero, this),
-                MirClass.Archer => new ArcherHero(CurrentHero, this),
+                MirClass.战士 => new WarriorHero(CurrentHero, this),
+                MirClass.法师 => new WizardHero(CurrentHero, this),
+                MirClass.道士 => new TaoistHero(CurrentHero, this),
+                MirClass.刺客 => new AssassinHero(CurrentHero, this),
+                MirClass.弓箭 => new ArcherHero(CurrentHero, this),
                 _ => new HeroObject(CurrentHero, this)
             };
 

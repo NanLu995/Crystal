@@ -14,17 +14,17 @@ public enum MouseCursor : byte
 //[Flags]
 public enum WeatherSetting : ushort
 {
-    None = 0, // 无效果 = 0,
-    Fog = 1, // 雾天 = 1,
-    RedEmber = 2, // 红色余烬 = 2,
-    WhiteEmber = 4, // 白色余烬 = 4,
-    YellowEmber = 8, // 黄色余烬 = 8,
-    FireParticle = 16, // 落雪 = 16,
-    Snow = 32, // 飘雪 = 32,
-    Rain = 64, // 雨天 = 64,
-    Leaves = 128, // 黄色花瓣 = 128,
-    FireyLeaves = 256, // 红色花瓣 = 256,
-    PurpleLeaves = 512, // 粉色花瓣 = 512,
+    无效果 = 0, // None = 0,
+    雾天 = 1,// Fog = 1, 
+    红色余烬 = 2, // RedEmber = 2,
+    白色余烬 = 4, // WhiteEmber = 4,
+    黄色余烬 = 8, // YellowEmber = 8,
+    火焰粒子 = 16, // FireParticle = 16, 落雪
+    飘雪 = 32, // Snow = 32,
+    雨天 = 64, // Rain = 64,
+    黄色花瓣 = 128, // Leaves = 128,
+    红色花瓣 = 256, // FireyLeaves = 256,
+    粉色花瓣 = 512, // PurpleLeaves = 512,
     // 沙尘 = 1024,
     // 沙雾 = 2048,
 }
@@ -108,13 +108,13 @@ public enum GMOptions : byte
 
 public enum AwakeType : byte
 {
-    None = 0,
-    DC, // 物理攻击
-    MC, // 魔法攻击
-    SC, // 道术攻击
-    AC, // 物理防御
-    MAC, // 魔法防御
-    HPMP, // 生命法力值
+    无 = 0, // None
+    物理攻击, // DC
+    魔法攻击, // MC
+    道术攻击, // SC
+    物理防御, // AC
+    魔法防御, // MAC
+    生命值魔法值, // HPMP
 }
 
 [Flags]
@@ -141,30 +141,28 @@ public enum OutputMessageType : byte
 
 public enum ItemGrade : byte
 {
-    None = 0,
-    Common = 1, // 普通 = 1
-    Rare = 2, // 宝物 = 2
-    Legendary = 3, // 圣物 = 3
-    Mythical = 4, // 神物 = 4
-    Heroic = 5, // 英雄 = 5
+    无等级 = 0, // None = 0
+    普通 = 1, // Common = 1
+    宝物 = 2, // Rare = 2
+    圣物 = 3, // Legendary = 3
+    神物 = 4, // Mythical = 4
+    英雄 = 5, // Heroic = 5
 }
-
-
 
 public enum RefinedValue : byte
 {
-    None = 0,
-    DC = 1,
-    MC = 2,
-    SC = 3,
+    无 = 0, // None
+    物理攻击 = 1, // DC
+    魔法攻击 = 2, // MC
+    道术攻击 = 3, // SC
 }
 
 public enum QuestType : byte
 {
-    General = 0, // 一般 = 0,
-    Daily = 1, // 每日 = 1,
-    Repeatable = 2, // 重复 = 2,
-    Story = 3 // 主线 = 3
+    一般 = 0, // General = 0,
+    每日 = 1, // Daily = 1,
+    重复 = 2, // Repeatable = 2,
+    主线 = 3 // Story = 3
 }
 
 public enum QuestIcon : byte
@@ -210,21 +208,21 @@ public enum DefaultNPCType : byte
 public enum IntelligentCreatureType : byte
 {
     None = 99,
-    BabyPig = 0, // 小猪 = 0,
-    Chick = 1, // 小鸡 = 1,
-    Kitten = 2, // 小猫 = 2,
-    BabySkeleton = 3, // 精灵骷髅 = 3,
-    Baekdon = 4, // 白猪 = 4,
-    Wimaen = 5, // 纸片人 = 5,
-    BlackKitten = 6, // 黑猫 = 6,
-    BabyDragon = 7, // 龙蛋 = 7,
-    OlympicFlame = 8, // 火娃 = 8,
-    BabySnowMan = 9, // 雪人 = 9,
-    Frog = 10, // 青蛙 = 10,
-    BabyMonkey = 11, // 红猴 = 11,
-    AngryBird = 12, // 愤怒的小鸟 = 12,
-    Foxey = 13, // 阿福 = 13,
-    MedicalRat = 14, // 治疗拉拉 = 14,
+    小猪 = 0, // BabyPig = 0,
+    小鸡 = 1, // Chick = 1,
+    小猫 = 2, // Kitten = 2,
+    精灵骷髅 = 3, // BabySkeleton = 3,
+    白猪 = 4, // Baekdon = 4,
+    纸片人 = 5, // Wimaen = 5,
+    黑猫 = 6, // BlackKitten = 6,
+    龙蛋 = 7, // BabyDragon = 7,
+    火娃 = 8, // OlympicFlame = 8,
+    雪人 = 9, // BabySnowMan = 9,
+    青蛙 = 10, // Frog = 10,
+    红猴 = 11, // BabyMonkey = 11,
+    愤怒的小鸟 = 12, // AngryBird = 12,
+    阿福 = 13, // Foxey = 13,
+    治疗拉拉 = 14, // MedicalRat = 14,
     // 猫咪超人 = 15,
     // 龙宝宝 = 16,
     // 蛇宝宝 = 17,
@@ -737,21 +735,24 @@ public enum Monster : ushort
     //Flags 1000 ~ 1100
 
     //Creatures
-    BabyPig = 10000,//Permanent
-    Chick = 10001,//Special
-    Kitten = 10002,//Permanent
-    BabySkeleton = 10003,//Special
-    Baekdon = 10004,//Special
-    Wimaen = 10005,//Event
-    BlackKitten = 10006,//unknown
-    BabyDragon = 10007,//unknown
-    OlympicFlame = 10008,//unknown
-    BabySnowMan = 10009,//unknown
-    Frog = 10010,//unknown
-    BabyMonkey = 10011,//unknown
-    AngryBird = 10012,
-    Foxey = 10013,
-    MedicalRat = 10014,
+    小猪 = 10000,//BabyPig
+    小鸡 = 10001,//Chick
+    小猫 = 10002,//Kitten
+    精灵骷髅 = 10003,//BabySkeleton
+    白猪 = 10004,//Baekdon
+    纸片人 = 10005,//Wimaen
+    黑猫 = 10006,//BlackKitten
+    龙蛋 = 10007,//BabyDragon
+    火娃 = 10008,//OlympicFlame
+    雪人 = 10009,//BabySnowMan
+    青蛙 = 10010,//Frog
+    红猴 = 10011,//BabyMonkey
+    愤怒的小鸟 = 10012,//AngryBird
+    阿福 = 10013,//Foxey
+    治疗拉拉 = 10014,//MedicalRat
+    // 猫咪超人 = 10015,
+    // 龙宝宝 = 10016,
+    // 蛇宝宝 = 10017,
 }
 
 public enum MirAction : byte
@@ -824,23 +825,17 @@ public enum LightSetting : byte
 
 public enum MirGender : byte
 {
-    /// <summary>
-    /// 男性
-    /// </summary>
-    Male = 0,
-    /// <summary>
-    /// 女性
-    /// </summary>
-    Female = 1
+    男性 = 0, // Male
+    女性 = 1 // Female
 }
 
 public enum MirClass : byte
 {
-    Warrior = 0, // 战士 = 0
-    Wizard = 1, // 法师 = 1
-    Taoist = 2, // 道士 = 2
-    Assassin = 3, // 刺客 = 3
-    Archer = 4 // 弓箭 = 
+    战士 = 0, // Warrior = 0
+    法师 = 1, // Wizard = 1
+    道士 = 2, // Taoist = 2
+    刺客 = 3, // Assassin = 3
+    弓箭 = 4 // Archer = 4
 }
 
 public enum MirDirection : byte
@@ -891,90 +886,48 @@ public enum ChatType : byte
 
 public enum ItemType : byte
 {
-    /// <summary> 杂物 </summary>
-    Nothing = 0,
-    /// <summary> 武器 </summary>
-    Weapon = 1,
-    /// <summary> 盔甲 </summary>
-    Armour = 2,
-    /// <summary> 头盔 </summary>
-    Helmet = 4,
-    /// <summary> 项链 </summary>
-    Necklace = 5,
-    /// <summary> 手镯 </summary>
-    Bracelet = 6,
-    /// <summary> 戒指 </summary>
-    Ring = 7,
-    /// <summary> 护身符 </summary>
-    Amulet = 8,
-    /// <summary> 腰带 </summary>
-    Belt = 9,
-    /// <summary> 靴子 </summary>
-    Boots = 10,
-    /// <summary> 守护石 </summary>
-    Stone = 11,
-    /// <summary> 照明物 </summary>
-    Torch = 12,
-    /// <summary> 药水 </summary>
-    Potion = 13,
-    /// <summary> 矿石 </summary>
-    Ore = 14,
-    /// <summary> 肉 </summary>
-    Meat = 15,
-    /// <summary> 工艺材料 </summary>
-    CraftingMaterial = 16,
-    /// <summary> 卷轴 </summary>
-    Scroll = 17,
-    /// <summary> 宝玉神珠 </summary>
-    Gem = 18,
-    /// <summary> 坐骑 </summary>
-    Mount = 19,
-    /// <summary> 技能书 </summary>
-    Book = 20,
-    /// <summary> 特殊消耗品 </summary>
-    Script = 21,
-    /// <summary> 缰绳 </summary>
-    Reins = 22,
-    /// <summary> 铃铛 </summary>
-    Bells = 23,
-    /// <summary> 马鞍 </summary>
-    Saddle = 24,
-    /// <summary> 蝴蝶结 </summary>
-    Ribbon = 25,
-    /// <summary> 面罩 </summary>
-    Mask = 26,
-    /// <summary> 坐骑食物 </summary>
-    Food = 27,
-    /// <summary> 鱼钩 </summary>
-    Hook = 28,
-    /// <summary> 鱼漂 </summary>
-    Float = 29,
-    /// <summary> 鱼饵 </summary>
-    Bait = 30,
-    /// <summary> 探鱼器 </summary>
-    Finder = 31,
-    /// <summary> 摇轮 </summary>
-    Reel = 32,
-    /// <summary> 鱼 </summary>
-    Fish = 33,
-    /// <summary> 任务物品 </summary>
-    Quest = 34,
-    /// <summary> 觉醒物品 </summary>
-    Awakening = 35,
-    /// <summary> 灵物 </summary>
-    Pets = 36,
-    /// <summary> 外形物品 </summary>
-    Transform = 37,
-    /// <summary> 装饰 </summary>
-    Deco = 38,
-    /// <summary> 镶嵌宝石 </summary>
-    Socket = 39,
-    /// <summary> 宠物蛋 </summary>
-    MonsterSpawn = 40,
-    /// <summary> 攻城弹药 </summary>
-    SiegeAmmo = 41, //TODO
-    /// <summary> 封印 </summary>
-    SealedHero = 42,
+    杂物 = 0,
+    武器 = 1,
+    盔甲 = 2,
+    头盔 = 4,
+    项链 = 5,
+    手镯 = 6,
+    戒指 = 7,
+    护身符 = 8,
+    腰带 = 9,
+    靴子 = 10,
+    守护石 = 11,
+    照明物 = 12,
+    药水 = 13,
+    矿石 = 14,
+    肉 = 15,
+    制作材料 = 16,
+    卷轴 = 17,
+    宝玉神珠 = 18,
+    坐骑 = 19,
+    技能书 = 20,
+    特殊消耗品 = 21,
+    缰绳 = 22,
+    铃铛 = 23,
+    马鞍 = 24,
+    蝴蝶结 = 25,
+    面罩 = 26,
+    坐骑食物 = 27,
+    鱼钩 = 28,
+    鱼漂 = 29,
+    鱼饵 = 30,
+    探鱼器 = 31,
+    摇轮 = 32,
+    鱼 = 33,
+    任务物品 = 34,
+    觉醒物品 = 35,
+    宠物 = 36,
+    时装 = 37,
+    装饰 = 38,
+    镶嵌宝石 = 39,
+    宠物蛋 = 40,
+    攻城弹药 = 41, //TODO
+    英雄封印 = 42,
     // 攻击型绝技 = 43,
     // 防御型绝技 = 44,
     // 技能型绝技 = 45,
@@ -1012,34 +965,20 @@ public enum MirGridType : byte
 
 public enum EquipmentSlot : byte
 {
-    /// <summary> 武器 </summary>
-    Weapon = 0,
-    /// <summary> 盔甲 </summary>
-    Armour = 1,
-    /// <summary> 头盔 </summary>
-    Helmet = 2,
-    /// <summary> 照明物 </summary>
-    Torch = 3,
-    /// <summary> 项链 </summary>
-    Necklace = 4,
-    /// <summary> 左手镯 </summary>
-    BraceletL = 5,
-    /// <summary> 右手镯 </summary>
-    BraceletR = 6,
-    /// <summary> 左戒指 </summary>
-    RingL = 7,
-    /// <summary> 右戒指 </summary>
-    RingR = 8,
-    /// <summary> 护身符 </summary>
-    Amulet = 9,
-    /// <summary> 腰带 </summary>
-    Belt = 10,
-    /// <summary> 靴子 </summary>
-    Boots = 11,
-    /// <summary> 守护石 </summary>
-    Stone = 12,
-    /// <summary> 坐骑 </summary>
-    Mount = 13
+    武器 = 0,
+    盔甲 = 1,
+    头盔 = 2,
+    照明物 = 3,
+    项链 = 4,
+    左手镯 = 5,
+    右手镯 = 6,
+    左戒指 = 7,
+    右戒指 = 8,
+    护身符 = 9,
+    腰带 = 10,
+    靴子 = 11,
+    守护石 = 12,
+    坐骑 = 13
 }
 
 public enum MountSlot : byte
@@ -1140,33 +1079,22 @@ public enum SpecialItemMode : short
 [Flags]
 public enum RequiredClass : byte
 {    
-    /// <summary> 战士 </summary>
-    Warrior = 1,
-    /// <summary> 法师 </summary>
-    Wizard = 2,
-    /// <summary> 道士 </summary>
-    Taoist = 4,
-    /// <summary> 刺客 </summary>
-    Assassin = 8,
-    /// <summary> 弓箭 </summary>
-    Archer = 16,
-    /// <summary> 战法道 </summary>
-    WarWizTao = Warrior | Wizard | Taoist,
-    /// <summary> 战刺 </summary>
-    //WarAss = Warrior | Assassin,
-    /// <summary> 全职业 </summary>
-    None = WarWizTao | Assassin | Archer
+    战士 = 1,
+    法师 = 2,
+    道士 = 4,
+    刺客 = 8,
+    弓箭 = 16,
+    //战士刺客 = 战士 | 刺客 ,
+    战法道 = 战士 | 法师 | 道士,
+    全职业 = 战法道 | 刺客 | 弓箭
 }
 
 [Flags]
 public enum RequiredGender : byte
 {
-    /// <summary> 男性 </summary>
-    Male = 1,
-    /// <summary> 女性 </summary>
-    Female = 2,
-    /// <summary> 性别不限 </summary>
-    None = Male | Female
+    男性 = 1,
+    女性 = 2,
+    性别不限 = 男性 | 女性
 }
 
 public enum RequiredType : byte
@@ -1187,74 +1115,41 @@ public enum RequiredType : byte
 
 public enum ItemSet : byte
 {
-    /// <summary> 非套装 </summary>
-    None = 0,
-    /// <summary> 祈祷套装 </summary>
-    Spirit = 1,
-    /// <summary> 记忆套装 </summary>
-    Recall = 2,
-    /// <summary> 赤兰套装 </summary>
-    RedOrchid = 3,
-    /// <summary> 密火套装 </summary>
-    RedFlower = 4,
-    /// <summary> 破碎套装 </summary>
-    Smash = 5,
-    /// <summary> 幻魔石套 </summary>
-    HwanDevil = 6,
-    /// <summary> 灵玉套装 </summary>
-    Purity = 7,
-    /// <summary> 五玄套装 </summary>
-    FiveString = 8,
-    /// <summary> 世轮套装 </summary>
-    Mundane = 9,
-    /// <summary> 绿翠套装 </summary>
-    NokChi = 10,
-    /// <summary> 道护套装 </summary>
-    TaoProtect = 11,
-    /// <summary> 天龙套装 </summary>
-    Mir = 12,
-    /// <summary> 白骨套装 </summary>
-    Bone = 13,
-    /// <summary> 虫血套装 </summary>
-    Bug = 14,
-    /// <summary> 白金套装 </summary>
-    WhiteGold = 15,
-    /// <summary> 强白金套 </summary>
-    WhiteGoldH = 16,
-    /// <summary> 红玉套装 </summary>
-    RedJade = 17,
-    /// <summary> 强红玉套 </summary>
-    RedJadeH = 18,
-    /// <summary> 软玉套装 </summary>
-    Nephrite = 19,
-    /// <summary> 强软玉套 </summary>
-    NephriteH = 20,
-    /// <summary> 贵人战套 </summary>
-    Whisker1 = 21,
-    /// <summary> 贵人法套 </summary>
-    Whisker2 = 22,
-    /// <summary> 贵人道套 </summary>
-    Whisker3 = 23,
-    /// <summary> 贵人刺套 </summary>
-    Whisker4 = 24,
-    /// <summary> 贵人弓套 </summary>
-    Whisker5 = 25,
-    /// <summary> 血龙套装 </summary>
-    Hyeolryong = 26,
-    /// <summary> 监视套装 </summary>
-    Monitor = 27,
-    /// <summary> 暴压套装 </summary>
-    Oppressive = 28,
-    /// <summary> 贝玉套装 </summary>
-    Paeok = 29,
-    /// <summary> 黑术套装 </summary>
-    Sulgwan = 30,
-    /// <summary> 青玉套装 </summary>
-    BlueFrost = 31,
-    /// <summary> 鏃未套装 </summary>
-    DarkGhost = 38,
-    /// <summary> 强青玉套 </summary>
-    BlueFrostH = 39,
+    非套装 = 0,
+    祈祷套装 = 1,
+    记忆套装 = 2,
+    赤兰套装 = 3,
+    密火套装 = 4,
+    破碎套装 = 5,
+    幻魔石套 = 6,
+    灵玉套装 = 7,
+    五玄套装 = 8,
+    世轮套装 = 9,
+    绿翠套装 = 10,
+    道护套装 = 11,
+    天龙套装 = 12,
+    白骨套装 = 13,
+    虫血套装 = 14,
+    白金套装 = 15,
+    白金套装H = 16,
+    红玉套装 = 17,
+    红玉套装H = 18,
+    软玉套装 = 19,
+    软玉套装H = 20,
+    贵人战套 = 21,
+    贵人法套 = 22,
+    贵人道套 = 23,
+    贵人刺套 = 24,
+    贵人弓套 = 25,
+    血龙套装 = 26,
+    监视套装 = 27,
+    暴压套装 = 28,
+    贝玉套装 = 29,
+    黑术套装 = 30,
+    青玉套装 = 31,
+    青宝套装 = 32,
+    鏃未套装 = 38,
+    青玉套装H = 39,
     // 双戒套装 = 40,
     // 昆仑套装 = 41
 }
@@ -1996,18 +1891,18 @@ public enum ClientPacketIds : short
 
 public enum ConquestType : byte
 {
-    Request = 0,
-    Auto = 1,
-    Forced = 2,
+    申请启动 = 0,
+    自动 = 1,
+    强制启动 = 2,
 }
 
 public enum ConquestGame : byte
 {
-    CapturePalace = 0, // 占领皇宫 = 0
-    KingOfHill = 1, // 争夺国王 = 1
-    Random = 2, // 随机模式 = 2
-    Classic = 3, // 经典模式 = 3
-    ControlPoints = 4 // 征服模式 = 4
+    占领皇宫 = 0,
+    争夺国王 = 1,
+    随机模式 = 2,
+    经典模式 = 3,
+    征服模式 = 4
 }
 
 [Flags]
@@ -2047,13 +1942,13 @@ public enum HeroSpawnState : byte
 
 public enum HeroBehaviour : byte
 {
-    Attack = 0, // 攻击 = 0,
-    CounterAttack = 1, // 反击 = 1,
-    Follow = 2, // 跟随 = 2,
-    Custom = 3, // 自定 = 3,
-    //守护 = 4,
-    //跑回 = 5,
-    //瞬回 = 6
+    攻击 = 0,
+    反击 = 1,
+    跟随 = 2,
+    自定 = 3,
+    // 守护 = 4,
+    // 跑回 = 5,
+    // 瞬回 = 6
 }
 
 public enum SpellToggleState: sbyte

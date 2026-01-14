@@ -48,36 +48,36 @@ namespace Client.MirScenes.Dialogs
             {
                 if (Libraries.StateItems == null) return;
                 ItemInfo RealItem = null;
-                if (Grid[(int)EquipmentSlot.Armour].Item != null)
+                if (Grid[(int)EquipmentSlot.盔甲].Item != null)
                 {
                     if (actor.WingEffect == 1 || actor.WingEffect == 2)
                     {
                         int wingOffset = actor.WingEffect == 1 ? 2 : 4;
 
-                        int genderOffset = actor.Gender == MirGender.Male ? 0 : 1;
+                        int genderOffset = actor.Gender == MirGender.男性 ? 0 : 1;
 
                         Libraries.Prguse2.DrawBlend(1200 + wingOffset + genderOffset, DisplayLocation, Color.White, true, 1F);
                     }
 
-                    RealItem = Functions.GetRealItem(Grid[(int)EquipmentSlot.Armour].Item.Info, actor.Level, actor.Class, GameScene.ItemInfoList);
+                    RealItem = Functions.GetRealItem(Grid[(int)EquipmentSlot.盔甲].Item.Info, actor.Level, actor.Class, GameScene.ItemInfoList);
                     Libraries.StateItems.Draw(RealItem.Image, DisplayLocation, Color.White, true, 1F);
 
                 }
-                if (Grid[(int)EquipmentSlot.Weapon].Item != null)
+                if (Grid[(int)EquipmentSlot.武器].Item != null)
                 {
-                    RealItem = Functions.GetRealItem(Grid[(int)EquipmentSlot.Weapon].Item.Info, actor.Level, actor.Class, GameScene.ItemInfoList);
+                    RealItem = Functions.GetRealItem(Grid[(int)EquipmentSlot.武器].Item.Info, actor.Level, actor.Class, GameScene.ItemInfoList);
                     Libraries.StateItems.Draw(RealItem.Image, DisplayLocation, Color.White, true, 1F);
 
                 }
 
-                if (Grid[(int)EquipmentSlot.Helmet].Item != null)
-                    Libraries.StateItems.Draw(Grid[(int)EquipmentSlot.Helmet].Item.Info.Image, DisplayLocation, Color.White, true, 1F);
+                if (Grid[(int)EquipmentSlot.头盔].Item != null)
+                    Libraries.StateItems.Draw(Grid[(int)EquipmentSlot.头盔].Item.Info.Image, DisplayLocation, Color.White, true, 1F);
                 else
                 {
-                    int hair = 441 + actor.Hair + (actor.Class == MirClass.Assassin ? 20 : 0) + (actor.Gender == MirGender.Male ? 0 : 40);
+                    int hair = 441 + actor.Hair + (actor.Class == MirClass.刺客 ? 20 : 0) + (actor.Gender == MirGender.男性 ? 0 : 40);
 
-                    int offSetX = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.Male ? 6 : 4) : 0;
-                    int offSetY = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.Male ? 25 : 18) : 0;
+                    int offSetX = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 6 : 4) : 0;
+                    int offSetY = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 25 : 18) : 0;
 
                     Libraries.Prguse.Draw(hair, new Point(DisplayLocation.X + offSetX, DisplayLocation.Y + offSetY), Color.White, true, 1F);
                 }
@@ -226,27 +226,27 @@ namespace Client.MirScenes.Dialogs
 
             Grid = new MirItemCell[Enum.GetNames(typeof(EquipmentSlot)).Length];
 
-            Grid[(int)EquipmentSlot.Weapon] = new MirItemCell
+            Grid[(int)EquipmentSlot.武器] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Weapon,
+                ItemSlot = (int)EquipmentSlot.武器,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(123, 7),
             };
 
 
-            Grid[(int)EquipmentSlot.Armour] = new MirItemCell
+            Grid[(int)EquipmentSlot.盔甲] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Armour,
+                ItemSlot = (int)EquipmentSlot.盔甲,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(163, 7),
             };
 
 
-            Grid[(int)EquipmentSlot.Helmet] = new MirItemCell
+            Grid[(int)EquipmentSlot.头盔] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Helmet,
+                ItemSlot = (int)EquipmentSlot.头盔,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 7),
@@ -254,94 +254,94 @@ namespace Client.MirScenes.Dialogs
 
 
 
-            Grid[(int)EquipmentSlot.Torch] = new MirItemCell
+            Grid[(int)EquipmentSlot.照明物] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Torch,
+                ItemSlot = (int)EquipmentSlot.照明物,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 134),
             };
 
 
-            Grid[(int)EquipmentSlot.Necklace] = new MirItemCell
+            Grid[(int)EquipmentSlot.项链] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Necklace,
+                ItemSlot = (int)EquipmentSlot.项链,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 98),
             };
 
 
-            Grid[(int)EquipmentSlot.BraceletL] = new MirItemCell
+            Grid[(int)EquipmentSlot.左手镯] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.BraceletL,
+                ItemSlot = (int)EquipmentSlot.左手镯,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(8, 170),
             };
 
-            Grid[(int)EquipmentSlot.BraceletR] = new MirItemCell
+            Grid[(int)EquipmentSlot.右手镯] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.BraceletR,
+                ItemSlot = (int)EquipmentSlot.右手镯,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 170),
             };
 
-            Grid[(int)EquipmentSlot.RingL] = new MirItemCell
+            Grid[(int)EquipmentSlot.左戒指] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.RingL,
+                ItemSlot = (int)EquipmentSlot.左戒指,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(8, 206),
             };
 
-            Grid[(int)EquipmentSlot.RingR] = new MirItemCell
+            Grid[(int)EquipmentSlot.右戒指] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.RingR,
+                ItemSlot = (int)EquipmentSlot.右戒指,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 206),
             };
 
 
-            Grid[(int)EquipmentSlot.Amulet] = new MirItemCell
+            Grid[(int)EquipmentSlot.护身符] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Amulet,
+                ItemSlot = (int)EquipmentSlot.护身符,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(8, 242),
             };
 
 
-            Grid[(int)EquipmentSlot.Boots] = new MirItemCell
+            Grid[(int)EquipmentSlot.靴子] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Boots,
+                ItemSlot = (int)EquipmentSlot.靴子,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(48, 242),
             };
 
-            Grid[(int)EquipmentSlot.Belt] = new MirItemCell
+            Grid[(int)EquipmentSlot.腰带] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Belt,
+                ItemSlot = (int)EquipmentSlot.腰带,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(88, 242),
             };
 
 
-            Grid[(int)EquipmentSlot.Stone] = new MirItemCell
+            Grid[(int)EquipmentSlot.守护石] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Stone,
+                ItemSlot = (int)EquipmentSlot.守护石,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(128, 242),
             };
 
-            Grid[(int)EquipmentSlot.Mount] = new MirItemCell
+            Grid[(int)EquipmentSlot.坐骑] = new MirItemCell
             {
-                ItemSlot = (int)EquipmentSlot.Mount,
+                ItemSlot = (int)EquipmentSlot.坐骑,
                 GridType = gridType,
                 Parent = CharacterPage,
                 Location = new Point(203, 62),
@@ -656,26 +656,26 @@ namespace Client.MirScenes.Dialogs
 
         private void RefreshInterface()
         {
-            int offSet = Actor.Gender == MirGender.Male ? 0 : 1;
+            int offSet = Actor.Gender == MirGender.男性 ? 0 : 1;
 
             Index = 504;// +offSet;
             CharacterPage.Index = 340 + offSet;
 
             switch (Actor.Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     ClassImage.Index = 100;// + offSet * 5;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     ClassImage.Index = 101;// + offSet * 5;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     ClassImage.Index = 102;// + offSet * 5;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     ClassImage.Index = 103;// + offSet * 5;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     ClassImage.Index = 104;// + offSet * 5;
                     break;
             }

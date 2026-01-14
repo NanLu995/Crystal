@@ -148,7 +148,7 @@ namespace Client.MirScenes.Dialogs
 
         private void SwitchType()
         {
-            UserItem MountItem = GameScene.User.Equipment[(int)EquipmentSlot.Mount];
+            UserItem MountItem = GameScene.User.Equipment[(int)EquipmentSlot.坐骑];
             UserItem[] MountSlots = null;
 
             if (MountItem != null)
@@ -213,7 +213,7 @@ namespace Client.MirScenes.Dialogs
                 MountImage.Index = StartIndex + (GameScene.User.MountType * 20);
                 MountImage.Animated = true;
 
-                UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.Mount];
+                UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.坐骑];
 
                 if (item != null)
                 {

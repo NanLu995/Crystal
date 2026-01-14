@@ -45,11 +45,11 @@ namespace Client.MirObjects
                 switch (Weapon / Globals.ClassWeaponCount)
                 {
                     default:
-                        return Class == MirClass.Wizard || Class == MirClass.Warrior || Class == MirClass.Taoist;
+                        return Class == MirClass.法师 || Class == MirClass.战士 || Class == MirClass.道士;
                     case 1:
-                        return Class == MirClass.Assassin;
+                        return Class == MirClass.刺客;
                     case 2:
-                        return Class == MirClass.Archer;
+                        return Class == MirClass.弓箭;
                 }
             }
         }
@@ -365,7 +365,7 @@ namespace Client.MirObjects
                 switch (Class)
                 {
                     #region Archer
-                    case MirClass.Archer:
+                    case MirClass.弓箭:
 
                         #region WeaponType
                         if (HasClassWeapon)
@@ -442,10 +442,10 @@ namespace Client.MirObjects
                         #endregion
 
                         #region Offsets
-                        ArmourOffSet = Gender == MirGender.Male ? 0 : altAnim ? 352 : 808;
-                        HairOffSet = Gender == MirGender.Male ? 0 : altAnim ? 352 : 808;
-                        WeaponOffSet = Gender == MirGender.Male ? 0 : altAnim ? 352 : 416;
-                        WingOffset = Gender == MirGender.Male ? 0 : altAnim ? 352 : 840;
+                        ArmourOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 352 : 808;
+                        HairOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 352 : 808;
+                        WeaponOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 352 : 416;
+                        WingOffset = Gender == MirGender.男性 ? 0 : altAnim ? 352 : 840;
                         MountOffset = 0;
                         #endregion
 
@@ -454,7 +454,7 @@ namespace Client.MirObjects
 
 
                     #region Assassin
-                    case MirClass.Assassin:
+                    case MirClass.刺客:
 
                         #region WeaponType
                         if (HasClassWeapon || Weapon < 0)
@@ -533,10 +533,10 @@ namespace Client.MirObjects
                         #endregion
 
                         #region Offsets
-                        ArmourOffSet = Gender == MirGender.Male ? 0 : altAnim ? 512 : 808;
-                        HairOffSet = Gender == MirGender.Male ? 0 : altAnim ? 512 : 808;
-                        WeaponOffSet = Gender == MirGender.Male ? 0 : altAnim ? 512 : 416;
-                        WingOffset = Gender == MirGender.Male ? 0 : altAnim ? 544 : 840;
+                        ArmourOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 512 : 808;
+                        HairOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 512 : 808;
+                        WeaponOffSet = Gender == MirGender.男性 ? 0 : altAnim ? 512 : 416;
+                        WingOffset = Gender == MirGender.男性 ? 0 : altAnim ? 544 : 840;
                         MountOffset = 0;
                         #endregion
 
@@ -545,9 +545,9 @@ namespace Client.MirObjects
 
 
                     #region Others
-                    case MirClass.Warrior:
-                    case MirClass.Taoist:
-                    case MirClass.Wizard:
+                    case MirClass.战士:
+                    case MirClass.道士:
+                    case MirClass.法师:
 
                         #region Armours
                         BodyLibrary = Armour < Libraries.CArmours.Length ? Libraries.CArmours[Armour] : Libraries.CArmours[0];
@@ -581,10 +581,10 @@ namespace Client.MirObjects
                         #endregion
 
                         #region Offsets
-                        ArmourOffSet = Gender == MirGender.Male ? 0 : 808;
-                        HairOffSet = Gender == MirGender.Male ? 0 : 808;
-                        WeaponOffSet = Gender == MirGender.Male ? 0 : 416;
-                        WingOffset = Gender == MirGender.Male ? 0 : 840;
+                        ArmourOffSet = Gender == MirGender.男性 ? 0 : 808;
+                        HairOffSet = Gender == MirGender.男性 ? 0 : 808;
+                        WeaponOffSet = Gender == MirGender.男性 ? 0 : 416;
+                        WingOffset = Gender == MirGender.男性 ? 0 : 840;
                         MountOffset = 0;
                         #endregion
 
@@ -621,8 +621,8 @@ namespace Client.MirObjects
                 }
             }
 
-            DieSound = Gender == MirGender.Male ? SoundList.MaleDie : SoundList.FemaleDie;
-            FlinchSound = Gender == MirGender.Male ? SoundList.MaleFlinch : SoundList.FemaleFlinch;
+            DieSound = Gender == MirGender.男性 ? SoundList.MaleDie : SoundList.FemaleDie;
+            FlinchSound = Gender == MirGender.男性 ? SoundList.MaleFlinch : SoundList.FemaleFlinch;
             #endregion
         }
 
@@ -935,7 +935,7 @@ namespace Client.MirObjects
 
                 if (CurrentAction == MirAction.Standing)
                 {
-                    if (Class == MirClass.Archer && HasClassWeapon)
+                    if (Class == MirClass.弓箭 && HasClassWeapon)
                         CurrentAction = MirAction.Standing;
                     else
                         CurrentAction = CMain.Time > StanceTime ? MirAction.Standing : MirAction.Stance;
@@ -1055,10 +1055,10 @@ namespace Client.MirObjects
                     case MirAction.Attack1:
                         switch (Class)
                         {
-                            case MirClass.Archer:
+                            case MirClass.弓箭:
                                 Frames.TryGetValue(CurrentAction, out Frame);
                                 break;
-                            case MirClass.Assassin:
+                            case MirClass.刺客:
                                 if(GameScene.User.DoubleSlash)
                                     Frames.TryGetValue(MirAction.Attack1, out Frame);
                                 else if (CMain.Shift)
@@ -1269,7 +1269,7 @@ namespace Client.MirObjects
                 }
 
                 //ArcherTest - Need to check for bow weapon only
-                if (Class == MirClass.Archer && HasClassWeapon)
+                if (Class == MirClass.弓箭 && HasClassWeapon)
                 {
                     switch (CurrentAction)
                     {
@@ -1283,7 +1283,7 @@ namespace Client.MirObjects
                 }
 
                 //Assassin sneekyness
-                if (Class == MirClass.Assassin && Sneaking && (CurrentAction == MirAction.Walking || CurrentAction == MirAction.Running))
+                if (Class == MirClass.刺客 && Sneaking && (CurrentAction == MirAction.Walking || CurrentAction == MirAction.Running))
                 {
                     Frames.TryGetValue(MirAction.Sneek, out Frame);
                 }
@@ -1535,7 +1535,7 @@ namespace Client.MirObjects
                         switch (Spell)
                         {
                             case Spell.Slaying:
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.Male ? 0 : 1));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
                                 break;
                             case Spell.DoubleSlash:
                                 FrameInterval = (int)(FrameInterval * 0.46f); //46% Animation Speed
@@ -1611,7 +1611,7 @@ namespace Client.MirObjects
                             {
                                 PlayerObject player = (PlayerObject)ob;
                                 StruckWeapon = player.Weapon;
-                                if (player.Class == MirClass.Assassin && StruckWeapon != -1)
+                                if (player.Class == MirClass.刺客 && StruckWeapon != -1)
                                     StruckWeapon = 1;
                             }
 
@@ -2064,7 +2064,7 @@ namespace Client.MirObjects
                             case Spell.LionRoar:
                             case Spell.BattleCry:
                                 Effects.Add(new Effect(Libraries.Magic2, 710, 20, 1200, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.Male ? 0 : 1));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
                                 break;
 
                             #endregion
@@ -2120,7 +2120,7 @@ namespace Client.MirObjects
 
                             case Spell.CrescentSlash:
                                 Effects.Add(new Effect(Libraries.Magic2, 2620 + (int)Direction * 20, 20, 20 * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.Male ? 0 : 1));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
 
                                
                                 break;
@@ -2130,7 +2130,7 @@ namespace Client.MirObjects
                             #region FlashDash
 
                             case Spell.FlashDash:
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.Male ? 0 : 1));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
                                 int attackDelay = (User.AttackSpeed - 120) <= 300 ? 300 : (User.AttackSpeed - 120);
 
                                 float attackRate = (float)(attackDelay / 300F * 10F);
@@ -2345,7 +2345,7 @@ namespace Client.MirObjects
                     else
                     {
                         if (FrameIndex == 1)
-                            SoundManager.PlaySound(20000 + 127 * 10 + (Gender == MirGender.Male ? 5 : 6));
+                            SoundManager.PlaySound(20000 + 127 * 10 + (Gender == MirGender.男性 ? 5 : 6));
                         if (FrameIndex == 7)
                             SoundManager.PlaySound(20000 + 127 * 10 + 7);
                     }
@@ -4687,7 +4687,7 @@ namespace Client.MirObjects
             }
 
             int add = 0;
-            if (Class != MirClass.Assassin) //Archer to add?
+            if (Class != MirClass.刺客) //Archer to add?
                 switch (Armour)
                 {
                     case 3:
@@ -4774,13 +4774,13 @@ namespace Client.MirObjects
                 return;
             }
 
-            if (Weapon >= 0 && Class == MirClass.Assassin)
+            if (Weapon >= 0 && Class == MirClass.刺客)
             {
                 SoundManager.PlaySound(SoundList.SwingShort);
                 return;
             }
 
-            if (Class == MirClass.Archer && HasClassWeapon)
+            if (Class == MirClass.弓箭 && HasClassWeapon)
             {
                 return;
             }
@@ -4918,7 +4918,7 @@ namespace Client.MirObjects
                 else
                     DrawWeapon2();
 
-                if (Class == MirClass.Archer && HasClassWeapon)
+                if (Class == MirClass.弓箭 && HasClassWeapon)
                     DrawWeapon2();
             }
 

@@ -3507,8 +3507,8 @@ namespace Server.MirEnvir
 
                         Lover.Married = 0;
                         Lover.MarriedDate = Now;
-                        if (Lover.Equipment[(int)EquipmentSlot.RingL] != null)
-                            Lover.Equipment[(int)EquipmentSlot.RingL].WeddingRing = -1;
+                        if (Lover.Equipment[(int)EquipmentSlot.左戒指] != null)
+                            Lover.Equipment[(int)EquipmentSlot.左戒指].WeddingRing = -1;
                     }
                     #endregion
                 }
@@ -3989,21 +3989,21 @@ namespace Server.MirEnvir
                 return;
             }
 
-            if (p.Gender != MirGender.Male && p.Gender != MirGender.Female)
+            if (p.Gender != MirGender.男性 && p.Gender != MirGender.女性)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 2 });
                 return;
             }
 
-            if (p.Class != MirClass.Warrior && p.Class != MirClass.Wizard && p.Class != MirClass.Taoist &&
-                p.Class != MirClass.Assassin && p.Class != MirClass.Archer)
+            if (p.Class != MirClass.战士 && p.Class != MirClass.法师 && p.Class != MirClass.道士 &&
+                p.Class != MirClass.刺客 && p.Class != MirClass.弓箭)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
             }
 
-            if (p.Class == MirClass.Assassin && !Settings.AllowCreateAssassin ||
-                p.Class == MirClass.Archer && !Settings.AllowCreateArcher)
+            if (p.Class == MirClass.刺客 && !Settings.AllowCreateAssassin ||
+                p.Class == MirClass.弓箭 && !Settings.AllowCreateArcher)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
@@ -4059,19 +4059,19 @@ namespace Server.MirEnvir
                 return false;
             }
 
-            if (p.Gender != MirGender.Male && p.Gender != MirGender.Female)
+            if (p.Gender != MirGender.男性 && p.Gender != MirGender.女性)
             {
                 c.Enqueue(new S.NewHero { Result = 2 });
                 return false;
             }
 
-            if (p.Class != MirClass.Warrior && p.Class != MirClass.Wizard && p.Class != MirClass.Taoist && p.Class != MirClass.Assassin && p.Class != MirClass.Archer)
+            if (p.Class != MirClass.战士 && p.Class != MirClass.法师 && p.Class != MirClass.道士 && p.Class != MirClass.刺客 && p.Class != MirClass.弓箭)
             {
                 c.Enqueue(new S.NewHero { Result = 3 });
                 return false;
             }
 
-            if (p.Class == MirClass.Warrior && !Settings.Hero_CanCreateClass[0] || p.Class == MirClass.Wizard && !Settings.Hero_CanCreateClass[1] || p.Class == MirClass.Taoist && !Settings.Hero_CanCreateClass[2] || p.Class == MirClass.Assassin && !Settings.Hero_CanCreateClass[3] || p.Class == MirClass.Archer && !Settings.Hero_CanCreateClass[4])
+            if (p.Class == MirClass.战士 && !Settings.Hero_CanCreateClass[0] || p.Class == MirClass.法师 && !Settings.Hero_CanCreateClass[1] || p.Class == MirClass.道士 && !Settings.Hero_CanCreateClass[2] || p.Class == MirClass.刺客 && !Settings.Hero_CanCreateClass[3] || p.Class == MirClass.弓箭 && !Settings.Hero_CanCreateClass[4])
             {
                 c.Enqueue(new S.NewHero { Result = 3 });
                 return false;
@@ -4289,7 +4289,7 @@ namespace Server.MirEnvir
         {
             MapInfoList.Add(new MapInfo { Index = ++MapIndex });
         }
-        public void CreateItemInfo(ItemType type = ItemType.Nothing)
+        public void CreateItemInfo(ItemType type = ItemType.杂物)
         {
             ItemInfoList.Add(new ItemInfo { Index = ++ItemIndex, Type = type, RandomStatsId = 255 });
         }
@@ -4734,7 +4734,7 @@ namespace Server.MirEnvir
             for (var i = 0; i < ItemInfoList.Count; i++)
             {
                 var info = ItemInfoList[i];
-                if (info.Type != ItemType.Book || info.Shape != Skill) continue;
+                if (info.Type != ItemType.技能书 || info.Shape != Skill) continue;
                 return info;
             }
             return null;
@@ -4981,7 +4981,7 @@ namespace Server.MirEnvir
         {
             foreach (var quest in QuestInfoList)
             {
-                if (quest.Type != QuestType.Daily) continue;
+                if (quest.Type != QuestType.每日) continue;
 
                 for (var i = 0; i < info.CompletedQuests.Count; i++)
                 {

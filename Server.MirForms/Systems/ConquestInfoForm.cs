@@ -28,7 +28,7 @@ namespace Server
 
             WarType_combo.Items.AddRange(Enum.GetValues(typeof(ConquestType)).Cast<object>().ToArray());
             WarMode_combo.Items.AddRange(Enum.GetValues(typeof(ConquestGame)).Cast<object>().ToArray());
-            WarType_combo.Items.Remove(ConquestType.Forced);
+            WarType_combo.Items.Remove(ConquestType.强制启动);
 
             for (int i = 0; i < Envir.MonsterInfoList.Count; i++)
             {

@@ -179,21 +179,21 @@ namespace Client.MirObjects
                 case Monster.FrozenDoor:
                     BodyLibrary = Libraries.Gates[((ushort)BaseImage) - 950];
                     break;
-                case Monster.BabyPig:
-                case Monster.Chick:
-                case Monster.Kitten:
-                case Monster.BabySkeleton:
-                case Monster.Baekdon:
-                case Monster.Wimaen:
-                case Monster.BlackKitten:
-                case Monster.BabyDragon:
-                case Monster.OlympicFlame:
-                case Monster.BabySnowMan:
-                case Monster.Frog:
-                case Monster.BabyMonkey:
-                case Monster.AngryBird:
-                case Monster.Foxey:
-                case Monster.MedicalRat:
+                case Monster.小猪:
+                case Monster.小鸡:
+                case Monster.小猫:
+                case Monster.精灵骷髅:
+                case Monster.白猪:
+                case Monster.纸片人:
+                case Monster.黑猫:
+                case Monster.龙蛋:
+                case Monster.火娃:
+                case Monster.雪人:
+                case Monster.青蛙:
+                case Monster.红猴:
+                case Monster.愤怒的小鸟:
+                case Monster.阿福:
+                case Monster.治疗拉拉:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
                 case Monster.HellBomb1:
@@ -484,21 +484,21 @@ namespace Client.MirObjects
             //IntelligentCreature
             switch (BaseImage)
             {
-                case Monster.BabyPig:
-                case Monster.Chick:
-                case Monster.Kitten:
-                case Monster.BabySkeleton:
-                case Monster.Baekdon:
-                case Monster.Wimaen:
-                case Monster.BlackKitten:
-                case Monster.BabyDragon:
-                case Monster.OlympicFlame:
-                case Monster.BabySnowMan:
-                case Monster.Frog:
-                case Monster.BabyMonkey:
-                case Monster.AngryBird:
-                case Monster.Foxey:
-                case Monster.MedicalRat:
+                case Monster.小猪:
+                case Monster.小鸡:
+                case Monster.小猫:
+                case Monster.精灵骷髅:
+                case Monster.白猪:
+                case Monster.纸片人:
+                case Monster.黑猫:
+                case Monster.龙蛋:
+                case Monster.火娃:
+                case Monster.雪人:
+                case Monster.青蛙:
+                case Monster.红猴:
+                case Monster.愤怒的小鸟:
+                case Monster.阿福:
+                case Monster.治疗拉拉:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
             }
@@ -1057,7 +1057,7 @@ namespace Client.MirObjects
                             {
                                 PlayerObject player = (PlayerObject)ob;
                                 StruckWeapon = player.Weapon;
-                                if (player.Class == MirClass.Assassin && StruckWeapon > -1)
+                                if (player.Class == MirClass.刺客 && StruckWeapon > -1)
                                     StruckWeapon = 1;
                             }
                         }
@@ -1862,7 +1862,7 @@ namespace Client.MirObjects
                                     {
                                         switch (BaseImage)
                                         {
-                                            case Monster.BabySnowMan:
+                                            case Monster.雪人:
                                                 if (FrameIndex == 1)
                                                 {
                                                     if (TrackableEffect.GetOwnerEffectID(this.ObjectID, "SnowmanSnow") < 0)
@@ -2147,7 +2147,7 @@ namespace Client.MirObjects
                                 case 1:
                                     switch (BaseImage)
                                     {
-                                        case Monster.OlympicFlame:
+                                        case Monster.火娃:
                                             if (TrackableEffect.GetOwnerEffectID(this.ObjectID, "CreatureFlame") < 0)
                                                 Effects.Add(new TrackableEffect(new Effect(Libraries.Pets[((ushort)BaseImage) - 10000], 280, 4, 800, this), "CreatureFlame"));
                                             break;
@@ -2216,7 +2216,7 @@ namespace Client.MirObjects
                                 case 4:
                                     switch (BaseImage)
                                     {
-                                        case Monster.OlympicFlame:
+                                        case Monster.火娃:
                                             if (TrackableEffect.GetOwnerEffectID(this.ObjectID, "CreatureSmoke") < 0)
                                                 Effects.Add(new TrackableEffect(new Effect(Libraries.Pets[((ushort)BaseImage) - 10000], 256, 3, 1000, this), "CreatureSmoke"));
                                             break;
@@ -4272,21 +4272,21 @@ namespace Client.MirObjects
 
             switch (BaseImage)
             {
-                case Monster.Chick:
-                case Monster.BabyPig:
-                case Monster.Kitten:
-                case Monster.BabySkeleton:
-                case Monster.Baekdon:
-                case Monster.Wimaen:
-                case Monster.BlackKitten:
-                case Monster.BabyDragon:
-                case Monster.OlympicFlame:
-                case Monster.BabySnowMan:
-                case Monster.Frog:
-                case Monster.BabyMonkey:
-                case Monster.AngryBird:
-                case Monster.Foxey:
-                case Monster.MedicalRat:
+                case Monster.小鸡:
+                case Monster.小猪:
+                case Monster.小猫:
+                case Monster.精灵骷髅:
+                case Monster.白猪:
+                case Monster.纸片人:
+                case Monster.黑猫:
+                case Monster.龙蛋:
+                case Monster.火娃:
+                case Monster.雪人:
+                case Monster.青蛙:
+                case Monster.红猴:
+                case Monster.愤怒的小鸟:
+                case Monster.阿福:
+                case Monster.治疗拉拉:
                     SoundManager.PlaySound(petSound);
                     break;
             }
@@ -5609,23 +5609,23 @@ namespace Client.MirObjects
             int yOffset = 0;
             switch (BaseImage)
             {
-                case Monster.Chick:
+                case Monster.小鸡:
                     yOffset = -10;
                     break;
-                case Monster.BabyPig:
-                case Monster.Kitten:
-                case Monster.BabySkeleton:
-                case Monster.Baekdon:
-                case Monster.Wimaen:
-                case Monster.BlackKitten:
-                case Monster.BabyDragon:
-                case Monster.OlympicFlame:
-                case Monster.BabySnowMan:
-                case Monster.Frog:
-                case Monster.BabyMonkey:
-                case Monster.AngryBird:
-                case Monster.Foxey:
-                case Monster.MedicalRat:
+                case Monster.小猪:
+                case Monster.小猫:
+                case Monster.精灵骷髅:
+                case Monster.白猪:
+                case Monster.纸片人:
+                case Monster.黑猫:
+                case Monster.龙蛋:
+                case Monster.火娃:
+                case Monster.雪人:
+                case Monster.青蛙:
+                case Monster.红猴:
+                case Monster.愤怒的小鸟:
+                case Monster.阿福:
+                case Monster.治疗拉拉:
                     yOffset = -20;
                     break;
             }
@@ -5684,23 +5684,23 @@ namespace Client.MirObjects
             int yOffset = 0;
             switch (BaseImage)
             {
-                case Monster.Chick:
+                case Monster.小鸡:
                     yOffset = 30;
                     break;
-                case Monster.BabyPig:
-                case Monster.Kitten:
-                case Monster.BabySkeleton:
-                case Monster.Baekdon:
-                case Monster.Wimaen:
-                case Monster.BlackKitten:
-                case Monster.BabyDragon:
-                case Monster.OlympicFlame:
-                case Monster.BabySnowMan:
-                case Monster.Frog:
-                case Monster.BabyMonkey:
-                case Monster.AngryBird:
-                case Monster.Foxey:
-                case Monster.MedicalRat:
+                case Monster.小猪:
+                case Monster.小猫:
+                case Monster.精灵骷髅:
+                case Monster.白猪:
+                case Monster.纸片人:
+                case Monster.黑猫:
+                case Monster.龙蛋:
+                case Monster.火娃:
+                case Monster.雪人:
+                case Monster.青蛙:
+                case Monster.红猴:
+                case Monster.愤怒的小鸟:
+                case Monster.阿福:
+                case Monster.治疗拉拉:
                     yOffset = 20;
                     break;
             }

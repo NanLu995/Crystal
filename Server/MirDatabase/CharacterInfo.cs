@@ -688,7 +688,7 @@ namespace Server.MirDatabase
 
         public bool HasMount
         {
-            get { return Player.Info.Equipment[(int)EquipmentSlot.Mount] != null; }
+            get { return Player.Info.Equipment[(int)EquipmentSlot.坐骑] != null; }
         }
 
         private bool RidingMount
@@ -699,7 +699,7 @@ namespace Server.MirDatabase
 
         public UserItem[] Slots
         {
-            get { return Player.Info.Equipment[(int)EquipmentSlot.Mount].Slots; }
+            get { return Player.Info.Equipment[(int)EquipmentSlot.坐骑].Slots; }
         }
 
 

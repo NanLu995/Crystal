@@ -328,14 +328,14 @@ namespace Server.MirObjects
             if (Envir.Time > TorchTime)
             {
                 TorchTime = Envir.Time + 10000;
-                item = Info.Equipment[(int)EquipmentSlot.Torch];
+                item = Info.Equipment[(int)EquipmentSlot.照明物];
                 if (item != null)
                 {
                     DamageItem(item, 5);
 
                     if (item.CurrentDura == 0)
                     {
-                        Info.Equipment[(int)EquipmentSlot.Torch] = null;
+                        Info.Equipment[(int)EquipmentSlot.照明物] = null;
                         Enqueue(new S.DeleteItem { UniqueID = item.UniqueID, Count = item.Count });
                         RefreshStats();
                     }
@@ -349,7 +349,7 @@ namespace Server.MirObjects
                 for (int i = 0; i < Info.Equipment.Length; i++)
                 {
                     item = Info.Equipment[i];
-                    if (item == null || !item.DuraChanged) continue; // || item.Info.Type == ItemType.Mount
+                    if (item == null || !item.DuraChanged) continue; // || item.Info.Type == ItemType.坐骑
                     item.DuraChanged = false;
                     Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
                 }
@@ -937,7 +937,7 @@ namespace Server.MirObjects
                     var info = Envir.GetItemInfo(Drop.Item.Index);
 
                     UserItem item = Envir.CreateDropItem(info);
-                    if (item.Info.Type == ItemType.Ore)
+                    if (item.Info.Type == ItemType.矿石)
                     {
                         item.CurrentDura = (ushort)Math.Min(ushort.MaxValue, (Drop.MinDura + Envir.Random.Next(Math.Max(0, Drop.MaxDura - Drop.MinDura))) * 1000);
                         if ((Drop.BonusChance > 0) && (Envir.Random.Next(100) <= Drop.BonusChance))
@@ -961,7 +961,7 @@ namespace Server.MirObjects
         }
         protected bool TryLuckWeapon()
         {
-            var item = Info.Equipment[(int)EquipmentSlot.Weapon];
+            var item = Info.Equipment[(int)EquipmentSlot.武器];
 
             if (item == null || item.AddedStats[Stat.Luck] >= 7)
                 return false;
@@ -1023,15 +1023,15 @@ namespace Server.MirObjects
 
             switch (Gender)
             {
-                case MirGender.Male:
-                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.Male))
+                case MirGender.男性:
+                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.男性))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NotFemale), ChatType.System);
                         return false;
                     }
                     break;
-                case MirGender.Female:
-                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.Female))
+                case MirGender.女性:
+                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.女性))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NotMale), ChatType.System);
                         return false;
@@ -1041,36 +1041,36 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.Warrior:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Warrior))
+                case MirClass.战士:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Wizard:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Wizard))
+                case MirClass.法师:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Taoist:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Taoist))
+                case MirClass.道士:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Assassin:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Assassin))
+                case MirClass.刺客:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Archer:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Archer))
+                case MirClass.弓箭:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
@@ -1168,7 +1168,7 @@ namespace Server.MirObjects
 
             switch (item.Info.Type)
             {
-                case ItemType.Scroll:
+                case ItemType.卷轴:
                     switch (item.Info.Shape)
                     {
                         case 0:
@@ -1226,7 +1226,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Potion:
+                case ItemType.药水:
                     if (CurrentMap.Info.NoDrug)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouCannotUsePotionsHere), ChatType.System);
@@ -1234,37 +1234,37 @@ namespace Server.MirObjects
                     }
                     break;
 
-                case ItemType.Book:
+                case ItemType.技能书:
                     if (Info.Magics.Any(t => t.Spell == (Spell)item.Info.Shape))
                     {
                         return false;
                     }
                     break;
-                case ItemType.Saddle:
-                case ItemType.Ribbon:
-                case ItemType.Bells:
-                case ItemType.Mask:
-                case ItemType.Reins:
-                    if (Info.Equipment[(int)EquipmentSlot.Mount] == null)
+                case ItemType.马鞍:
+                case ItemType.蝴蝶结:
+                case ItemType.铃铛:
+                case ItemType.面罩:
+                case ItemType.缰绳:
+                    if (Info.Equipment[(int)EquipmentSlot.坐骑] == null)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CanOnlyUseWithMount), ChatType.System);
                         return false;
                     }
                     break;
-                case ItemType.Hook:
-                case ItemType.Float:
-                case ItemType.Bait:
-                case ItemType.Finder:
-                case ItemType.Reel:
-                    if (Info.Equipment[(int)EquipmentSlot.Weapon] == null || !Info.Equipment[(int)EquipmentSlot.Weapon].Info.IsFishingRod)
+                case ItemType.鱼钩:
+                case ItemType.鱼漂:
+                case ItemType.鱼饵:
+                case ItemType.探鱼器:
+                case ItemType.摇轮:
+                    if (Info.Equipment[(int)EquipmentSlot.武器] == null || !Info.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CanOnlyUseWithFishingRod), ChatType.System);
                         return false;
                     }
                     break;
-                case ItemType.Socket:
+                case ItemType.镶嵌宝石:
                     break;
-                case ItemType.Pets:
+                case ItemType.宠物:
                     switch (item.Info.Shape)
                     {
                         case 20://mirror rename creature
@@ -1335,7 +1335,7 @@ namespace Server.MirObjects
                     break;
             }
 
-            if (RidingMount && item.Info.Type != ItemType.Scroll && item.Info.Type != ItemType.Potion)
+            if (RidingMount && item.Info.Type != ItemType.卷轴 && item.Info.Type != ItemType.药水)
             {
                 return false;
             }
@@ -1383,7 +1383,7 @@ namespace Server.MirObjects
 
             if (!ob.Drop(range)) return false;
 
-            if (item.Info.Type == ItemType.Meat)
+            if (item.Info.Type == ItemType.肉)
                 item.CurrentDura = (ushort)Math.Max(0, item.CurrentDura - 2000);
 
             return true;
@@ -1408,7 +1408,7 @@ namespace Server.MirObjects
                         continue;
 
                     // TODO: Check this.
-                    if (item.WeddingRing != -1 && Info.Equipment[(int)EquipmentSlot.RingL].UniqueID == item.UniqueID)
+                    if (item.WeddingRing != -1 && Info.Equipment[(int)EquipmentSlot.左戒指].UniqueID == item.UniqueID)
                         continue;
 
                     if (item.SealedInfo != null && item.SealedInfo.ExpiryDate > Envir.Now)
@@ -1424,9 +1424,9 @@ namespace Server.MirObjects
                             Report?.ItemChanged(item, item.Count, 1);
                         }
                     }
-                    if (ItemSets.Any(set => set.Set == ItemSet.Spirit && !set.SetComplete))
+                    if (ItemSets.Any(set => set.Set == ItemSet.祈祷套装 && !set.SetComplete))
                     {
-                        if (item.Info.Set == ItemSet.Spirit)
+                        if (item.Info.Set == ItemSet.祈祷套装)
                         {
                             Info.Equipment[i] = null;
                             Enqueue(new S.DeleteItem { UniqueID = item.UniqueID, Count = item.Count });
@@ -1593,7 +1593,7 @@ namespace Server.MirObjects
                 }
             }
 
-            if (item.Info.Type == ItemType.Potion || item.Info.Type == ItemType.Scroll || (item.Info.Type == ItemType.Script && item.Info.Effect == 1))
+            if (item.Info.Type == ItemType.药水 || item.Info.Type == ItemType.卷轴 || (item.Info.Type == ItemType.特殊消耗品 && item.Info.Effect == 1))
             {
                 for (int i = PotionBeltMinimum; i < PotionBeltMaximum; i++)
                 {
@@ -1602,7 +1602,7 @@ namespace Server.MirObjects
                     return;
                 }
             }
-            else if (item.Info.Type == ItemType.Amulet)
+            else if (item.Info.Type == ItemType.护身符)
             {
                 for (int i = AmuletBeltMinimum; i < AmuletBeltMaximum; i++)
                 {
@@ -1632,20 +1632,20 @@ namespace Server.MirObjects
         {
             switch (Class)
             {
-                case MirClass.Warrior:
-                    if (!info.RequiredClass.HasFlag(RequiredClass.Warrior)) return false;
+                case MirClass.战士:
+                    if (!info.RequiredClass.HasFlag(RequiredClass.战士)) return false;
                     break;
-                case MirClass.Wizard:
-                    if (!info.RequiredClass.HasFlag(RequiredClass.Wizard)) return false;
+                case MirClass.法师:
+                    if (!info.RequiredClass.HasFlag(RequiredClass.法师)) return false;
                     break;
-                case MirClass.Taoist:
-                    if (!info.RequiredClass.HasFlag(RequiredClass.Taoist)) return false;
+                case MirClass.道士:
+                    if (!info.RequiredClass.HasFlag(RequiredClass.道士)) return false;
                     break;
-                case MirClass.Assassin:
-                    if (!info.RequiredClass.HasFlag(RequiredClass.Assassin)) return false;
+                case MirClass.刺客:
+                    if (!info.RequiredClass.HasFlag(RequiredClass.刺客)) return false;
                     break;
-                case MirClass.Archer:
-                    if (!info.RequiredClass.HasFlag(RequiredClass.Archer)) return false;
+                case MirClass.弓箭:
+                    if (!info.RequiredClass.HasFlag(RequiredClass.弓箭)) return false;
                     break;
                 default:
                     return false;
@@ -1653,11 +1653,11 @@ namespace Server.MirObjects
 
             switch (Gender)
             {
-                case MirGender.Male:
-                    if (!info.RequiredGender.HasFlag(RequiredGender.Male)) return false;
+                case MirGender.男性:
+                    if (!info.RequiredGender.HasFlag(RequiredGender.男性)) return false;
                     break;
-                case MirGender.Female:
-                    if (!info.RequiredGender.HasFlag(RequiredGender.Female)) return false;
+                case MirGender.女性:
+                    if (!info.RequiredGender.HasFlag(RequiredGender.女性)) return false;
                     break;
                 default:
                     return false;
@@ -1828,26 +1828,26 @@ namespace Server.MirObjects
                 if (temp == null) continue;
                 ItemInfo realItem = Functions.GetRealItem(temp.Info, Info.Level, Info.Class, Envir.ItemInfoList);
 
-                if (realItem.Type == ItemType.Weapon || realItem.Type == ItemType.Torch)
+                if (realItem.Type == ItemType.武器 || realItem.Type == ItemType.照明物)
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
                 else
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
 
                 if (temp.CurrentDura == 0 && temp.Info.Durability > 0) continue;
 
-                if (realItem.Type == ItemType.Armour)
+                if (realItem.Type == ItemType.盔甲)
                 {
                     Looks_Armour = realItem.Shape;
                     Looks_Wings = realItem.Effect;
                 }
 
-                if (realItem.Type == ItemType.Weapon)
+                if (realItem.Type == ItemType.武器)
                 {
                     Looks_Weapon = realItem.Shape;
                     Looks_WeaponEffect = realItem.Effect;
                 }
 
-                if (realItem.Type == ItemType.Mount)
+                if (realItem.Type == ItemType.坐骑)
                 {
                     Mount.MountType = realItem.Shape;
                     //RealItem.Effect;
@@ -1890,7 +1890,7 @@ namespace Server.MirObjects
 
                 RefreshSocketStats(temp, skillsToAdd);
 
-                if (realItem.Set == ItemSet.None) continue;
+                if (realItem.Set == ItemSet.非套装) continue;
 
                 ItemSets itemSet = ItemSets.Where(set => set.Set == realItem.Set && !set.Type.Contains(realItem.Type) && !set.SetComplete).FirstOrDefault();
 
@@ -1905,7 +1905,7 @@ namespace Server.MirObjects
                 }
 
                 //Mir Set
-                if (realItem.Set == ItemSet.Mir)
+                if (realItem.Set == ItemSet.天龙套装)
                 {
                     if (!MirSet.Contains((EquipmentSlot)i))
                     {
@@ -1938,12 +1938,12 @@ namespace Server.MirObjects
         {
             if (equipItem == null) return;
 
-            if (equipItem.Info.Type == ItemType.Weapon && equipItem.Info.IsFishingRod)
+            if (equipItem.Info.Type == ItemType.武器 && equipItem.Info.IsFishingRod)
             {
                 return;
             }
 
-            if (equipItem.Info.Type == ItemType.Mount && !RidingMount)
+            if (equipItem.Info.Type == ItemType.坐骑 && !RidingMount)
             {
                 return;
             }
@@ -1955,7 +1955,7 @@ namespace Server.MirObjects
 
                 ItemInfo RealItem = Functions.GetRealItem(temp.Info, Info.Level, Info.Class, Envir.ItemInfoList);
 
-                if (RealItem.Type == ItemType.Weapon || RealItem.Type == ItemType.Torch)
+                if (RealItem.Type == ItemType.武器 || RealItem.Type == ItemType.照明物)
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
                 else
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
@@ -1988,7 +1988,7 @@ namespace Server.MirObjects
 
             foreach (var s in ItemSets)
             {
-                if ((s.Set == ItemSet.Smash) && (s.Type.Contains(ItemType.Ring)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.破碎套装) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
                     if (!hasSmashSetBonus)
                     {
@@ -1997,7 +1997,7 @@ namespace Server.MirObjects
                     }
                 }
 
-                if ((s.Set == ItemSet.Purity) && (s.Type.Contains(ItemType.Ring)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.灵玉套装) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
                     if (!hasPuritySetBonus)
                     {
@@ -2006,7 +2006,7 @@ namespace Server.MirObjects
                     }
                 }
 
-                if ((s.Set == ItemSet.HwanDevil) && (s.Type.Contains(ItemType.Ring)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.幻魔石套) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
                     if (!hasHwanDevilSetBonus)
                     {
@@ -2015,7 +2015,7 @@ namespace Server.MirObjects
                         hasHwanDevilSetBonus = true;
                     }
                 }
-                if ((s.Set == ItemSet.DarkGhost) && (s.Type.Contains(ItemType.Necklace)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.鏃未套装) && (s.Type.Contains(ItemType.项链)) && (s.Type.Contains(ItemType.手镯)))
                 {
                     Stats[Stat.HP] += 25;
                 }
@@ -2024,123 +2024,123 @@ namespace Server.MirObjects
 
                 switch (s.Set)
                 {
-                    case ItemSet.Mundane:
+                    case ItemSet.世轮套装:
                         Stats[Stat.HP] += 50;
                         break;
-                    case ItemSet.NokChi:
+                    case ItemSet.绿翠套装:
                         Stats[Stat.MP] += 50;
                         break;
-                    case ItemSet.TaoProtect:
+                    case ItemSet.道护套装:
                         Stats[Stat.HP] += 30;
                         Stats[Stat.MP] += 30;
                         break;
-                    case ItemSet.RedOrchid:
+                    case ItemSet.赤兰套装:
                         Stats[Stat.Accuracy] += 2;
                         break;
-                    case ItemSet.RedFlower:
+                    case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
                         Stats[Stat.MP] -= 50;
                         break;
-                    case ItemSet.Smash:
+                    case ItemSet.破碎套装:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 3;
                         break;
-                    case ItemSet.HwanDevil:
+                    case ItemSet.幻魔石套:
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 2;
                         break;
-                    case ItemSet.Purity:
+                    case ItemSet.灵玉套装:
                         Stats[Stat.MinSC] += 1;
                         Stats[Stat.MaxSC] += 2;
                         break;
-                    case ItemSet.FiveString:
+                    case ItemSet.五玄套装:
                         Stats[Stat.HP] += (int)(((double)Stats[Stat.HP] / 100) * 30);
                         Stats[Stat.MinAC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
-                    case ItemSet.Spirit:
+                    case ItemSet.祈祷套装:
                         Stats[Stat.MinDC] += 2;
                         Stats[Stat.MaxDC] += 5;
                         Stats[Stat.AttackSpeed] += 2;
                         break;
-                    case ItemSet.Bone:
+                    case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         break;
-                    case ItemSet.Bug:
+                    case ItemSet.虫血套装:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         Stats[Stat.MaxMAC] += 1;
                         Stats[Stat.PoisonResist] += 1;
                         break;
-                    case ItemSet.WhiteGold:
+                    case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
-                    case ItemSet.WhiteGoldH:
+                    case ItemSet.白金套装H:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
                         Stats[Stat.AttackSpeed] += 2;
                         break;
-                    case ItemSet.RedJade:
+                    case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MaxMAC] += 2;
                         break;
-                    case ItemSet.RedJadeH:
+                    case ItemSet.红玉套装H:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
                         Stats[Stat.Agility] += 2;
                         break;
-                    case ItemSet.Nephrite:
+                    case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
                         break;
-                    case ItemSet.NephriteH:
+                    case ItemSet.软玉套装H:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
                         Stats[Stat.Holy] += 1;
                         Stats[Stat.Accuracy] += 1;
                         break;
-                    case ItemSet.Whisker1:
+                    case ItemSet.贵人战套:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.BagWeight] += 25;
                         break;
-                    case ItemSet.Whisker2:
+                    case ItemSet.贵人法套:
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.BagWeight] += 17;
                         break;
-                    case ItemSet.Whisker3:
+                    case ItemSet.贵人道套:
                         Stats[Stat.MaxSC] += 1;
                         Stats[Stat.BagWeight] += 17;
                         break;
-                    case ItemSet.Whisker4:
+                    case ItemSet.贵人刺套:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.BagWeight] += 20;
                         break;
-                    case ItemSet.Whisker5:
+                    case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.BagWeight] += 17;
                         break;
-                    case ItemSet.Hyeolryong:
+                    case ItemSet.血龙套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
                         Stats[Stat.Holy] += 1;
                         Stats[Stat.Accuracy] += 1;
                         break;
-                    case ItemSet.Monitor:
+                    case ItemSet.监视套装:
                         Stats[Stat.MagicResist] += 1;
                         Stats[Stat.PoisonResist] += 1;
                         break;
-                    case ItemSet.Oppressive:
+                    case ItemSet.暴压套装:
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.Agility] += 1;
                         break;
-                    case ItemSet.BlueFrost:
+                    case ItemSet.青玉套装:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MinMC] += 1;
@@ -2148,14 +2148,14 @@ namespace Server.MirObjects
                         Stats[Stat.HandWeight] += 1;
                         Stats[Stat.WearWeight] += 2;
                         break;
-                    case ItemSet.BlueFrostH:
+                    case ItemSet.青玉套装H:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.Accuracy] += 1;
                         Stats[Stat.HP] += 50;
                         break;
-                    case ItemSet.DarkGhost:
+                    case ItemSet.鏃未套装:
                         Stats[Stat.MP] += 25;
                         Stats[Stat.AttackSpeed] += 2;
                         break;
@@ -2177,45 +2177,45 @@ namespace Server.MirObjects
                 Stats[Stat.PoisonResist] += 6;
             }
 
-            if (MirSet.Contains(EquipmentSlot.RingL) && MirSet.Contains(EquipmentSlot.RingR))
+            if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指))
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
             }
-            if (MirSet.Contains(EquipmentSlot.BraceletL) && MirSet.Contains(EquipmentSlot.BraceletR))
+            if (MirSet.Contains(EquipmentSlot.左手镯) && MirSet.Contains(EquipmentSlot.右手镯))
             {
                 Stats[Stat.MinAC] += 1;
                 Stats[Stat.MinMAC] += 1;
             }
-            if ((MirSet.Contains(EquipmentSlot.RingL) | MirSet.Contains(EquipmentSlot.RingR)) && (MirSet.Contains(EquipmentSlot.BraceletL) | MirSet.Contains(EquipmentSlot.BraceletR)) && MirSet.Contains(EquipmentSlot.Necklace))
+            if ((MirSet.Contains(EquipmentSlot.左戒指) | MirSet.Contains(EquipmentSlot.右戒指)) && (MirSet.Contains(EquipmentSlot.左手镯) | MirSet.Contains(EquipmentSlot.右手镯)) && MirSet.Contains(EquipmentSlot.项链))
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
                 Stats[Stat.BagWeight] += 30;
                 Stats[Stat.WearWeight] += 17;
             }
-            if (MirSet.Contains(EquipmentSlot.RingL) && MirSet.Contains(EquipmentSlot.RingR) && MirSet.Contains(EquipmentSlot.BraceletL) && MirSet.Contains(EquipmentSlot.BraceletR) && MirSet.Contains(EquipmentSlot.Necklace))
+            if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指) && MirSet.Contains(EquipmentSlot.左手镯) && MirSet.Contains(EquipmentSlot.右手镯) && MirSet.Contains(EquipmentSlot.项链))
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
                 Stats[Stat.BagWeight] += 20;
                 Stats[Stat.WearWeight] += 10;
             }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Helmet) && MirSet.Contains(EquipmentSlot.Weapon))
+            if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
                 Stats[Stat.MaxDC] += 2;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
                 Stats[Stat.Agility] += 1;
             }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Boots) && MirSet.Contains(EquipmentSlot.Belt))
+            if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
                 Stats[Stat.MaxDC] += 1;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
                 Stats[Stat.HandWeight] += 17;
             }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Boots) && MirSet.Contains(EquipmentSlot.Belt) && MirSet.Contains(EquipmentSlot.Helmet) && MirSet.Contains(EquipmentSlot.Weapon))
+            if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
                 Stats[Stat.MinDC] += 1;
                 Stats[Stat.MaxDC] += 1;
@@ -2746,8 +2746,8 @@ namespace Server.MirObjects
         {
             LogTime = Envir.Time + Globals.LogDelay;
 
-            if (Info.Equipment[(int)EquipmentSlot.Weapon] == null) return;
-            ItemInfo RealItem = Functions.GetRealItem(Info.Equipment[(int)EquipmentSlot.Weapon].Info, Info.Level, Info.Class, Envir.ItemInfoList);
+            if (Info.Equipment[(int)EquipmentSlot.武器] == null) return;
+            ItemInfo RealItem = Functions.GetRealItem(Info.Equipment[(int)EquipmentSlot.武器].Info, Info.Level, Info.Class, Envir.ItemInfoList);
 
             if ((RealItem.Shape / Globals.ClassWeaponCount) != 2) return;
             if (Functions.InRange(CurrentLocation, location, Globals.MaxAttackRange) == false) return;
@@ -3293,12 +3293,12 @@ namespace Server.MirObjects
         Mining:
             if (Mined)
             {
-                if (Info.Equipment[(int)EquipmentSlot.Weapon] == null) return;
-                if (!Info.Equipment[(int)EquipmentSlot.Weapon].Info.CanMine) return;
-                if (Info.Equipment[(int)EquipmentSlot.Weapon].CurrentDura <= 0)//Stop dura 0 working. use below if you wish to break the item.
+                if (Info.Equipment[(int)EquipmentSlot.武器] == null) return;
+                if (!Info.Equipment[(int)EquipmentSlot.武器].Info.CanMine) return;
+                if (Info.Equipment[(int)EquipmentSlot.武器].CurrentDura <= 0)//Stop dura 0 working. use below if you wish to break the item.
                     /*{
-                        Enqueue(new S.DeleteItem { UniqueID = Info.Equipment[(int)EquipmentSlot.Weapon].UniqueID, Count = Info.Equipment[(int)EquipmentSlot.Weapon].Count });
-                        Info.Equipment[(int)EquipmentSlot.Weapon] = null;
+                        Enqueue(new S.DeleteItem { UniqueID = Info.Equipment[(int)EquipmentSlot.武器].UniqueID, Count = Info.Equipment[(int)EquipmentSlot.武器].Count });
+                        Info.Equipment[(int)EquipmentSlot.武器] = null;
                         RefreshStats();*/
                     return;
                 /*}*/
@@ -3308,7 +3308,7 @@ namespace Server.MirObjects
                 if (Mine.StonesLeft > 0)
                 {
                     Mine.StonesLeft--;
-                    if (Envir.Random.Next(100) < (Mine.Mine.HitRate + (Info.Equipment[(int)EquipmentSlot.Weapon].GetTotal(Stat.Accuracy)) * 10))
+                    if (Envir.Random.Next(100) < (Mine.Mine.HitRate + (Info.Equipment[(int)EquipmentSlot.武器].GetTotal(Stat.Accuracy)) * 10))
                     {
                         //create some rubble on the floor (or increase whats there)
                         SpellObject Rubble = null;
@@ -3350,7 +3350,7 @@ namespace Server.MirObjects
                             GetMinePayout(Mine.Mine);
                         }
 
-                        DamageItem(Info.Equipment[(int)EquipmentSlot.Weapon], 5 + Envir.Random.Next(15));
+                        DamageItem(Info.Equipment[(int)EquipmentSlot.武器], 5 + Envir.Random.Next(15));
                     }
                 }
                 else
@@ -4802,15 +4802,15 @@ namespace Server.MirObjects
                     {
                         var stats = new Stats();
 
-                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.Warrior || ((HumanObject)target).Class == MirClass.Assassin)
+                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.战士 || ((HumanObject)target).Class == MirClass.刺客)
                         {
                             stats[Stat.MaxDC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.Wizard || ((HumanObject)target).Class == MirClass.Archer)
+                        else if (((HumanObject)target).Class == MirClass.法师 || ((HumanObject)target).Class == MirClass.弓箭)
                         {
                             stats[Stat.MaxMC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.Taoist)
+                        else if (((HumanObject)target).Class == MirClass.道士)
                         {
                             stats[Stat.MaxSC] = value;
                         }
@@ -6861,7 +6861,7 @@ namespace Server.MirObjects
             for (int i = 0; i < Info.Equipment.Length; i++)
             {
                 UserItem item = Info.Equipment[i];
-                if (item != null && item.Info.Type == ItemType.Amulet && item.Info.Shape == shape && item.Count >= count)
+                if (item != null && item.Info.Type == ItemType.护身符 && item.Info.Shape == shape && item.Count >= count)
                     return item;
             }
 
@@ -6872,7 +6872,7 @@ namespace Server.MirObjects
             for (int i = 0; i < Info.Equipment.Length; i++)
             {
                 UserItem item = Info.Equipment[i];
-                if (item != null && item.Info.Type == ItemType.Amulet && item.Count >= count)
+                if (item != null && item.Info.Type == ItemType.护身符 && item.Count >= count)
                 {
                     if (shape == 0)
                     {
@@ -7590,7 +7590,7 @@ namespace Server.MirObjects
                 return true;
             }
 
-            if (item.Info.Type == ItemType.Amulet)
+            if (item.Info.Type == ItemType.护身符)
             {
                 ushort count = item.Count;
 
@@ -7662,57 +7662,57 @@ namespace Server.MirObjects
         {
             switch ((EquipmentSlot)slot)
             {
-                case EquipmentSlot.Weapon:
-                    if (item.Info.Type != ItemType.Weapon)
+                case EquipmentSlot.武器:
+                    if (item.Info.Type != ItemType.武器)
                         return false;
                     break;
-                case EquipmentSlot.Armour:
-                    if (item.Info.Type != ItemType.Armour)
+                case EquipmentSlot.盔甲:
+                    if (item.Info.Type != ItemType.盔甲)
                         return false;
                     break;
-                case EquipmentSlot.Helmet:
-                    if (item.Info.Type != ItemType.Helmet)
+                case EquipmentSlot.头盔:
+                    if (item.Info.Type != ItemType.头盔)
                         return false;
                     break;
-                case EquipmentSlot.Torch:
-                    if (item.Info.Type != ItemType.Torch)
+                case EquipmentSlot.照明物:
+                    if (item.Info.Type != ItemType.照明物)
                         return false;
                     break;
-                case EquipmentSlot.Necklace:
-                    if (item.Info.Type != ItemType.Necklace)
+                case EquipmentSlot.项链:
+                    if (item.Info.Type != ItemType.项链)
                         return false;
                     break;
-                case EquipmentSlot.BraceletL:
-                    if (item.Info.Type != ItemType.Bracelet)
+                case EquipmentSlot.左手镯:
+                    if (item.Info.Type != ItemType.手镯)
                         return false;
                     break;
-                case EquipmentSlot.BraceletR:
-                    if (item.Info.Type != ItemType.Bracelet && item.Info.Type != ItemType.Amulet)
+                case EquipmentSlot.右手镯:
+                    if (item.Info.Type != ItemType.手镯 && item.Info.Type != ItemType.护身符)
                         return false;
                     break;
-                case EquipmentSlot.RingL:
-                case EquipmentSlot.RingR:
-                    if (item.Info.Type != ItemType.Ring)
+                case EquipmentSlot.左戒指:
+                case EquipmentSlot.右戒指:
+                    if (item.Info.Type != ItemType.戒指)
                         return false;
                     break;
-                case EquipmentSlot.Amulet:
-                    if (item.Info.Type != ItemType.Amulet)// || item.Info.Shape == 0
+                case EquipmentSlot.护身符:
+                    if (item.Info.Type != ItemType.护身符)// || item.Info.Shape == 0
                         return false;
                     break;
-                case EquipmentSlot.Boots:
-                    if (item.Info.Type != ItemType.Boots)
+                case EquipmentSlot.靴子:
+                    if (item.Info.Type != ItemType.靴子)
                         return false;
                     break;
-                case EquipmentSlot.Belt:
-                    if (item.Info.Type != ItemType.Belt)
+                case EquipmentSlot.腰带:
+                    if (item.Info.Type != ItemType.腰带)
                         return false;
                     break;
-                case EquipmentSlot.Stone:
-                    if (item.Info.Type != ItemType.Stone)
+                case EquipmentSlot.守护石:
+                    if (item.Info.Type != ItemType.守护石)
                         return false;
                     break;
-                case EquipmentSlot.Mount:
-                    if (item.Info.Type != ItemType.Mount)
+                case EquipmentSlot.坐骑:
+                    if (item.Info.Type != ItemType.坐骑)
                         return false;
                     break;
                 default:
@@ -7722,12 +7722,12 @@ namespace Server.MirObjects
 
             switch (Gender)
             {
-                case MirGender.Male:
-                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.Male))
+                case MirGender.男性:
+                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.男性))
                         return false;
                     break;
-                case MirGender.Female:
-                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.Female))
+                case MirGender.女性:
+                    if (!item.Info.RequiredGender.HasFlag(RequiredGender.女性))
                         return false;
                     break;
             }
@@ -7735,20 +7735,20 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.Warrior:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Warrior))
+                case MirClass.战士:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                         return false;
                     break;
-                case MirClass.Wizard:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Wizard))
+                case MirClass.法师:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                         return false;
                     break;
-                case MirClass.Taoist:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Taoist))
+                case MirClass.道士:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                         return false;
                     break;
-                case MirClass.Assassin:
-                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.Assassin))
+                case MirClass.刺客:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                         return false;
                     break;
             }
@@ -7805,7 +7805,7 @@ namespace Server.MirObjects
                     break;
             }
 
-            if (item.Info.Type == ItemType.Weapon || item.Info.Type == ItemType.Torch)
+            if (item.Info.Type == ItemType.武器 || item.Info.Type == ItemType.照明物)
             {
                 if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentHandWeight > Stats[Stat.HandWeight])
                     return false;
@@ -7814,7 +7814,7 @@ namespace Server.MirObjects
                 if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.WearWeight])
                 return false;
 
-            if (RidingMount && item.Info.Type != ItemType.Torch)
+            if (RidingMount && item.Info.Type != ItemType.照明物)
             {
                 return false;
             }
@@ -7838,18 +7838,18 @@ namespace Server.MirObjects
         {
             if (!SpecialMode.HasFlag(SpecialItemMode.NoDuraLoss))
                 for (int i = 0; i < Info.Equipment.Length; i++)
-                    if (i != (int)EquipmentSlot.Weapon)
+                    if (i != (int)EquipmentSlot.武器)
                         DamageItem(Info.Equipment[i], Envir.Random.Next(1) + 1);
         }
         public void DamageWeapon()
         {
             if (!SpecialMode.HasFlag(SpecialItemMode.NoDuraLoss))
-                DamageItem(Info.Equipment[(int)EquipmentSlot.Weapon], Envir.Random.Next(4) + 1);
+                DamageItem(Info.Equipment[(int)EquipmentSlot.武器], Envir.Random.Next(4) + 1);
         }
         public void DamageItem(UserItem item, int amount, bool isChanged = false)
         {
-            if (item == null || item.CurrentDura == 0 || item.Info.Type == ItemType.Amulet) return;
-            if ((item.WeddingRing == Info.Married) && (Info.Equipment[(int)EquipmentSlot.RingL].UniqueID == item.UniqueID)) return;
+            if (item == null || item.CurrentDura == 0 || item.Info.Type == ItemType.护身符) return;
+            if ((item.WeddingRing == Info.Married) && (Info.Equipment[(int)EquipmentSlot.左戒指].UniqueID == item.UniqueID)) return;
             if (item.GetTotal(Stat.Strong) > 0) amount = Math.Max(1, amount - item.GetTotal(Stat.Strong));
             item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
             item.DuraChanged = true;
@@ -8633,7 +8633,7 @@ namespace Server.MirObjects
         }
         public void IncreaseMountLoyalty(int amount)
         {
-            UserItem item = Info.Equipment[(int)EquipmentSlot.Mount];
+            UserItem item = Info.Equipment[(int)EquipmentSlot.坐骑];
             if (item != null && item.CurrentDura < item.MaxDura)
             {
                 item.CurrentDura = (ushort)Math.Min(item.MaxDura, item.CurrentDura + amount);
@@ -8646,7 +8646,7 @@ namespace Server.MirObjects
             if (Envir.Time > DecreaseLoyaltyTime)
             {
                 DecreaseLoyaltyTime = Envir.Time + (Mount.SlowLoyalty ? (LoyaltyDelay * 2) : LoyaltyDelay);
-                UserItem item = Info.Equipment[(int)EquipmentSlot.Mount];
+                UserItem item = Info.Equipment[(int)EquipmentSlot.坐骑];
                 if (item != null && item.CurrentDura > 0)
                 {
                     DamageItem(item, amount);

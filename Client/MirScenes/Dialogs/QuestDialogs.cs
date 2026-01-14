@@ -1596,11 +1596,11 @@ namespace Client.MirScenes.Dialogs
 
                 switch (MapObject.User.Gender)
                 {
-                    case MirGender.Male:
-                        if (!item.RequiredGender.HasFlag(RequiredGender.Male)) continue;
+                    case MirGender.男性:
+                        if (!item.RequiredGender.HasFlag(RequiredGender.男性)) continue;
                         break;
-                    case MirGender.Female:
-                        if (!item.RequiredGender.HasFlag(RequiredGender.Female)) continue;
+                    case MirGender.女性:
+                        if (!item.RequiredGender.HasFlag(RequiredGender.女性)) continue;
                         break;
                 }
 

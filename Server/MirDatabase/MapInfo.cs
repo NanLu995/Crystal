@@ -37,7 +37,7 @@ namespace Server.MirDatabase
         public List<NPCInfo> NPCs = new List<NPCInfo>();
         public List<MineZone> MineZones = new List<MineZone>();
         public List<Point> ActiveCoords = new List<Point>();
-        public WeatherSetting WeatherParticles = WeatherSetting.None;
+        public WeatherSetting WeatherParticles = WeatherSetting.无效果;
 
         public MapInfo()
         {

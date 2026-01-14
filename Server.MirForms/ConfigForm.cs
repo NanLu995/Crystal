@@ -298,7 +298,7 @@ namespace Server
 
                         foreach (ItemInfo item in itemLookup[itemName])
                         {
-                            if (item.RequiredClass == RequiredClass.None) continue;
+                            if (item.RequiredClass == RequiredClass.全职业) continue;
                             if (!item.RequiredClass.HasFlag(targetClass)) continue;
 
                             if (comment && !isCommented)
@@ -332,22 +332,22 @@ namespace Server
         }
         private void RemoveSinDrops_Click(object sender, EventArgs e)
         {
-            ProcessFiles(RequiredClass.Assassin, true);
+            ProcessFiles(RequiredClass.刺客, true);
         }
 
         private void ReaddSinDrops_Click(object sender, EventArgs e)
         {
-            ProcessFiles(RequiredClass.Assassin, false);
+            ProcessFiles(RequiredClass.刺客, false);
         }
 
         private void RemoveArcDrops_Click(object sender, EventArgs e)
         {
-            ProcessFiles(RequiredClass.Archer, true);
+            ProcessFiles(RequiredClass.弓箭, true);
         }
 
         private void ReaddArcDrops_Click(object sender, EventArgs e)
         {
-            ProcessFiles(RequiredClass.Archer, false);
+            ProcessFiles(RequiredClass.弓箭, false);
         }
         #endregion
     }

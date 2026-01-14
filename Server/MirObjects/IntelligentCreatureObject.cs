@@ -14,7 +14,7 @@ namespace Server.MirObjects
 
         public IntelligentCreatureType PetType = IntelligentCreatureType.None;
 
-        public ItemGrade GradeFilter = ItemGrade.None;
+        public ItemGrade GradeFilter = ItemGrade.无等级;
 
         public IntelligentCreatureRules CreatureRules = new IntelligentCreatureRules();
         public IntelligentCreatureItemFilter ItemFilter { get { return CreatureInfo.Filter; } set { CreatureInfo.Filter = value; } }
@@ -196,14 +196,14 @@ namespace Server.MirObjects
 
                 switch (PetType)
                 {
-                    case IntelligentCreatureType.BabyDragon:
-                    case IntelligentCreatureType.OlympicFlame:
+                    case IntelligentCreatureType.龙蛋:
+                    case IntelligentCreatureType.火娃:
                         if (Envir.Random.Next(10) > 5)
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
                         else
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
                         break;
-                    case IntelligentCreatureType.BabySnowMan:
+                    case IntelligentCreatureType.雪人:
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
                         break;
                     default:
@@ -623,7 +623,7 @@ namespace Server.MirObjects
                         for (int j = 0; j < Master.GroupMembers.Count; j++)
                             Master.GroupMembers[j].ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.FriendlyPickedUpItem), Name, item.Item.FriendlyName), ChatType.Hint);
 
-                    if (item.Item.Info.Grade == ItemGrade.Mythical || item.Item.Info.Grade == ItemGrade.Legendary || item.Item.Info.Grade == ItemGrade.Heroic)
+                    if (item.Item.Info.Grade == ItemGrade.神物 || item.Item.Info.Grade == ItemGrade.圣物 || item.Item.Info.Grade == ItemGrade.英雄)
                     {
                         Master.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PetPickedUp), item.Item.FriendlyName), ChatType.Hint);
                         ((PlayerObject)Master).Enqueue(new S.IntelligentCreaturePickup { ObjectID = ObjectID });
@@ -654,21 +654,21 @@ namespace Server.MirObjects
 
             switch (iType)
             {
-                case ItemType.Nothing:// <---- im not sure if any item will ever hold this ItemType but better to prevent then cure
+                case ItemType.杂物:// <---- im not sure if any item will ever hold this ItemType but better to prevent then cure
                     return false;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     return ItemFilter.PetPickupWeapons;
-                case ItemType.Armour:
+                case ItemType.盔甲:
                     return ItemFilter.PetPickupArmours;
-                case ItemType.Helmet:
+                case ItemType.头盔:
                     return ItemFilter.PetPickupHelmets;
-                case ItemType.Boots:
+                case ItemType.靴子:
                     return ItemFilter.PetPickupBoots;
-                case ItemType.Belt:
+                case ItemType.腰带:
                     return ItemFilter.PetPickupBelts;
-                case ItemType.Necklace:
-                case ItemType.Bracelet:
-                case ItemType.Ring:
+                case ItemType.项链:
+                case ItemType.手镯:
+                case ItemType.戒指:
                     return ItemFilter.PetPickupAccessories;
                 default:
                     return ItemFilter.PetPickupOthers;

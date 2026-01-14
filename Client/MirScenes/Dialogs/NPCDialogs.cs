@@ -1625,7 +1625,7 @@ namespace Client.MirScenes.Dialogs
 
                 case PanelType.ReplaceWedRing:
 
-                    if (TargetItem.Info.Type != ItemType.Ring)
+                    if (TargetItem.Info.Type != ItemType.戒指)
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ItemIsNotRing), TargetItem.FriendlyName), ChatType.System);
                         return;
@@ -1652,8 +1652,8 @@ namespace Client.MirScenes.Dialogs
 
             if (GameScene.SelectedCell != null && PType == PanelType.Disassemble)
             {
-                if (GameScene.SelectedCell.Item.Info.Grade != ItemGrade.None &&
-                    GameScene.SelectedCell.Item.Info.Type != ItemType.Awakening)
+                if (GameScene.SelectedCell.Item.Info.Grade != ItemGrade.无等级 &&
+                    GameScene.SelectedCell.Item.Info.Type != ItemType.觉醒物品)
                 {
                     TargetItem = GameScene.SelectedCell.Item;
                     OldCell = GameScene.SelectedCell;
@@ -1869,7 +1869,7 @@ namespace Client.MirScenes.Dialogs
         public MirButton UpgradeButton, CloseButton;
         public MirItemCell[] ItemCells = new MirItemCell[7];
         public MirDropDownBox SelectAwakeType;
-        public AwakeType CurrentAwakeType = AwakeType.None;
+        public AwakeType CurrentAwakeType = AwakeType.无;
         public MirLabel GoldLabel, NeedItemLabel1, NeedItemLabel2;
 
         public static UserItem[] Items = new UserItem[7];
@@ -2044,20 +2044,20 @@ namespace Client.MirScenes.Dialogs
             {
                 SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SelectUpgradeItem));
                 SelectAwakeType.SelectedIndex = SelectAwakeType.Items.Count - 1;
-                CurrentAwakeType = AwakeType.None;
+                CurrentAwakeType = AwakeType.无;
             }
             else
             {
                 if (Items[0].Awake.GetAwakeLevel() == 0)
                 {
                     SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SelectUpgradeType));
-                    if (Items[0].Info.Type == ItemType.Weapon)
+                    if (Items[0].Info.Type == ItemType.武器)
                     {
                         SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BraveryGlyph));
                         SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MagicGlyph));
                         SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SoulGlyph));
                     }
-                    else if (Items[0].Info.Type == ItemType.Helmet)
+                    else if (Items[0].Info.Type == ItemType.头盔)
                     {
                         SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ProtectionGlyph));
                         SelectAwakeType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EvilSlayerGlyph));
@@ -2082,27 +2082,27 @@ namespace Client.MirScenes.Dialogs
         public string getAwakeTypeText(AwakeType type)
         {
             string typeName = "";
-            if (type == AwakeType.DC)
+            if (type == AwakeType.物理攻击)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BraveryGlyph);
             }
-            else if (type == AwakeType.MC)
+            else if (type == AwakeType.魔法攻击)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MagicGlyph);
             }
-            else if (type == AwakeType.SC)
+            else if (type == AwakeType.道术攻击)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SoulGlyph);
             }
-            else if (type == AwakeType.AC)
+            else if (type == AwakeType.物理防御)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ProtectionGlyph);
             }
-            else if (type == AwakeType.MAC)
+            else if (type == AwakeType.魔法防御)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EvilSlayerGlyph);
             }
-            else if (type == AwakeType.HPMP)
+            else if (type == AwakeType.生命值魔法值)
             {
                 typeName = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BodyGlyph);
             }
@@ -2116,34 +2116,34 @@ namespace Client.MirScenes.Dialogs
 
         public AwakeType getAwakeType(string typeName)
         {
-            AwakeType type = AwakeType.None;
+            AwakeType type = AwakeType.无;
             if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BraveryGlyph))
             {
-                type = AwakeType.DC;
+                type = AwakeType.物理攻击;
             }
             else if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MagicGlyph))
             {
-                type = AwakeType.MC;
+                type = AwakeType.魔法攻击;
             }
             else if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SoulGlyph))
             {
-                type = AwakeType.SC;
+                type = AwakeType.道术攻击;
             }
             else if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ProtectionGlyph))
             {
-                type = AwakeType.AC;
+                type = AwakeType.物理防御;
             }
             else if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EvilSlayerGlyph))
             {
-                type = AwakeType.MAC;
+                type = AwakeType.魔法防御;
             }
             else if (typeName == GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BodyGlyph))
             {
-                type = AwakeType.HPMP;
+                type = AwakeType.生命值魔法值;
             }
             else
             {
-                type = AwakeType.None;
+                type = AwakeType.无;
             }
 
             return type;
@@ -2155,7 +2155,7 @@ namespace Client.MirScenes.Dialogs
 
             AwakeType type = getAwakeType(SelectAwakeType.Items[SelectAwakeType.SelectedIndex]);
             CurrentAwakeType = type;
-            if (type != AwakeType.None)
+            if (type != AwakeType.无)
             {
                 Network.Enqueue(new C.AwakeningNeedMaterials { UniqueID = Items[0].UniqueID, Type = type });
             }
@@ -2215,7 +2215,7 @@ namespace Client.MirScenes.Dialogs
             {
                 AwakeType type = getAwakeType(SelectAwakeType.Items[SelectAwakeType.SelectedIndex]);
 
-                if (type != AwakeType.None)
+                if (type != AwakeType.无)
                 {
                     Network.Enqueue(new C.Awakening { UniqueID = Items[0].UniqueID, Type = type });
                     MapControl.AwakeningAction = true;

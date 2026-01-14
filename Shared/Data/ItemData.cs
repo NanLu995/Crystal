@@ -7,8 +7,8 @@ public class ItemInfo
     public ItemType Type;
     public ItemGrade Grade;
     public RequiredType RequiredType = RequiredType.Level;
-    public RequiredClass RequiredClass = RequiredClass.None;
-    public RequiredGender RequiredGender = RequiredGender.None;
+    public RequiredClass RequiredClass = RequiredClass.全职业;
+    public RequiredGender RequiredGender = RequiredGender.性别不限;
     public ItemSet Set;
 
     public short Shape;
@@ -42,7 +42,7 @@ public class ItemInfo
 
     public bool IsConsumable
     {
-        get { return Type == ItemType.Potion || Type == ItemType.Scroll || Type == ItemType.Food || Type == ItemType.Transform || Type == ItemType.Script || Type == ItemType.SealedHero; }
+        get { return Type == ItemType.药水 || Type == ItemType.卷轴 || Type == ItemType.坐骑食物 || Type == ItemType.时装 || Type == ItemType.特殊消耗品 || Type == ItemType.英雄封印; }
     }
     public bool IsFishingRod
     {
@@ -198,7 +198,7 @@ public class ItemInfo
 
         if (version < 70) //before db version 70 all specialitems had wedding rings disabled, after that it became a server option
         {
-            if ((Type == ItemType.Ring) && (Unique != SpecialItemMode.None))
+            if ((Type == ItemType.戒指) && (Unique != SpecialItemMode.None))
                 Bind |= BindMode.NoWeddingRing;
         }
     }
@@ -284,7 +284,7 @@ public class UserItem
     public ushort Count = 1,
         GemCount = 0;
 
-    public RefinedValue RefinedValue = RefinedValue.None;
+    public RefinedValue RefinedValue = RefinedValue.无;
     public byte RefineAdded = 0;
     public int RefineSuccessChance = 0;
 
@@ -316,7 +316,7 @@ public class UserItem
 
     public int Weight
     {
-        get { return (Info.Type == ItemType.Amulet || Info.Type == ItemType.Bait) ? Info.Weight : Info.Weight * Count; }
+        get { return (Info.Type == ItemType.护身符 || Info.Type == ItemType.鱼饵) ? Info.Weight : Info.Weight * Count; }
     }
 
     public string FriendlyName
@@ -618,13 +618,13 @@ public class UserItem
         {
             switch (Info.Type)
             {
-                case ItemType.Mount:
+                case ItemType.坐骑:
                     if (Info.Shape < 7)
                         size = 4;
                     else if (Info.Shape < 12)
                         size = 5;
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     if (Info.Shape == 49 || Info.Shape == 50)
                         size = 5;
                     break;
@@ -645,7 +645,7 @@ public class UserItem
             switch (Info.Type)
             {
                 #region Amulet and Poison Stack Image changes
-                case ItemType.Amulet:
+                case ItemType.护身符:
                     if (Info.StackSize > 0)
                     {
                         switch (Info.Shape)
@@ -885,7 +885,7 @@ public class Awake
     public static byte[] AwakeChanceMax = new byte[5] { 1, 2, 3, 4, 5 };
     public static List<List<byte>[]> AwakeMaterials = new List<List<byte>[]>();
 
-    public AwakeType Type = AwakeType.None;
+    public AwakeType Type = AwakeType.无;
     readonly List<byte> listAwake = new List<byte>();
 
     public Awake() { }
@@ -933,18 +933,18 @@ public class Awake
         if (item.Info.CanAwakening != true)
             return false;
 
-        if (item.Info.Grade == ItemGrade.None)
+        if (item.Info.Grade == ItemGrade.无等级)
             return false;
 
         if (IsMaxLevel()) return false;
 
-        if (this.Type == AwakeType.None)
+        if (this.Type == AwakeType.无)
         {
-            if (item.Info.Type == ItemType.Weapon)
+            if (item.Info.Type == ItemType.武器)
             {
-                if (type == AwakeType.DC ||
-                    type == AwakeType.MC ||
-                    type == AwakeType.SC)
+                if (type == AwakeType.物理攻击 ||
+                    type == AwakeType.魔法攻击 ||
+                    type == AwakeType.道术攻击)
                 {
                     this.Type = type;
                     return true;
@@ -952,10 +952,10 @@ public class Awake
                 else
                     return false;
             }
-            else if (item.Info.Type == ItemType.Helmet)
+            else if (item.Info.Type == ItemType.头盔)
             {
-                if (type == AwakeType.AC ||
-                    type == AwakeType.MAC)
+                if (type == AwakeType.物理防御 ||
+                    type == AwakeType.魔法防御)
                 {
                     this.Type = type;
                     return true;
@@ -963,9 +963,9 @@ public class Awake
                 else
                     return false;
             }
-            else if (item.Info.Type == ItemType.Armour)
+            else if (item.Info.Type == ItemType.盔甲)
             {
-                if (type == AwakeType.HPMP)
+                if (type == AwakeType.生命值魔法值)
                 {
                     this.Type = type;
                     return true;
@@ -1013,25 +1013,25 @@ public class Awake
             listAwake.Remove(listAwake[listAwake.Count - 1]);
 
             if (listAwake.Count == 0)
-                Type = AwakeType.None;
+                Type = AwakeType.无;
 
             return 1;
         }
         else
         {
-            Type = AwakeType.None;
+            Type = AwakeType.无;
             return 0;
         }
     }
 
     public int GetAwakeLevelValue(int i) { return listAwake[i]; }
 
-    public byte GetDC() { return (Type == AwakeType.DC ? GetAwakeValue() : (byte)0); }
-    public byte GetMC() { return (Type == AwakeType.MC ? GetAwakeValue() : (byte)0); }
-    public byte GetSC() { return (Type == AwakeType.SC ? GetAwakeValue() : (byte)0); }
-    public byte GetAC() { return (Type == AwakeType.AC ? GetAwakeValue() : (byte)0); }
-    public byte GetMAC() { return (Type == AwakeType.MAC ? GetAwakeValue() : (byte)0); }
-    public byte GetHPMP() { return (Type == AwakeType.HPMP ? GetAwakeValue() : (byte)0); }
+    public byte GetDC() { return (Type == AwakeType.物理攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetMC() { return (Type == AwakeType.魔法攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetSC() { return (Type == AwakeType.道术攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetAC() { return (Type == AwakeType.物理防御 ? GetAwakeValue() : (byte)0); }
+    public byte GetMAC() { return (Type == AwakeType.魔法防御 ? GetAwakeValue() : (byte)0); }
+    public byte GetHPMP() { return (Type == AwakeType.生命值魔法值 ? GetAwakeValue() : (byte)0); }
 
     private bool[] MakeHit(int maxValue, out int makeValue)
     {
@@ -1066,13 +1066,13 @@ public class Awake
 
         switch (item.Info.Type)
         {
-            case ItemType.Weapon:
+            case ItemType.武器:
                 result *= (int)Awake_WeaponRate;
                 break;
-            case ItemType.Armour:
+            case ItemType.盔甲:
                 result *= (int)Awake_ArmorRate;
                 break;
-            case ItemType.Helmet:
+            case ItemType.头盔:
                 result *= (int)Awake_HelmetRate;
                 break;
             default:
@@ -1125,41 +1125,41 @@ public class ItemSets
         {
             switch (Set)
             {
-                case ItemSet.Mundane:
-                case ItemSet.NokChi:
-                case ItemSet.TaoProtect:
-                case ItemSet.Whisker1:
-                case ItemSet.Whisker2:
-                case ItemSet.Whisker3:
-                case ItemSet.Whisker4:
-                case ItemSet.Whisker5:
+                case ItemSet.世轮套装:
+                case ItemSet.绿翠套装:
+                case ItemSet.道护套装:
+                case ItemSet.贵人战套:
+                case ItemSet.贵人法套:
+                case ItemSet.贵人道套:
+                case ItemSet.贵人刺套:
+                case ItemSet.贵人弓套:
                     return 2;
-                case ItemSet.RedOrchid:
-                case ItemSet.RedFlower:
-                case ItemSet.Smash:
-                case ItemSet.HwanDevil:
-                case ItemSet.Purity:
-                case ItemSet.FiveString:
-                case ItemSet.Bone:
-                case ItemSet.Bug:
-                case ItemSet.DarkGhost:
+                case ItemSet.赤兰套装:
+                case ItemSet.密火套装:
+                case ItemSet.破碎套装:
+                case ItemSet.幻魔石套:
+                case ItemSet.灵玉套装:
+                case ItemSet.五玄套装:
+                case ItemSet.白骨套装:
+                case ItemSet.虫血套装:
+                case ItemSet.鏃未套装:
                     return 3;
-                case ItemSet.Recall:
+                case ItemSet.记忆套装:
                     return 4;
-                case ItemSet.Spirit:
-                case ItemSet.WhiteGold:
-                case ItemSet.WhiteGoldH:
-                case ItemSet.RedJade:
-                case ItemSet.RedJadeH:
-                case ItemSet.Nephrite:
-                case ItemSet.NephriteH:
-                case ItemSet.Hyeolryong:
-                case ItemSet.Monitor:
-                case ItemSet.Oppressive:
-                case ItemSet.Paeok:
-                case ItemSet.Sulgwan:
-                case ItemSet.BlueFrostH:
-                case ItemSet.BlueFrost:
+                case ItemSet.祈祷套装:
+                case ItemSet.白金套装:
+                case ItemSet.白金套装H:
+                case ItemSet.红玉套装:
+                case ItemSet.红玉套装H:
+                case ItemSet.软玉套装:
+                case ItemSet.软玉套装H:
+                case ItemSet.血龙套装:
+                case ItemSet.监视套装:
+                case ItemSet.暴压套装:
+                case ItemSet.贝玉套装:
+                case ItemSet.黑术套装:
+                case ItemSet.青玉套装H:
+                case ItemSet.青玉套装:
                     return 5;
                 default:
                     return 0;
@@ -1190,33 +1190,33 @@ public class RandomItemStat
     public byte CurseChance;
     public byte SlotChance, SlotStatChance, SlotMaxStat;
 
-    public RandomItemStat(ItemType Type = ItemType.Book)
+    public RandomItemStat(ItemType Type = ItemType.技能书)
     {
         switch (Type)
         {
-            case ItemType.Weapon:
+            case ItemType.武器:
                 SetWeapon();
                 break;
-            case ItemType.Armour:
+            case ItemType.盔甲:
                 SetArmour();
                 break;
-            case ItemType.Helmet:
+            case ItemType.头盔:
                 SetHelmet();
                 break;
-            case ItemType.Belt:
-            case ItemType.Boots:
+            case ItemType.腰带:
+            case ItemType.靴子:
                 SetBeltBoots();
                 break;
-            case ItemType.Necklace:
+            case ItemType.项链:
                 SetNecklace();
                 break;
-            case ItemType.Bracelet:
+            case ItemType.手镯:
                 SetBracelet();
                 break;
-            case ItemType.Ring:
+            case ItemType.戒指:
                 SetRing();
                 break;
-            case ItemType.Mount:
+            case ItemType.坐骑:
                 SetMount();
                 break;
         }

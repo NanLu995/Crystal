@@ -63,17 +63,17 @@ namespace Server.MirObjects
                 NameColour = Color.Cyan;
 			else
 			{
-				if (item.Info.Grade == ItemGrade.None)
+				if (item.Info.Grade == ItemGrade.无等级)
 					NameColour = Color.White;
-				if (item.Info.Grade == ItemGrade.Common)
+				if (item.Info.Grade == ItemGrade.普通)
 					NameColour = Color.White;
-				if (item.Info.Grade == ItemGrade.Rare)
+				if (item.Info.Grade == ItemGrade.宝物)
 					NameColour = Color.DeepSkyBlue;
-				if (item.Info.Grade == ItemGrade.Legendary)
+				if (item.Info.Grade == ItemGrade.圣物)
 					NameColour = Color.DarkOrange;
-				if (item.Info.Grade == ItemGrade.Mythical)
+				if (item.Info.Grade == ItemGrade.神物)
 					NameColour = Color.Plum;
-                if (item.Info.Grade == ItemGrade.Heroic)
+                if (item.Info.Grade == ItemGrade.英雄)
                     NameColour = Color.Red;
             }
 
@@ -90,17 +90,17 @@ namespace Server.MirObjects
 				NameColour = Color.Cyan;
 			else
 			{
-				if (item.Info.Grade == ItemGrade.None)
+				if (item.Info.Grade == ItemGrade.无等级)
 					NameColour = Color.White;
-				if (item.Info.Grade == ItemGrade.Common)
+				if (item.Info.Grade == ItemGrade.普通)
 					NameColour = Color.White;
-				if (item.Info.Grade == ItemGrade.Rare)
+				if (item.Info.Grade == ItemGrade.宝物)
 					NameColour = Color.DeepSkyBlue;
-				if (item.Info.Grade == ItemGrade.Legendary)
+				if (item.Info.Grade == ItemGrade.圣物)
 					NameColour = Color.DarkOrange;
-				if (item.Info.Grade == ItemGrade.Mythical)
+				if (item.Info.Grade == ItemGrade.神物)
 					NameColour = Color.Plum;
-                if (item.Info.Grade == ItemGrade.Heroic)
+                if (item.Info.Grade == ItemGrade.英雄)
                     NameColour = Color.Red;
             }
 

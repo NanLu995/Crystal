@@ -495,7 +495,7 @@ namespace Client.MirObjects
                     if (HeroObject.HeroObject?.OwnerName == User.Name)
                     {
                         index = 1;
-                        if ((MapObject.HeroObject.Class != MirClass.Warrior && HeroObject.Level > 7) || (MapObject.HeroObject.Class == MirClass.Warrior && HeroObject.Level > 25))
+                        if ((MapObject.HeroObject.Class != MirClass.战士 && HeroObject.Level > 7) || (MapObject.HeroObject.Class == MirClass.战士 && HeroObject.Level > 25))
                         {
                             Libraries.Prguse2.Draw(10, new Rectangle(0, 0, (int)(32 * PercentMana / 100F), 4), new Point(DisplayRectangle.X + 8, DisplayRectangle.Y - 60), Color.White, false);
                         }

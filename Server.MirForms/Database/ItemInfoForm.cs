@@ -40,7 +40,7 @@ namespace Server
 
         public void RefreshUniqueTab()
         {
-            if ((ITypeComboBox.SelectedItem != null) && ((ItemType)ITypeComboBox.SelectedItem == ItemType.Gem))
+            if ((ITypeComboBox.SelectedItem != null) && ((ItemType)ITypeComboBox.SelectedItem == ItemType.宝玉神珠))
             {
                 tabControl1.TabPages[3].Text = "可赋能在";
                 ParalysischeckBox.Text = "武器";

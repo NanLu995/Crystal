@@ -136,13 +136,13 @@ namespace Server.MirObjects
                 NextMagicSpell = Spell.None;
             }
 
-            if (CanMove && !CanAttack && (TargetDistance < 3 && Owner.Info.HeroBehaviour == HeroBehaviour.Attack && distanceToPlayer < 6))
+            if (CanMove && !CanAttack && (TargetDistance < 3 && Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer < 6))
             {
                 Point awayFromTarget = GetAdjacentPoint(CurrentLocation, Target.CurrentLocation, Owner.CurrentLocation);
                 MoveTo(awayFromTarget);
                 return;
             }
-            if (CanMove && ((Owner.Info.HeroBehaviour == HeroBehaviour.CounterAttack && distanceToPlayer > 2) || (Owner.Info.HeroBehaviour == HeroBehaviour.Attack && distanceToPlayer > 5)))
+            if (CanMove && ((Owner.Info.HeroBehaviour == HeroBehaviour.反击 && distanceToPlayer > 2) || (Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer > 5)))
             {
                 MoveTo(Owner.Back);
                 return;
@@ -180,13 +180,13 @@ namespace Server.MirObjects
             }
         }
         private bool HasRangedSpell => Info.Magics.Select(x => x.Spell).Intersect(Globals.RangedSpells).Any();
-        public bool HasWeapon => Info.Equipment[(int)EquipmentSlot.Weapon] != null && Info.Equipment[(int)EquipmentSlot.Weapon].CurrentDura > 0;
+        public bool HasWeapon => Info.Equipment[(int)EquipmentSlot.武器] != null && Info.Equipment[(int)EquipmentSlot.武器].CurrentDura > 0;
         public bool HasClassWeapon
         {
             get
             {
-                var classweapon = Info.Equipment[(int)EquipmentSlot.Weapon];
-                return classweapon != null && classweapon.Info.RequiredClass == RequiredClass.Archer && classweapon.CurrentDura > 0;
+                var classweapon = Info.Equipment[(int)EquipmentSlot.武器];
+                return classweapon != null && classweapon.Info.RequiredClass == RequiredClass.弓箭 && classweapon.CurrentDura > 0;
             }
         }
     }
