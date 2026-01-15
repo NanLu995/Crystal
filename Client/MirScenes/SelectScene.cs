@@ -135,7 +135,7 @@ namespace Client.MirScenes
             };
             CharacterDisplay.AfterDraw += (o, e) =>
             {
-                // if (_selected >= 0 && _selected < Characters.Count && characters[_selected].Class == MirClass.法师)
+                // if (_selected >= 0 && _selected < Characters.Count && characters[_selected].Class == MirClass.Wizard)
                 Libraries.ChrSel.DrawBlend(CharacterDisplay.Index + 560, CharacterDisplay.DisplayLocationWithoutOffSet, Color.White, true);
             };
 
@@ -507,19 +507,19 @@ namespace Client.MirScenes
 
                 switch ((MirClass)Characters[_selected].Class)
                 {
-                    case MirClass.战士:
+                    case MirClass.Warrior:
                         CharacterDisplay.Index = (byte)Characters[_selected].Gender == 0 ? 20 : 300; //220 : 500;
                         break;
-                    case MirClass.法师:
+                    case MirClass.Wizard:
                         CharacterDisplay.Index = (byte)Characters[_selected].Gender == 0 ? 40 : 320; //240 : 520;
                         break;
-                    case MirClass.道士:
+                    case MirClass.Taoist:
                         CharacterDisplay.Index = (byte)Characters[_selected].Gender == 0 ? 60 : 340; //260 : 540;
                         break;
-                    case MirClass.刺客:
+                    case MirClass.Assassin:
                         CharacterDisplay.Index = (byte)Characters[_selected].Gender == 0 ? 80 : 360; //280 : 560;
                         break;
-                    case MirClass.弓箭:
+                    case MirClass.Archer:
                         CharacterDisplay.Index = (byte)Characters[_selected].Gender == 0 ? 100 : 140; //160 : 180;
                         break;
                 }

@@ -2152,35 +2152,35 @@ namespace Client.MirControls
 
             switch (actor.Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);
@@ -2334,35 +2334,35 @@ namespace Client.MirControls
 
             switch (actor.Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);

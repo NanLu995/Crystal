@@ -1041,35 +1041,35 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ArchersCannotUseItem), ChatType.System);
@@ -1632,19 +1632,19 @@ namespace Server.MirObjects
         {
             switch (Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     if (!info.RequiredClass.HasFlag(RequiredClass.战士)) return false;
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     if (!info.RequiredClass.HasFlag(RequiredClass.法师)) return false;
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     if (!info.RequiredClass.HasFlag(RequiredClass.道士)) return false;
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     if (!info.RequiredClass.HasFlag(RequiredClass.刺客)) return false;
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     if (!info.RequiredClass.HasFlag(RequiredClass.弓箭)) return false;
                     break;
                 default:
@@ -4802,15 +4802,15 @@ namespace Server.MirObjects
                     {
                         var stats = new Stats();
 
-                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.战士 || ((HumanObject)target).Class == MirClass.刺客)
+                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.Warrior || ((HumanObject)target).Class == MirClass.Assassin)
                         {
                             stats[Stat.MaxDC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.法师 || ((HumanObject)target).Class == MirClass.弓箭)
+                        else if (((HumanObject)target).Class == MirClass.Wizard || ((HumanObject)target).Class == MirClass.Archer)
                         {
                             stats[Stat.MaxMC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.道士)
+                        else if (((HumanObject)target).Class == MirClass.Taoist)
                         {
                             stats[Stat.MaxSC] = value;
                         }
@@ -7735,19 +7735,19 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                         return false;
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                         return false;
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                         return false;
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                         return false;
                     break;

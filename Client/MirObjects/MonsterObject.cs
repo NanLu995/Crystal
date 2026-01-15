@@ -63,7 +63,7 @@ namespace Client.MirObjects
 
         public Color OldNameColor;
 
-        public SpellEffect CurrentEffect;
+        //public SpellEffect CurrentEffect;
 
         public uint MasterObjectId;
 
@@ -1057,7 +1057,7 @@ namespace Client.MirObjects
                             {
                                 PlayerObject player = (PlayerObject)ob;
                                 StruckWeapon = player.Weapon;
-                                if (player.Class == MirClass.刺客 && StruckWeapon > -1)
+                                if (player.Class == MirClass.Assassin && StruckWeapon > -1)
                                     StruckWeapon = 1;
                             }
                         }

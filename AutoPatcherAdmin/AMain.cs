@@ -387,7 +387,7 @@ namespace AutoPatcherAdmin
             DeleteDirectory(TempUploadDirectory);
         }
 
-        private byte[] DownloadFile(string fileName)
+        private byte[]? DownloadFile(string fileName)
         {
             using Session session = new Session();
             OpenSession(session);

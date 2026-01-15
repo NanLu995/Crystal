@@ -105,7 +105,7 @@ namespace Client.MirScenes.Dialogs
             };
             CharacterDisplay.AfterDraw += (o, e) =>
             {
-                if (Class == MirClass.法师)
+                if (Class == MirClass.Wizard)
                     Libraries.ChrSel.DrawBlend(CharacterDisplay.Index + 560, CharacterDisplay.DisplayLocationWithoutOffSet, Color.White, true);
             };
 
@@ -122,7 +122,7 @@ namespace Client.MirScenes.Dialogs
             };
             WarriorButton.Click += (o, e) =>
             {
-                Class = MirClass.战士;
+                Class = MirClass.Warrior;
                 UpdateInterface();
             };
 
@@ -139,7 +139,7 @@ namespace Client.MirScenes.Dialogs
             };
             WizardButton.Click += (o, e) =>
             {
-                Class = MirClass.法师;
+                Class = MirClass.Wizard;
                 UpdateInterface();
             };
 
@@ -156,7 +156,7 @@ namespace Client.MirScenes.Dialogs
             };
             TaoistButton.Click += (o, e) =>
             {
-                Class = MirClass.道士;
+                Class = MirClass.Taoist;
                 UpdateInterface();
             };
 
@@ -172,7 +172,7 @@ namespace Client.MirScenes.Dialogs
             };
             AssassinButton.Click += (o, e) =>
             {
-                Class = MirClass.刺客;
+                Class = MirClass.Assassin;
                 UpdateInterface();
             };
 
@@ -188,7 +188,7 @@ namespace Client.MirScenes.Dialogs
             };
             ArcherButton.Click += (o, e) =>
             {
-                Class = MirClass.弓箭;
+                Class = MirClass.Archer;
                 UpdateInterface();
             };
 
@@ -239,7 +239,7 @@ namespace Client.MirScenes.Dialogs
         {
             base.Show();
 
-            Class = MirClass.战士;
+            Class = MirClass.Warrior;
             Gender = MirGender.男性;
             NameTextBox.Text = string.Empty;
 
@@ -310,27 +310,27 @@ namespace Client.MirScenes.Dialogs
 
             switch (Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     WarriorButton.Index = 2427;
                     Description.Text = WarriorDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 20 : 300; //220 : 500;
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     WizardButton.Index = 2430;
                     Description.Text = WizardDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 40 : 320; //240 : 520;
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     TaoistButton.Index = 2433;
                     Description.Text = TaoistDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 60 : 340; //260 : 540;
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     AssassinButton.Index = 2436;
                     Description.Text = AssassinDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 80 : 360; //280 : 560;
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     ArcherButton.Index = 2439;
                     Description.Text = ArcherDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 100 : 140; //160 : 180;

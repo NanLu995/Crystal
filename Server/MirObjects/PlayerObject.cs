@@ -299,7 +299,7 @@ namespace Server.MirObjects
 
                             switch (Class)
                             {
-                                case (MirClass.刺客):
+                                case (MirClass.Assassin):
 
                                     if (Info.Name != Settings.AssassinCloneName)
                                     {
@@ -319,7 +319,7 @@ namespace Server.MirObjects
 
                             switch (Class)
                             {
-                                case (MirClass.法师):
+                                case (MirClass.Wizard):
 
                                     if (pet.Name == Settings.CloneName)
                                     {
@@ -335,7 +335,7 @@ namespace Server.MirObjects
 
                                     break;
 
-                                case (MirClass.道士):
+                                case (MirClass.Taoist):
                                     if (pet.Name == Settings.SkeletonName || pet.Name == Settings.AngelName || pet.Name == Settings.ShinsuName)
                                         Info.Pets.Add(new PetInfo(pet));
 
@@ -1257,7 +1257,7 @@ namespace Server.MirObjects
                     case false when Settings.PetSave is false:
                         switch (Class)
                         {
-                            case (MirClass.法师):
+                            case (MirClass.Wizard):
                                 if (monster.Info.Name == Settings.CloneName)
                                 {
                                     monster.ActionTime = Envir.Time + 1000;
@@ -14408,11 +14408,11 @@ namespace Server.MirObjects
 
             HeroObject hero = CurrentHero.Class switch
             {
-                MirClass.战士 => new WarriorHero(CurrentHero, this),
-                MirClass.法师 => new WizardHero(CurrentHero, this),
-                MirClass.道士 => new TaoistHero(CurrentHero, this),
-                MirClass.刺客 => new AssassinHero(CurrentHero, this),
-                MirClass.弓箭 => new ArcherHero(CurrentHero, this),
+                MirClass.Warrior => new WarriorHero(CurrentHero, this),
+                MirClass.Wizard => new WizardHero(CurrentHero, this),
+                MirClass.Taoist => new TaoistHero(CurrentHero, this),
+                MirClass.Assassin => new AssassinHero(CurrentHero, this),
+                MirClass.Archer => new ArcherHero(CurrentHero, this),
                 _ => new HeroObject(CurrentHero, this)
             };
 

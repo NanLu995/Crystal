@@ -3995,15 +3995,15 @@ namespace Server.MirEnvir
                 return;
             }
 
-            if (p.Class != MirClass.战士 && p.Class != MirClass.法师 && p.Class != MirClass.道士 &&
-                p.Class != MirClass.刺客 && p.Class != MirClass.弓箭)
+            if (p.Class != MirClass.Warrior && p.Class != MirClass.Wizard && p.Class != MirClass.Taoist &&
+                p.Class != MirClass.Assassin && p.Class != MirClass.Archer)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
             }
 
-            if (p.Class == MirClass.刺客 && !Settings.AllowCreateAssassin ||
-                p.Class == MirClass.弓箭 && !Settings.AllowCreateArcher)
+            if (p.Class == MirClass.Assassin && !Settings.AllowCreateAssassin ||
+                p.Class == MirClass.Archer && !Settings.AllowCreateArcher)
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 3 });
                 return;
@@ -4065,13 +4065,13 @@ namespace Server.MirEnvir
                 return false;
             }
 
-            if (p.Class != MirClass.战士 && p.Class != MirClass.法师 && p.Class != MirClass.道士 && p.Class != MirClass.刺客 && p.Class != MirClass.弓箭)
+            if (p.Class != MirClass.Warrior && p.Class != MirClass.Wizard && p.Class != MirClass.Taoist && p.Class != MirClass.Assassin && p.Class != MirClass.Archer)
             {
                 c.Enqueue(new S.NewHero { Result = 3 });
                 return false;
             }
 
-            if (p.Class == MirClass.战士 && !Settings.Hero_CanCreateClass[0] || p.Class == MirClass.法师 && !Settings.Hero_CanCreateClass[1] || p.Class == MirClass.道士 && !Settings.Hero_CanCreateClass[2] || p.Class == MirClass.刺客 && !Settings.Hero_CanCreateClass[3] || p.Class == MirClass.弓箭 && !Settings.Hero_CanCreateClass[4])
+            if (p.Class == MirClass.Warrior && !Settings.Hero_CanCreateClass[0] || p.Class == MirClass.Wizard && !Settings.Hero_CanCreateClass[1] || p.Class == MirClass.Taoist && !Settings.Hero_CanCreateClass[2] || p.Class == MirClass.Assassin && !Settings.Hero_CanCreateClass[3] || p.Class == MirClass.Archer && !Settings.Hero_CanCreateClass[4])
             {
                 c.Enqueue(new S.NewHero { Result = 3 });
                 return false;

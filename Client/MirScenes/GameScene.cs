@@ -2221,7 +2221,7 @@ namespace Client.MirScenes
         {
             User = new UserObject(p.ObjectID);
             User.Load(p);
-            MainDialog.PModeLabel.Visible = User.Class == MirClass.法师 || User.Class == MirClass.道士;
+            MainDialog.PModeLabel.Visible = User.Class == MirClass.Wizard || User.Class == MirClass.Taoist;
             HasHero = p.HasHero;
             HeroBehaviourPanel.UpdateBehaviour(p.HeroBehaviour);
             Gold = p.Gold;
@@ -3440,7 +3440,7 @@ namespace Client.MirScenes
             {
                 PlayerObject player = (PlayerObject)attacker;
                 weapon = player.Weapon;
-                if (player.Class == MirClass.刺客 && weapon > -1)
+                if (player.Class == MirClass.Assassin && weapon > -1)
                     weapon = 1;
             }
             action.Params.Add(weapon);
@@ -3473,7 +3473,7 @@ namespace Client.MirScenes
                 {
                     PlayerObject player = (PlayerObject)attacker;
                     weapon = player.Weapon;
-                    if (player.Class == MirClass.刺客 && weapon > -1)
+                    if (player.Class == MirClass.Assassin && weapon > -1)
                         weapon = 1;
                 }
                 action.Params.Add(weapon);
@@ -6061,11 +6061,11 @@ namespace Client.MirScenes
 
         private void HeroCreateRequest(S.HeroCreateRequest p)
         {
-            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.战士];
-            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.法师];
-            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.道士];
-            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.刺客];
-            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.弓箭];
+            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.Warrior];
+            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.Wizard];
+            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.Taoist];
+            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.Assassin];
+            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.Archer];
 
             NewHeroDialog.Show();
         }
@@ -8812,23 +8812,23 @@ namespace Client.MirScenes
 
                 switch (MapObject.User.Class)
                 {
-                    case MirClass.战士:
+                    case MirClass.Warrior:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.战士))
                             colour = Color.Red;
                         break;
-                    case MirClass.法师:
+                    case MirClass.Wizard:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.法师))
                             colour = Color.Red;
                         break;
-                    case MirClass.道士:
+                    case MirClass.Taoist:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.道士))
                             colour = Color.Red;
                         break;
-                    case MirClass.刺客:
+                    case MirClass.Assassin:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.刺客))
                             colour = Color.Red;
                         break;
-                    case MirClass.弓箭:
+                    case MirClass.Archer:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.弓箭))
                             colour = Color.Red;
                         break;
@@ -11493,7 +11493,7 @@ namespace Client.MirScenes
                 {
                     GameScene.LogTime = CMain.Time + Globals.LogDelay;
 
-                    if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
+                    if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
                     {
                         if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                         {
@@ -11590,7 +11590,7 @@ namespace Client.MirScenes
                                 MapObject target = null;
                                 if (MapObject.MouseObject is MonsterObject || MapObject.MouseObject is PlayerObject) target = MapObject.MouseObject;
 
-                                if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
+                                if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
                                 {
                                     if (target != null)
                                     {
@@ -11620,7 +11620,7 @@ namespace Client.MirScenes
                             return;
                         }
 
-                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.弓箭 && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
+                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.Archer && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
                         {
                             if (Functions.InRange(MapObject.MouseObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                             {
@@ -11783,7 +11783,7 @@ namespace Client.MirScenes
             if (((!MapObject.TargetObject.Name.EndsWith(")") && !(MapObject.TargetObject is PlayerObject)) || !CMain.Shift) &&
                 (MapObject.TargetObject.Name.EndsWith(")") || !(MapObject.TargetObject is MonsterObject))) return;
             if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, 1)) return;
-            if (User.Class == MirClass.弓箭 && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
+            if (User.Class == MirClass.Archer && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
             direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation);
 
             if (!CanWalk(direction, out direction)) return;

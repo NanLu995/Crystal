@@ -3608,20 +3608,20 @@ namespace Server.MirObjects
 
                             switch (mirClass)
                             {
-                                case MirClass.战士:
-                                    player.Info.Class = MirClass.战士;
+                                case MirClass.Warrior:
+                                    player.Info.Class = MirClass.Warrior;
                                     break;
-                                case MirClass.道士:
-                                    player.Info.Class = MirClass.道士;
+                                case MirClass.Taoist:
+                                    player.Info.Class = MirClass.Taoist;
                                     break;
-                                case MirClass.法师:
-                                    player.Info.Class = MirClass.法师;
+                                case MirClass.Wizard:
+                                    player.Info.Class = MirClass.Wizard;
                                     break;
-                                case MirClass.刺客:
-                                    player.Info.Class = MirClass.刺客;
+                                case MirClass.Assassin:
+                                    player.Info.Class = MirClass.Assassin;
                                     break;
-                                case MirClass.弓箭:
-                                    player.Info.Class = MirClass.弓箭;
+                                case MirClass.Archer:
+                                    player.Info.Class = MirClass.Archer;
                                     break;
                             }
                         }

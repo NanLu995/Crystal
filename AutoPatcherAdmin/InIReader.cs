@@ -25,7 +25,7 @@
         #endregion
 
         #region Functions
-        private string FindValue(string section, string key)
+        private string? FindValue(string section, string key)
         {
             for (int a = 0; a < _contents.Count; a++)
                 if (String.CompareOrdinal(_contents[a], "[" + section + "]") == 0)

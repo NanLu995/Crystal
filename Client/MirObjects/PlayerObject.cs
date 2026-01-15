@@ -45,11 +45,11 @@ namespace Client.MirObjects
                 switch (Weapon / Globals.ClassWeaponCount)
                 {
                     default:
-                        return Class == MirClass.法师 || Class == MirClass.战士 || Class == MirClass.道士;
+                        return Class == MirClass.Wizard || Class == MirClass.Warrior || Class == MirClass.Taoist;
                     case 1:
-                        return Class == MirClass.刺客;
+                        return Class == MirClass.Assassin;
                     case 2:
-                        return Class == MirClass.弓箭;
+                        return Class == MirClass.Archer;
                 }
             }
         }
@@ -365,7 +365,7 @@ namespace Client.MirObjects
                 switch (Class)
                 {
                     #region Archer
-                    case MirClass.弓箭:
+                    case MirClass.Archer:
 
                         #region WeaponType
                         if (HasClassWeapon)
@@ -454,7 +454,7 @@ namespace Client.MirObjects
 
 
                     #region Assassin
-                    case MirClass.刺客:
+                    case MirClass.Assassin:
 
                         #region WeaponType
                         if (HasClassWeapon || Weapon < 0)
@@ -545,9 +545,9 @@ namespace Client.MirObjects
 
 
                     #region Others
-                    case MirClass.战士:
-                    case MirClass.道士:
-                    case MirClass.法师:
+                    case MirClass.Warrior:
+                    case MirClass.Taoist:
+                    case MirClass.Wizard:
 
                         #region Armours
                         BodyLibrary = Armour < Libraries.CArmours.Length ? Libraries.CArmours[Armour] : Libraries.CArmours[0];
@@ -935,7 +935,7 @@ namespace Client.MirObjects
 
                 if (CurrentAction == MirAction.Standing)
                 {
-                    if (Class == MirClass.弓箭 && HasClassWeapon)
+                    if (Class == MirClass.Archer && HasClassWeapon)
                         CurrentAction = MirAction.Standing;
                     else
                         CurrentAction = CMain.Time > StanceTime ? MirAction.Standing : MirAction.Stance;
@@ -1055,10 +1055,10 @@ namespace Client.MirObjects
                     case MirAction.Attack1:
                         switch (Class)
                         {
-                            case MirClass.弓箭:
+                            case MirClass.Archer:
                                 Frames.TryGetValue(CurrentAction, out Frame);
                                 break;
-                            case MirClass.刺客:
+                            case MirClass.Assassin:
                                 if(GameScene.User.DoubleSlash)
                                     Frames.TryGetValue(MirAction.Attack1, out Frame);
                                 else if (CMain.Shift)
@@ -1269,7 +1269,7 @@ namespace Client.MirObjects
                 }
 
                 //ArcherTest - Need to check for bow weapon only
-                if (Class == MirClass.弓箭 && HasClassWeapon)
+                if (Class == MirClass.Archer && HasClassWeapon)
                 {
                     switch (CurrentAction)
                     {
@@ -1283,7 +1283,7 @@ namespace Client.MirObjects
                 }
 
                 //Assassin sneekyness
-                if (Class == MirClass.刺客 && Sneaking && (CurrentAction == MirAction.Walking || CurrentAction == MirAction.Running))
+                if (Class == MirClass.Assassin && Sneaking && (CurrentAction == MirAction.Walking || CurrentAction == MirAction.Running))
                 {
                     Frames.TryGetValue(MirAction.Sneek, out Frame);
                 }
@@ -1611,7 +1611,7 @@ namespace Client.MirObjects
                             {
                                 PlayerObject player = (PlayerObject)ob;
                                 StruckWeapon = player.Weapon;
-                                if (player.Class == MirClass.刺客 && StruckWeapon != -1)
+                                if (player.Class == MirClass.Assassin && StruckWeapon != -1)
                                     StruckWeapon = 1;
                             }
 
@@ -4687,7 +4687,7 @@ namespace Client.MirObjects
             }
 
             int add = 0;
-            if (Class != MirClass.刺客) //Archer to add?
+            if (Class != MirClass.Assassin) //Archer to add?
                 switch (Armour)
                 {
                     case 3:
@@ -4774,13 +4774,13 @@ namespace Client.MirObjects
                 return;
             }
 
-            if (Weapon >= 0 && Class == MirClass.刺客)
+            if (Weapon >= 0 && Class == MirClass.Assassin)
             {
                 SoundManager.PlaySound(SoundList.SwingShort);
                 return;
             }
 
-            if (Class == MirClass.弓箭 && HasClassWeapon)
+            if (Class == MirClass.Archer && HasClassWeapon)
             {
                 return;
             }
@@ -4918,7 +4918,7 @@ namespace Client.MirObjects
                 else
                     DrawWeapon2();
 
-                if (Class == MirClass.弓箭 && HasClassWeapon)
+                if (Class == MirClass.Archer && HasClassWeapon)
                     DrawWeapon2();
             }
 

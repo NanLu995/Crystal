@@ -74,10 +74,10 @@ namespace Client.MirScenes.Dialogs
                     Libraries.StateItems.Draw(Grid[(int)EquipmentSlot.头盔].Item.Info.Image, DisplayLocation, Color.White, true, 1F);
                 else
                 {
-                    int hair = 441 + actor.Hair + (actor.Class == MirClass.刺客 ? 20 : 0) + (actor.Gender == MirGender.男性 ? 0 : 40);
+                    int hair = 441 + actor.Hair + (actor.Class == MirClass.Assassin ? 20 : 0) + (actor.Gender == MirGender.男性 ? 0 : 40);
 
-                    int offSetX = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 6 : 4) : 0;
-                    int offSetY = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 25 : 18) : 0;
+                    int offSetX = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.男性 ? 6 : 4) : 0;
+                    int offSetY = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.男性 ? 25 : 18) : 0;
 
                     Libraries.Prguse.Draw(hair, new Point(DisplayLocation.X + offSetX, DisplayLocation.Y + offSetY), Color.White, true, 1F);
                 }
@@ -663,19 +663,19 @@ namespace Client.MirScenes.Dialogs
 
             switch (Actor.Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     ClassImage.Index = 100;// + offSet * 5;
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     ClassImage.Index = 101;// + offSet * 5;
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     ClassImage.Index = 102;// + offSet * 5;
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     ClassImage.Index = 103;// + offSet * 5;
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     ClassImage.Index = 104;// + offSet * 5;
                     break;
             }

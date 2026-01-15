@@ -12,7 +12,7 @@
         switch (job)
         {
             #region Warrior
-            case MirClass.战士:
+            case MirClass.Warrior:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 4.5F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 3.5F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.BagWeight) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3F, GainRate = 0F, Max = 0 });
@@ -27,7 +27,7 @@
                 break;
             #endregion
             #region Wizard
-            case MirClass.法师:
+            case MirClass.Wizard:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 15F, GainRate =1.8F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 13, Gain = 5F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.BagWeight) { FormulaType = StatFormula.Weight, Base = 50, Gain = 5F, GainRate = 0F, Max = 0 });
@@ -42,7 +42,7 @@
                 break;
             #endregion
             #region Taoist
-            case MirClass.道士:
+            case MirClass.Taoist:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 6F, GainRate = 2.5F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 13, Gain = 8F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.BagWeight) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
@@ -59,7 +59,7 @@
                 break;
             #endregion
             #region Assassin
-            case MirClass.刺客:
+            case MirClass.Assassin:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 3.25F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 5F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.BagWeight) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3.5F, GainRate = 0F, Max = 0 });
@@ -72,7 +72,7 @@
                 break;
             #endregion
             #region Archer
-            case MirClass.弓箭:
+            case MirClass.Archer:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 3.25F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 4F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.BagWeight) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
@@ -160,7 +160,7 @@ public class BaseStat
         {
             return job switch
             {
-                MirClass.战士 => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate + level / 20F) * level),
+                MirClass.Warrior => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate + level / 20F) * level),
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level / Gain + GainRate) * level),
             };
         }
@@ -168,8 +168,8 @@ public class BaseStat
         {
             return job switch
             {
-                MirClass.法师 => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + ((level / Gain + 2F) * 2.2F * level) + (level * GainRate)),
-                MirClass.道士 => (int)Math.Min(Max > 0 ? Max : int.MaxValue, (Base + level / Gain * 2.2F * level) + (level * GainRate)),
+                MirClass.Wizard => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + ((level / Gain + 2F) * 2.2F * level) + (level * GainRate)),
+                MirClass.Taoist => (int)Math.Min(Max > 0 ? Max : int.MaxValue, (Base + level / Gain * 2.2F * level) + (level * GainRate)),
                 _ => (int)Math.Min(Max > 0 ? Max : int.MaxValue, Base + (level * Gain) + (level * GainRate)),
             };
         }

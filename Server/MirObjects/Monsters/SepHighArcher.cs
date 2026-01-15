@@ -377,7 +377,7 @@ namespace Server.MirObjects.Monsters
                 ObjectID = ObjectID,
                 Name = master != null ? master.Name : Name,
                 NameColour = NameColour,
-                Class = MirClass.弓箭,
+                Class = MirClass.Archer,
                 Gender = master != null ? master.Gender : Envir.Random.Next(2) == 0 ? MirGender.男性 : MirGender.女性,
                 Location = CurrentLocation,
                 Direction = Direction,

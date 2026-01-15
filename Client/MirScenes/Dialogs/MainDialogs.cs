@@ -29,7 +29,7 @@ namespace Client.MirScenes.Dialogs
 
         public bool HPOnly
         {
-            get { return User != null && User.Class == MirClass.战士 && User.Level < 26; }
+            get { return User != null && User.Class == MirClass.Warrior && User.Level < 26; }
         }
 
         public MainDialog()
@@ -2195,10 +2195,10 @@ namespace Client.MirScenes.Dialogs
                     Libraries.StateItems.Draw(HelmetCell.Item.Info.Image, new Point(DisplayLocation.X, DisplayLocation.Y - 20), Color.White, true, 1F);
                 else
                 {
-                    int hair = 441 + Hair + (Class == MirClass.刺客 ? 20 : 0) + (Gender == MirGender.男性 ? 0 : 40);
+                    int hair = 441 + Hair + (Class == MirClass.Assassin ? 20 : 0) + (Gender == MirGender.男性 ? 0 : 40);
 
-                    int offSetX = Class == MirClass.刺客 ? (Gender == MirGender.男性 ? 6 : 4) : 0;
-                    int offSetY = Class == MirClass.刺客 ? (Gender == MirGender.男性 ? 25 : 18) : 0;
+                    int offSetX = Class == MirClass.Assassin ? (Gender == MirGender.男性 ? 6 : 4) : 0;
+                    int offSetY = Class == MirClass.Assassin ? (Gender == MirGender.男性 ? 25 : 18) : 0;
 
                     Libraries.Prguse.Draw(hair, new Point(DisplayLocation.X + offSetX, DisplayLocation.Y + offSetY - 20), Color.White, true, 1F);
                 }
@@ -2476,19 +2476,19 @@ namespace Client.MirScenes.Dialogs
 
             switch (Class)
             {
-                case MirClass.战士:
+                case MirClass.Warrior:
                     ClassImage.Index = 100;// + offSet * 5;
                     break;
-                case MirClass.法师:
+                case MirClass.Wizard:
                     ClassImage.Index = 101;// + offSet * 5;
                     break;
-                case MirClass.道士:
+                case MirClass.Taoist:
                     ClassImage.Index = 102;// + offSet * 5;
                     break;
-                case MirClass.刺客:
+                case MirClass.Assassin:
                     ClassImage.Index = 103;// + offSet * 5;
                     break;
-                case MirClass.弓箭:
+                case MirClass.Archer:
                     ClassImage.Index = 104;// + offSet * 5;
                     break;
             }

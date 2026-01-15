@@ -831,11 +831,11 @@ public enum MirGender : byte
 
 public enum MirClass : byte
 {
-    战士 = 0, // Warrior = 0
-    法师 = 1, // Wizard = 1
-    道士 = 2, // Taoist = 2
-    刺客 = 3, // Assassin = 3
-    弓箭 = 4 // Archer = 4
+    Warrior = 0,
+    Wizard = 1,
+    Taoist = 2,
+    Assassin = 3,
+    Archer = 4 
 }
 
 public enum MirDirection : byte

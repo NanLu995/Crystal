@@ -432,23 +432,23 @@ namespace Client.MirObjects
             {
                 switch (User.Class)
                 {
-                    case MirClass.战士:
+                    case MirClass.Warrior:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.战士))
                             return false;
                         break;
-                    case MirClass.法师:
+                    case MirClass.Wizard:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.法师))
                             return false;
                         break;
-                    case MirClass.道士:
+                    case MirClass.Taoist:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.道士))
                             return false;
                         break;
-                    case MirClass.刺客:
+                    case MirClass.Assassin:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.刺客))
                             return false;
                         break;
-                    case MirClass.弓箭:
+                    case MirClass.Archer:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.弓箭))
                             return false;
                         break;
