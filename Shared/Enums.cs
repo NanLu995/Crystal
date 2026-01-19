@@ -735,21 +735,21 @@ public enum Monster : ushort
     //Flags 1000 ~ 1100
 
     //Creatures
-    小猪 = 10000,//BabyPig
-    小鸡 = 10001,//Chick
-    小猫 = 10002,//Kitten
-    精灵骷髅 = 10003,//BabySkeleton
-    白猪 = 10004,//Baekdon
-    纸片人 = 10005,//Wimaen
-    黑猫 = 10006,//BlackKitten
-    龙蛋 = 10007,//BabyDragon
-    火娃 = 10008,//OlympicFlame
-    雪人 = 10009,//BabySnowMan
-    青蛙 = 10010,//Frog
-    红猴 = 10011,//BabyMonkey
-    愤怒的小鸟 = 10012,//AngryBird
-    阿福 = 10013,//Foxey
-    治疗拉拉 = 10014,//MedicalRat
+    BabyPig = 10000,
+    Chick = 10001,
+    Kitten = 10002,
+    BabySkeleton = 10003,
+    Baekdon = 10004,
+    Wimaen = 10005,
+    BlackKitten = 10006,
+    BabyDragon = 10007,
+    OlympicFlame = 10008,
+    BabySnowMan = 10009,
+    Frog = 10010,
+    BabyMonkey = 10011,
+    AngryBird = 10012,
+    Foxey = 10013,
+    MedicalRat = 10014,
     // 猫咪超人 = 10015,
     // 龙宝宝 = 10016,
     // 蛇宝宝 = 10017,
@@ -1084,7 +1084,8 @@ public enum RequiredClass : byte
     道士 = 4,
     刺客 = 8,
     弓箭 = 16,
-    //战士刺客 = 战士 | 刺客 ,
+    战刺 = 战士 | 刺客 ,
+    法弓 = 法师 | 弓箭 ,
     战法道 = 战士 | 法师 | 道士,
     全职业 = 战法道 | 刺客 | 弓箭
 }

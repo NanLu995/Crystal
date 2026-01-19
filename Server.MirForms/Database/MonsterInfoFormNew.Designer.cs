@@ -291,7 +291,7 @@ namespace Server.Database
             // 
             groupView.Controls.Add(rbtnViewAll);
             groupView.Controls.Add(rbtnViewBasic);
-            groupView.Enabled = false;
+            groupView.Enabled = true;
             groupView.Location = new Point(4, 3);
             groupView.Margin = new Padding(4, 3, 4, 3);
             groupView.Name = "groupView";
