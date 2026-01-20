@@ -596,7 +596,7 @@
     "CurseSkillDescription": "诅咒术\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：护身符 + 毒药\n\n降低目标的攻击速度、物理攻击、\n魔法攻击与道术攻击力。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "HallucinationSkillDescription": "迷魂术\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：护身符\n\n让怪物陷入幻觉，并攻击\n沿途遇到的任何目标。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "ReincarnationSkillDescription": "复活术\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：护身符\n\n复活一名已死亡的玩家。\n\n当前技能等级 {0}\n下一级等级 {1}",
-    "PoisonCloudSkillDescription": "毒雾\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：绿毒\n\n投掷护身符，在目标区域生成\n强力的毒云。\n\n当前技能等级 {0}\n下一级等级 {1}",
+    "PoisonCloudSkillDescription": "毒雾\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：绿毒\n\n投掷护身符，在目标区域生成\n强力的毒雾。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "EnergyShieldSkillDescription": "能量护盾\n\n瞬发技能\n法力消耗 {2}\n\n需要物品：护身符\n\n可施加于自己或友方目标。\n反弹所受伤害的一定比例给攻击者。\n\n当前技能等级 {0}\n\n下一级等级 {1}",
     "PlagueSkillDescription": "瘟疫术\n\n瞬间施放\n魔法消耗 {2}\n\n需要物品：护符 + 毒药\n\n降低目标的魔法值并施加各种负面状态\n示例：眩晕、诅咒、中毒和减速。\n\n当前技能等级 {0}\n下一级 {1}",
     "HealingCircleSkillDescription": "阴阳五行阵\n\n瞬间施放\n魔法消耗 {2}\n\n治疗范围内的友方目标，并对敌人造成法术伤害。\n\n当前技能等级 {0}\n下一级 {1}",

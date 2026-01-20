@@ -230,7 +230,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 8F),
                 Parent = this,
                 AutoSize = true,
-                Location = new Point(210, 8)
+                Location = new Point(160, 8)
             };
 
             MirButton closeButton = new MirButton

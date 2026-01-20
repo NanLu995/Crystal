@@ -142,22 +142,22 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-
             CharacterButton = new MirButton
             {
                 Index = 500,
                 Library = Libraries.Title,
-                Location = new Point(8, 70),
+                Location = new Point(9, 70),
                 Parent = this,
                 PressedIndex = 500,
                 Size = new Size(64, 20),
                 Sound = SoundList.ButtonA,
             };
             CharacterButton.Click += (o, e) => ShowCharacterPage();
+
             StatusButton = new MirButton
             {
                 Library = Libraries.Title,
-                Location = new Point(70, 70),
+                Location = new Point(58, 70),
                 Parent = this,
                 PressedIndex = 501,
                 Size = new Size(64, 20),
@@ -168,7 +168,7 @@ namespace Client.MirScenes.Dialogs
             StateButton = new MirButton
             {
                 Library = Libraries.Title,
-                Location = new Point(132, 70),
+                Location = new Point(107, 70),
                 Parent = this,
                 PressedIndex = 502,
                 Size = new Size(64, 20),
@@ -179,7 +179,7 @@ namespace Client.MirScenes.Dialogs
             SkillButton = new MirButton
             {
                 Library = Libraries.Title,
-                Location = new Point(194, 70),
+                Location = new Point(156, 70),
                 Parent = this,
                 PressedIndex = 503,
                 Size = new Size(64, 20),
