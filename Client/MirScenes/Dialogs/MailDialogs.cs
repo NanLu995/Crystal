@@ -44,7 +44,7 @@ namespace Client.MirScenes.Dialogs
 
             TitleTypeLabel = new MirLabel
             {
-                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Type),
+                //Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Type),
                 Parent = this,
                 Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
@@ -54,7 +54,7 @@ namespace Client.MirScenes.Dialogs
 
             TitleSenderLabel = new MirLabel
             {
-                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Sender),
+                //Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Sender),
                 Parent = this,
                 Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
@@ -64,7 +64,7 @@ namespace Client.MirScenes.Dialogs
 
             TitleMessageLabel = new MirLabel
             {
-                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Message),
+                //Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Message),
                 Parent = this,
                 Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
@@ -1010,7 +1010,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 35),
+                Location = new Point(70, 32),
                 Size = new Size(150, 15),
                 NotControl = true,
             };
@@ -1020,7 +1020,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 56),
+                Location = new Point(70, 51),
                 Size = new Size(150, 15),
                 NotControl = true,
             };
@@ -1141,7 +1141,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 35),
+                Location = new Point(70, 32),
                 Size = new Size(150, 15),
                 NotControl = true,
             };
@@ -1151,7 +1151,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 56),
+                Location = new Point(70, 51),
                 Size = new Size(150, 15),
                 NotControl = true,
             };
@@ -1169,7 +1169,7 @@ namespace Client.MirScenes.Dialogs
             {
                 DrawFormat = TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),
-                Location = new Point(63, 290),
+                Location = new Point(63, 289),
                 Parent = this,
                 Size = new Size(143, 15),
             };
@@ -1240,7 +1240,7 @@ namespace Client.MirScenes.Dialogs
                 }
             }
 
-            if (!Mail.Collected)
+            if (Mail.Collected)
             {
                 CollectButton.Index = 683;
                 CollectButton.HoverIndex = 684;

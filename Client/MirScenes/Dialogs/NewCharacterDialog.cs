@@ -54,7 +54,7 @@ namespace Client.MirScenes.Dialogs
             {
                 Index = 20,
                 Library = Libraries.Title,
-                Location = new Point(206, 11),
+                Location = new Point(206, 5),
                 Parent = this,
             };
 
@@ -63,7 +63,7 @@ namespace Client.MirScenes.Dialogs
                 HoverIndex = 281,
                 Index = 280,
                 Library = Libraries.Title,
-                Location = new Point(425, 425),
+                Location = new Point(365, 425),
                 Parent = this,
                 PressedIndex = 282
             };

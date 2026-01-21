@@ -1,0 +1,3 @@
+cmd /c mklink /D  "E:\Mir2\Crystal.Release\Client\Data" "E:\Mir2\CrystalMir2ClientPatch\Data" 
+cmd /c mklink /D  "E:\Mir2\Crystal.Release\Client\Map" "E:\Mir2\CrystalMir2ClientPatch\Map" 
+cmd /c mklink /D  "E:\Mir2\Crystal.Release\Client\Sound" "E:\Mir2\CrystalMir2ClientPatch\Sound" 
