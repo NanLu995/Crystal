@@ -570,7 +570,7 @@
             gbGameWorld.Size = new Size(272, 335);
             gbGameWorld.TabIndex = 2;
             gbGameWorld.TabStop = false;
-            gbGameWorld.Text = "Game World";
+            gbGameWorld.Text = "游戏世界";
             // 
             // SafeZoneHealingCheckBox
             // 
@@ -770,7 +770,7 @@
             label23.Name = "label23";
             label23.Size = new Size(14, 17);
             label23.TabIndex = 12;
-            label23.Text = "x";
+            label23.Text = "倍";
             // 
             // label21
             // 
@@ -880,7 +880,7 @@
             label19.Name = "label19";
             label19.Size = new Size(14, 17);
             label19.TabIndex = 11;
-            label19.Text = "x";
+            label19.Text = "倍";
             // 
             // label18
             // 
@@ -889,7 +889,7 @@
             label18.Name = "label18";
             label18.Size = new Size(14, 17);
             label18.TabIndex = 12;
-            label18.Text = "x";
+            label18.Text = "倍";
             // 
             // dropRateInput
             // 

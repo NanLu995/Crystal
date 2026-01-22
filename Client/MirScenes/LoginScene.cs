@@ -69,7 +69,7 @@ namespace Client.MirScenes
                 BorderColour = Color.Black,
                 Location = new Point(5, Settings.ScreenHeight - 20),
                 Parent = _background,
-                Text = string.Format("Build: {0}.{1}.{2}", Globals.ProductCodename, Settings.UseTestConfig ? "Debug" : "Release", Application.ProductVersion),
+                Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuildVersionLabel), Globals.ProductCodename, Settings.UseTestConfig ? "Debug" : "Release", Application.ProductVersion)
             };
 
             TestLabel = new MirImageControl

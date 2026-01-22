@@ -6988,7 +6988,7 @@ namespace Client.MirScenes
                 case ItemType.肉:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMeat);
                     break;
-                case ItemType.制作材料:
+                case ItemType.工艺材料:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeCraftingMaterial);
                     break;
                 case ItemType.卷轴:
@@ -7018,7 +7018,7 @@ namespace Client.MirScenes
                 case ItemType.蝴蝶结:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeRibbon);
                     break;
-                case ItemType.面罩:
+                case ItemType.面甲:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMask);
                     break;
                 case ItemType.坐骑食物:

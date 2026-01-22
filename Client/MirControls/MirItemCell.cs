@@ -611,7 +611,7 @@ namespace Client.MirControls
                 case ItemType.铃铛:
                 case ItemType.蝴蝶结:
                 case ItemType.马鞍:
-                case ItemType.面罩:
+                case ItemType.面甲:
                 case ItemType.鱼钩:
                 case ItemType.鱼漂:
                 case ItemType.鱼饵:
@@ -706,7 +706,7 @@ namespace Client.MirControls
                         Locked = true;
                     }
                     break;
-                case ItemType.面罩:
+                case ItemType.面甲:
                     mountDialog = GameScene.Scene.MountDialog;
                     if (mountDialog.Grid[(int)MountSlot.Mask].CanWearItem(GameScene.User, Item))
                     {
@@ -2282,7 +2282,7 @@ namespace Client.MirControls
                 case ItemType.马鞍:
                 case ItemType.蝴蝶结:
                 case ItemType.铃铛:
-                case ItemType.面罩:
+                case ItemType.面甲:
                 case ItemType.缰绳:
                     if (actor.Equipment[(int)EquipmentSlot.坐骑] == null)
                     {

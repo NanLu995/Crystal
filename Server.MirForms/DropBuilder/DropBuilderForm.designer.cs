@@ -464,7 +464,7 @@
             this.tabPageCraftingMaterial.Size = new System.Drawing.Size(468, 356);
             this.tabPageCraftingMaterial.TabIndex = 14;
             this.tabPageCraftingMaterial.Tag = "CraftingMaterial";
-            this.tabPageCraftingMaterial.Text = "制作材料";
+            this.tabPageCraftingMaterial.Text = "工艺材料";
             this.tabPageCraftingMaterial.UseVisualStyleBackColor = true;
             // 
             // listBoxCraftingMaterial
@@ -1113,7 +1113,7 @@
             this.tabPagePets.Size = new System.Drawing.Size(468, 338);
             this.tabPagePets.TabIndex = 35;
             this.tabPagePets.Tag = "Pets";
-            this.tabPagePets.Text = "灵物";
+            this.tabPagePets.Text = "宠物";
             this.tabPagePets.UseVisualStyleBackColor = true;
             // 
             // listBoxPets

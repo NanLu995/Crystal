@@ -717,7 +717,7 @@ namespace Client.MirScenes.Dialogs
             book.SubFilters.Add(new Filter { Index = 604, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Assassin), Type = ItemType.技能书, MinShape = 91, MaxShape = 120 });
             book.SubFilters.Add(new Filter { Index = 605, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Archer), Type = ItemType.技能书, MinShape = 121, MaxShape = 150 });
 
-            crafting.SubFilters.Add(new Filter { Index = 701, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Materials), Type = ItemType.制作材料 });
+            crafting.SubFilters.Add(new Filter { Index = 701, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Materials), Type = ItemType.工艺材料 });
             crafting.SubFilters.Add(new Filter { Index = 703, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Meat), Type = ItemType.肉 });
             crafting.SubFilters.Add(new Filter { Index = 704, Title = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Ore), Type = ItemType.矿石 });
         }

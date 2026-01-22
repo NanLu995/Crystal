@@ -1243,7 +1243,7 @@ namespace Server.MirObjects
                 case ItemType.马鞍:
                 case ItemType.蝴蝶结:
                 case ItemType.铃铛:
-                case ItemType.面罩:
+                case ItemType.面甲:
                 case ItemType.缰绳:
                     if (Info.Equipment[(int)EquipmentSlot.坐骑] == null)
                     {
