@@ -11762,7 +11762,7 @@ namespace Server.MirObjects
 
             if (mail == null) return;
 
-            if (mail.Collected)
+            if (!mail.Collected)
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.MailCollectFromPostOffice), ChatType.System);
                 return;

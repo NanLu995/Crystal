@@ -75,9 +75,9 @@ namespace Launcher
             // 
             ActionLabel.Anchor = AnchorStyles.Bottom;
             ActionLabel.BackColor = Color.Transparent;
-            ActionLabel.Font = new Font("Calibri", 8.25F);
+            ActionLabel.Font = new Font("Calibri", 9F);
             ActionLabel.ForeColor = Color.Gray;
-            ActionLabel.Location = new Point(489, 522);
+            ActionLabel.Location = new Point(430, 466);
             ActionLabel.Margin = new Padding(5, 0, 5, 0);
             ActionLabel.Name = "ActionLabel";
             ActionLabel.Size = new Size(118, 24);
@@ -91,16 +91,16 @@ namespace Launcher
             // 
             SpeedLabel.Anchor = AnchorStyles.Bottom;
             SpeedLabel.BackColor = Color.Transparent;
-            SpeedLabel.Font = new Font("Calibri", 8.25F);
+            SpeedLabel.Font = new Font("Calibri", 9F);
             SpeedLabel.ForeColor = Color.Gray;
-            SpeedLabel.Location = new Point(379, 528);
+            SpeedLabel.Location = new Point(311, 466);
             SpeedLabel.Margin = new Padding(5, 0, 5, 0);
             SpeedLabel.Name = "SpeedLabel";
             SpeedLabel.RightToLeft = RightToLeft.No;
-            SpeedLabel.Size = new Size(100, 15);
+            SpeedLabel.Size = new Size(100, 24);
             SpeedLabel.TabIndex = 13;
             SpeedLabel.Text = "速度";
-            SpeedLabel.TextAlign = ContentAlignment.TopRight;
+            SpeedLabel.TextAlign = ContentAlignment.MiddleRight;
             SpeedLabel.Visible = false;
             // 
             // InterfaceTimer
@@ -204,12 +204,12 @@ namespace Launcher
             // 
             CurrentFile_label.Anchor = AnchorStyles.Bottom;
             CurrentFile_label.BackColor = Color.Transparent;
-            CurrentFile_label.Font = new Font("Calibri", 8.25F);
+            CurrentFile_label.Font = new Font("Calibri", 9F);
             CurrentFile_label.ForeColor = Color.Gray;
-            CurrentFile_label.Location = new Point(147, 525);
+            CurrentFile_label.Location = new Point(63, 466);
             CurrentFile_label.Margin = new Padding(5, 0, 5, 0);
             CurrentFile_label.Name = "CurrentFile_label";
-            CurrentFile_label.Size = new Size(222, 21);
+            CurrentFile_label.Size = new Size(222, 24);
             CurrentFile_label.TabIndex = 27;
             CurrentFile_label.Text = "检查文件.";
             CurrentFile_label.TextAlign = ContentAlignment.MiddleLeft;
