@@ -56,7 +56,7 @@
             // ClientTextBox
             // 
             ClientTextBox.Location = new Point(134, 21);
-            ClientTextBox.Margin = new Padding(4, 4, 4, 4);
+            ClientTextBox.Margin = new Padding(4);
             ClientTextBox.Name = "ClientTextBox";
             ClientTextBox.Size = new Size(345, 23);
             ClientTextBox.TabIndex = 0;
@@ -84,7 +84,7 @@
             // HostTextBox
             // 
             HostTextBox.Location = new Point(134, 65);
-            HostTextBox.Margin = new Padding(4, 4, 4, 4);
+            HostTextBox.Margin = new Padding(4);
             HostTextBox.Name = "HostTextBox";
             HostTextBox.Size = new Size(345, 23);
             HostTextBox.TabIndex = 3;
@@ -102,7 +102,7 @@
             // LoginTextBox
             // 
             LoginTextBox.Location = new Point(134, 110);
-            LoginTextBox.Margin = new Padding(4, 4, 4, 4);
+            LoginTextBox.Margin = new Padding(4);
             LoginTextBox.Name = "LoginTextBox";
             LoginTextBox.Size = new Size(345, 23);
             LoginTextBox.TabIndex = 5;
@@ -120,7 +120,7 @@
             // PasswordTextBox
             // 
             PasswordTextBox.Location = new Point(134, 154);
-            PasswordTextBox.Margin = new Padding(4, 4, 4, 4);
+            PasswordTextBox.Margin = new Padding(4);
             PasswordTextBox.Name = "PasswordTextBox";
             PasswordTextBox.Size = new Size(345, 23);
             PasswordTextBox.TabIndex = 7;
@@ -128,18 +128,18 @@
             // ProcessButton
             // 
             ProcessButton.Location = new Point(16, 238);
-            ProcessButton.Margin = new Padding(4, 4, 4, 4);
+            ProcessButton.Margin = new Padding(4);
             ProcessButton.Name = "ProcessButton";
-            ProcessButton.Size = new Size(103, 39);
+            ProcessButton.Size = new Size(110, 39);
             ProcessButton.TabIndex = 9;
-            ProcessButton.Text = "文件校验";
+            ProcessButton.Text = "增量同步";
             ProcessButton.UseVisualStyleBackColor = true;
             ProcessButton.Click += ProcessButton_Click;
             // 
             // progressBar1
             // 
             progressBar1.Location = new Point(16, 311);
-            progressBar1.Margin = new Padding(4, 4, 4, 4);
+            progressBar1.Margin = new Padding(4);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(506, 27);
             progressBar1.TabIndex = 12;
@@ -167,7 +167,7 @@
             // progressBar2
             // 
             progressBar2.Location = new Point(16, 407);
-            progressBar2.Margin = new Padding(4, 4, 4, 4);
+            progressBar2.Margin = new Padding(4);
             progressBar2.Name = "progressBar2";
             progressBar2.Size = new Size(506, 17);
             progressBar2.TabIndex = 13;
@@ -214,12 +214,12 @@
             // 
             // ListButton
             // 
-            ListButton.Location = new Point(419, 238);
-            ListButton.Margin = new Padding(4, 4, 4, 4);
+            ListButton.Location = new Point(400, 238);
+            ListButton.Margin = new Padding(4);
             ListButton.Name = "ListButton";
-            ListButton.Size = new Size(103, 39);
+            ListButton.Size = new Size(110, 39);
             ListButton.TabIndex = 20;
-            ListButton.Text = "创建列表";
+            ListButton.Text = "仅上传文件清单";
             ListButton.UseVisualStyleBackColor = true;
             ListButton.Click += ListButton_Click;
             // 
@@ -227,32 +227,32 @@
             // 
             AllowCleanCheckBox.AutoSize = true;
             AllowCleanCheckBox.Location = new Point(134, 199);
-            AllowCleanCheckBox.Margin = new Padding(4, 4, 4, 4);
+            AllowCleanCheckBox.Margin = new Padding(4);
             AllowCleanCheckBox.Name = "AllowCleanCheckBox";
-            AllowCleanCheckBox.Size = new Size(75, 21);
+            AllowCleanCheckBox.Size = new Size(135, 21);
             AllowCleanCheckBox.TabIndex = 22;
-            AllowCleanCheckBox.Text = "允许整理";
+            AllowCleanCheckBox.Text = "允许整理服务器文件";
             AllowCleanCheckBox.UseVisualStyleBackColor = true;
             // 
             // DownloadExistingButton
             // 
-            DownloadExistingButton.Location = new Point(232, 238);
-            DownloadExistingButton.Margin = new Padding(4, 4, 4, 4);
+            DownloadExistingButton.Location = new Point(272, 238);
+            DownloadExistingButton.Margin = new Padding(4);
             DownloadExistingButton.Name = "DownloadExistingButton";
-            DownloadExistingButton.Size = new Size(182, 39);
+            DownloadExistingButton.Size = new Size(110, 39);
             DownloadExistingButton.TabIndex = 23;
-            DownloadExistingButton.Text = "下载现有数据";
+            DownloadExistingButton.Text = "下载服务器数据";
             DownloadExistingButton.UseVisualStyleBackColor = true;
             DownloadExistingButton.Click += DownloadExistingButton_Click;
             // 
             // btnFixGZ
             // 
-            btnFixGZ.Location = new Point(124, 238);
-            btnFixGZ.Margin = new Padding(4, 4, 4, 4);
+            btnFixGZ.Location = new Point(144, 238);
+            btnFixGZ.Margin = new Padding(4);
             btnFixGZ.Name = "btnFixGZ";
-            btnFixGZ.Size = new Size(103, 39);
+            btnFixGZ.Size = new Size(110, 39);
             btnFixGZ.TabIndex = 24;
-            btnFixGZ.Text = "修复列表";
+            btnFixGZ.Text = "修复服务器后缀";
             btnFixGZ.UseVisualStyleBackColor = true;
             btnFixGZ.Click += BtnFixGZ_Click;
             // 
@@ -262,7 +262,7 @@
             ProtocolDropDown.FormattingEnabled = true;
             ProtocolDropDown.Items.AddRange(new object[] { "Ftp", "SFtp" });
             ProtocolDropDown.Location = new Point(357, 195);
-            ProtocolDropDown.Margin = new Padding(4, 4, 4, 4);
+            ProtocolDropDown.Margin = new Padding(4);
             ProtocolDropDown.Name = "ProtocolDropDown";
             ProtocolDropDown.Size = new Size(123, 25);
             ProtocolDropDown.TabIndex = 25;
@@ -270,12 +270,12 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(313, 200);
+            label6.Location = new Point(290, 199);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(35, 17);
+            label6.Size = new Size(59, 17);
             label6.TabIndex = 26;
-            label6.Text = "协议:";
+            label6.Text = "链接协议:";
             // 
             // AMain
             // 
@@ -305,7 +305,7 @@
             Controls.Add(HostTextBox);
             Controls.Add(label1);
             Controls.Add(ClientTextBox);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "AMain";
             Text = "自动更新管理窗口";
             Load += AMain_Load;
