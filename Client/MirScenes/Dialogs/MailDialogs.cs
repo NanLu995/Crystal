@@ -1240,19 +1240,19 @@ namespace Client.MirScenes.Dialogs
                 }
             }
 
-            if (Mail.Collected)
+            if (!Mail.Collected)
             {
-                CollectButton.Index = 683;
-                CollectButton.HoverIndex = 684;
-                CollectButton.PressedIndex = 685;
-                CollectButton.Enabled = false;
+               CollectButton.Index = 683;
+               CollectButton.HoverIndex = 684;
+               CollectButton.PressedIndex = 685;
+               CollectButton.Enabled = false;
             }
             else
             {
-                CollectButton.Index = 680;
-                CollectButton.HoverIndex = 681;
-                CollectButton.PressedIndex = 682;
-                CollectButton.Enabled = true;
+               CollectButton.Index = 680;
+               CollectButton.HoverIndex = 681;
+               CollectButton.PressedIndex = 682;
+               CollectButton.Enabled = true;
             }
 
             Visible = true;
