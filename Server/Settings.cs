@@ -54,7 +54,7 @@ namespace Server
         public static string MonsterNPCFilename = "00Monster";
         public static string RobotNPCFilename = "00Robot";
         public static string FishingDropFilename = "00Fishing";
-	    public static string AwakeningDropFilename = "00Awakening";
+        public static string AwakeningDropFilename = "00Awakening";
         public static string StrongboxDropFilename = "00Strongbox";
         public static string BlackstoneDropFilename = "00Blackstone";
 
@@ -157,61 +157,61 @@ namespace Server
                           RestedMaxBonus = 24,
                           NewbieGuildMaxSize = 1000;
 
-        public static string NewbieGuild = "NewbieGuild",
-                             SkeletonName = "BoneFamiliar",
-                             ShinsuName = "Shinsu",
-                             BugBatName = "BugBat",
-                             Zuma1 = "ZumaStatue",
-                             Zuma2 = "ZumaGuardian",
-                             Zuma3 = "ZumaArcher",
-                             Zuma4 = "WedgeMoth",
-                             Zuma5 = "ZumaArcher3",
-                             Zuma6 = "ZumaStatue3",
-                             Zuma7 = "ZumaGuardian3",
-                             Turtle1 = "RedTurtle",
-                             Turtle2 = "GreenTurtle",
-                             Turtle3 = "BlueTurtle",
-                             Turtle4 = "TowerTurtle",
-                             Turtle5 = "FinialTurtle",
-                             BoneMonster1 = "BoneSpearman",
-                             BoneMonster2 = "BoneBlademan",
-                             BoneMonster3 = "BoneArcher",
-                             BoneMonster4 = "BoneCaptain",
-                             BehemothMonster1 = "Hugger",
-                             BehemothMonster2 = "PoisonHugger",
-                             BehemothMonster3 = "MutatedHugger",
-                             HellKnight1 = "HellKnight1",
-                             HellKnight2 = "HellKnight2",
-                             HellKnight3 = "HellKnight3",
-                             HellKnight4 = "HellKnight4",
-                             HellBomb1 = "HellBomb1",
-                             HellBomb2 = "HellBomb2",
-                             HellBomb3 = "HellBomb3",
-                             WhiteSnake = "WhiteSerpent",
-                             AngelName = "HolyDeva",
-                             BombSpiderName = "BombSpider",
-                             CloneName = "Clone",
-                             AssassinCloneName = "AssassinClone",
-                             VampireName = "VampireSpider",
-                             ToadName = "SpittingToad",
-                             SnakeTotemName = "SnakeTotem",
-                             SnakesName = "CharmedSnake",
-                             AncientBatName = "AncientBat",
-                             TucsonGeneralEgg = "GeneralTucson",
-                             GeneralMeowMeowMob1 = "StainHammerCat",
-                             GeneralMeowMeowMob2 = "BlackHammerCat",
-                             GeneralMeowMeowMob3 = "StrayCat",
-                             GeneralMeowMeowMob4 = "CatShaman",
-                             KingHydraxMob = "Hydrax",
-                             HornedCommanderMob = "HornedSorceror",
-                             HornedCommanderBombMob = "BoulderSpirit",
-                             SnowWolfKingMob = "SnowWolf",
-                             ScrollMob1 = "WarriorScroll",
-                             ScrollMob2 = "TaoistScroll",
-                             ScrollMob3 = "WizardScroll",
-                             ScrollMob4 = "AssassinScroll",
-                             StoneName = "StoneTrap",
-                             HeroName = "Hero";
+        public static string NewbieGuild = "新人行会",
+                             SkeletonName = "变异骷髅", // BoneFamiliar
+                             ShinsuName = "神兽", // Shinsu
+                             BugBatName = "蝇蛾", // BugBat
+                             Zuma1 = "祖玛雕像", // ZumaStatue
+                             Zuma2 = "祖玛卫士", // ZumaGuardian
+                             Zuma3 = "祖玛弓箭手", // ZumaArcher
+                             Zuma4 = "楔蛾", // WedgeMoth
+                             Zuma5 = "祖玛雕像3", // ZumaArcher3
+                             Zuma6 = "祖玛弓箭手3", // ZumaStatue3
+                             Zuma7 = "祖玛卫士3", // ZumaGuardian3
+                             Turtle1 = "红海龟", // RedTurtle
+                             Turtle2 = "绿海龟", // GreenTurtle
+                             Turtle3 = "蓝海龟", // BlueTurtle
+                             Turtle4 = "宝塔龟", // TowerTurtle
+                             Turtle5 = "幽冥龟", // FinialTurtle
+                             BoneMonster1 = "骷髅长枪兵", // BoneSpearman
+                             BoneMonster2 = "骷髅刀斧手", // BoneBlademan
+                             BoneMonster3 = "骷髅弓箭手", // BoneArcher
+                             BoneMonster4 = "骷髅武将", // BoneCaptain
+                             BehemothMonster1 = "尸虫", // Hugger
+                             BehemothMonster2 = "剧毒尸虫", // PoisonHugger
+                             BehemothMonster3 = "变异尸虫", // MutatedHugger
+                             HellKnight1 = "魔焰守护", // HellKnight1
+                             HellKnight2 = "寒冰守护", // HellKnight2
+                             HellKnight3 = "定土守护", // HellKnight3
+                             HellKnight4 = "延火守护", // HellKnight4
+                             HellBomb1 = "寒冰球", // HellBomb1
+                             HellBomb2 = "紫电球", // HellBomb2
+                             HellBomb3 = "赤炎球", // HellBomb3
+                             WhiteSnake = "白灵蛇", // WhiteSerpent
+                             AngelName = "精灵", // HolyDeva
+                             BombSpiderName = "爆裂蜘蛛", // BombSpider
+                             CloneName = "分身", // Clone
+                             AssassinCloneName = "刺客分身", // AssassinClone
+                             VampireName = "吸血蜘蛛", // VampireSpider
+                             ToadName = "蟾蜍", // SpittingToad
+                             SnakeTotemName = "蛇图腾", // SnakeTotem
+                             SnakesName = "鬼魅蛇", // CharmedSnake
+                             AncientBatName = "AncientBat", // AncientBat
+                             TucsonGeneralEgg = "GeneralTucson", // GeneralTucson
+                             GeneralMeowMeowMob1 = "白锤猫卫", // StainHammerCat
+                             GeneralMeowMeowMob2 = "黑锤猫卫", // BlackHammerCat
+                             GeneralMeowMeowMob3 = "猫妖武士", // StrayCat
+                             GeneralMeowMeowMob4 = "灵猫法师", // CatShaman
+                             KingHydraxMob = "小蟒", // Hydrax
+                             HornedCommanderMob = "咒魔法师", // HornedSorceror
+                             HornedCommanderBombMob = "岩石炸弹", // BoulderSpirit
+                             SnowWolfKingMob = "雪狼", // SnowWolf
+                             ScrollMob1 = "秘密画轴1", // WarriorScroll
+                             ScrollMob2 = "秘密画轴2", // TaoistScroll
+                             ScrollMob3 = "秘密画轴3", // WizardScroll
+                             ScrollMob4 = "秘密画轴4", // AssassinScroll
+                             StoneName = "石柱", // StoneTrap
+                             HeroName = "英雄"; // Hero
 
 
 
@@ -227,7 +227,7 @@ namespace Server
         public static uint MaxDropGold = 2000;
         public static bool DropGold = true;
 
-        public static string CreatureBlackStoneName = "BlackCreatureStone";
+        public static string CreatureBlackStoneName = "黑玉";
 
         //Fishing Settings
         public static int FishingAttempts = 30;
@@ -256,7 +256,7 @@ namespace Server
         public static byte RefineItemStatReduce = 15;
         public static int RefineCost = 125;
 
-        public static string RefineOreName = "BlackIronOre";
+        public static string RefineOreName = "黑铁矿石";
 
         //Marriage Settings
         public static int LoverEXPBonus = 5;
@@ -374,7 +374,7 @@ namespace Server
         }
 
         public static void Load()
-        {            
+        {
             //General
             VersionPath = Reader.ReadString("General", "VersionPath", VersionPath);
             CheckVersion = Reader.ReadBoolean("General", "CheckVersion", CheckVersion);
@@ -385,7 +385,7 @@ namespace Server
             TestServer = Reader.ReadBoolean("General", "TestServer", TestServer);
             EnforceDBChecks = Reader.ReadBoolean("General", "EnforceDBChecks", EnforceDBChecks);
             MonsterProcessWhenAlone = Reader.ReadBoolean("General", "MonsterProcessWhenAlone", MonsterProcessWhenAlone);
-            Language=Reader.ReadString("General", "Language", Language);
+            Language = Reader.ReadString("General", "Language", Language);
 
             //Paths
             IPAddress = Reader.ReadString("Network", "IPAddress", IPAddress);
@@ -514,18 +514,18 @@ namespace Server
             DropGold = Reader.ReadBoolean("DropGold", "DropGold", DropGold);
             MaxDropGold = Reader.ReadUInt32("DropGold", "MaxDropGold", MaxDropGold);
 
-            MagicResistWeight = Reader.ReadByte("Items","MagicResistWeight",MagicResistWeight);
-            PoisonResistWeight = Reader.ReadByte("Items","PoisonResistWeight",PoisonResistWeight);
-            CriticalRateWeight = Reader.ReadByte("Items","CriticalRateWeight",CriticalRateWeight);
-            CriticalDamageWeight = Math.Max((byte)1, Reader.ReadByte("Items","CriticalDamageWeight",CriticalDamageWeight));
-            FreezingAttackWeight = Reader.ReadByte("Items","FreezingAttackWeight",FreezingAttackWeight);
-            PoisonAttackWeight = Reader.ReadByte("Items","PoisonAttackWeight",PoisonAttackWeight);
+            MagicResistWeight = Reader.ReadByte("Items", "MagicResistWeight", MagicResistWeight);
+            PoisonResistWeight = Reader.ReadByte("Items", "PoisonResistWeight", PoisonResistWeight);
+            CriticalRateWeight = Reader.ReadByte("Items", "CriticalRateWeight", CriticalRateWeight);
+            CriticalDamageWeight = Math.Max((byte)1, Reader.ReadByte("Items", "CriticalDamageWeight", CriticalDamageWeight));
+            FreezingAttackWeight = Reader.ReadByte("Items", "FreezingAttackWeight", FreezingAttackWeight);
+            PoisonAttackWeight = Reader.ReadByte("Items", "PoisonAttackWeight", PoisonAttackWeight);
             HealthRegenWeight = Math.Max((byte)1, Reader.ReadByte("Items", "HealthRegenWeight", HealthRegenWeight));
             ManaRegenWeight = Math.Max((byte)1, Reader.ReadByte("Items", "ManaRegenWeight", ManaRegenWeight));
             MaxLuck = Reader.ReadByte("Items", "MaxLuck", MaxLuck);
             ItemSealDelay = Reader.ReadUInt16("Items", "SealDelay", ItemSealDelay);
 
-            PvpCanResistMagic = Reader.ReadBoolean("Items","PvpCanResistMagic",PvpCanResistMagic);
+            PvpCanResistMagic = Reader.ReadBoolean("Items", "PvpCanResistMagic", PvpCanResistMagic);
             PvpCanResistPoison = Reader.ReadBoolean("Items", "PvpCanResistPoison", PvpCanResistPoison);
             PvpCanFreeze = Reader.ReadBoolean("Items", "PvpCanFreeze", PvpCanFreeze);
 
@@ -556,7 +556,7 @@ namespace Server
             if (!Directory.Exists(ExportPath))
                 Directory.CreateDirectory(ExportPath);
             if (!Directory.Exists(RoutePath))
-                Directory.CreateDirectory(RoutePath);         
+                Directory.CreateDirectory(RoutePath);
             if (!Directory.Exists(NameListPath))
                 Directory.CreateDirectory(NameListPath);
             if (!Directory.Exists(RecipePath))
@@ -603,7 +603,7 @@ namespace Server
             LoadRandomItemStats();
             LoadMines();
             LoadGuildSettings();
-			LoadAwakeAttribute();
+            LoadAwakeAttribute();
             LoadFishing();
             LoadMail();
             LoadRefine();
@@ -785,7 +785,7 @@ namespace Server
 
             Reader.Write("DropGold", "DropGold", DropGold);
             Reader.Write("DropGold", "MaxDropGold", MaxDropGold);
-            
+
             Reader.Write("Items", "MagicResistWeight", MagicResistWeight);
             Reader.Write("Items", "PoisonResistWeight", PoisonResistWeight);
             Reader.Write("Items", "CriticalRateWeight", CriticalRateWeight);
@@ -870,7 +870,7 @@ namespace Server
                 HeroExperienceList.Add(exp);
             }
         }
-            public static void LoadWorldMap()
+        public static void LoadWorldMap()
         {
             InIReader reader = null;
             string path = Path.Combine(ConfigPath, "WorldMap.ini");
@@ -887,7 +887,7 @@ namespace Server
 
             if (reader == null)
                 reader = new InIReader(path);
-            
+
             WorldMapSetup.Enabled = reader.ReadBoolean("Setup", "Enabled", false);
 
             int c = 0;
@@ -1063,7 +1063,7 @@ namespace Server
             InIReader reader = new InIReader(Path.Combine(ConfigPath, "RandomItemStats.ini"));
             int i = 0;
             RandomItemStat stat;
-            while (reader.ReadByte("Item" + i.ToString(),"MaxDuraChance",255) != 255)
+            while (reader.ReadByte("Item" + i.ToString(), "MaxDuraChance", 255) != 255)
             {
                 stat = new RandomItemStat();
                 stat.MaxDuraChance = reader.ReadByte("Item" + i.ToString(), "MaxDuraChance", 0);
@@ -1161,7 +1161,7 @@ namespace Server
                 reader.Write("Item" + i.ToString(), "MaxDcStatChance", stat.MaxDcStatChance);
                 reader.Write("Item" + i.ToString(), "MaxDcMaxStat", stat.MaxDcMaxStat);
                 reader.Write("Item" + i.ToString(), "MaxMcChance", stat.MaxMcChance);
-                reader.Write("Item" + i.ToString(), "MaxMcStatChance",  stat.MaxMcStatChance);
+                reader.Write("Item" + i.ToString(), "MaxMcStatChance", stat.MaxMcStatChance);
                 reader.Write("Item" + i.ToString(), "MaxMcMaxStat", stat.MaxMcMaxStat);
                 reader.Write("Item" + i.ToString(), "MaxScChance", stat.MaxScChance);
                 reader.Write("Item" + i.ToString(), "MaxScStatChance", stat.MaxScStatChance);
@@ -1246,15 +1246,15 @@ namespace Server
                 while (reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MinSlot", 255) != 255)
                 {
                     mine.Drops.Add(new MineDrop()
-                        {
-                            ItemName = reader.ReadString("Mine" + i.ToString(), "D" + j.ToString() + "-ItemName", ""),
-                            MinSlot = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MinSlot", 255),
-                            MaxSlot = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxSlot", 255),
-                            MinDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MinDura", 255),
-                            MaxDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxDura", 255),
-                            BonusChance = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-BonusChance", 255),
-                            MaxBonusDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxBonusDura", 255)
-                        });
+                    {
+                        ItemName = reader.ReadString("Mine" + i.ToString(), "D" + j.ToString() + "-ItemName", ""),
+                        MinSlot = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MinSlot", 255),
+                        MaxSlot = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxSlot", 255),
+                        MinDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MinDura", 255),
+                        MaxDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxDura", 255),
+                        BonusChance = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-BonusChance", 255),
+                        MaxBonusDura = reader.ReadByte("Mine" + i.ToString(), "D" + j.ToString() + "-MaxBonusDura", 255)
+                    });
                     j++;
                 }
                 MineSetList.Add(mine);
@@ -1276,7 +1276,7 @@ namespace Server
                 reader.Write("Mine" + i.ToString(), "HitRate", mine.HitRate);
                 reader.Write("Mine" + i.ToString(), "DropRate", mine.DropRate);
                 reader.Write("Mine" + i.ToString(), "TotalSlots", mine.TotalSlots);
-                
+
                 for (int j = 0; j < mine.Drops.Count; j++)
                 {
                     MineDrop Drop = mine.Drops[j];
@@ -1295,7 +1295,7 @@ namespace Server
         {
             Array.Resize(ref Hero_CanCreateClass, Enum.GetNames(typeof(MirClass)).Length);
             if (!File.Exists(Path.Combine(ConfigPath, "HeroSettings.ini")))
-            {                
+            {
                 for (int i = 0; i < Hero_CanCreateClass.Length; i++)
                     Hero_CanCreateClass[i] = true;
                 SaveHeroSettings();
@@ -1329,8 +1329,8 @@ namespace Server
         {
             if (!File.Exists(Path.Combine(ConfigPath, "GuildSettings.ini")))
             {
-                Guild_CreationCostList.Add(new GuildItemVolume(){Amount = 1000000});
-                Guild_CreationCostList.Add(new GuildItemVolume(){ItemName = "WoomaHorn",Amount = 1});
+                Guild_CreationCostList.Add(new GuildItemVolume() { Amount = 1000000 });
+                Guild_CreationCostList.Add(new GuildItemVolume() { ItemName = "WoomaHorn", Amount = 1 });
                 return;
             }
             InIReader reader = new InIReader(Path.Combine(ConfigPath, "GuildSettings.ini"));
@@ -1343,7 +1343,7 @@ namespace Server
             NewbieGuildExpBuff = reader.ReadInt32("Guilds", "NewbieGuildExpBuff", NewbieGuildExpBuff);
 
             int i = 0;
-            while (reader.ReadUInt32("Required-" + i.ToString(),"Amount",0) != 0)
+            while (reader.ReadUInt32("Required-" + i.ToString(), "Amount", 0) != 0)
             {
                 Guild_CreationCostList.Add(new GuildItemVolume()
                 {
@@ -1414,11 +1414,11 @@ namespace Server
                         Guild_CreationCostList[i].Item = ItemList[j];
                         break;
                     }
-                  
+
             }
         }
 
-		public static void LoadAwakeAttribute()
+        public static void LoadAwakeAttribute()
         {
             if (!File.Exists(Path.Combine(ConfigPath, "AwakeningSystem.ini")))
             {
@@ -1633,7 +1633,7 @@ namespace Server
             reader.Write("Config", "MarriageCooldown", MarriageCooldown);
             reader.Write("Config", "AllowLoverRecall", WeddingRingRecall);
             reader.Write("Config", "MinimumLevel", MarriageLevelRequired);
-            reader.Write("Config", "ReplaceRingCost", ReplaceWedRingCost); 
+            reader.Write("Config", "ReplaceRingCost", ReplaceWedRingCost);
         }
 
         public static void LoadMentor()
