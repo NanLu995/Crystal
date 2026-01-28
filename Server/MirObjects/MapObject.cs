@@ -660,7 +660,7 @@ namespace Server.MirObjects
                     HideFromTargets();
                     break;
                 case BuffType.隐身术:
-                case BuffType.ClearRing:
+                case BuffType.隐身戒指:
                     Hidden = true;
                     HideFromTargets();
                     break;
@@ -684,7 +684,7 @@ namespace Server.MirObjects
                     case BuffType.隐身术:
                     case BuffType.月影术:
                     case BuffType.烈火身:
-                        if (!HasAnyBuffs(b, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
+                        if (!HasAnyBuffs(b, BuffType.隐身戒指, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }

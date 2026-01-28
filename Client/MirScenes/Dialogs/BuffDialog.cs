@@ -300,7 +300,7 @@ namespace Client.MirScenes.Dialogs
                     }
                     break;
                 case BuffType.隐身术:
-                case BuffType.ClearRing:
+                case BuffType.隐身戒指:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvisibleToManyMonsters);
                     break;
                 case BuffType.月影术:
@@ -326,19 +326,19 @@ namespace Client.MirScenes.Dialogs
                     overridestats = true;
                     text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.IncreaseMcAndConsumption), buff.Stats[Stat.MinMC], buff.Stats[Stat.MaxMC], buff.Stats[Stat.法力值消耗数率]);
                     break;
-                case BuffType.Transform:
+                case BuffType.变形效果:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisguisesYourAppearance);
                     break;
-                case BuffType.Mentee:
+                case BuffType.衣钵相传:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LearnSkillPointsTwiceAsQuick);
                     break;
-                case BuffType.Guild:
+                case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
                 case BuffType.Blindness:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ReducesVisibility);
                     break;
-                case BuffType.Newbie:
+                case BuffType.新人特效:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildMemberBoost);
                     break;
             }
@@ -433,7 +433,7 @@ namespace Client.MirScenes.Dialogs
                     return 30;
 
                 case BuffType.隐身术:
-                case BuffType.ClearRing:
+                case BuffType.隐身戒指:
                     return 17;
                 case BuffType.体迅风:
                     return 60;
@@ -485,25 +485,25 @@ namespace Client.MirScenes.Dialogs
                     return 162;
                 case BuffType.Gold:
                     return 168;
-                case BuffType.Knapsack:
+                case BuffType.包容万斤:
                 case BuffType.背包负重提升:
                     return 235;
-                case BuffType.Transform:
+                case BuffType.变形效果:
                     return 241;
-                case BuffType.Mentor:
-                case BuffType.Mentee:
+                case BuffType.火传穷薪:
+                case BuffType.衣钵相传:
                     return 248;
-                case BuffType.Lover:
+                case BuffType.心心相印:
                     return 201;
-                case BuffType.Guild:
+                case BuffType.公会特效:
                     return 203;
-                case BuffType.Rested:
+                case BuffType.精力充沛:
                     return 240;
                 case BuffType.时间之殇:
                     return 261;
-                case BuffType.Skill:
+                case BuffType.技巧项链:
                     return 200;
-                case BuffType.Newbie:
+                case BuffType.新人特效:
                     return 182;
 
                 //Stats
@@ -513,17 +513,17 @@ namespace Client.MirScenes.Dialogs
                     return 165;
                 case BuffType.道术力提升:
                     return 250;
-                case BuffType.Storm:
+                case BuffType.攻击速度提升:
                     return 170;
-                case BuffType.HealthAid:
+                case BuffType.生命值提升:
                     return 161;
-                case BuffType.ManaAid:
+                case BuffType.法力值提升:
                     return 169;
-                case BuffType.Defence:
+                case BuffType.物理防御提升:
                     return 166;
-                case BuffType.MagicDefence:
+                case BuffType.魔法防御提升:
                     return 158;
-                case BuffType.WonderDrug:
+                case BuffType.奇异药水:
                     return 252;
                 default:
                     return 0;

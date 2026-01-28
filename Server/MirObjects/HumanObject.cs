@@ -413,11 +413,11 @@ namespace Server.MirObjects
                             UpdateConcentration(true, false);
                         }
                         break;
-                    case BuffType.ClearRing:
+                    case BuffType.隐身戒指:
                         clearRing = true;
                         if (!SpecialMode.HasFlag(SpecialItemMode.ClearRing)) buff.FlagForRemoval = true;
                         break;
-                    case BuffType.Skill:
+                    case BuffType.技巧项链:
                         skill = true;
                         if (!SpecialMode.HasFlag(SpecialItemMode.Skill)) buff.FlagForRemoval = true;
                         break;
@@ -425,12 +425,12 @@ namespace Server.MirObjects
                         gm = true;
                         if (!IsGM) buff.FlagForRemoval = true;
                         break;
-                    case BuffType.Mentor:
-                    case BuffType.Mentee:
+                    case BuffType.火传穷薪:
+                    case BuffType.衣钵相传:
                         mentor = true;
                         if (Info.Mentor == 0) buff.FlagForRemoval = true;
                         break;
-                    case BuffType.Lover:
+                    case BuffType.心心相印:
                         lover = true;
                         if (Info.Married == 0) buff.FlagForRemoval = true;
                         break;
@@ -462,8 +462,8 @@ namespace Server.MirObjects
                     case BuffType.隐身术:
                     case BuffType.月影术:
                     case BuffType.烈火身:
-                    case BuffType.ClearRing:
-                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
+                    case BuffType.隐身戒指:
+                        if (!HasAnyBuffs(buff.Type, BuffType.隐身戒指, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }
@@ -500,12 +500,12 @@ namespace Server.MirObjects
 
             if (SpecialMode.HasFlag(SpecialItemMode.ClearRing) && !clearRing)
             {
-                AddBuff(BuffType.ClearRing, this, 0, new Stats());
+                AddBuff(BuffType.隐身戒指, this, 0, new Stats());
             }
 
             if (SpecialMode.HasFlag(SpecialItemMode.Skill) && !skill)
             {
-                AddBuff(BuffType.Skill, this, 0, new Stats { [Stat.技能熟练度倍率] = 3 }, false);
+                AddBuff(BuffType.技巧项链, this, 0, new Stats { [Stat.技能熟练度倍率] = 3 }, false);
             }
 
             if (Info.Mentor != 0 && !mentor)
@@ -517,11 +517,11 @@ namespace Server.MirObjects
                 {
                     if (Info.IsMentor)
                     {
-                        AddBuff(BuffType.Mentor, partnerP, 0, new Stats { [Stat.师徒专享伤害数率] = Settings.MentorDamageBoost });
+                        AddBuff(BuffType.火传穷薪, partnerP, 0, new Stats { [Stat.师徒专享伤害数率] = Settings.MentorDamageBoost });
                     }
                     else
                     {
-                        AddBuff(BuffType.Mentee, partnerP, 0, new Stats { [Stat.师徒专享经验数率] = Settings.MentorExpBoost });
+                        AddBuff(BuffType.衣钵相传, partnerP, 0, new Stats { [Stat.师徒专享经验数率] = Settings.MentorExpBoost });
                     }
                 }
             }
@@ -533,13 +533,13 @@ namespace Server.MirObjects
 
                 if (loverP != null)
                 {
-                    AddBuff(BuffType.Lover, loverP, 0, new Stats { [Stat.伴侣专享经验数率] = Settings.LoverEXPBonus });
+                    AddBuff(BuffType.心心相印, loverP, 0, new Stats { [Stat.伴侣专享经验数率] = Settings.LoverEXPBonus });
                 }
             }
 
             if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
             {
-                AddBuff(BuffType.Newbie, this, 0, new Stats { [Stat.经验增长数率] = Settings.NewbieGuildExpBuff });
+                AddBuff(BuffType.新人特效, this, 0, new Stats { [Stat.经验增长数率] = Settings.NewbieGuildExpBuff });
             }
 
             if (refresh)
@@ -2335,7 +2335,7 @@ namespace Server.MirObjects
                 {
                     switch (buff.Type)
                     {
-                        case BuffType.Transform:
+                        case BuffType.变形效果:
                             TransformType = (short)buff.Values[0];
                             FastRun = true;
                             break;
@@ -6906,7 +6906,7 @@ namespace Server.MirObjects
 
             if (Settings.MentorSkillBoost && Info.Mentor != 0 && Info.IsMentor)
             {
-                if (HasBuff(BuffType.Mentee, out _))
+                if (HasBuff(BuffType.衣钵相传, out _))
                 {
                     CharacterInfo mentor = Envir.GetCharacterInfo(Info.Mentor);
                     PlayerObject player = Envir.GetPlayer(mentor.Name);

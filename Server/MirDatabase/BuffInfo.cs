@@ -54,17 +54,17 @@ namespace Server.MirDatabase
 
                 //Special
                 new BuffInfo { Type = BuffType.GameMaster, Properties = BuffProperty.None, StackType = BuffStackType.Infinite, Visible = Settings.GameMasterEffect },
-                new BuffInfo { Type = BuffType.Mentee, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Mentor, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Guild, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Skill, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.ClearRing, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Transform, Properties = BuffProperty.None, StackType = BuffStackType.None },
-                new BuffInfo { Type = BuffType.Lover, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Rested, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.衣钵相传, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.火传穷薪, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.公会特效, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.技巧项链, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.隐身戒指, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.变形效果, Properties = BuffProperty.None, StackType = BuffStackType.None },
+                new BuffInfo { Type = BuffType.心心相印, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.精力充沛, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
                 new BuffInfo { Type = BuffType.Prison, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
                 new BuffInfo { Type = BuffType.General, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
-                new BuffInfo { Type = BuffType.Newbie, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite }, //???
+                new BuffInfo { Type = BuffType.新人特效, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite }, //???
 
                 //Stats
                 new BuffInfo { Type = BuffType.获取经验提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
@@ -74,13 +74,13 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.攻击力提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
                 new BuffInfo { Type = BuffType.魔法力提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
                 new BuffInfo { Type = BuffType.道术力提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Storm, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.HealthAid, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.ManaAid, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Defence, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.MagicDefence, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.WonderDrug, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Knapsack, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration }
+                new BuffInfo { Type = BuffType.攻击速度提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.生命值提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.法力值提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.物理防御提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.魔法防御提升, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.奇异药水, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.包容万斤, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration }
             };
 
             return info;

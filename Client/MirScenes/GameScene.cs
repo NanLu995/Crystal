@@ -5228,7 +5228,7 @@ namespace Client.MirScenes
                         case BuffType.轻身步:
                             User.Sprint = false;
                             break;
-                        case BuffType.Transform:
+                        case BuffType.变形效果:
                             User.TransformType = -1;
                             break;
                     }
@@ -5250,7 +5250,7 @@ namespace Client.MirScenes
                         case BuffType.轻身步:
                             Hero.Sprint = false;
                             break;
-                        case BuffType.Transform:
+                        case BuffType.变形效果:
                             Hero.TransformType = -1;
                             break;
                     }
@@ -5912,7 +5912,7 @@ namespace Client.MirScenes
             {
                 GuildDialog.EnabledBuffs.Clear();
                 GuildDialog.UpdateActiveStats();
-                RemoveBuff(new S.RemoveBuff { ObjectID = User.ObjectID, Type = BuffType.Guild });
+                RemoveBuff(new S.RemoveBuff { ObjectID = User.ObjectID, Type = BuffType.公会特效 });
                 User.RefreshStats();
             }
         }
@@ -6296,13 +6296,13 @@ namespace Client.MirScenes
                 }
             }
 
-            ClientBuff buff = BuffsDialog.Buffs.FirstOrDefault(e => e.Type == BuffType.Guild);
+            ClientBuff buff = BuffsDialog.Buffs.FirstOrDefault(e => e.Type == BuffType.公会特效);
 
             if (GuildDialog.EnabledBuffs.Any(e => e.Active))
             {
                 if (buff == null)
                 {
-                    buff = new ClientBuff { Type = BuffType.Guild, ObjectID = User.ObjectID, Caster = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Guild), Infinite = true, Values = new int[0] };
+                    buff = new ClientBuff { Type = BuffType.公会特效, ObjectID = User.ObjectID, Caster = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Guild), Infinite = true, Values = new int[0] };
 
                     BuffsDialog.Buffs.Add(buff);
                     BuffsDialog.CreateBuff(buff);
@@ -6312,7 +6312,7 @@ namespace Client.MirScenes
             }
             else
             {
-                RemoveBuff(new S.RemoveBuff { ObjectID = User.ObjectID, Type = BuffType.Guild });
+                RemoveBuff(new S.RemoveBuff { ObjectID = User.ObjectID, Type = BuffType.公会特效 });
             }
 
             User.RefreshStats();

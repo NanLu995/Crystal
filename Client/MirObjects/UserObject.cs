@@ -637,7 +637,7 @@ namespace Client.MirObjects
                     case BuffType.轻身步:
                         Sprint = true;
                         break;
-                    case BuffType.Transform:
+                    case BuffType.变形效果:
                         if (buff.Paused) continue;
                         TransformType = (short)buff.Values[0];
                         FastRun = true;

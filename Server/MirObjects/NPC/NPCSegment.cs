@@ -3959,8 +3959,8 @@ namespace Server.MirObjects
 
                             if (player.MyGuildRank == null) return;
 
-                            if (player.MyGuild.Name == Settings.NewbieGuild) player.RemoveBuff(BuffType.Newbie);
-                            if (player.HasBuff(BuffType.Guild)) player.RemoveBuff(BuffType.Guild);
+                            if (player.MyGuild.Name == Settings.NewbieGuild) player.RemoveBuff(BuffType.新人特效);
+                            if (player.HasBuff(BuffType.公会特效)) player.RemoveBuff(BuffType.公会特效);
 
                             player.MyGuild.DeleteMember(player, player.Name);
                         }

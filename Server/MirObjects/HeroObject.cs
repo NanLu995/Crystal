@@ -385,19 +385,19 @@ namespace Server.MirObjects
                                     AddBuff(BuffType.道术力提升, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
 
                                 if (item.GetTotal(Stat.攻击速度) > 0)
-                                    AddBuff(BuffType.Storm, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
+                                    AddBuff(BuffType.攻击速度提升, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
 
                                 if (item.GetTotal(Stat.HP) > 0)
-                                    AddBuff(BuffType.HealthAid, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
+                                    AddBuff(BuffType.生命值提升, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
 
                                 if (item.GetTotal(Stat.MP) > 0)
-                                    AddBuff(BuffType.ManaAid, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
+                                    AddBuff(BuffType.法力值提升, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
 
                                 if (item.GetTotal(Stat.MaxAC) > 0)
-                                    AddBuff(BuffType.Defence, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
+                                    AddBuff(BuffType.物理防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
 
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
-                                    AddBuff(BuffType.MagicDefence, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
+                                    AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
                                     AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
@@ -533,7 +533,7 @@ namespace Server.MirObjects
                     break;                
                 case ItemType.时装: //Transforms
                     {
-                        AddBuff(BuffType.Transform, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
+                        AddBuff(BuffType.变形效果, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
                     }
                     break;
                 case ItemType.装饰:

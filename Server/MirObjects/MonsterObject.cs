@@ -1640,7 +1640,7 @@ namespace Server.MirObjects
                     case BuffType.隐身术:
                     case BuffType.月影术:
                     case BuffType.烈火身:
-                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
+                        if (!HasAnyBuffs(buff.Type, BuffType.隐身戒指, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }
@@ -2653,7 +2653,7 @@ namespace Server.MirObjects
 
             if (attacker.Info.Mentor != 0 && attacker.Info.IsMentor)
             {
-                if (attacker.HasBuff(BuffType.Mentor, out _))
+                if (attacker.HasBuff(BuffType.火传穷薪, out _))
                 {
                     CharacterInfo mentee = Envir.GetCharacterInfo(attacker.Info.Mentor);
                     PlayerObject player = Envir.GetPlayer(mentee.Name);

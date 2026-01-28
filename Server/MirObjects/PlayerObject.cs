@@ -851,7 +851,7 @@ namespace Server.MirObjects
 
             if (Info.Married != 0)
             {
-                if (HasBuff(BuffType.Lover, out Buff buff))
+                if (HasBuff(BuffType.心心相印, out Buff buff))
                 {
                     CharacterInfo lover = Envir.GetCharacterInfo(Info.Married);
                     PlayerObject loverPlayer = Envir.GetPlayer(lover.Name);
@@ -864,7 +864,7 @@ namespace Server.MirObjects
 
             if (Info.Mentor != 0 && !Info.IsMentor)
             {
-                if (HasBuff(BuffType.Mentee, out _))
+                if (HasBuff(BuffType.衣钵相传, out _))
                 {
                     CharacterInfo mentor = Envir.GetCharacterInfo(Info.Mentor);
                     PlayerObject mentorPlayer = Envir.GetPlayer(mentor.Name);
@@ -1359,7 +1359,7 @@ namespace Server.MirObjects
             {
                 long existingTime = 0;
 
-                if (HasBuff(BuffType.Rested, out Buff rested))
+                if (HasBuff(BuffType.精力充沛, out Buff rested))
                 {
                     existingTime = rested.ExpireTime;
                 }
@@ -1369,7 +1369,7 @@ namespace Server.MirObjects
 
                 if (duration > maxDuration) duration = maxDuration;
 
-                AddBuff(BuffType.Rested, this, duration, new Stats { [Stat.经验增长数率] = Settings.RestedExpBonus });
+                AddBuff(BuffType.精力充沛, this, duration, new Stats { [Stat.经验增长数率] = Settings.RestedExpBonus });
 
                 _restedCounter = 0;
             }
@@ -3251,8 +3251,8 @@ namespace Server.MirObjects
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotLeaveGuildAtWar), ChatType.System);
                             return;
                         }
-                        if (MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true) RemoveBuff(BuffType.Newbie);
-                        if (HasBuff(BuffType.Guild)) RemoveBuff(BuffType.Guild);
+                        if (MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true) RemoveBuff(BuffType.新人特效);
+                        if (HasBuff(BuffType.公会特效)) RemoveBuff(BuffType.公会特效);
                         MyGuild.DeleteMember(this, Name);
                         break;
 
@@ -3829,7 +3829,7 @@ namespace Server.MirObjects
                         break;
 
                     case "TOGGLETRANSFORM":
-                        if (HasBuff(BuffType.Transform, out Buff transform))
+                        if (HasBuff(BuffType.变形效果, out Buff transform))
                         {
                             if (transform.Paused)
                             {
@@ -5815,19 +5815,19 @@ namespace Server.MirObjects
                                     AddBuff(BuffType.道术力提升, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC), [Stat.MinSC] = item.GetTotal(Stat.MinSC) });
 
                                 if (item.GetTotal(Stat.攻击速度) > 0)
-                                    AddBuff(BuffType.Storm, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
+                                    AddBuff(BuffType.攻击速度提升, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
 
                                 if (item.GetTotal(Stat.HP) > 0)
-                                    AddBuff(BuffType.HealthAid, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
+                                    AddBuff(BuffType.生命值提升, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
 
                                 if (item.GetTotal(Stat.MP) > 0)
-                                    AddBuff(BuffType.ManaAid, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
+                                    AddBuff(BuffType.法力值提升, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
 
                                 if (item.GetTotal(Stat.MaxAC) > 0 || item.GetTotal(Stat.MinAC) > 0)
-                                    AddBuff(BuffType.Defence, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC), [Stat.MinAC] = item.GetTotal(Stat.MinAC) });
+                                    AddBuff(BuffType.物理防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC), [Stat.MinAC] = item.GetTotal(Stat.MinAC) });
 
                                 if (item.GetTotal(Stat.MaxMAC) > 0 || item.GetTotal(Stat.MinMAC) > 0)
-                                    AddBuff(BuffType.MagicDefence, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC), [Stat.MinMAC] = item.GetTotal(Stat.MinMAC) });
+                                    AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC), [Stat.MinMAC] = item.GetTotal(Stat.MinMAC) });
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
                                     AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
@@ -6157,7 +6157,7 @@ namespace Server.MirObjects
                                 break;
                             case 26://Wonderdrug
                                 {
-                                    if (HasBuff(BuffType.WonderDrug, out _))
+                                    if (HasBuff(BuffType.奇异药水, out _))
                                     {
                                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WonderDrugActive), ChatType.System);
                                         Enqueue(p);
@@ -6166,7 +6166,7 @@ namespace Server.MirObjects
 
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.WonderDrug, this, time * Settings.Minute, new Stats(item.AddedStats));
+                                    AddBuff(BuffType.奇异药水, this, time * Settings.Minute, new Stats(item.AddedStats));
                                 }
                                 break;
                             case 27://FortuneCookies
@@ -6175,7 +6175,7 @@ namespace Server.MirObjects
                                 {
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.Knapsack, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.幸运) });
+                                    AddBuff(BuffType.包容万斤, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.幸运) });
                                 }
                                 break;
                         }
@@ -6204,7 +6204,7 @@ namespace Server.MirObjects
                     break;
                 case ItemType.时装: //Transforms
                     {
-                        AddBuff(BuffType.Transform, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
+                        AddBuff(BuffType.变形效果, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
                     }
                     break;
                 case ItemType.装饰:
