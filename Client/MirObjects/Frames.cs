@@ -37,36 +37,40 @@
             frame.Add(MirAction.站立动作, new Frame(300, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(300, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(300, 1, -1, 200));
-
+            frame.Add(MirAction.死后尸体, new Frame(300, 1, -1, 1000));
             //DragonStatue 2
             DragonStatue.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(301, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(301, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(301, 1, -1, 200));
+            frame.Add(MirAction.死后尸体, new Frame(300, 1, -1, 1000));
 
             //DragonStatue 3
             DragonStatue.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(302, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(302, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(302, 1, -1, 200));
+            frame.Add(MirAction.死后尸体, new Frame(300, 1, -1, 1000));
 
             //DragonStatue 4
             DragonStatue.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(320, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(320, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(320, 1, -1, 200));
-
+            frame.Add(MirAction.死后尸体, new Frame(321, 1, -1, 1000));
             //DragonStatue 5
             DragonStatue.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(321, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(321, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(321, 1, -1, 200));
+            frame.Add(MirAction.死后尸体, new Frame(321, 1, -1, 1000));
 
             //DragonStatue 6
             DragonStatue.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(322, 1, -1, 1000));
             frame.Add(MirAction.远程攻击1, new Frame(322, 1, -1, 120));
             frame.Add(MirAction.被击动作, new Frame(322, 1, -1, 200));
+            frame.Add(MirAction.死后尸体, new Frame(321, 1, -1, 1000));
             #endregion
 
             #region GreatFoxSpirit
