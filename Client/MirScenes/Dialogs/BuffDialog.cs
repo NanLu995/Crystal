@@ -278,7 +278,7 @@ namespace Client.MirScenes.Dialogs
 
             switch (buff.Type)
             {
-                case BuffType.GameMaster:
+                case BuffType.游戏管理:
                     GMOptions options = (GMOptions)buff.Values[0];
 
                     if (options.HasFlag(GMOptions.GameMaster)) text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Invisible);
@@ -335,7 +335,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
-                case BuffType.Blindness:
+                case BuffType.失明状态:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ReducesVisibility);
                     break;
                 case BuffType.新人特效:
@@ -469,13 +469,13 @@ namespace Client.MirScenes.Dialogs
                     return 199;
 
                 //Monster
-                case BuffType.RhinoPriestDebuff:
+                case BuffType.惩戒真言:
                     return 217;
-                case BuffType.Blindness:
+                case BuffType.失明状态:
                     return 226;
 
                 //Special
-                case BuffType.GameMaster:
+                case BuffType.游戏管理:
                     return 173;
                 case BuffType.General:
                     return 182;
@@ -483,7 +483,7 @@ namespace Client.MirScenes.Dialogs
                     return 260;
                 case BuffType.物品掉落提升:
                     return 162;
-                case BuffType.Gold:
+                case BuffType.金币辉煌:
                     return 168;
                 case BuffType.包容万斤:
                 case BuffType.背包负重提升:

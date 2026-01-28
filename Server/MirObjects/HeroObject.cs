@@ -401,6 +401,12 @@ namespace Server.MirObjects
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
                                     AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+
+                                if (item.GetTotal(Stat.准确) > 0)
+                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+
+                                if (item.GetTotal(Stat.敏捷) > 0)
+                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
@@ -413,6 +419,20 @@ namespace Server.MirObjects
                             {
                                 int time = item.Info.Durability;
                                 AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                            }
+                            break;
+                        case 6:
+                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 7:
+                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 8:
+                            {
+                                int time = item.Info.Durability;
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
                             }
                             break;
                     }
@@ -766,6 +786,7 @@ namespace Server.MirObjects
 
         public override void Process()
         {
+            base.Process();
 
             if (Node == null || Info == null) return;
             

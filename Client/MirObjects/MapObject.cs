@@ -261,14 +261,14 @@ namespace Client.MirObjects
                 case BuffType.血龙兽:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 230, 6, 1200, this, true, type) { Repeat = true });
                     break;
-                case BuffType.GameMaster:
+                case BuffType.游戏管理:
                     Effects.Add(new BuffEffect(Libraries.CHumEffect[5], 0, 1, 1200, this, true, type) { Repeat = true });
                     break;
                 case BuffType.GeneralMeowMeowShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 529, 7, 700, this, true, type) { Repeat = true, Light = 1 });
                     MirSounds.SoundManager.PlaySound(8322);
                     break;
-                case BuffType.PowerBeadBuff:
+                case BuffType.御体之力:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.PowerUpBead], 64, 6, 600, this, true, type) { Blend = true, Repeat = true });
                     break;
                 case BuffType.HornedArcherBuff:

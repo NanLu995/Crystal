@@ -203,11 +203,9 @@ public class GuildBuffInfo
 
         foreach (var val in Stats.Values)
         {
-            //var c = val.Value < 0 ? "Decreases" : "Increases";
             var c = val.Value < 0 ? "降低" : "提高";
 
-            //var txt = $"{c} {val.Key} by: {val.Value}{(val.Key.ToString().Contains("Percent") ? "%" : "")}.\n";
-            var txt = $"{c} {val.Key} : {val.Value}{(val.Key.ToString().Contains("百分比") ? "%" : "")}\n";
+            var txt = $"{c} {val.Key} : {val.Value}{(val.Key.ToString().Contains("数率") ? "%" : "")}\n";
 
             text += txt;
         }

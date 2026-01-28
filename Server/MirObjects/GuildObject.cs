@@ -220,7 +220,7 @@ namespace Server.MirObjects
         {
             if (Ranks.Count < 2)
             {
-                Ranks.Add(new GuildRank() { Name = "Members", Index = 1 });
+                Ranks.Add(new GuildRank() { Name = "会员", Index = 1});
             }
 
             GuildRank lowestRank = Ranks[Ranks.Count - 1];
@@ -232,7 +232,7 @@ namespace Server.MirObjects
             NeedSave = true;
         }
 
-        public bool ChangeRank(PlayerObject self, string memberName, byte rankIndex, string rankName = "Members")
+        public bool ChangeRank(PlayerObject self, string memberName, byte rankIndex, string rankName = "会员")
         {
             if ((self.MyGuild != this) || (self.MyGuildRank == null)) return false;
             if (rankIndex >= Ranks.Count) return false;

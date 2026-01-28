@@ -1133,6 +1133,7 @@ public class ItemSets
                 case ItemSet.贵人道套:
                 case ItemSet.贵人刺套:
                 case ItemSet.贵人弓套:
+                case ItemSet.双戒套装:
                     return 2;
                 case ItemSet.赤兰套装:
                 case ItemSet.密火套装:
@@ -1143,6 +1144,7 @@ public class ItemSets
                 case ItemSet.白骨套装:
                 case ItemSet.虫血套装:
                 case ItemSet.鏃未套装:
+                case ItemSet.青宝套装:
                     return 3;
                 case ItemSet.记忆套装:
                     return 4;
@@ -1161,6 +1163,9 @@ public class ItemSets
                 case ItemSet.青玉套装H:
                 case ItemSet.青玉套装:
                     return 5;
+                case ItemSet.天龙套装:
+                case ItemSet.昆仑套装:
+                    return 8;
                 default:
                     return 0;
             }
@@ -1251,6 +1256,10 @@ public class RandomItemStat
         AccuracyChance = 30;
         AccuracyStatChance = 20;
         AccuracyMaxStat = 2;
+
+        SlotChance = 0;
+        SlotStatChance = 0;
+        SlotMaxStat = 4;
     }
 
     public void SetArmour()

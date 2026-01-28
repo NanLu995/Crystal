@@ -617,7 +617,11 @@ namespace Server.MirObjects
                 if (item == null) continue;
                 if (item.Item != null)
                 {
-                    if (!((PlayerObject)Master).CanGainItem(item.Item)) continue;
+                    if (!((PlayerObject)Master).CanGainItem(item.Item))
+                    {
+                        CreatureSay("*背包已满*");
+                        continue;
+                    }
 
                     if (item.Item.Info.ShowGroupPickup && IsMasterGroupMember(Master))
                         for (int j = 0; j < Master.GroupMembers.Count; j++)
@@ -853,6 +857,7 @@ namespace Server.MirObjects
         {
             var packet=(S.ObjectMonster)base.GetInfo();
             packet.Extra = Summoned;
+            packet.Buffs = Buffs.Where(d => d.Info.Visible).Select(e => e.Type).ToList();
             return packet;
         }
     }
