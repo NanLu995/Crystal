@@ -245,14 +245,14 @@ namespace Server.MirObjects
             if (min < 0) min = 0;
             if (min > max) max = min;
 
-            if (Stats[Stat.Luck] > 0)
+            if (Stats[Stat.幸运] > 0)
             {
-                if (Stats[Stat.Luck] > Envir.Random.Next(Settings.MaxLuck))
+                if (Stats[Stat.幸运] > Envir.Random.Next(Settings.MaxLuck))
                     return max;
             }
-            else if (Stats[Stat.Luck] < 0)
+            else if (Stats[Stat.幸运] < 0)
             {
-                if (Stats[Stat.Luck] < -Envir.Random.Next(Settings.MaxLuck))
+                if (Stats[Stat.幸运] < -Envir.Random.Next(Settings.MaxLuck))
                     return min;
             }
 
@@ -464,7 +464,7 @@ namespace Server.MirObjects
             switch (type)
             {
                 case DefenceType.ACAgility:
-                    if (Envir.Random.Next(Stats[Stat.Agility] + 1) > attacker.Stats[Stat.Accuracy])
+                    if (Envir.Random.Next(Stats[Stat.敏捷] + 1) > attacker.Stats[Stat.准确])
                     {
                         BroadcastDamageIndicator(DamageType.Miss);
                         hit = false;
@@ -475,12 +475,12 @@ namespace Server.MirObjects
                     armour = GetDefencePower(Stats[Stat.MinAC], Stats[Stat.MaxAC]);
                     break;
                 case DefenceType.MACAgility:
-                    if (Envir.Random.Next(Settings.MagicResistWeight) < Stats[Stat.MagicResist])
+                    if (Envir.Random.Next(Settings.MagicResistWeight) < Stats[Stat.魔法躲避])
                     {
                         BroadcastDamageIndicator(DamageType.Miss);
                         hit = false;
                     }
-                    if (Envir.Random.Next(Stats[Stat.Agility] + 1) > attacker.Stats[Stat.Accuracy])
+                    if (Envir.Random.Next(Stats[Stat.敏捷] + 1) > attacker.Stats[Stat.准确])
                     {
                         BroadcastDamageIndicator(DamageType.Miss);
                         hit = false;
@@ -488,7 +488,7 @@ namespace Server.MirObjects
                     armour = GetDefencePower(Stats[Stat.MinMAC], Stats[Stat.MaxMAC]);
                     break;
                 case DefenceType.MAC:
-                    if (Envir.Random.Next(Settings.MagicResistWeight) < Stats[Stat.MagicResist])
+                    if (Envir.Random.Next(Settings.MagicResistWeight) < Stats[Stat.魔法躲避])
                     {
                         BroadcastDamageIndicator(DamageType.Miss);
                         hit = false;
@@ -496,7 +496,7 @@ namespace Server.MirObjects
                     armour = GetDefencePower(Stats[Stat.MinMAC], Stats[Stat.MaxMAC]);
                     break;
                 case DefenceType.Agility:
-                    if (Envir.Random.Next(Stats[Stat.Agility] + 1) > attacker.Stats[Stat.Accuracy])
+                    if (Envir.Random.Next(Stats[Stat.敏捷] + 1) > attacker.Stats[Stat.准确])
                     {
                         BroadcastDamageIndicator(DamageType.Miss);
                         hit = false;
@@ -512,15 +512,15 @@ namespace Server.MirObjects
             {
                 ApplyPoison(new Poison { PType = PoisonType.Paralysis, Duration = 5, TickSpeed = 1000 }, attacker);
             }
-            if ((attacker.Stats[Stat.Freezing] > 0) && (Settings.PvpCanFreeze || Race != ObjectType.Player) && type != DefenceType.MAC && type != DefenceType.MACAgility)
+            if ((attacker.Stats[Stat.冰冻伤害] > 0) && (Settings.PvpCanFreeze || Race != ObjectType.Player) && type != DefenceType.MAC && type != DefenceType.MACAgility)
             {
-                if ((Envir.Random.Next(Settings.FreezingAttackWeight) < attacker.Stats[Stat.Freezing]) && (Envir.Random.Next(levelOffset) == 0))
-                    ApplyPoison(new Poison { PType = PoisonType.Slow, Duration = Math.Min(10, (3 + Envir.Random.Next(attacker.Stats[Stat.Freezing]))), TickSpeed = 1000 }, attacker);
+                if ((Envir.Random.Next(Settings.FreezingAttackWeight) < attacker.Stats[Stat.冰冻伤害]) && (Envir.Random.Next(levelOffset) == 0))
+                    ApplyPoison(new Poison { PType = PoisonType.Slow, Duration = Math.Min(10, (3 + Envir.Random.Next(attacker.Stats[Stat.冰冻伤害]))), TickSpeed = 1000 }, attacker);
             }
-            if (attacker.Stats[Stat.PoisonAttack] > 0 && type != DefenceType.MAC && type != DefenceType.MACAgility)
+            if (attacker.Stats[Stat.毒素伤害] > 0 && type != DefenceType.MAC && type != DefenceType.MACAgility)
             {
-                if ((Envir.Random.Next(Settings.PoisonAttackWeight) < attacker.Stats[Stat.PoisonAttack]) && (Envir.Random.Next(levelOffset) == 0))
-                    ApplyPoison(new Poison { PType = PoisonType.Green, Duration = 5, TickSpeed = 1000, Value = Math.Min(10, 3 + Envir.Random.Next(attacker.Stats[Stat.PoisonAttack])) }, attacker);
+                if ((Envir.Random.Next(Settings.PoisonAttackWeight) < attacker.Stats[Stat.毒素伤害]) && (Envir.Random.Next(levelOffset) == 0))
+                    ApplyPoison(new Poison { PType = PoisonType.Green, Duration = 5, TickSpeed = 1000, Value = Math.Min(10, 3 + Envir.Random.Next(attacker.Stats[Stat.毒素伤害])) }, attacker);
             }
         }
 
@@ -653,13 +653,13 @@ namespace Server.MirObjects
 
             switch (buff.Type)
             {
-                case BuffType.MoonLight:
-                case BuffType.DarkBody:
+                case BuffType.月影术:
+                case BuffType.烈火身:
                     Hidden = true;
                     Sneaking = true;
                     HideFromTargets();
                     break;
-                case BuffType.Hiding:
+                case BuffType.隐身术:
                 case BuffType.ClearRing:
                     Hidden = true;
                     HideFromTargets();
@@ -681,10 +681,10 @@ namespace Server.MirObjects
 
                 switch(b)
                 {
-                    case BuffType.Hiding:
-                    case BuffType.MoonLight:
-                    case BuffType.DarkBody:
-                        if (!HasAnyBuffs(b, BuffType.ClearRing, BuffType.Hiding, BuffType.MoonLight, BuffType.DarkBody))
+                    case BuffType.隐身术:
+                    case BuffType.月影术:
+                    case BuffType.烈火身:
+                        if (!HasAnyBuffs(b, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }

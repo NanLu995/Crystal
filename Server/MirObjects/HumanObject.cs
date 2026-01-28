@@ -132,7 +132,7 @@ namespace Server.MirObjects
         {
             get
             {
-                return !Dead && Envir.Time >= ActionTime && (_stepCounter > 0 || FastRun) && (!Sneaking || ActiveSwiftFeet) && CurrentBagWeight <= Stats[Stat.BagWeight] && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
+                return !Dead && Envir.Time >= ActionTime && (_stepCounter > 0 || FastRun) && (!Sneaking || ActiveSwiftFeet) && CurrentBagWeight <= Stats[Stat.背包负重] && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
             }
         }
         public virtual bool CanAttack
@@ -405,7 +405,7 @@ namespace Server.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.Concentration:
+                    case BuffType.气流术:
                         if (buff.Get<bool>("Interrupted") && buff.Get<long>("InterruptTime") <= Envir.Time)
                         {
                             buff.Set("Interrupted", false);
@@ -459,33 +459,33 @@ namespace Server.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.Hiding:
-                    case BuffType.MoonLight:
-                    case BuffType.DarkBody:
+                    case BuffType.隐身术:
+                    case BuffType.月影术:
+                    case BuffType.烈火身:
                     case BuffType.ClearRing:
-                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.Hiding, BuffType.MoonLight, BuffType.DarkBody))
+                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }
-                        if (buff.Type == BuffType.MoonLight || buff.Type == BuffType.DarkBody)
+                        if (buff.Type == BuffType.月影术 || buff.Type == BuffType.烈火身)
                         {
-                            if (!HasAnyBuffs(buff.Type, BuffType.MoonLight, BuffType.DarkBody))
+                            if (!HasAnyBuffs(buff.Type, BuffType.月影术, BuffType.烈火身))
                             {
                                 Sneaking = false;
                             }
                             break;
                         }
                         break;
-                    case BuffType.Concentration:
+                    case BuffType.气流术:
                         UpdateConcentration(false, false);
                         break;
-                    case BuffType.SwiftFeet:
+                    case BuffType.轻身步:
                         ActiveSwiftFeet = false;
                         break;
-                    case BuffType.MagicShield:
+                    case BuffType.魔法盾:
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.MagicShieldDown }, CurrentLocation);
                         break;
-                    case BuffType.ElementalBarrier:
+                    case BuffType.金刚术:
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierDown }, CurrentLocation);
                         break;
                 }
@@ -505,7 +505,7 @@ namespace Server.MirObjects
 
             if (SpecialMode.HasFlag(SpecialItemMode.Skill) && !skill)
             {
-                AddBuff(BuffType.Skill, this, 0, new Stats { [Stat.SkillGainMultiplier] = 3 }, false);
+                AddBuff(BuffType.Skill, this, 0, new Stats { [Stat.技能熟练度倍率] = 3 }, false);
             }
 
             if (Info.Mentor != 0 && !mentor)
@@ -517,11 +517,11 @@ namespace Server.MirObjects
                 {
                     if (Info.IsMentor)
                     {
-                        AddBuff(BuffType.Mentor, partnerP, 0, new Stats { [Stat.MentorDamageRatePercent] = Settings.MentorDamageBoost });
+                        AddBuff(BuffType.Mentor, partnerP, 0, new Stats { [Stat.师徒专享伤害数率] = Settings.MentorDamageBoost });
                     }
                     else
                     {
-                        AddBuff(BuffType.Mentee, partnerP, 0, new Stats { [Stat.MentorExpRatePercent] = Settings.MentorExpBoost });
+                        AddBuff(BuffType.Mentee, partnerP, 0, new Stats { [Stat.师徒专享经验数率] = Settings.MentorExpBoost });
                     }
                 }
             }
@@ -533,13 +533,13 @@ namespace Server.MirObjects
 
                 if (loverP != null)
                 {
-                    AddBuff(BuffType.Lover, loverP, 0, new Stats { [Stat.LoverExpRatePercent] = Settings.LoverEXPBonus });
+                    AddBuff(BuffType.Lover, loverP, 0, new Stats { [Stat.伴侣专享经验数率] = Settings.LoverEXPBonus });
                 }
             }
 
             if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
             {
-                AddBuff(BuffType.Newbie, this, 0, new Stats { [Stat.ExpRatePercent] = Settings.NewbieGuildExpBuff });
+                AddBuff(BuffType.Newbie, this, 0, new Stats { [Stat.经验增长数率] = Settings.NewbieGuildExpBuff });
             }
 
             if (refresh)
@@ -560,13 +560,13 @@ namespace Server.MirObjects
                 if (HP < Stats[Stat.HP])
                 {
                     healthRegen += (int)(Stats[Stat.HP] * 0.03F) + 1;
-                    healthRegen += (int)(healthRegen * ((double)Stats[Stat.HealthRecovery] / Settings.HealthRegenWeight));
+                    healthRegen += (int)(healthRegen * ((double)Stats[Stat.生命恢复] / Settings.HealthRegenWeight));
                 }
 
                 if (MP < Stats[Stat.MP])
                 {
                     manaRegen += (int)(Stats[Stat.MP] * 0.03F) + 1;
-                    manaRegen += (int)(manaRegen * ((double)Stats[Stat.SpellRecovery] / Settings.ManaRegenWeight));
+                    manaRegen += (int)(manaRegen * ((double)Stats[Stat.法力恢复] / Settings.ManaRegenWeight));
                 }
             }
 
@@ -963,7 +963,7 @@ namespace Server.MirObjects
         {
             var item = Info.Equipment[(int)EquipmentSlot.武器];
 
-            if (item == null || item.AddedStats[Stat.Luck] >= 7)
+            if (item == null || item.AddedStats[Stat.幸运] >= 7)
                 return false;
 
             if (item.Info.Bind.HasFlag(BindMode.DontUpgrade))
@@ -975,20 +975,20 @@ namespace Server.MirObjects
             string message = String.Empty;
             ChatType chatType;
 
-            if (item.AddedStats[Stat.Luck] > (Settings.MaxLuck * -1) && Envir.Random.Next(20) == 0)
+            if (item.AddedStats[Stat.幸运] > (Settings.MaxLuck * -1) && Envir.Random.Next(20) == 0)
             {
-                Stats[Stat.Luck]--;
-                item.AddedStats[Stat.Luck]--;
+                Stats[Stat.幸运]--;
+                item.AddedStats[Stat.幸运]--;
                 Enqueue(new S.RefreshItem { Item = item });
 
                 message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponCurse);
                 chatType = ChatType.System;
                 
             }
-            else if (item.AddedStats[Stat.Luck] <= 0 || Envir.Random.Next(10 * item.GetTotal(Stat.Luck)) == 0)
+            else if (item.AddedStats[Stat.幸运] <= 0 || Envir.Random.Next(10 * item.GetTotal(Stat.幸运)) == 0)
             {
-                Stats[Stat.Luck]++;
-                item.AddedStats[Stat.Luck]++;
+                Stats[Stat.幸运]++;
+                item.AddedStats[Stat.幸运]++;
                 Enqueue(new S.RefreshItem { Item = item });
 
                 message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponLuck);
@@ -1041,35 +1041,35 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ArchersCannotUseItem), ChatType.System);
@@ -1264,7 +1264,7 @@ namespace Server.MirObjects
                     break;
                 case ItemType.镶嵌宝石:
                     break;
-                case ItemType.宠物:
+                case ItemType.灵物:
                     switch (item.Info.Shape)
                     {
                         case 20://mirror rename creature
@@ -1632,19 +1632,19 @@ namespace Server.MirObjects
         {
             switch (Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     if (!info.RequiredClass.HasFlag(RequiredClass.战士)) return false;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     if (!info.RequiredClass.HasFlag(RequiredClass.法师)) return false;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     if (!info.RequiredClass.HasFlag(RequiredClass.道士)) return false;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     if (!info.RequiredClass.HasFlag(RequiredClass.刺客)) return false;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     if (!info.RequiredClass.HasFlag(RequiredClass.弓箭)) return false;
                     break;
                 default:
@@ -1748,22 +1748,22 @@ namespace Server.MirObjects
 
             //Add any rate percent changes
 
-            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.HPRatePercent]) / 100;
-            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.MPRatePercent]) / 100;
-            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.MaxACRatePercent]) / 100;
-            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.MaxMACRatePercent]) / 100;
+            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
+            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
+            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.强化物理防御]) / 100;
+            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.强化魔法防御]) / 100;
 
-            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.MaxDCRatePercent]) / 100;
-            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.MaxMCRatePercent]) / 100;
-            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.MaxSCRatePercent]) / 100;
-            Stats[Stat.AttackSpeed] += (Stats[Stat.AttackSpeed] * Stats[Stat.AttackSpeedRatePercent]) / 100;
+            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.物理攻击强化]) / 100;
+            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.魔法攻击强化]) / 100;
+            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.道术攻击强化]) / 100;
+            Stats[Stat.攻击速度] += (Stats[Stat.攻击速度] * Stats[Stat.攻击速度强化]) / 100;
 
             RefreshStatCaps();
 
             if (HP > Stats[Stat.HP]) SetHP(Stats[Stat.HP]);
             if (MP > Stats[Stat.MP]) SetMP(Stats[Stat.MP]);
 
-            AttackSpeed = 1400 - ((Stats[Stat.AttackSpeed] * 60) + Math.Min(370, (Level * 14)));
+            AttackSpeed = 1400 - ((Stats[Stat.攻击速度] * 60) + Math.Min(370, (Level * 14)));
 
             if (AttackSpeed < 550) AttackSpeed = 550;
         }
@@ -1814,7 +1814,7 @@ namespace Server.MirObjects
 
             FastRun = false;
 
-            Stats[Stat.SkillGainMultiplier] = 1;
+            Stats[Stat.技能熟练度倍率] = 1;
 
             var skillsToAdd = new List<string>();
             var skillsToRemove = new List<string> { Settings.HealRing, Settings.FireRing, Settings.BlinkSkill };
@@ -1919,9 +1919,9 @@ namespace Server.MirObjects
 
             if (SpecialMode.HasFlag(SpecialItemMode.Muscle))
             {
-                Stats[Stat.BagWeight] = Stats[Stat.BagWeight] * 2;
-                Stats[Stat.WearWeight] = Stats[Stat.WearWeight] * 2;
-                Stats[Stat.HandWeight] = Stats[Stat.HandWeight] * 2;
+                Stats[Stat.背包负重] = Stats[Stat.背包负重] * 2;
+                Stats[Stat.装备负重] = Stats[Stat.装备负重] * 2;
+                Stats[Stat.腕力负重] = Stats[Stat.腕力负重] * 2;
             }
 
             if ((OldLooks_Armour != Looks_Armour) || (OldLooks_Weapon != Looks_Weapon) || (OldLooks_WeaponEffect != Looks_WeaponEffect) || (OldLooks_Wings != Looks_Wings) || (OldLight != Light))
@@ -1970,7 +1970,7 @@ namespace Server.MirObjects
                 {
                     SpecialMode |= RealItem.Unique;
 
-                    if (RealItem.Unique.HasFlag(SpecialItemMode.Skill)) Stats[Stat.SkillGainMultiplier] = 3;
+                    if (RealItem.Unique.HasFlag(SpecialItemMode.Skill)) Stats[Stat.技能熟练度倍率] = 3;
 
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Flame)) skillsToAdd.Add(Settings.FireRing);
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Healing)) skillsToAdd.Add(Settings.HealRing);
@@ -1992,7 +1992,7 @@ namespace Server.MirObjects
                 {
                     if (!hasSmashSetBonus)
                     {
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         hasSmashSetBonus = true;
                     }
                 }
@@ -2001,7 +2001,7 @@ namespace Server.MirObjects
                 {
                     if (!hasPuritySetBonus)
                     {
-                        Stats[Stat.Holy] += 3;
+                        Stats[Stat.神圣] += 3;
                         hasPuritySetBonus = true;
                     }
                 }
@@ -2010,8 +2010,8 @@ namespace Server.MirObjects
                 {
                     if (!hasHwanDevilSetBonus)
                     {
-                        Stats[Stat.WearWeight] += 5;
-                        Stats[Stat.BagWeight] += 20;
+                        Stats[Stat.装备负重] += 5;
+                        Stats[Stat.背包负重] += 20;
                         hasHwanDevilSetBonus = true;
                     }
                 }
@@ -2035,7 +2035,7 @@ namespace Server.MirObjects
                         Stats[Stat.MP] += 30;
                         break;
                     case ItemSet.赤兰套装:
-                        Stats[Stat.Accuracy] += 2;
+                        Stats[Stat.准确] += 2;
                         break;
                     case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
@@ -2061,7 +2061,7 @@ namespace Server.MirObjects
                     case ItemSet.祈祷套装:
                         Stats[Stat.MinDC] += 2;
                         Stats[Stat.MaxDC] += 5;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                     case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
@@ -2073,7 +2073,7 @@ namespace Server.MirObjects
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
                     case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
@@ -2082,7 +2082,7 @@ namespace Server.MirObjects
                     case ItemSet.白金套装H:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                     case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
@@ -2091,7 +2091,7 @@ namespace Server.MirObjects
                     case ItemSet.红玉套装H:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
-                        Stats[Stat.Agility] += 2;
+                        Stats[Stat.敏捷] += 2;
                         break;
                     case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
@@ -2102,62 +2102,62 @@ namespace Server.MirObjects
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
                     case ItemSet.贵人战套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 25;
+                        Stats[Stat.背包负重] += 25;
                         break;
                     case ItemSet.贵人法套:
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.贵人道套:
                         Stats[Stat.MaxSC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.贵人刺套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 20;
+                        Stats[Stat.背包负重] += 20;
                         break;
                     case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.血龙套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
                     case ItemSet.监视套装:
-                        Stats[Stat.MagicResist] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                        Stats[Stat.魔法躲避] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
                     case ItemSet.暴压套装:
                         Stats[Stat.MaxAC] += 1;
-                        Stats[Stat.Agility] += 1;
+                        Stats[Stat.敏捷] += 1;
                         break;
                     case ItemSet.青玉套装:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.HandWeight] += 1;
-                        Stats[Stat.WearWeight] += 2;
+                        Stats[Stat.腕力负重] += 1;
+                        Stats[Stat.装备负重] += 2;
                         break;
                     case ItemSet.青玉套装H:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxMC] += 2;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.准确] += 1;
                         Stats[Stat.HP] += 50;
                         break;
                     case ItemSet.鏃未套装:
                         Stats[Stat.MP] += 25;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                 }
             }
@@ -2168,13 +2168,13 @@ namespace Server.MirObjects
             {
                 Stats[Stat.MaxAC] += 1;
                 Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.BagWeight] += 70;
-                Stats[Stat.Luck] += 2;
-                Stats[Stat.AttackSpeed] += 2;
+                Stats[Stat.背包负重] += 70;
+                Stats[Stat.幸运] += 2;
+                Stats[Stat.攻击速度] += 2;
                 Stats[Stat.HP] += 70;
                 Stats[Stat.MP] += 80;
-                Stats[Stat.MagicResist] += 6;
-                Stats[Stat.PoisonResist] += 6;
+                Stats[Stat.魔法躲避] += 6;
+                Stats[Stat.毒物躲避] += 6;
             }
 
             if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指))
@@ -2191,29 +2191,29 @@ namespace Server.MirObjects
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 30;
-                Stats[Stat.WearWeight] += 17;
+                Stats[Stat.背包负重] += 30;
+                Stats[Stat.装备负重] += 17;
             }
             if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指) && MirSet.Contains(EquipmentSlot.左手镯) && MirSet.Contains(EquipmentSlot.右手镯) && MirSet.Contains(EquipmentSlot.项链))
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 20;
-                Stats[Stat.WearWeight] += 10;
+                Stats[Stat.背包负重] += 20;
+                Stats[Stat.装备负重] += 10;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
                 Stats[Stat.MaxDC] += 2;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.Agility] += 1;
+                Stats[Stat.敏捷] += 1;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
                 Stats[Stat.MaxDC] += 1;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
+                Stats[Stat.腕力负重] += 17;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
@@ -2223,7 +2223,7 @@ namespace Server.MirObjects
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MinSC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
+                Stats[Stat.腕力负重] += 17;
             }
         }
         public void RefreshStatCaps()
@@ -2301,17 +2301,17 @@ namespace Server.MirObjects
                 switch (magic.Spell)
                 {
                     case Spell.Fencing:
-                        Stats[Stat.Accuracy] += magic.Level * 3;
+                        Stats[Stat.准确] += magic.Level * 3;
                         // Stats[Stat.MaxAC] += (magic.Level + 1) * 3;
                         break;
                     // case Spell.FatalSword:
                     case Spell.Slaying:
-                        Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.准确] += magic.Level;
                         Stats[Stat.MaxDC] += slayingLvPlus[magic.Level];
                         break;
                     case Spell.SpiritSword:
-                        Stats[Stat.Accuracy] += spiritSwordLvPlus[magic.Level];
-                        // Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.准确] += spiritSwordLvPlus[magic.Level];
+                        // Stats[Stat.准确] += magic.Level;
                         // Stats[Stat.MaxDC] += (int)(Stats[Stat.MaxSC] * (magic.Level + 1) * 0.1F);
                         break;
                 }
@@ -2446,7 +2446,7 @@ namespace Server.MirObjects
                 }
             }
 
-            if (HasBuff(BuffType.Concentration, out Buff concentration))
+            if (HasBuff(BuffType.气流术, out Buff concentration))
             {
                 concentration.Set("InterruptTime", Envir.Time + (Settings.Second * 3));
 
@@ -2459,7 +2459,7 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.Hiding);
+                RemoveBuff(BuffType.隐身术);
             }
 
             Direction = dir;
@@ -2513,7 +2513,7 @@ namespace Server.MirObjects
         }
         public bool Run(MirDirection dir)
         {
-            if (CurrentBagWeight > Stats[Stat.BagWeight])
+            if (CurrentBagWeight > Stats[Stat.背包负重])
             {
                 Walk(dir);
             }
@@ -2526,7 +2526,7 @@ namespace Server.MirObjects
                 return false;
             }
 
-            if (HasBuff(BuffType.Concentration, out Buff concentration))
+            if (HasBuff(BuffType.气流术, out Buff concentration))
             {
                 concentration.Set("InterruptTime", Envir.Time + (Settings.Second * 3));
 
@@ -2539,9 +2539,9 @@ namespace Server.MirObjects
 
             if (Hidden && !Sneaking)
             {
-                RemoveBuff(BuffType.Hiding);
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.隐身术);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
             Moved();
@@ -2687,7 +2687,7 @@ namespace Server.MirObjects
 
             if (result > 0)
             {
-                if (HasBuff(BuffType.Concentration, out Buff concentration))
+                if (HasBuff(BuffType.气流术, out Buff concentration))
                 {
                     concentration.Set("InterruptTime", Envir.Time + (Settings.Second * 3));
 
@@ -2872,17 +2872,17 @@ namespace Server.MirObjects
                 {
                     switch (Buffs[i].Type)
                     {
-                        case BuffType.MoonLight:
+                        case BuffType.月影术:
                             MoonLightAttack = true;
                             break;
-                        case BuffType.DarkBody:
+                        case BuffType.烈火身:
                             DarkBodyAttack = true;
                             break;
                     }
                 }
 
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
             byte level = 0;
@@ -3056,7 +3056,7 @@ namespace Server.MirObjects
                 //Only undead targets
                 if (ob.Undead)
                 {
-                    damageBase = Math.Min(int.MaxValue, damageBase + Stats[Stat.Holy]);
+                    damageBase = Math.Min(int.MaxValue, damageBase + Stats[Stat.神圣]);
                     damageFinal = damageBase;//incase we're not using skills
                 }
 
@@ -3080,7 +3080,7 @@ namespace Server.MirObjects
 
                 if (magic != null)
                 {
-                    int baseCount = 1 + Stats[Stat.Accuracy] / 2;
+                    int baseCount = 1 + Stats[Stat.准确] / 2;
                     int maxCount = baseCount + magic.Level * 5;
                     MPEaterCount += Envir.Random.Next(baseCount, maxCount);
                     if (MPEater)
@@ -3092,7 +3092,7 @@ namespace Server.MirObjects
                         S.ObjectEffect p = new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.MPEater, EffectType = ObjectID };
                         CurrentMap.Broadcast(p, ob.CurrentLocation);
 
-                        int addMp = 5 * (magic.Level + Stats[Stat.Accuracy] / 4);
+                        int addMp = 5 * (magic.Level + Stats[Stat.准确] / 4);
 
                         if (ob.Race == ObjectType.Player)
                         {
@@ -3123,7 +3123,7 @@ namespace Server.MirObjects
 
                         if (ob == null || ob.Node == null) continue;
 
-                        long calcDuration = magic.Level * 2 + Stats[Stat.Luck] / 6;
+                        long calcDuration = magic.Level * 2 + Stats[Stat.幸运] / 6;
 
                         ob.ApplyPoison(new Poison
                         {
@@ -3308,7 +3308,7 @@ namespace Server.MirObjects
                 if (Mine.StonesLeft > 0)
                 {
                     Mine.StonesLeft--;
-                    if (Envir.Random.Next(100) < (Mine.Mine.HitRate + (Info.Equipment[(int)EquipmentSlot.武器].GetTotal(Stat.Accuracy)) * 10))
+                    if (Envir.Random.Next(100) < (Mine.Mine.HitRate + (Info.Equipment[(int)EquipmentSlot.武器].GetTotal(Stat.准确)) * 10))
                     {
                         //create some rubble on the floor (or increase whats there)
                         SpellObject Rubble = null;
@@ -3345,7 +3345,7 @@ namespace Server.MirObjects
                         }
 
                         //check if we get a payout
-                        if (Envir.Random.Next(100) < (Mine.Mine.DropRate + Stats[Stat.MineRatePercent]))
+                        if (Envir.Random.Next(100) < (Mine.Mine.DropRate + Stats[Stat.采矿出矿数率]))
                         {
                             GetMinePayout(Mine.Mine);
                         }
@@ -3378,15 +3378,15 @@ namespace Server.MirObjects
             Spell spell = magic.Spell;
             if (spell == Spell.Teleport || spell == Spell.Blink || spell == Spell.StormEscape)
             {
-                if (Stats[Stat.TeleportManaPenaltyPercent] > 0)
+                if (Stats[Stat.传送技法力消耗数率] > 0)
                 {
-                    cost += (cost * Stats[Stat.TeleportManaPenaltyPercent]) / 100;
+                    cost += (cost * Stats[Stat.传送技法力消耗数率]) / 100;
                 }
             }
 
-            if (Stats[Stat.ManaPenaltyPercent] > 0)
+            if (Stats[Stat.法力值消耗数率] > 0)
             {
-                cost += (cost * Stats[Stat.ManaPenaltyPercent]) / 100;
+                cost += (cost * Stats[Stat.法力值消耗数率]) / 100;
             }
 
             if (spell == Spell.Plague)
@@ -3417,8 +3417,8 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
             AttackTime = Envir.Time + MoveDelay;
@@ -3784,7 +3784,7 @@ namespace Server.MirObjects
         {
             int duration = 45 + (15 * magic.Level);
 
-            var buff = AddBuff(BuffType.Concentration, this, Settings.Second * duration, new Stats());
+            var buff = AddBuff(BuffType.气流术, this, Settings.Second * duration, new Stats());
 
             buff.Set("InterruptTime", (long)0);
             buff.Set("Interrupted", false);
@@ -3831,7 +3831,7 @@ namespace Server.MirObjects
             int meditationLvl = magic.Level;
             int concentrateChance = 0;
 
-            if (HasBuff(BuffType.Concentration, out Buff concentration) && !concentration.Get<bool>("Interrupted"))
+            if (HasBuff(BuffType.气流术, out Buff concentration) && !concentration.Get<bool>("Interrupted"))
             {
                 magic = GetMagic(Spell.Concentration);
 
@@ -4331,7 +4331,7 @@ namespace Server.MirObjects
         private void IceThrust(UserMagic magic)
         {
             int damageBase = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-            if (Envir.Random.Next(100) < (1 + Stats[Stat.Luck]))
+            if (Envir.Random.Next(100) < (1 + Stats[Stat.幸运]))
                 damageBase += damageBase;
             int damageFinish = magic.GetDamage(damageBase);
 
@@ -4553,7 +4553,7 @@ namespace Server.MirObjects
             int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500; //50 MS per Step
             int damage = magic.GetDamage(GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]));
 
-            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, damage, location, (byte)Envir.Random.Next(Stats[Stat.PoisonAttack]));
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, damage, location, (byte)Envir.Random.Next(Stats[Stat.毒素伤害]));
 
             ConsumeItem(amulet, 5);
             ConsumeItem(poison, 5);
@@ -4565,11 +4565,11 @@ namespace Server.MirObjects
         private void MoonMist(UserMagic magic)
         {
             for (int i = 0; i < Buffs.Count; i++)
-                if (Buffs[i].Type == BuffType.MoonLight) return;
+                if (Buffs[i].Type == BuffType.月影术) return;
 
             var time = GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]);
 
-            AddBuff(BuffType.MoonLight, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
+            AddBuff(BuffType.月影术, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
 
             CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.MoonMist }, CurrentLocation);
             int damage = magic.GetDamage(GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]));
@@ -4757,14 +4757,14 @@ namespace Server.MirObjects
             int duration = 30 + 50 * magic.Level;
             int power = magic.GetPower(GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]));
 
-            int chance = (10 - (Stats[Stat.Luck] / 3 + magic.Level + 1));
+            int chance = (10 - (Stats[Stat.幸运] / 3 + magic.Level + 1));
 
             if (chance < 2) chance = 2;
 
             var stats = new Stats
             {
-                [Stat.EnergyShieldPercent] = (int)Math.Round((1 / (decimal)chance) * 100),
-                [Stat.EnergyShieldHPGain] = power
+                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                [Stat.气功盾恢复生命值] = power
             };
 
             switch (target.Race)
@@ -4773,7 +4773,7 @@ namespace Server.MirObjects
                     //Only targets
                     if (target.IsFriendlyTarget(this))
                     {
-                        target.AddBuff(BuffType.EnergyShield, this, (Settings.Second * duration), stats);
+                        target.AddBuff(BuffType.先天气功, this, (Settings.Second * duration), stats);
                         target.OperateTime = 0;
                         LevelMagic(magic);
                         cast = true;
@@ -4802,20 +4802,20 @@ namespace Server.MirObjects
                     {
                         var stats = new Stats();
 
-                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.Warrior || ((HumanObject)target).Class == MirClass.Assassin)
+                        if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.战士 || ((HumanObject)target).Class == MirClass.刺客)
                         {
                             stats[Stat.MaxDC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.Wizard || ((HumanObject)target).Class == MirClass.Archer)
+                        else if (((HumanObject)target).Class == MirClass.法师 || ((HumanObject)target).Class == MirClass.弓箭)
                         {
                             stats[Stat.MaxMC] = value;
                         }
-                        else if (((HumanObject)target).Class == MirClass.Taoist)
+                        else if (((HumanObject)target).Class == MirClass.道士)
                         {
                             stats[Stat.MaxSC] = value;
                         }
 
-                        target.AddBuff(BuffType.UltimateEnhancer, this, Settings.Second * expiretime, stats);
+                        target.AddBuff(BuffType.无极真气, this, Settings.Second * expiretime, stats);
                         target.OperateTime = 0;
                         LevelMagic(magic);
                         ConsumeItem(item, 1);
@@ -4903,7 +4903,7 @@ namespace Server.MirObjects
         private void BladeAvalanche(UserMagic magic)
         {
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-            if (Envir.Random.Next(0, 100) <= (1 + Stats[Stat.Luck]))
+            if (Envir.Random.Next(0, 100) <= (1 + Stats[Stat.幸运]))
                 damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
             int damageFinal = magic.GetDamage(damageBase);
 
@@ -4957,7 +4957,7 @@ namespace Server.MirObjects
             int duration = 45 + (15 * magic.Level);
             int addValue = (int)Math.Round(Stats[Stat.MaxAC] * (0.2 + (0.03 * magic.Level)));
 
-            AddBuff(BuffType.ProtectionField, this, Settings.Second * duration, new Stats { [Stat.MaxAC] = addValue, [Stat.MinAC] = addValue });
+            AddBuff(BuffType.护身气幕, this, Settings.Second * duration, new Stats { [Stat.MaxAC] = addValue, [Stat.MinAC] = addValue });
             OperateTime = 0;
             LevelMagic(magic);
         }
@@ -4967,7 +4967,7 @@ namespace Server.MirObjects
             int duration = 18 + (6 * magic.Level);
             int addValue = (int)Math.Round(Stats[Stat.MaxDC] * (0.12 + (0.03 * magic.Level)));
 
-            AddBuff(BuffType.Rage, this, Settings.Second * duration, new Stats { [Stat.MaxDC] = addValue, [Stat.MinDC] = addValue });
+            AddBuff(BuffType.剑气爆, this, Settings.Second * duration, new Stats { [Stat.MaxDC] = addValue, [Stat.MinDC] = addValue });
             OperateTime = 0;
             LevelMagic(magic);
         }
@@ -5216,7 +5216,7 @@ namespace Server.MirObjects
             if (CounterAttack == false) return;
 
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-            if (Envir.Random.Next(0, 100) <= Stats[Stat.Accuracy])
+            if (Envir.Random.Next(0, 100) <= Stats[Stat.准确])
                 damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
             int damageFinal = magic.GetDamage(damageBase);
 
@@ -5249,7 +5249,7 @@ namespace Server.MirObjects
 
             ActiveSwiftFeet = true;
 
-            AddBuff(BuffType.SwiftFeet, this, (Settings.Second * 25) + (magic.Level * 5000), new Stats(), true);
+            AddBuff(BuffType.轻身步, this, (Settings.Second * 25) + (magic.Level * 5000), new Stats(), true);
 
             LevelMagic(magic);
         }
@@ -5257,7 +5257,7 @@ namespace Server.MirObjects
         {
             var time = GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]);
 
-            AddBuff(BuffType.MoonLight, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
+            AddBuff(BuffType.月影术, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
 
             LevelMagic(magic);
         }
@@ -5308,7 +5308,7 @@ namespace Server.MirObjects
                         Owner = this,
                         PType = PoisonType.Green,
                         TickSpeed = 1000,
-                        Value = power / 10 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.PoisonAttack])
+                        Value = power / 10 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.毒素伤害])
                     }, this);
 
                     target.OperateTime = 0;
@@ -5353,19 +5353,19 @@ namespace Server.MirObjects
 
             monster.Spawn(CurrentMap, CurrentLocation);
 
-            if (!HasBuff(BuffType.DarkBody, out _))
+            if (!HasBuff(BuffType.烈火身, out _))
             {
                 LevelMagic(magic);
             }
 
             var duration = (GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]) + (magic.Level + 1) * 5) * 500;
 
-            AddBuff(BuffType.DarkBody, this, duration, new Stats());
+            AddBuff(BuffType.烈火身, this, duration, new Stats());
         }
         private void CrescentSlash(UserMagic magic)
         {
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-            if (Envir.Random.Next(0, 100) <= Stats[Stat.Accuracy])
+            if (Envir.Random.Next(0, 100) <= Stats[Stat.准确])
                 damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
             int damageFinal = magic.GetDamage(damageBase);
 
@@ -5481,7 +5481,7 @@ namespace Server.MirObjects
                                     DelayedAction action = new DelayedAction(DelayedType.Damage, AttackTime, ob, magic.GetDamage(GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC])), DefenceType.AC, true);
                                     ActionList.Add(action);
                                     success = true;
-                                    if ((((ob.Race != ObjectType.Player) || Settings.PvpCanResistPoison) && (Envir.Random.Next(Settings.PoisonAttackWeight) >= ob.Stats[Stat.PoisonResist])) && (Envir.Random.Next(15) <= magic.Level + 1))
+                                    if ((((ob.Race != ObjectType.Player) || Settings.PvpCanResistPoison) && (Envir.Random.Next(Settings.PoisonAttackWeight) >= ob.Stats[Stat.毒物躲避])) && (Envir.Random.Next(15) <= magic.Level + 1))
                                     {
                                         DelayedAction pa = new DelayedAction(DelayedType.Poison, AttackTime, ob, PoisonType.Stun, SpellEffect.TwinDrakeBlade, magic.Level + 1, 1000);
                                         ActionList.Add(pa);
@@ -5984,7 +5984,7 @@ namespace Server.MirObjects
                             target.ApplyPoison(new Poison
                             {
                                 Owner = this,
-                                Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(Stats[Stat.Freezing]),
+                                Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(Stats[Stat.冰冻伤害]),
                                 PType = PoisonType.Frozen,
                                 TickSpeed = 1000,
                             }, this);
@@ -6056,7 +6056,7 @@ namespace Server.MirObjects
                                 Owner = this,
                                 PType = PoisonType.Green,
                                 TickSpeed = 2000,
-                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.PoisonAttack])
+                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.毒素伤害])
                             }, this);
                             break;
                         case 2:
@@ -6087,7 +6087,7 @@ namespace Server.MirObjects
                     if (!CurrentMap.ValidPoint(location) || Envir.Random.Next(4) >= magic.Level + 1 || !Teleport(CurrentMap, location, false)) return;
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.StormEscape }, CurrentLocation);
 
-                    AddBuff(BuffType.TemporalFlux, this, Settings.Second * 30, new Stats { [Stat.TeleportManaPenaltyPercent] = 30 });
+                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
                     LevelMagic(magic);
                     break;
                 #endregion
@@ -6103,7 +6103,7 @@ namespace Server.MirObjects
                     if (!MagicTeleport(magic))
                         return;                    
 
-                    AddBuff(BuffType.TemporalFlux, this, Settings.Second * 30, new Stats { [Stat.TeleportManaPenaltyPercent] = 30 });
+                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
                     LevelMagic(magic);
 
                     break;
@@ -6124,7 +6124,7 @@ namespace Server.MirObjects
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Teleport }, CurrentLocation);
                         LevelMagic(magic);
 
-                        AddBuff(BuffType.TemporalFlux, this, Settings.Second * 30, new Stats { [Stat.TeleportManaPenaltyPercent] = 30 });
+                        AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
                     }
                     break;
 
@@ -6136,7 +6136,7 @@ namespace Server.MirObjects
                     {
                         value = (int)data[1];
 
-                        AddBuff(BuffType.Hiding, this, Settings.Second * value, new Stats());
+                        AddBuff(BuffType.隐身术, this, Settings.Second * value, new Stats());
 
                         LevelMagic(magic);
                     }
@@ -6148,7 +6148,7 @@ namespace Server.MirObjects
 
                 case Spell.Haste:
                     {
-                        AddBuff(BuffType.Haste, this, (Settings.Second * 25) + (Settings.Second * magic.Level * 15), new Stats { [Stat.AttackSpeed] = (magic.Level * 2) + 2 });
+                        AddBuff(BuffType.体迅风, this, (Settings.Second * 25) + (Settings.Second * magic.Level * 15), new Stats { [Stat.攻击速度] = (magic.Level * 2) + 2 });
                         LevelMagic(magic);
                     }
                     break;
@@ -6159,7 +6159,7 @@ namespace Server.MirObjects
 
                 case Spell.Fury:
                     {
-                        AddBuff(BuffType.Fury, this, (Settings.Second * 60) + (magic.Level * 10000), new Stats { [Stat.AttackSpeed] = 4 });
+                        AddBuff(BuffType.血龙剑法, this, (Settings.Second * 60) + (magic.Level * 10000), new Stats { [Stat.攻击速度] = 4 });
                         LevelMagic(magic);
                     }
                     break;
@@ -6176,7 +6176,7 @@ namespace Server.MirObjects
                             [Stat.MaxAC] = (int)Math.Round(Stats[Stat.MaxAC] * (0.10 + (0.07 * magic.Level)))
                         };
 
-                        AddBuff(BuffType.ImmortalSkin, this, (Settings.Second * 60) + (magic.Level * 1000), stats);
+                        AddBuff(BuffType.金刚不坏, this, (Settings.Second * 60) + (magic.Level * 1000), stats);
                         LevelMagic(magic);
                     }
                     break;
@@ -6186,7 +6186,7 @@ namespace Server.MirObjects
 
                 case Spell.LightBody:
                     {
-                        AddBuff(BuffType.LightBody, this, (magic.Level + 1) * (Settings.Second * 30), new Stats { [Stat.Agility] = (magic.Level + 1) * 2 });
+                        AddBuff(BuffType.风身术, this, (magic.Level + 1) * (Settings.Second * 30), new Stats { [Stat.敏捷] = (magic.Level + 1) * 2 });
                         LevelMagic(magic);
                     }
                     break;
@@ -6197,10 +6197,10 @@ namespace Server.MirObjects
 
                 case Spell.MagicShield:
                     {
-                        if (HasBuff(BuffType.MagicShield, out _)) return;
+                        if (HasBuff(BuffType.魔法盾, out _)) return;
 
                         LevelMagic(magic);
-                        AddBuff(BuffType.MagicShield, this, Settings.Second * (int)data[1], new Stats { [Stat.DamageReductionPercent] = (magic.Level + 2) * 10 });
+                        AddBuff(BuffType.魔法盾, this, Settings.Second * (int)data[1], new Stats { [Stat.伤害减免数率] = (magic.Level + 2) * 10 });
                     }
                     break;
 
@@ -6231,10 +6231,10 @@ namespace Server.MirObjects
                         {
                             [Stat.MinMC] = (int)data[1],
                             [Stat.MaxMC] = (int)data[1],
-                            [Stat.ManaPenaltyPercent] = 6 + magic.Level
+                            [Stat.法力值消耗数率] = 6 + magic.Level
                         };
 
-                        AddBuff(BuffType.MagicBooster, this, Settings.Second * 60, stats, true);
+                        AddBuff(BuffType.深延术, this, Settings.Second * 60, stats, true);
                         LevelMagic(magic);
                     }
                     break;
@@ -6378,7 +6378,7 @@ namespace Server.MirObjects
                             [Stat.MaxAC] = acInc
                         };
 
-                        target.AddBuff(BuffType.PetEnhancer, this, (Settings.Second * value), stats);
+                        target.AddBuff(BuffType.血龙兽, this, (Settings.Second * value), stats);
                         LevelMagic(magic);
                     }
                     break;
@@ -6416,7 +6416,7 @@ namespace Server.MirObjects
 
                 case Spell.ElementalBarrier:
                     {
-                        if (HasBuff(BuffType.ElementalBarrier, out _)) return;
+                        if (HasBuff(BuffType.金刚术, out _)) return;
 
                         if (!HasElemental)
                         {
@@ -6431,7 +6431,7 @@ namespace Server.MirObjects
                         ObtainElement(false);
                         LevelMagic(magic);
 
-                        AddBuff(BuffType.ElementalBarrier, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.DamageReductionPercent] = (magic.Level + 1) * 10 });
+                        AddBuff(BuffType.金刚术, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.伤害减免数率] = (magic.Level + 1) * 10 });
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierUp }, CurrentLocation);
                     }
                     break;
@@ -6561,8 +6561,8 @@ namespace Server.MirObjects
 
                     int buffTime = 5 + (5 * magic.Level);
 
-                    bool hasVampBuff = HasBuff(BuffType.VampireShot, out _);
-                    bool hasPoisonBuff = HasBuff(BuffType.PoisonShot, out _);
+                    bool hasVampBuff = HasBuff(BuffType.吸血地闪, out _);
+                    bool hasPoisonBuff = HasBuff(BuffType.毒魔闪, out _);
 
                     bool doVamp = false, doPoison = false;
                     if (magic.Spell == Spell.VampireShot)
@@ -6570,7 +6570,7 @@ namespace Server.MirObjects
                         doVamp = true;
                         if (!hasVampBuff && !hasPoisonBuff && (Envir.Random.Next(20) >= 8))//40% chance
                         {
-                            AddBuff(BuffType.VampireShot, this, Settings.Second * buffTime, new Stats());
+                            AddBuff(BuffType.吸血地闪, this, Settings.Second * buffTime, new Stats());
                             BroadcastInfo();
                         }
                     }
@@ -6579,7 +6579,7 @@ namespace Server.MirObjects
                         doPoison = true;
                         if (!hasPoisonBuff && !hasVampBuff && (Envir.Random.Next(20) >= 8))//40% chance
                         {
-                            AddBuff(BuffType.PoisonShot, this, Settings.Second * buffTime, new Stats());
+                            AddBuff(BuffType.毒魔闪, this, Settings.Second * buffTime, new Stats());
                             BroadcastInfo();
                         }
                     }
@@ -6608,7 +6608,7 @@ namespace Server.MirObjects
                                         if (hasVampBuff)//Vampire Effect
                                         {
                                             //cancel out buff
-                                            AddBuff(BuffType.VampireShot, this, 0, new Stats());
+                                            AddBuff(BuffType.吸血地闪, this, 0, new Stats());
 
                                             target.Attacked(this, value, DefenceType.MAC, false);
                                             if (VampAmount == 0) VampTime = Envir.Time + Settings.Second;
@@ -6617,7 +6617,7 @@ namespace Server.MirObjects
                                         if (hasPoisonBuff)//Poison Effect
                                         {
                                             //cancel out buff
-                                            AddBuff(BuffType.PoisonShot, this, 0, new Stats());
+                                            AddBuff(BuffType.毒魔闪, this, 0, new Stats());
 
                                             targetob.ApplyPoison(new Poison
                                             {
@@ -6625,7 +6625,7 @@ namespace Server.MirObjects
                                                 Owner = this,
                                                 PType = PoisonType.Green,
                                                 TickSpeed = 2000,
-                                                Value = value / 25 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.PoisonAttack])
+                                                Value = value / 25 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.毒素伤害])
                                             }, this);
                                             targetob.OperateTime = 0;
                                         }
@@ -6649,7 +6649,7 @@ namespace Server.MirObjects
                                 Owner = this,
                                 PType = PoisonType.Green,
                                 TickSpeed = 2000,
-                                Value = value / 25 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.PoisonAttack])
+                                Value = value / 25 + magic.Level + 1 + Envir.Random.Next(Stats[Stat.毒素伤害])
                             }, this);
                             target.OperateTime = 0;
                         }
@@ -6803,7 +6803,7 @@ namespace Server.MirObjects
                 if (userMagic.Spell == Spell.TwinDrakeBlade)
                 {
                     if ((((target.Race != ObjectType.Player) || Settings.PvpCanResistPoison) &&
-                        (Envir.Random.Next(Settings.PoisonAttackWeight) >= target.Stats[Stat.PoisonResist])) &&
+                        (Envir.Random.Next(Settings.PoisonAttackWeight) >= target.Stats[Stat.毒物躲避])) &&
                         (target.Level < Level + 10 && Envir.Random.Next(target.Race == ObjectType.Player ? 40 : 20) <= userMagic.Level + 1))
                     {
                         target.ApplyPoison(new Poison { PType = PoisonType.Stun, Duration = target.Race == ObjectType.Player ? 2 : 2 + userMagic.Level, TickSpeed = 1000 }, this);
@@ -6912,7 +6912,7 @@ namespace Server.MirObjects
                     PlayerObject player = Envir.GetPlayer(mentor.Name);
                     if (player.CurrentMap == CurrentMap && Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange) && !player.Dead)
                     {
-                        if (Stats[Stat.SkillGainMultiplier] == 1)
+                        if (Stats[Stat.技能熟练度倍率] == 1)
                         {
                             if (GroupMembers != null && GroupMembers.Contains(player))
                                 exp *= 2;
@@ -6921,7 +6921,7 @@ namespace Server.MirObjects
                 }
             }
 
-            exp *= (byte)Math.Min(byte.MaxValue, Stats[Stat.SkillGainMultiplier]);
+            exp *= (byte)Math.Min(byte.MaxValue, Stats[Stat.技能熟练度倍率]);
 
             if (Level == ushort.MaxValue) exp = byte.MaxValue;
 
@@ -7111,9 +7111,9 @@ namespace Server.MirObjects
             if (damageWeapon)
                 attacker.DamageWeapon();
 
-            damage += attacker.Stats[Stat.AttackBonus];
+            damage += attacker.Stats[Stat.武器增伤];
 
-            if (Envir.Random.Next(100) < Stats[Stat.Reflect])
+            if (Envir.Random.Next(100) < Stats[Stat.反弹伤害])
             {
                 if (attacker.IsAttackTarget(this))
                 {
@@ -7124,9 +7124,9 @@ namespace Server.MirObjects
             }
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.DamageReductionPercent] > 0)
+            if (Stats[Stat.伤害减免数率] > 0)
             {
-                damage -= (damage * Stats[Stat.DamageReductionPercent]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage)
@@ -7137,44 +7137,44 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
             //EnergyShield
-            if (Stats[Stat.EnergyShieldPercent] > 0)
+            if (Stats[Stat.气功盾恢复数率] > 0)
             {
-                if (Envir.Random.Next(100) < Stats[Stat.EnergyShieldPercent])
+                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复数率])
                 {
-                    if (HP + (Stats[Stat.EnergyShieldHPGain]) >= Stats[Stat.HP])
+                    if (HP + (Stats[Stat.气功盾恢复生命值]) >= Stats[Stat.HP])
                         SetHP(Stats[Stat.HP]);
                     else
-                        ChangeHP(Stats[Stat.EnergyShieldHPGain]);
+                        ChangeHP(Stats[Stat.气功盾恢复生命值]);
                 }
             }
 
-            if (Envir.Random.Next(100) < (attacker.Stats[Stat.CriticalRate] * Settings.CriticalRateWeight))
+            if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击率] * Settings.CriticalRateWeight))
             {
                 CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Critical }, CurrentLocation);
-                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (((double)attacker.Stats[Stat.CriticalDamage] / (double)Settings.CriticalDamageWeight) * 10)));
+                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (((double)attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight) * 10)));
                 BroadcastDamageIndicator(DamageType.Critical);
             }
 
-            if (HasBuff(BuffType.MagicShield, out Buff magicShield))
+            if (HasBuff(BuffType.魔法盾, out Buff magicShield))
             {
                 var duration = (int)Math.Min(int.MaxValue, magicShield.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.MagicShield, this, duration, null);
+                AddBuff(BuffType.魔法盾, this, duration, null);
             }
 
-            if (HasBuff(BuffType.ElementalBarrier, out Buff elementalBarrier))
+            if (HasBuff(BuffType.金刚术, out Buff elementalBarrier))
             {
                 var duration = (int)Math.Min(int.MaxValue, elementalBarrier.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.ElementalBarrier, this, duration, null);
+                AddBuff(BuffType.金刚术, this, duration, null);
             }
 
-            if (attacker.Stats[Stat.HPDrainRatePercent] > 0 && damageWeapon)
+            if (attacker.Stats[Stat.吸血数率] > 0 && damageWeapon)
             {
-                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.HPDrainRatePercent]);
+                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.吸血数率]);
                 if (attacker.HpDrain > 2)
                 {
                     int HpGain = (int)Math.Floor(attacker.HpDrain);
@@ -7228,7 +7228,7 @@ namespace Server.MirObjects
                 return 0;
             }
 
-            if (Envir.Random.Next(100) < Stats[Stat.Reflect])
+            if (Envir.Random.Next(100) < Stats[Stat.反弹伤害])
             {
                 if (attacker.IsAttackTarget(this))
                 {
@@ -7242,9 +7242,9 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.DamageReductionPercent] != 0)
+            if (Stats[Stat.伤害减免数率] != 0)
             {
-                damage -= (damage * Stats[Stat.DamageReductionPercent]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage)
@@ -7255,31 +7255,31 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
-            if (Stats[Stat.EnergyShieldPercent] > 0)
+            if (Stats[Stat.气功盾恢复数率] > 0)
             {
-                if (Envir.Random.Next(100) < Stats[Stat.EnergyShieldPercent])
+                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复数率])
                 {
-                    if (HP + (Stats[Stat.EnergyShieldHPGain]) >= Stats[Stat.HP])
+                    if (HP + (Stats[Stat.气功盾恢复生命值]) >= Stats[Stat.HP])
                         SetHP(Stats[Stat.HP]);
                     else
-                        ChangeHP(Stats[Stat.EnergyShieldHPGain]);
+                        ChangeHP(Stats[Stat.气功盾恢复生命值]);
                 }
             }
 
-            if (HasBuff(BuffType.MagicShield, out Buff magicShield))
+            if (HasBuff(BuffType.魔法盾, out Buff magicShield))
             {
                 var duration = (int)Math.Min(int.MaxValue, magicShield.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.MagicShield, this, duration, null);
+                AddBuff(BuffType.魔法盾, this, duration, null);
             }
 
-            if (HasBuff(BuffType.ElementalBarrier, out Buff elementalBarrier))
+            if (HasBuff(BuffType.金刚术, out Buff elementalBarrier))
             {
                 var duration = (int)Math.Min(int.MaxValue, elementalBarrier.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.ElementalBarrier, this, duration, null);
+                AddBuff(BuffType.金刚术, this, duration, null);
             }
 
             for (int i = PoisonList.Count - 1; i >= 0; i--)
@@ -7319,8 +7319,8 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.MoonLight);
-                RemoveBuff(BuffType.DarkBody);
+                RemoveBuff(BuffType.月影术);
+                RemoveBuff(BuffType.烈火身);
             }
 
             switch (type)
@@ -7345,23 +7345,23 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.DamageReductionPercent] != 0)
+            if (Stats[Stat.伤害减免数率] != 0)
             {
-                damage -= (damage * Stats[Stat.DamageReductionPercent]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage) return 0;
 
-            if (HasBuff(BuffType.MagicShield, out Buff magicShield))
+            if (HasBuff(BuffType.魔法盾, out Buff magicShield))
             {
                 var duration = (int)Math.Min(int.MaxValue, magicShield.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.MagicShield, this, duration, null);
+                AddBuff(BuffType.魔法盾, this, duration, null);
             }
 
-            if (HasBuff(BuffType.ElementalBarrier, out Buff elementalBarrier))
+            if (HasBuff(BuffType.金刚术, out Buff elementalBarrier))
             {
                 var duration = (int)Math.Min(int.MaxValue, elementalBarrier.ExpireTime - ((damage - armour) * 60));
-                AddBuff(BuffType.ElementalBarrier, this, duration, null);
+                AddBuff(BuffType.金刚术, this, duration, null);
             }
 
             RegenTime = Envir.Time + RegenDelay;
@@ -7381,7 +7381,7 @@ namespace Server.MirObjects
         {
             if (Caster != null && !NoResist)
             {
-                if (((Caster.Race != ObjectType.Player) || Settings.PvpCanResistPoison) && (Envir.Random.Next(Settings.PoisonResistWeight) < Stats[Stat.PoisonResist]))
+                if (((Caster.Race != ObjectType.Player) || Settings.PvpCanResistPoison) && (Envir.Random.Next(Settings.PoisonResistWeight) < Stats[Stat.毒物躲避]))
                 {
                     return;
                 }
@@ -7407,7 +7407,7 @@ namespace Server.MirObjects
                         p.Owner.BrownTime = Envir.Time + Settings.Minute;
             }
 
-            if ((p.PType == PoisonType.Green) || (p.PType == PoisonType.Red)) p.Duration = Math.Max(0, p.Duration - Stats[Stat.PoisonRecovery]);
+            if ((p.PType == PoisonType.Green) || (p.PType == PoisonType.Red)) p.Duration = Math.Max(0, p.Duration - Stats[Stat.中毒恢复]);
             if (p.Duration == 0) return;
             if (p.PType == PoisonType.None) return;
 
@@ -7443,7 +7443,7 @@ namespace Server.MirObjects
                     break;
                 case PoisonType.Blindness:
                     {
-                        AddBuff(BuffType.Blindness, Caster, (int)(p.Duration * p.TickSpeed), new Stats { [Stat.Accuracy] = p.Value * -1 });
+                        AddBuff(BuffType.Blindness, Caster, (int)(p.Duration * p.TickSpeed), new Stats { [Stat.准确] = p.Value * -1 });
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.BeenPoisoned), ChatType.System2);
                     }
                     break;
@@ -7463,10 +7463,10 @@ namespace Server.MirObjects
 
             switch (b.Type)
             {
-                case BuffType.MagicShield:
+                case BuffType.魔法盾:
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.MagicShieldUp }, CurrentLocation);
                     break;
-                case BuffType.ElementalBarrier:
+                case BuffType.金刚术:
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierUp }, CurrentLocation);
                     break;
             }
@@ -7525,32 +7525,32 @@ namespace Server.MirObjects
             else if ((gem.Info.Durability) > 0)
                 return item.Info.Durability > item.MaxDura ? 0 : ((item.MaxDura - item.Info.Durability) / 1000);
 
-            else if (gem.GetTotal(Stat.AttackSpeed) > 0)
-                return item.AddedStats[Stat.AttackSpeed];
+            else if (gem.GetTotal(Stat.攻击速度) > 0)
+                return item.AddedStats[Stat.攻击速度];
 
-            else if (gem.GetTotal(Stat.Agility) > 0)
-                return item.AddedStats[Stat.Agility];
+            else if (gem.GetTotal(Stat.敏捷) > 0)
+                return item.AddedStats[Stat.敏捷];
 
-            else if (gem.GetTotal(Stat.Accuracy) > 0)
-                return item.AddedStats[Stat.Accuracy];
+            else if (gem.GetTotal(Stat.准确) > 0)
+                return item.AddedStats[Stat.准确];
 
-            else if (gem.GetTotal(Stat.PoisonAttack) > 0)
-                return item.AddedStats[Stat.PoisonAttack];
+            else if (gem.GetTotal(Stat.毒素伤害) > 0)
+                return item.AddedStats[Stat.毒素伤害];
 
-            else if (gem.GetTotal(Stat.Freezing) > 0)
-                return item.AddedStats[Stat.Freezing];
+            else if (gem.GetTotal(Stat.冰冻伤害) > 0)
+                return item.AddedStats[Stat.冰冻伤害];
 
-            else if (gem.GetTotal(Stat.MagicResist) > 0)
-                return item.AddedStats[Stat.MagicResist];
+            else if (gem.GetTotal(Stat.魔法躲避) > 0)
+                return item.AddedStats[Stat.魔法躲避];
 
-            else if (gem.GetTotal(Stat.PoisonResist) > 0)
-                return item.AddedStats[Stat.PoisonResist];
+            else if (gem.GetTotal(Stat.毒物躲避) > 0)
+                return item.AddedStats[Stat.毒物躲避];
 
-            else if (gem.GetTotal(Stat.Luck) > 0)
-                return item.AddedStats[Stat.Luck];
+            else if (gem.GetTotal(Stat.幸运) > 0)
+                return item.AddedStats[Stat.幸运];
 
-            else if (gem.GetTotal(Stat.PoisonRecovery) > 0)
-                return item.AddedStats[Stat.PoisonRecovery];
+            else if (gem.GetTotal(Stat.中毒恢复) > 0)
+                return item.AddedStats[Stat.中毒恢复];
 
             else if (gem.GetTotal(Stat.HP) > 0)
                 return item.AddedStats[Stat.HP];
@@ -7558,8 +7558,8 @@ namespace Server.MirObjects
             else if (gem.GetTotal(Stat.MP) > 0)
                 return item.AddedStats[Stat.MP];
 
-            else if (gem.GetTotal(Stat.HealthRecovery) > 0)
-                return item.AddedStats[Stat.HealthRecovery];
+            else if (gem.GetTotal(Stat.生命恢复) > 0)
+                return item.AddedStats[Stat.生命恢复];
 
             // Definitions are missing for these.
             /*
@@ -7735,19 +7735,19 @@ namespace Server.MirObjects
 
             switch (Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                         return false;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                         return false;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                         return false;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                         return false;
                     break;
@@ -7807,11 +7807,11 @@ namespace Server.MirObjects
 
             if (item.Info.Type == ItemType.武器 || item.Info.Type == ItemType.照明物)
             {
-                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentHandWeight > Stats[Stat.HandWeight])
+                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentHandWeight > Stats[Stat.腕力负重])
                     return false;
             }
             else
-                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.WearWeight])
+                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.装备负重])
                 return false;
 
             if (RidingMount && item.Info.Type != ItemType.照明物)
@@ -7850,7 +7850,7 @@ namespace Server.MirObjects
         {
             if (item == null || item.CurrentDura == 0 || item.Info.Type == ItemType.护身符) return;
             if ((item.WeddingRing == Info.Married) && (Info.Equipment[(int)EquipmentSlot.左戒指].UniqueID == item.UniqueID)) return;
-            if (item.GetTotal(Stat.Strong) > 0) amount = Math.Max(1, amount - item.GetTotal(Stat.Strong));
+            if (item.GetTotal(Stat.强度) > 0) amount = Math.Max(1, amount - item.GetTotal(Stat.强度));
             item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
             item.DuraChanged = true;
 
@@ -8565,7 +8565,7 @@ namespace Server.MirObjects
                         [Stat.MaxMAC] = 11 + magic.Level * 3,
                     };
 
-                    AddBuff(BuffType.CounterAttack, this, Settings.Second * 7, stats);
+                    AddBuff(BuffType.天务, this, Settings.Second * 7, stats);
                     ChangeMP(-cost);
                     break;
                 case Spell.MentalState:
@@ -8591,7 +8591,7 @@ namespace Server.MirObjects
                     break;
             }
 
-            AddBuff(BuffType.MentalState, this, 0, new Stats(), false, values: Info.MentalState);
+            AddBuff(BuffType.精神状态, this, 0, new Stats(), false, values: Info.MentalState);
         }
 
         #region Mounts

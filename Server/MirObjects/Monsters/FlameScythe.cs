@@ -48,7 +48,7 @@ namespace Server.MirObjects.Monsters
                 {
                     for (int i = 0; i < targets.Count; i++)
                     {
-                        if (Envir.Random.Next(Settings.MagicResistWeight) >= targets[i].Stats[Stat.MagicResist])
+                        if (Envir.Random.Next(Settings.MagicResistWeight) >= targets[i].Stats[Stat.魔法躲避])
                         {
                             DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, targets[i], damage, DefenceType.MACAgility);
                             ActionList.Add(action);

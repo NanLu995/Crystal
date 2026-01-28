@@ -3608,20 +3608,20 @@ namespace Server.MirObjects
 
                             switch (mirClass)
                             {
-                                case MirClass.Warrior:
-                                    player.Info.Class = MirClass.Warrior;
+                                case MirClass.战士:
+                                    player.Info.Class = MirClass.战士;
                                     break;
-                                case MirClass.Taoist:
-                                    player.Info.Class = MirClass.Taoist;
+                                case MirClass.道士:
+                                    player.Info.Class = MirClass.道士;
                                     break;
-                                case MirClass.Wizard:
-                                    player.Info.Class = MirClass.Wizard;
+                                case MirClass.法师:
+                                    player.Info.Class = MirClass.法师;
                                     break;
-                                case MirClass.Assassin:
-                                    player.Info.Class = MirClass.Assassin;
+                                case MirClass.刺客:
+                                    player.Info.Class = MirClass.刺客;
                                     break;
-                                case MirClass.Archer:
-                                    player.Info.Class = MirClass.Archer;
+                                case MirClass.弓箭:
+                                    player.Info.Class = MirClass.弓箭;
                                     break;
                             }
                         }
@@ -4586,7 +4586,7 @@ namespace Server.MirObjects
 
                             foreach (var drop in drops)
                             {
-                                var reward = drop.AttemptDrop(player?.Stats[Stat.ItemDropRatePercent] ?? 0, player?.Stats[Stat.GoldDropRatePercent] ?? 0);
+                                var reward = drop.AttemptDrop(player?.Stats[Stat.物品掉落数率] ?? 0, player?.Stats[Stat.金币收益数率] ?? 0);
 
                                 if (reward != null)
                                 {

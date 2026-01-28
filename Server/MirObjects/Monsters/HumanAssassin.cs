@@ -99,7 +99,7 @@ namespace Server.MirObjects.Monsters
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.Hiding);
+                RemoveBuff(BuffType.隐身术);
             }
 
             CellTime = Envir.Time + 500;
@@ -295,7 +295,7 @@ namespace Server.MirObjects.Monsters
 
         private void ExplosionDie()
         {
-            int criticalDamage = Envir.Random.Next(0, 100) <= Stats[Stat.Accuracy] ? Stats[Stat.MaxDC] * 2 : Stats[Stat.MinDC] * 2;
+            int criticalDamage = Envir.Random.Next(0, 100) <= Stats[Stat.准确] ? Stats[Stat.MaxDC] * 2 : Stats[Stat.MinDC] * 2;
             int damage = (Stats[Stat.MinDC] / 5 + 4 * (Level / 20)) * criticalDamage / 20 + Stats[Stat.MaxDC];
 
             for (int i = 0; i < 16; i++)
@@ -349,7 +349,7 @@ namespace Server.MirObjects.Monsters
                 ObjectID = ObjectID,
                 Name = master != null ? master.Name : Name,
                 NameColour = NameColour,
-                Class = master != null ? master.Class : MirClass.Assassin,
+                Class = master != null ? master.Class : MirClass.刺客,
                 Gender = master != null ? master.Gender : MirGender.男性,
                 Location = CurrentLocation,
                 Direction = Direction,

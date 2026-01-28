@@ -225,26 +225,26 @@ namespace Client.MirObjects
 
             switch (type)
             {
-                case BuffType.Fury:
+                case BuffType.血龙剑法:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 190, 7, 1400, this, true, type) { Repeat = true });
                     break;
-                case BuffType.ImmortalSkin:
+                case BuffType.金刚不坏:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 570, 5, 1400, this, true, type) { Repeat = true });
                     break;
-                case BuffType.SwiftFeet:
+                case BuffType.轻身步:
                     if (ob != null) ob.Sprint = true;
                     break;
-                case BuffType.MoonLight:
-                case BuffType.DarkBody:
+                case BuffType.月影术:
+                case BuffType.烈火身:
                     if (ob != null) ob.Sneaking = true;
                     break;
-                case BuffType.VampireShot:
+                case BuffType.吸血地闪:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 2110, 6, 1400, this, true, type) { Repeat = false });
                     break;
-                case BuffType.PoisonShot:
+                case BuffType.毒魔闪:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 2310, 7, 1400, this, true, type) { Repeat = false });
                     break;
-                case BuffType.EnergyShield:
+                case BuffType.先天气功:
                     BuffEffect effect;
 
                     Effects.Add(effect = new BuffEffect(Libraries.Magic2, 1880, 9, 900, this, true, type) { Repeat = false });
@@ -255,10 +255,10 @@ namespace Client.MirObjects
                         Effects.Add(new BuffEffect(Libraries.Magic2, 1900, 2, 800, this, true, type) { Repeat = true });
                     };
                     break;
-                case BuffType.MagicBooster:
+                case BuffType.深延术:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 90, 6, 1200, this, true, type) { Repeat = true });
                     break;
-                case BuffType.PetEnhancer:
+                case BuffType.血龙兽:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 230, 6, 1200, this, true, type) { Repeat = true });
                     break;
                 case BuffType.GameMaster:
@@ -315,11 +315,11 @@ namespace Client.MirObjects
 
             switch (type)
             {
-                case BuffType.SwiftFeet:
+                case BuffType.轻身步:
                     if (ob != null) ob.Sprint = false;
                     break;
-                case BuffType.MoonLight:
-                case BuffType.DarkBody:
+                case BuffType.月影术:
+                case BuffType.烈火身:
                     if (ob != null) ob.Sneaking = false;
                     break;
             }
@@ -495,7 +495,7 @@ namespace Client.MirObjects
                     if (HeroObject.HeroObject?.OwnerName == User.Name)
                     {
                         index = 1;
-                        if ((MapObject.HeroObject.Class != MirClass.Warrior && HeroObject.Level > 7) || (MapObject.HeroObject.Class == MirClass.Warrior && HeroObject.Level > 25))
+                        if ((MapObject.HeroObject.Class != MirClass.战士 && HeroObject.Level > 7) || (MapObject.HeroObject.Class == MirClass.战士 && HeroObject.Level > 25))
                         {
                             Libraries.Prguse2.Draw(10, new Rectangle(0, 0, (int)(32 * PercentMana / 100F), 4), new Point(DisplayRectangle.X + 8, DisplayRectangle.Y - 60), Color.White, false);
                         }

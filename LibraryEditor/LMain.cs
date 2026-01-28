@@ -1360,8 +1360,8 @@ namespace LibraryEditor
 
             ////ADD LIST OF FRAMES (CAN BE COPIED FROM THE CLIENTS FRAME.CS)
             //FrameList.Add(frame = new FrameSet());
-            //frame.Add(MirAction.Standing, new Frame(0, 4, 0, 450));
-            //frame.Add(MirAction.Harvest, new Frame(12, 10, 0, 200));
+            //frame.Add(MirAction.站立动作, new Frame(0, 4, 0, 450));
+            //frame.Add(MirAction.挖矿展示, new Frame(12, 10, 0, 200));
 
             ////ADD SWITCH OF IMAGE TO CORRECT FRAME (CAN BE COPIED FROM THE MONSTEROBJECT.CS FRAME LIST)
             //FrameSet matchingFrame = new FrameSet();

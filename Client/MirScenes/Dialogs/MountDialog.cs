@@ -227,7 +227,7 @@ namespace Client.MirScenes.Dialogs
         public bool CanRide()
         {
             if (GameScene.User.MountType < 0 || GameScene.User.MountTime + 500 > CMain.Time) return false;
-            if (GameScene.User.CurrentAction != MirAction.Standing && GameScene.User.CurrentAction != MirAction.MountStanding) return false;
+            if (GameScene.User.CurrentAction != MirAction.站立动作 && GameScene.User.CurrentAction != MirAction.坐骑站立) return false;
 
             return true;
         }

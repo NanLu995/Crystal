@@ -54,7 +54,7 @@ namespace Server.MirObjects
 
             if (Target != null)
             {
-                if (!HasBuff(BuffType.Concentration))
+                if (!HasBuff(BuffType.气流术))
                 {
                     UserMagic magic = GetMagic(Spell.Concentration);
                     if (CanUseMagic(magic))
@@ -81,7 +81,7 @@ namespace Server.MirObjects
                 {
                     if (!Target.PoisonList.Any(p => p.PType == PoisonType.Green))
                     {
-                        if (!HasBuff(BuffType.PoisonShot))
+                        if (!HasBuff(BuffType.毒魔闪))
                         {
                             BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
                             return;

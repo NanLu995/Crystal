@@ -285,7 +285,7 @@ namespace Client.MirScenes.Dialogs
                     if (options.HasFlag(GMOptions.Superman)) text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Superman);
                     if (options.HasFlag(GMOptions.Observer)) text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Observer);
                     break;
-                case BuffType.MentalState:
+                case BuffType.精神状态:
                     switch (buff.Values[0])
                     {
                         case 0:
@@ -299,32 +299,32 @@ namespace Client.MirScenes.Dialogs
                             break;
                     }
                     break;
-                case BuffType.Hiding:
+                case BuffType.隐身术:
                 case BuffType.ClearRing:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvisibleToManyMonsters);
                     break;
-                case BuffType.MoonLight:
+                case BuffType.月影术:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvisibleToPlayersAndMonstersAtDistance);
                     break;
-                case BuffType.EnergyShield:
+                case BuffType.先天气功:
                     overridestats = true;
-                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ChanceGainHpWhenAttacked), buff.Stats[Stat.EnergyShieldPercent], buff.Stats[Stat.EnergyShieldHPGain]);
+                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ChanceGainHpWhenAttacked), buff.Stats[Stat.气功盾恢复数率], buff.Stats[Stat.气功盾恢复生命值]);
                     break;
-                case BuffType.DarkBody:
+                case BuffType.烈火身:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvisibleToManyMonstersAbleToMove);
                     break;
-                case BuffType.VampireShot:
+                case BuffType.吸血地闪:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GivesVampiricAbility);
                     break;
-                case BuffType.PoisonShot:
+                case BuffType.毒魔闪:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GivesPoisonAbility);
                     break;
-                case BuffType.Concentration:
+                case BuffType.气流术:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.IncreaseElementExtractionChance);
                     break;
-                case BuffType.MagicBooster:
+                case BuffType.深延术:
                     overridestats = true;
-                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.IncreaseMcAndConsumption), buff.Stats[Stat.MinMC], buff.Stats[Stat.MaxMC], buff.Stats[Stat.ManaPenaltyPercent]);
+                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.IncreaseMcAndConsumption), buff.Stats[Stat.MinMC], buff.Stats[Stat.MaxMC], buff.Stats[Stat.法力值消耗数率]);
                     break;
                 case BuffType.Transform:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisguisesYourAppearance);
@@ -418,54 +418,54 @@ namespace Client.MirScenes.Dialogs
             switch (type)
             {
                 //Skills
-                case BuffType.Fury:
+                case BuffType.血龙剑法:
                     return 76;
-                case BuffType.Rage:
+                case BuffType.剑气爆:
                     return 49;
-                case BuffType.ImmortalSkin:
+                case BuffType.金刚不坏:
                     return 80;
-                case BuffType.CounterAttack:
+                case BuffType.天务:
                     return 7;
 
-                case BuffType.MagicBooster:
+                case BuffType.深延术:
                     return 73;
-                case BuffType.MagicShield:
+                case BuffType.魔法盾:
                     return 30;
 
-                case BuffType.Hiding:
+                case BuffType.隐身术:
                 case BuffType.ClearRing:
                     return 17;
-                case BuffType.Haste:
+                case BuffType.体迅风:
                     return 60;
-                case BuffType.SoulShield:
+                case BuffType.幽灵盾:
                     return 13;
-                case BuffType.BlessedArmour:
+                case BuffType.神圣战甲术:
                     return 14;
-                case BuffType.ProtectionField:
+                case BuffType.护身气幕:
                     return 50;
-                case BuffType.UltimateEnhancer:
+                case BuffType.无极真气:
                     return 35;
-                case BuffType.Curse:
+                case BuffType.诅咒术:
                     return 45;
-                case BuffType.EnergyShield:
+                case BuffType.先天气功:
                     return 57;
 
-                case BuffType.SwiftFeet:
+                case BuffType.轻身步:
                     return 67;
-                case BuffType.LightBody:
+                case BuffType.风身术:
                     return 68;
-                case BuffType.MoonLight:
+                case BuffType.月影术:
                     return 65;
-                case BuffType.DarkBody:
+                case BuffType.烈火身:
                     return 70;
 
-                case BuffType.Concentration:
+                case BuffType.气流术:
                     return 96;
-                case BuffType.VampireShot:
+                case BuffType.吸血地闪:
                     return 100;
-                case BuffType.PoisonShot:
+                case BuffType.毒魔闪:
                     return 102;
-                case BuffType.MentalState:
+                case BuffType.精神状态:
                     return 199;
 
                 //Monster
@@ -479,14 +479,14 @@ namespace Client.MirScenes.Dialogs
                     return 173;
                 case BuffType.General:
                     return 182;
-                case BuffType.Exp:
+                case BuffType.获取经验提升:
                     return 260;
-                case BuffType.Drop:
+                case BuffType.物品掉落提升:
                     return 162;
                 case BuffType.Gold:
                     return 168;
                 case BuffType.Knapsack:
-                case BuffType.BagWeight:
+                case BuffType.背包负重提升:
                     return 235;
                 case BuffType.Transform:
                     return 241;
@@ -499,7 +499,7 @@ namespace Client.MirScenes.Dialogs
                     return 203;
                 case BuffType.Rested:
                     return 240;
-                case BuffType.TemporalFlux:
+                case BuffType.时间之殇:
                     return 261;
                 case BuffType.Skill:
                     return 200;
@@ -507,11 +507,11 @@ namespace Client.MirScenes.Dialogs
                     return 182;
 
                 //Stats
-                case BuffType.Impact:
+                case BuffType.攻击力提升:
                     return 249;
-                case BuffType.Magic:
+                case BuffType.魔法力提升:
                     return 165;
-                case BuffType.Taoist:
+                case BuffType.道术力提升:
                     return 250;
                 case BuffType.Storm:
                     return 170;

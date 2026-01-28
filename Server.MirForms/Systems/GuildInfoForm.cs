@@ -127,19 +127,19 @@ namespace Server
                 BufftxtDc.Text = SelectedBuff.Stats[Stat.MaxDC].ToString();
                 BufftxtMc.Text = SelectedBuff.Stats[Stat.MaxMC].ToString();
                 BufftxtSc.Text = SelectedBuff.Stats[Stat.MaxSC].ToString();
-                BufftxtAttack.Text = SelectedBuff.Stats[Stat.AttackBonus].ToString();
-                BufftxtHpRegen.Text = SelectedBuff.Stats[Stat.HealthRecovery].ToString();
-                BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.SpellRecovery].ToString();
+                BufftxtAttack.Text = SelectedBuff.Stats[Stat.武器增伤].ToString();
+                BufftxtHpRegen.Text = SelectedBuff.Stats[Stat.生命恢复].ToString();
+                BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.法力恢复].ToString();
                 BufftxtMaxHp.Text = SelectedBuff.Stats[Stat.HP].ToString();
                 BufftxtMaxMp.Text = SelectedBuff.Stats[Stat.MP].ToString();
-                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.MineRatePercent].ToString();
-                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.GemRatePercent].ToString();
-                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.FishRatePercent].ToString();
-                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.ExpRatePercent].ToString();
-                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.CraftRatePercent].ToString();
-                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.SkillGainMultiplier].ToString();
-                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.ItemDropRatePercent].ToString();
-                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.GoldDropRatePercent].ToString();
+                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.采矿出矿数率].ToString();
+                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.宝石成功数率].ToString();
+                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.钓鱼成功数率].ToString();
+                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.经验增长数率].ToString();
+                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.大师概率数率].ToString();
+                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.技能熟练度倍率].ToString();
+                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.物品掉落数率].ToString();
+                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.金币收益数率].ToString();
             }
         }
 
@@ -535,7 +535,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.AttackBonus] = temp;
+            SelectedBuff.Stats[Stat.武器增伤] = temp;
             GuildsChanged = true;
         }
 
@@ -562,7 +562,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.HealthRecovery] = temp;
+            SelectedBuff.Stats[Stat.生命恢复] = temp;
             GuildsChanged = true;
         }
 
@@ -571,7 +571,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.SpellRecovery] = temp;
+            SelectedBuff.Stats[Stat.法力恢复] = temp;
             GuildsChanged = true;
         }
 
@@ -580,7 +580,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.MineRatePercent] = temp;
+            SelectedBuff.Stats[Stat.采矿出矿数率] = temp;
             GuildsChanged = true;
         }
 
@@ -589,7 +589,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.GemRatePercent] = temp;
+            SelectedBuff.Stats[Stat.宝石成功数率] = temp;
             GuildsChanged = true;
         }
 
@@ -598,7 +598,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.FishRatePercent] = temp;
+            SelectedBuff.Stats[Stat.钓鱼成功数率] = temp;
             GuildsChanged = true;
         }
 
@@ -607,7 +607,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.ExpRatePercent] = temp;
+            SelectedBuff.Stats[Stat.经验增长数率] = temp;
             GuildsChanged = true;
         }
 
@@ -616,7 +616,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.CraftRatePercent] = temp;
+            SelectedBuff.Stats[Stat.大师概率数率] = temp;
             GuildsChanged = true;
         }
 
@@ -625,7 +625,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.SkillGainMultiplier] = temp;
+            SelectedBuff.Stats[Stat.技能熟练度倍率] = temp;
             GuildsChanged = true;
         }
 
@@ -634,7 +634,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.ItemDropRatePercent] = temp;
+            SelectedBuff.Stats[Stat.物品掉落数率] = temp;
             GuildsChanged = true;
         }
 
@@ -643,7 +643,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.GoldDropRatePercent] = temp;
+            SelectedBuff.Stats[Stat.金币收益数率] = temp;
             GuildsChanged = true;
         }
 

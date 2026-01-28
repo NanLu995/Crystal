@@ -25,8 +25,8 @@ public enum WeatherSetting : ushort
     黄色花瓣 = 128, // Leaves = 128,
     红色花瓣 = 256, // FireyLeaves = 256,
     粉色花瓣 = 512, // PurpleLeaves = 512,
-    // 沙尘 = 1024,
-    // 沙雾 = 2048,
+    沙尘 = 1024,
+    沙雾 = 2048,
 }
 public enum PanelType : byte
 {
@@ -86,7 +86,9 @@ public enum DamageType : byte
 {
     Hit = 0,
     Miss = 1,
-    Critical = 2
+    Critical = 2,
+    HpRegen = 3,
+    Poisoning = 4
 }
 
 public enum MonsterType : byte
@@ -757,54 +759,54 @@ public enum Monster : ushort
 
 public enum MirAction : byte
 {
-    Standing, // 站立动作
-    Walking, // 行走动作
-    Running, // 跑步动作
-    Pushed, // 推开动作
-    DashL, // 左冲动作
-    DashR, // 右冲动作
-    DashFail, // 冲击失败
-    Stance, // 站立姿势
-    Stance2, // 站立姿势2
-    Attack1, // 近距攻击1
-    Attack2, // 近距攻击2
-    Attack3, // 近距攻击3
-    Attack4, // 近距攻击4
-    Attack5, // 近距攻击5
-    AttackRange1, // 远程攻击1
-    AttackRange2, // 远程攻击2
-    AttackRange3, // 远程攻击3
-    Special, // 特殊攻击
-    Struck, // 被击动作
-    Harvest, // 挖矿展示
-    Spell, // 施法动作
-    Die, // 死亡动作
-    Dead, // 死后尸体
-    Skeleton, // 挖后尸骸
-    Show, // 石化苏醒
-    Hide, // 切换LIB
-    Stoned, // 石化状态
-    Appear, // 召唤初现
-    Revive, // 复活动作
-    SitDown, // 坐下动作
-    Mine, // 挖矿动作
-    Sneek, // 刺客潜行
-    DashAttack, // 刺客冲击
-    Lunge, // 刺客步刺
+    站立动作,
+    行走动作,
+    跑步动作,
+    推开动作,
+    左冲动作,
+    右冲动作,
+    冲击失败,
+    站立姿势,
+    站立姿势2,
+    近距攻击1,
+    近距攻击2,
+    近距攻击3,
+    近距攻击4,
+    近距攻击5,
+    远程攻击1,
+    远程攻击2,
+    远程攻击3,
+    特殊攻击,
+    被击动作,
+    挖矿展示,
+    施法动作,
+    死亡动作,
+    死后尸体,
+    挖后尸骸,
+    石化苏醒,
+    切换LIB,
+    石化状态,
+    召唤初现,
+    复活动作,
+    坐下动作,
+    挖矿动作,
+    刺客潜行,
+    刺客冲击,
+    刺客步刺,
 
-    WalkingBow, // 弓箭行走
-    RunningBow, // 弓箭奔跑
-    Jump, // 弓箭跳跃
+    弓箭行走,
+    弓箭奔跑,
+    弓箭跳跃,
 
-    MountStanding, // 坐骑站立
-    MountWalking, // 坐骑行走
-    MountRunning, // 坐骑奔跑
-    MountStruck, // 坐骑被击
-    MountAttack, // 坐骑攻击
+    坐骑站立,
+    坐骑行走,
+    坐骑奔跑,
+    坐骑被击,
+    坐骑攻击,
 
-    FishingCast, // 钓鱼抛竿
-    FishingWait, // 钓鱼等待
-    FishingReel // 钓鱼收线
+    钓鱼抛竿,
+    钓鱼等待,
+    钓鱼收线,
 }
 
 public enum CellAttribute : byte
@@ -831,11 +833,11 @@ public enum MirGender : byte
 
 public enum MirClass : byte
 {
-    Warrior = 0,
-    Wizard = 1,
-    Taoist = 2,
-    Assassin = 3,
-    Archer = 4 
+    战士 = 0,
+    法师 = 1,
+    道士 = 2,
+    刺客 = 3,
+    弓箭 = 4
 }
 
 public enum MirDirection : byte
@@ -921,11 +923,11 @@ public enum ItemType : byte
     鱼 = 33,
     任务物品 = 34,
     觉醒物品 = 35,
-    宠物 = 36,
+    灵物 = 36,
     时装 = 37,
     装饰 = 38,
     镶嵌宝石 = 39,
-    宠物蛋 = 40,
+    怪物蛋 = 40,
     攻城弹药 = 41, //TODO
     英雄封印 = 42,
     // 攻击型绝技 = 43,
@@ -1151,8 +1153,8 @@ public enum ItemSet : byte
     青宝套装 = 32,
     鏃未套装 = 38,
     青玉套装H = 39,
-    // 双戒套装 = 40,
-    // 昆仑套装 = 41
+    双戒套装 = 40,
+    昆仑套装 = 41
 }
 
 public enum Spell : byte
@@ -1177,11 +1179,11 @@ public enum Spell : byte
     SlashingBurst = 15, // 日闪
     Fury = 16, // 血龙剑法
     ImmortalSkin = 17, // 金刚不坏
-    EntrapmentRare = 18, // 捕绳剑-秘籍
-    ImmortalSkinRare = 19, // 金刚不坏-秘籍
-    LionRoarRare = 20, // 狮子吼-秘籍
+    EntrapmentRare = 18, // 捕绳剑秘笈
+    ImmortalSkinRare = 19, // 金刚不坏秘笈
+    LionRoarRare = 20, // 狮子吼秘笈
     DimensionalSword = 21, // 时空剑
-    DimensionalSwordRare = 22, // 时空剑-秘籍
+    DimensionalSwordRare = 22, // 时空剑秘笈
 
     //Wizard
     FireBall = 31, // 火球术
@@ -1210,8 +1212,8 @@ public enum Spell : byte
     FastMove = 54,
     StormEscape = 55, // 雷仙风
     HeavenlySecrets = 56, // 天上秘术
-    GreatFireBallRare = 57, // 大火球-秘籍
-    StormEscapeRare = 58, // 雷仙风-秘籍
+    GreatFireBallRare = 57, // 大火球秘笈
+    StormEscapeRare = 58, // 雷仙风秘笈
 
     //Taoist
     Healing = 61, // 治愈术
@@ -1239,11 +1241,11 @@ public enum Spell : byte
     EnergyShield = 84, // 先天气功
     PetEnhancer = 85, // 血龙兽
     HealingCircle = 86, // 阴阳五行阵
-    HealingRare = 87, // 治愈术-秘籍
-    HealingcircleRare = 88, // 阴阳五行阵-秘籍
-    PetEnhancerRare = 89, // 血龙兽-秘籍
+    HealingRare = 87, // 治愈术秘笈
+    HealingcircleRare = 88, // 阴阳五行阵秘笈
+    PetEnhancerRare = 89, // 血龙兽秘笈
     MultipleEffects = 90, // 万效符
-    MultipleEffectsRare = 91, // 万效符-秘籍
+    MultipleEffectsRare = 91, // 万效符秘笈
 
     //Assassin
     FatalSword = 100, // 绝命剑法
@@ -1284,7 +1286,7 @@ public enum Spell : byte
     CrippleShot = 137, // 邪爆闪
     SummonSnakes = 138, // 蛇柱阱
     NapalmShot = 139, // 血龙闪
-    OneWithNature = 140, // 血龙闪-秘籍
+    OneWithNature = 140, // 血龙闪秘笈
     MentalState = 141, // 精神状态
 
     //Custom
@@ -1322,12 +1324,14 @@ public enum SpellEffect : byte
     FatalSword,
     Teleport,
     Healing,
+    HealingRare,
     RedMoonEvil,
     TwinDrakeBlade,
     MagicShieldUp,
     MagicShieldDown,
     GreatFoxSpirit,
     Entrapment,
+    EntrapmentRare,
     Reflect,
     Critical,
     Mine,
@@ -1342,6 +1346,7 @@ public enum SpellEffect : byte
     AwakeningMiss,
     AwakeningHit,
     StormEscape,
+    StormEscapeRare,
     TurtleKing,
     Behemoth,
     Stunned,
@@ -1352,7 +1357,12 @@ public enum SpellEffect : byte
     FlamingMutantWeb,
     FurbolgWarriorCritical,
     Tester,
-    MoonMist
+	MoonMist,
+    HealingcircleRare,
+    HealingcircleRare1,
+    BloodthirstySpike,
+    GroundBurstIce,
+    MirEmperor,
 }
 
 
@@ -1361,31 +1371,31 @@ public enum BuffType : byte
     None = 0,
 
     //Magics
-    TemporalFlux,
-    Hiding,
-    Haste,
-    SwiftFeet,
-    Fury,
-    SoulShield,
-    BlessedArmour,
-    LightBody,
-    UltimateEnhancer,
-    ProtectionField,
-    Rage,
-    Curse,
-    MoonLight,
-    DarkBody,
-    Concentration,
-    VampireShot,
-    PoisonShot,
-    CounterAttack,
-    MentalState,
-    EnergyShield,
-    MagicBooster,
-    PetEnhancer,
-    ImmortalSkin,
-    MagicShield,
-    ElementalBarrier,
+    时间之殇,
+    隐身术,
+    体迅风,
+    轻身步,
+    血龙剑法,
+    幽灵盾,
+    神圣战甲术,
+    风身术,
+    无极真气,
+    护身气幕,
+    剑气爆,
+    诅咒术,
+    月影术,
+    烈火身,
+    气流术,
+    吸血地闪,
+    毒魔闪,
+    天务,
+    精神状态,
+    先天气功,
+    深延术,
+    血龙兽,
+    金刚不坏,
+    魔法盾,
+    金刚术,
 
     //Monster
     HornedArcherBuff = 50,
@@ -1400,10 +1410,10 @@ public enum BuffType : byte
     //Special
     GameMaster = 100,
     General,
-    Exp,
-    Drop,
+    获取经验提升,
+    物品掉落提升,
     Gold,
-    BagWeight,
+    背包负重提升,
     Transform,
     Lover,
     Mentee,
@@ -1416,9 +1426,9 @@ public enum BuffType : byte
     Newbie,
 
     //Stats
-    Impact = 200,
-    Magic,
-    Taoist,
+    攻击力提升 = 200,
+    魔法力提升,
+    道术力提升,
     Storm,
     HealthAid,
     ManaAid,
@@ -1447,7 +1457,9 @@ public enum BuffStackType : byte
     StackStatAndDuration,
     Infinite,
     ResetStat,
-    ResetStatAndDuration
+    ResetStatAndDuration,
+    AttrStackStat,
+    AttrStackStatAndDuration
 }
 
 public enum DefenceType : byte

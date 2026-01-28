@@ -151,20 +151,20 @@ namespace Client.MirObjects
             SetLibraries();
             SetEffects();
 
-            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.HPRatePercent]) / 100;
-            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.MPRatePercent]) / 100;
-            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.MaxACRatePercent]) / 100;
-            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.MaxMACRatePercent]) / 100;
+            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
+            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
+            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.强化物理防御]) / 100;
+            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.强化魔法防御]) / 100;
 
-            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.MaxDCRatePercent]) / 100;
-            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.MaxMCRatePercent]) / 100;
-            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.MaxSCRatePercent]) / 100;
-            Stats[Stat.AttackSpeed] += (Stats[Stat.AttackSpeed] * Stats[Stat.AttackSpeedRatePercent]) / 100;
+            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.物理攻击强化]) / 100;
+            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.魔法攻击强化]) / 100;
+            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.道术攻击强化]) / 100;
+            Stats[Stat.攻击速度] += (Stats[Stat.攻击速度] * Stats[Stat.攻击速度强化]) / 100;
 
             RefreshStatCaps();
 
             if (this == User && Light < 3) Light = 3;
-            AttackSpeed = 1400 - ((Stats[Stat.AttackSpeed] * 60) + Math.Min(370, (Level * 14)));
+            AttackSpeed = 1400 - ((Stats[Stat.攻击速度] * 60) + Math.Min(370, (Level * 14)));
             if (AttackSpeed < 550) AttackSpeed = 550;
 
             PercentHealth = (byte)(HP / (float)Stats[Stat.HP] * 100);
@@ -300,9 +300,9 @@ namespace Client.MirObjects
 
             if (ItemMode.HasFlag(SpecialItemMode.Muscle))
             {
-                Stats[Stat.BagWeight] = Stats[Stat.BagWeight] * 2;
-                Stats[Stat.WearWeight] = Stats[Stat.WearWeight] * 2;
-                Stats[Stat.HandWeight] = Stats[Stat.HandWeight] * 2;
+                Stats[Stat.背包负重] = Stats[Stat.背包负重] * 2;
+                Stats[Stat.装备负重] = Stats[Stat.装备负重] * 2;
+                Stats[Stat.腕力负重] = Stats[Stat.腕力负重] * 2;
             }
         }
 
@@ -358,7 +358,7 @@ namespace Client.MirObjects
                 {
                     if (!hasSmashSetBonus)
                     {
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         hasSmashSetBonus = true;
                     }
                 }
@@ -367,7 +367,7 @@ namespace Client.MirObjects
                 {
                     if (!hasPuritySetBonus)
                     {
-                        Stats[Stat.Holy] += 3;
+                        Stats[Stat.神圣] += 3;
                         hasPuritySetBonus = true;
                     }
                 }
@@ -376,8 +376,8 @@ namespace Client.MirObjects
                 {
                     if (!hasHwanDevilSetBonus)
                     {
-                        Stats[Stat.WearWeight] += 5;
-                        Stats[Stat.BagWeight] += 20;
+                        Stats[Stat.装备负重] += 5;
+                        Stats[Stat.背包负重] += 20;
                         hasHwanDevilSetBonus = true;
                     }
                 }
@@ -401,7 +401,7 @@ namespace Client.MirObjects
                         Stats[Stat.MP] += 30;
                         break;
                     case ItemSet.赤兰套装:
-                        Stats[Stat.Accuracy] += 2;
+                        Stats[Stat.准确] += 2;
                         break;
                     case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
@@ -427,7 +427,7 @@ namespace Client.MirObjects
                     case ItemSet.祈祷套装:
                         Stats[Stat.MinDC] += 2;
                         Stats[Stat.MaxDC] += 5;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                     case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
@@ -439,7 +439,7 @@ namespace Client.MirObjects
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
                     case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
@@ -448,7 +448,7 @@ namespace Client.MirObjects
                     case ItemSet.白金套装H:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                     case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
@@ -457,7 +457,7 @@ namespace Client.MirObjects
                     case ItemSet.红玉套装H:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
-                        Stats[Stat.Agility] += 2;
+                        Stats[Stat.敏捷] += 2;
                         break;
                     case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
@@ -468,62 +468,62 @@ namespace Client.MirObjects
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
                     case ItemSet.贵人战套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 25;
+                        Stats[Stat.背包负重] += 25;
                         break;
                     case ItemSet.贵人法套:
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.贵人道套:
                         Stats[Stat.MaxSC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.贵人刺套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 20;
+                        Stats[Stat.背包负重] += 20;
                         break;
                     case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
                     case ItemSet.血龙套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
                     case ItemSet.监视套装:
-                        Stats[Stat.MagicResist] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                        Stats[Stat.魔法躲避] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
                     case ItemSet.暴压套装:
                         Stats[Stat.MaxAC] += 1;
-                        Stats[Stat.Agility] += 1;
+                        Stats[Stat.敏捷] += 1;
                         break;
                     case ItemSet.青玉套装:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.HandWeight] += 1;
-                        Stats[Stat.WearWeight] += 2;
+                        Stats[Stat.腕力负重] += 1;
+                        Stats[Stat.装备负重] += 2;
                         break;
                     case ItemSet.青玉套装H:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxMC] += 2;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.准确] += 1;
                         Stats[Stat.HP] += 50;
                         break;
                     case ItemSet.鏃未套装:
                         Stats[Stat.MP] += 25;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                 }
             }
@@ -535,13 +535,13 @@ namespace Client.MirObjects
             {
                 Stats[Stat.MaxAC] += 1;
                 Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.BagWeight] += 70;
-                Stats[Stat.Luck] += 2;
-                Stats[Stat.AttackSpeed] += 2;
+                Stats[Stat.背包负重] += 70;
+                Stats[Stat.幸运] += 2;
+                Stats[Stat.攻击速度] += 2;
                 Stats[Stat.HP] += 70;
                 Stats[Stat.MP] += 80;
-                Stats[Stat.MagicResist] += 6;
-                Stats[Stat.PoisonResist] += 6;
+                Stats[Stat.魔法躲避] += 6;
+                Stats[Stat.毒物躲避] += 6;
             }
 
             if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指))
@@ -558,29 +558,29 @@ namespace Client.MirObjects
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 30;
-                Stats[Stat.WearWeight] += 17;
+                Stats[Stat.背包负重] += 30;
+                Stats[Stat.装备负重] += 17;
             }
             if (MirSet.Contains(EquipmentSlot.左戒指) && MirSet.Contains(EquipmentSlot.右戒指) && MirSet.Contains(EquipmentSlot.左手镯) && MirSet.Contains(EquipmentSlot.右手镯) && MirSet.Contains(EquipmentSlot.项链))
             {
                 Stats[Stat.MaxMAC] += 1;
                 Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 20;
-                Stats[Stat.WearWeight] += 10;
+                Stats[Stat.背包负重] += 20;
+                Stats[Stat.装备负重] += 10;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
                 Stats[Stat.MaxDC] += 2;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.Agility] += 1;
+                Stats[Stat.敏捷] += 1;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
                 Stats[Stat.MaxDC] += 1;
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
+                Stats[Stat.腕力负重] += 17;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带) && MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.武器))
             {
@@ -590,7 +590,7 @@ namespace Client.MirObjects
                 Stats[Stat.MaxMC] += 1;
                 Stats[Stat.MinSC] += 1;
                 Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
+                Stats[Stat.腕力负重] += 17;
             }
         }
 
@@ -604,17 +604,17 @@ namespace Client.MirObjects
                 switch (magic.Spell)
                 {
                     case Spell.Fencing:
-                        Stats[Stat.Accuracy] += magic.Level * 3;
+                        Stats[Stat.准确] += magic.Level * 3;
                         //Stats[Stat.MaxAC] += (magic.Level + 1) * 3;
                         break;
                     case Spell.Slaying:
                     // case Spell.FatalSword:
-                        Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.准确] += magic.Level;
                         Stats[Stat.MaxDC] += slayingLvPlus[magic.Level];
                         break;
                     case Spell.SpiritSword:
-                        Stats[Stat.Accuracy] += spiritSwordLvPlus[magic.Level];
-                        // Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.准确] += spiritSwordLvPlus[magic.Level];
+                        // Stats[Stat.准确] += magic.Level;
                         // Stats[Stat.MaxDC] += (int)(Stats[Stat.MaxSC] * (magic.Level + 1) * 0.1F);
                         break;
                 }
@@ -634,7 +634,7 @@ namespace Client.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.SwiftFeet:
+                    case BuffType.轻身步:
                         Sprint = true;
                         break;
                     case BuffType.Transform:
@@ -788,7 +788,7 @@ namespace Client.MirObjects
         {
             if (QueuedAction != null && !GameScene.Observing)
             {
-                if ((ActionFeed.Count == 0) || (ActionFeed.Count == 1 && NextAction.Action == MirAction.Stance))
+                if ((ActionFeed.Count == 0) || (ActionFeed.Count == 1 && NextAction.Action == MirAction.站立姿势))
                 {
                     ActionFeed.Clear();
                     ActionFeed.Add(QueuedAction);
@@ -805,7 +805,7 @@ namespace Client.MirObjects
             base.ProcessFrames();
 
             if (clear) QueuedAction = null;
-            if ((CurrentAction == MirAction.Standing || CurrentAction == MirAction.MountStanding || CurrentAction == MirAction.Stance || CurrentAction == MirAction.Stance2 || CurrentAction == MirAction.DashFail) && (QueuedAction != null || NextAction != null))
+            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.站立姿势2 || CurrentAction == MirAction.冲击失败) && (QueuedAction != null || NextAction != null))
                 SetAction();
         }
 

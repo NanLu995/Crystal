@@ -357,23 +357,23 @@ namespace Server.MirDatabase
 
             switch (player.Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     if (!RequiredClass.HasFlag(RequiredClass.战士))
                         return false;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     if (!RequiredClass.HasFlag(RequiredClass.法师))
                         return false;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     if (!RequiredClass.HasFlag(RequiredClass.道士))
                         return false;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     if (!RequiredClass.HasFlag(RequiredClass.刺客))
                         return false;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     if (!RequiredClass.HasFlag(RequiredClass.弓箭))
                         return false;
                     break;

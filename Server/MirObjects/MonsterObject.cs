@@ -842,7 +842,7 @@ namespace Server.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.SwiftFeet:
+                    case BuffType.轻身步:
                         MoveSpeed = (ushort)Math.Max(ushort.MinValue, MoveSpeed + 100);
                         break;
                 }
@@ -1096,8 +1096,8 @@ namespace Server.MirObjects
                 return;
 
             MonsterRarityProfile profile = GetRarityProfile();
-            int ownerItemBonus = EXPOwner?.Stats[Stat.ItemDropRatePercent] ?? 0;
-            int ownerGoldBonus = EXPOwner?.Stats[Stat.GoldDropRatePercent] ?? 0;
+            int ownerItemBonus = EXPOwner?.Stats[Stat.物品掉落数率] ?? 0;
+            int ownerGoldBonus = EXPOwner?.Stats[Stat.金币收益数率] ?? 0;
             int totalItemBonus = ownerItemBonus + profile.ItemDropBonusPercent;
             int totalGoldBonus = ownerGoldBonus + profile.GoldDropBonusPercent;
 
@@ -1637,16 +1637,16 @@ namespace Server.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.Hiding:
-                    case BuffType.MoonLight:
-                    case BuffType.DarkBody:
-                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.Hiding, BuffType.MoonLight, BuffType.DarkBody))
+                    case BuffType.隐身术:
+                    case BuffType.月影术:
+                    case BuffType.烈火身:
+                        if (!HasAnyBuffs(buff.Type, BuffType.ClearRing, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
                         }
-                        if (buff.Type == BuffType.MoonLight || buff.Type == BuffType.DarkBody)
+                        if (buff.Type == BuffType.月影术 || buff.Type == BuffType.烈火身)
                         {
-                            if (!HasAnyBuffs(buff.Type, BuffType.MoonLight, BuffType.DarkBody))
+                            if (!HasAnyBuffs(buff.Type, BuffType.月影术, BuffType.烈火身))
                             {
                                 Sneaking = false;
                             }
@@ -2121,7 +2121,7 @@ namespace Server.MirObjects
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.Hiding);
+                RemoveBuff(BuffType.隐身术);
             }
 
             CellTime = Envir.Time + 500;
@@ -2583,7 +2583,7 @@ namespace Server.MirObjects
 
             if (damageWeapon)
                 attacker.DamageWeapon();
-            damage += attacker.Stats[Stat.AttackBonus];
+            damage += attacker.Stats[Stat.武器增伤];
 
             if (armour >= damage)
             {
@@ -2591,10 +2591,10 @@ namespace Server.MirObjects
                 return 0;
             }
 
-            if (Envir.Random.Next(100) < (attacker.Stats[Stat.CriticalRate] * Settings.CriticalRateWeight))
+            if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击率] * Settings.CriticalRateWeight))
             {
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Critical });
-                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (((double)attacker.Stats[Stat.CriticalDamage] / (double)Settings.CriticalDamageWeight) * 10)));
+                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (((double)attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight) * 10)));
                 BroadcastDamageIndicator(DamageType.Critical);
             }
 
@@ -2638,9 +2638,9 @@ namespace Server.MirObjects
 
             Broadcast(new S.ObjectStruck { ObjectID = ObjectID, AttackerID = attacker.ObjectID, Direction = Direction, Location = CurrentLocation });
 
-            if (attacker.Stats[Stat.HPDrainRatePercent] > 0 && damageWeapon)
+            if (attacker.Stats[Stat.吸血数率] > 0 && damageWeapon)
             {
-                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.HPDrainRatePercent]);
+                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.吸血数率]);
                 if (attacker.HpDrain > 2)
                 {
                     int hpGain = (int)Math.Floor(attacker.HpDrain);
@@ -2660,7 +2660,7 @@ namespace Server.MirObjects
                     if (player != null && player.CurrentMap == attacker.CurrentMap && Functions.InRange(player.CurrentLocation, attacker.CurrentLocation, Globals.DataRange) && !player.Dead)
                     {
                         if (GroupMembers != null && GroupMembers.Contains(player))
-                            damage += (int)Math.Round((double)(damage * attacker.Stats[Stat.MentorDamageRatePercent]) / 100);
+                            damage += (int)Math.Round((double)(damage * attacker.Stats[Stat.师徒专享伤害数率]) / 100);
                     }
                 }
             }
@@ -2826,7 +2826,7 @@ namespace Server.MirObjects
             {
                 var stats = new Stats
                 {
-                    [Stat.Accuracy] = p.Value * -1
+                    [Stat.准确] = p.Value * -1
                 };
 
                 AddBuff(BuffType.Blindness, Caster, (int)(p.Duration * p.TickSpeed), stats);
@@ -3528,7 +3528,7 @@ namespace Server.MirObjects
         {
             int value = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
 
-            if (Envir.Random.Next(Settings.PoisonResistWeight) >= target.Stats[Stat.PoisonResist])
+            if (Envir.Random.Next(Settings.PoisonResistWeight) >= target.Stats[Stat.毒物躲避])
             {
                 if (Envir.Random.Next(chanceToPoison) == 0)
                 {

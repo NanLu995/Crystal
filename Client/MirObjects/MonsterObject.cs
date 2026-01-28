@@ -210,9 +210,9 @@ namespace Client.MirObjects
             }
 
             if (Skeleton)
-                ActionFeed.Add(new QueuedAction { Action = MirAction.Skeleton, Direction = Direction, Location = CurrentLocation });
+                ActionFeed.Add(new QueuedAction { Action = MirAction.挖后尸骸, Direction = Direction, Location = CurrentLocation });
             else if (Dead)
-                ActionFeed.Add(new QueuedAction { Action = MirAction.Dead, Direction = Direction, Location = CurrentLocation });
+                ActionFeed.Add(new QueuedAction { Action = MirAction.死后尸体, Direction = Direction, Location = CurrentLocation });
 
             BaseSound = (ushort)BaseImage * 10;
 
@@ -229,7 +229,7 @@ namespace Client.MirObjects
                 case Monster.LightningBead:
                 case Monster.HealingBead:
                 case Monster.PowerUpBead:
-                    if (!info.Extra) ActionFeed.Add(new QueuedAction { Action = MirAction.Appear, Direction = Direction, Location = CurrentLocation });
+                    if (!info.Extra) ActionFeed.Add(new QueuedAction { Action = MirAction.召唤初现, Direction = Direction, Location = CurrentLocation });
                     break;
                 case Monster.FrostTiger:
                 case Monster.FlameTiger:
@@ -281,7 +281,7 @@ namespace Client.MirObjects
             SetAction();
             SetCurrentEffects();
 
-            if (CurrentAction == MirAction.Standing)
+            if (CurrentAction == MirAction.站立动作)
             {
                 PlayAppearSound();
 
@@ -290,7 +290,7 @@ namespace Client.MirObjects
                     FrameIndex = CMain.Random.Next(Frame.Count);
                 }
             }
-            else if (CurrentAction == MirAction.SitDown)
+            else if (CurrentAction == MirAction.坐下动作)
             {
                 PlayAppearSound();
             }
@@ -363,30 +363,30 @@ namespace Client.MirObjects
 
             switch (CurrentAction)
             {
-                case MirAction.Walking:
-                case MirAction.Running:
-                case MirAction.Pushed:
-                case MirAction.Jump:
-                case MirAction.DashL:
-                case MirAction.DashR:
-                case MirAction.DashAttack:
+                case MirAction.行走动作:
+                case MirAction.跑步动作:
+                case MirAction.推开动作:
+                case MirAction.弓箭跳跃:
+                case MirAction.左冲动作:
+                case MirAction.右冲动作:
+                case MirAction.刺客冲击:
                     if (Frame == null)
                     {
                         OffSetMove = Point.Empty;
                         Movement = CurrentLocation;
                         break;
                     }
-                    int i = CurrentAction == MirAction.Running ? 2 : 1;
+                    int i = CurrentAction == MirAction.跑步动作 ? 2 : 1;
 
-                    if (CurrentAction == MirAction.Jump) i = -JumpDistance;
-                    if (CurrentAction == MirAction.DashAttack) i = JumpDistance;
+                    if (CurrentAction == MirAction.弓箭跳跃) i = -JumpDistance;
+                    if (CurrentAction == MirAction.刺客冲击) i = JumpDistance;
 
-                    Movement = Functions.PointMove(CurrentLocation, Direction, CurrentAction == MirAction.Pushed ? 0 : -i);
+                    Movement = Functions.PointMove(CurrentLocation, Direction, CurrentAction == MirAction.推开动作 ? 0 : -i);
 
                     int count = Frame.Count;
                     int index = FrameIndex;
 
-                    if (CurrentAction == MirAction.DashR || CurrentAction == MirAction.DashL)
+                    if (CurrentAction == MirAction.右冲动作 || CurrentAction == MirAction.左冲动作)
                     {
                         count = 3;
                         index %= 3;
@@ -474,9 +474,9 @@ namespace Client.MirObjects
             {
                 switch (NextAction.Action)
                 {
-                    case MirAction.Walking:
-                    case MirAction.Running:
-                    case MirAction.Pushed:
+                    case MirAction.行走动作:
+                    case MirAction.跑步动作:
+                    case MirAction.推开动作:
                         return false;
                 }
             }
@@ -505,8 +505,8 @@ namespace Client.MirObjects
 
             if (ActionFeed.Count == 0)
             {
-                CurrentAction = Stoned ? MirAction.Stoned : MirAction.Standing;
-                if (CurrentAction == MirAction.Standing) CurrentAction = SitDown ? MirAction.SitDown : MirAction.Standing;
+                CurrentAction = Stoned ? MirAction.石化状态 : MirAction.站立动作;
+                if (CurrentAction == MirAction.站立动作) CurrentAction = SitDown ? MirAction.坐下动作 : MirAction.站立动作;
 
                 Frames.TryGetValue(CurrentAction, out Frame);
 
@@ -536,14 +536,14 @@ namespace Client.MirObjects
                 Point temp;
                 switch (CurrentAction)
                 {
-                    case MirAction.Walking:
-                    case MirAction.Running:
-                    case MirAction.Pushed:
-                        int i = CurrentAction == MirAction.Running ? 2 : 1;
-                        temp = Functions.PointMove(CurrentLocation, Direction, CurrentAction == MirAction.Pushed ? 0 : -i);
+                    case MirAction.行走动作:
+                    case MirAction.跑步动作:
+                    case MirAction.推开动作:
+                        int i = CurrentAction == MirAction.跑步动作 ? 2 : 1;
+                        temp = Functions.PointMove(CurrentLocation, Direction, CurrentAction == MirAction.推开动作 ? 0 : -i);
                         break;
-                    case MirAction.Jump:
-                    case MirAction.DashAttack:
+                    case MirAction.弓箭跳跃:
+                    case MirAction.刺客冲击:
                         temp = Functions.PointMove(CurrentLocation, Direction, JumpDistance);
                         break;
                     default:
@@ -563,36 +563,36 @@ namespace Client.MirObjects
 
                 switch (CurrentAction)
                 {
-                    case MirAction.Pushed:
-                        Frames.TryGetValue(MirAction.Walking, out Frame);
+                    case MirAction.推开动作:
+                        Frames.TryGetValue(MirAction.行走动作, out Frame);
                         break;
-                    case MirAction.Jump:
-                        Frames.TryGetValue(MirAction.Jump, out Frame);
+                    case MirAction.弓箭跳跃:
+                        Frames.TryGetValue(MirAction.弓箭跳跃, out Frame);
                         break;
-                    case MirAction.DashAttack:
-                        Frames.TryGetValue(MirAction.DashAttack, out Frame);
+                    case MirAction.刺客冲击:
+                        Frames.TryGetValue(MirAction.刺客冲击, out Frame);
                         break;
-                    case MirAction.AttackRange1:
+                    case MirAction.远程攻击1:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
-                            Frames.TryGetValue(MirAction.Attack1, out Frame);
+                            Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                         break;
-                    case MirAction.AttackRange2:
+                    case MirAction.远程攻击2:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
-                            Frames.TryGetValue(MirAction.Attack2, out Frame);
+                            Frames.TryGetValue(MirAction.近距攻击2, out Frame);
                         break;
-                    case MirAction.AttackRange3:
+                    case MirAction.远程攻击3:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
-                            Frames.TryGetValue(MirAction.Attack3, out Frame);
+                            Frames.TryGetValue(MirAction.近距攻击3, out Frame);
                         break;
-                    case MirAction.Special:
+                    case MirAction.特殊攻击:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
-                            Frames.TryGetValue(MirAction.Attack1, out Frame);
+                            Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                         break;
-                    case MirAction.Skeleton:
+                    case MirAction.挖后尸骸:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
-                            Frames.TryGetValue(MirAction.Dead, out Frame);
+                            Frames.TryGetValue(MirAction.死后尸体, out Frame);
                         break;
-                    case MirAction.Hide:
+                    case MirAction.切换LIB:
                         switch (BaseImage)
                         {
                             case Monster.Shinsu1:
@@ -607,7 +607,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Dead:
+                    case MirAction.死后尸体:
                         switch (BaseImage)
                         {
                             case Monster.Shinsu:
@@ -645,7 +645,7 @@ namespace Client.MirObjects
 
                 switch (CurrentAction)
                 {
-                    case MirAction.Appear:
+                    case MirAction.召唤初现:
                         PlaySummonSound();
                         switch (BaseImage)
                         {
@@ -657,14 +657,14 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Show:
+                    case MirAction.石化苏醒:
                         PlayPopupSound();
                         break;
-                    case MirAction.Pushed:
+                    case MirAction.推开动作:
                         FrameIndex = Frame.Count - 1;
                         GameScene.Scene.Redraw();
                         break;
-                    case MirAction.Jump:
+                    case MirAction.弓箭跳跃:
                         PlayJumpSound();
                         switch (BaseImage)
                         {
@@ -681,17 +681,17 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.DashAttack:
+                    case MirAction.刺客冲击:
                         PlayDashSound();
                         break;
-                    case MirAction.Walking:
+                    case MirAction.行走动作:
                         GameScene.Scene.Redraw();
                         break;
-                    case MirAction.Running:
+                    case MirAction.跑步动作:
                         PlayRunSound();
                         GameScene.Scene.Redraw();
                         break;
-                    case MirAction.Attack1:
+                    case MirAction.近距攻击1:
                         PlayAttackSound();
                         CurrentActionLevel = (byte)action.Params[1];
                         switch (BaseImage)
@@ -784,7 +784,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Attack2:
+                    case MirAction.近距攻击2:
                         PlaySecondAttackSound();
                         CurrentActionLevel = (byte)action.Params[1];
                         switch (BaseImage)
@@ -854,7 +854,7 @@ namespace Client.MirObjects
                             PlayPetSound();
                         }
                         break;
-                    case MirAction.Attack3:
+                    case MirAction.近距攻击3:
                         PlayThirdAttackSound();
                         CurrentActionLevel = (byte)action.Params[1];
                         switch (BaseImage)
@@ -886,7 +886,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Attack4:
+                    case MirAction.近距攻击4:
                         PlayFourthAttackSound();
                         CurrentActionLevel = (byte)action.Params[1];
                         switch (BaseImage)
@@ -896,11 +896,11 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Attack5:
+                    case MirAction.近距攻击5:
                         PlayFithAttackSound();
                         CurrentActionLevel = (byte)action.Params[1];
                         break;
-                    case MirAction.AttackRange1:
+                    case MirAction.远程攻击1:
                         PlayRangeSound();
                         TargetID = (uint)action.Params[0];
                         CurrentActionLevel = (byte)action.Params[4];
@@ -1002,7 +1002,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.AttackRange2:
+                    case MirAction.远程攻击2:
                         PlaySecondRangeSound();
                         TargetID = (uint)action.Params[0];
                         CurrentActionLevel = (byte)action.Params[4];
@@ -1033,7 +1033,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.AttackRange3:
+                    case MirAction.远程攻击3:
                         PlayThirdRangeSound();
                         TargetID = (uint)action.Params[0];
                         CurrentActionLevel = (byte)action.Params[4];
@@ -1044,7 +1044,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Struck:
+                    case MirAction.被击动作:
                         uint attackerID = (uint)action.Params[0];
                         StruckWeapon = -2;
                         if (action.Params.Count > 1)
@@ -1057,7 +1057,7 @@ namespace Client.MirObjects
                             {
                                 PlayerObject player = (PlayerObject)ob;
                                 StruckWeapon = player.Weapon;
-                                if (player.Class == MirClass.Assassin && StruckWeapon > -1)
+                                if (player.Class == MirClass.刺客 && StruckWeapon > -1)
                                     StruckWeapon = 1;
                             }
                         }
@@ -1071,7 +1071,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.Die:
+                    case MirAction.死亡动作:
                         switch (BaseImage)
                         {
                             case Monster.ManectricKing:
@@ -1197,7 +1197,7 @@ namespace Client.MirObjects
                         }
                         PlayDieSound();
                         break;
-                    case MirAction.Dead:
+                    case MirAction.死后尸体:
                         GameScene.Scene.Redraw();
                         GameScene.Scene.MapControl.SortObject(this);
                         if (MouseObject == this) MouseObjectID = 0;
@@ -1260,7 +1260,7 @@ namespace Client.MirObjects
 
             switch (CurrentAction)
             {
-                case MirAction.Walking:
+                case MirAction.行走动作:
                     if (!GameScene.CanMove) return;
 
                     GameScene.Scene.MapControl.TextureValid = false;
@@ -1285,7 +1285,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Running:
+                case MirAction.跑步动作:
                     if (!GameScene.CanMove) return;
 
                     GameScene.Scene.MapControl.TextureValid = false;
@@ -1298,7 +1298,7 @@ namespace Client.MirObjects
                         SetAction();
                     }
                     break;
-                case MirAction.Pushed:
+                case MirAction.推开动作:
                     if (!GameScene.CanMove) return;
 
                     GameScene.Scene.MapControl.TextureValid = false;
@@ -1311,7 +1311,7 @@ namespace Client.MirObjects
                         SetAction();
                     }
                     break;
-                case MirAction.Jump:
+                case MirAction.弓箭跳跃:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1329,7 +1329,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.DashAttack:
+                case MirAction.刺客冲击:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1360,7 +1360,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Show:
+                case MirAction.石化苏醒:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1420,7 +1420,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Hide:
+                case MirAction.切换LIB:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1470,9 +1470,9 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Appear:
-                case MirAction.Standing:
-                case MirAction.Stoned:
+                case MirAction.召唤初现:
+                case MirAction.站立动作:
+                case MirAction.石化状态:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1481,7 +1481,7 @@ namespace Client.MirObjects
 
                         if (UpdateFrame() >= Frame.Count)
                         {
-                            if (CurrentAction == MirAction.Standing)
+                            if (CurrentAction == MirAction.站立动作)
                             {
                                 switch (BaseImage)
                                 {
@@ -1506,7 +1506,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Attack1:
+                case MirAction.近距攻击1:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1822,7 +1822,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.SitDown:
+                case MirAction.坐下动作:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1840,7 +1840,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Attack2:
+                case MirAction.近距攻击2:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -2128,7 +2128,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Attack3:
+                case MirAction.近距攻击3:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -2279,7 +2279,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Attack4:
+                case MirAction.近距攻击4:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -2344,7 +2344,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Attack5:
+                case MirAction.近距攻击5:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -2376,7 +2376,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.AttackRange1:
+                case MirAction.远程攻击1:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -2481,7 +2481,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.PurpleFaeFlower], 427, 9, 900, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2500,7 +2500,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Jar2], 752, 8, 500, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2535,7 +2535,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FurbolgGuard], 407, 7, 600, missile.Target));
                                                         SoundManager.PlaySound(BaseSound + 6);
                                                     };
@@ -2642,7 +2642,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WingedOma], 272, 2, 150, missile.Target) { Blend = false });
                                                     };
                                                 }
@@ -2662,7 +2662,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.PoisonHugger], 224, 5, 150, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2682,7 +2682,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WhiteFoxman], 352, 10, 600, missile.Target));
                                                         SoundManager.PlaySound(BaseSound + 6);
                                                     };
@@ -2716,7 +2716,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Dragon, 200, 20, 600, missile.Target));
                                                     };
                                                 }
@@ -2744,7 +2744,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FinialTurtle], 320, 10, 500, missile.Target) { Blend = true });
                                                         SoundManager.PlaySound(20000 + (ushort)Spell.FrostCrunch * 10 + 2);
                                                     };
@@ -2767,7 +2767,7 @@ namespace Client.MirObjects
                                                     {
                                                         missile.Complete += (o, e) =>
                                                         {
-                                                            if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                            if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                             missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WitchDoctor], 318, 10, 600, missile.Target));
                                                             SoundManager.PlaySound(BaseSound + 6);
                                                         };
@@ -2836,7 +2836,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.AncientBringer], 720, 10, 1000, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2848,7 +2848,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RestlessJar], 508, 3, 300, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2922,7 +2922,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.PeacockSpider], 744, 11, 1100, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2959,7 +2959,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.AvengingSpirit], 432, 10, 1000, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -2971,7 +2971,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.AvengingWarrior], 392, 7, 700, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3015,7 +3015,7 @@ namespace Client.MirObjects
                                                         {
                                                             missile.Complete += (o, e) =>
                                                             {
-                                                                if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                                if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                                 missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainArcher], 392, 6, 600, missile.Target));
                                                             };
                                                         }
@@ -3028,7 +3028,7 @@ namespace Client.MirObjects
                                                         {
                                                             missile.Complete += (o, e) =>
                                                             {
-                                                                if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                                if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                                 missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainArcher], 478, 6, 600, missile.Target));
                                                             };
                                                         }
@@ -3062,7 +3062,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.BlackTortoise], 540, 6, 600, missile.Target));
                                                     };
                                                 }
@@ -3085,7 +3085,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedArcher], 408, 6, 500, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3105,7 +3105,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WaterDragon], 896, 9, 900, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3117,7 +3117,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.AntCommander], 480, 3, 300, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3150,7 +3150,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WizardScroll], 380, 8, 800, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3161,7 +3161,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Siege[(ushort)Monster.Catapult - 940], 288, 10, 1000, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3182,7 +3182,7 @@ namespace Client.MirObjects
                                             {
                                                 missile.Complete += (o, e) =>
                                                 {
-                                                    if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                    if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                     missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.OmaCannibal], 456, 7, 700, missile.Target) { Blend = true });
                                                 };
                                             }
@@ -3194,7 +3194,7 @@ namespace Client.MirObjects
                                             {
                                                 missile.Complete += (o, e) =>
                                                 {
-                                                    if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                    if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                     missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.OmaMage], 520, 9, 600, missile.Target) { Blend = true });
                                                 };
                                             }
@@ -3224,7 +3224,7 @@ namespace Client.MirObjects
                                             {
                                                 missile.Complete += (o, e) =>
                                                 {
-                                                    if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                    if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                     missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkSpirit], 608, 10, 1000, missile.Target));
                                                 };
                                             }
@@ -3347,7 +3347,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.AttackRange2:
+                case MirAction.远程攻击2:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3403,7 +3403,7 @@ namespace Client.MirObjects
                                                     {
                                                         missile.Complete += (o, e) =>
                                                         {
-                                                            if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                            if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                             missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FurbolgArcher], 424, 5, 500, missile.Target));
                                                             SoundManager.PlaySound(BaseSound + 7);
                                                         };
@@ -3429,7 +3429,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WhiteFoxman], 362, 15, 1800, missile.Target));
                                                         SoundManager.PlaySound(BaseSound + 7);
                                                     };
@@ -3478,7 +3478,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TucsonGeneral], 736, 9, 900, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3511,7 +3511,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.KingHydrax], 537, 6, 600, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3531,7 +3531,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ColdArcher], 442, 6, 500, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3543,7 +3543,7 @@ namespace Client.MirObjects
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
-                                                        if (missile.Target.CurrentAction == MirAction.Dead) return;
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedArcher], 462, 6, 500, missile.Target) { Blend = true });
                                                     };
                                                 }
@@ -3579,7 +3579,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.AttackRange3:
+                case MirAction.远程攻击3:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3615,7 +3615,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Struck:
+                case MirAction.被击动作:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3634,7 +3634,7 @@ namespace Client.MirObjects
                     }
                     break;
 
-                case MirAction.Die:
+                case MirAction.死亡动作:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3645,7 +3645,7 @@ namespace Client.MirObjects
                         {
                             FrameIndex = Frame.Count - 1;
                             ActionFeed.Clear();
-                            ActionFeed.Add(new QueuedAction { Action = MirAction.Dead, Direction = Direction, Location = CurrentLocation });
+                            ActionFeed.Add(new QueuedAction { Action = MirAction.死后尸体, Direction = Direction, Location = CurrentLocation });
                             SetAction();
                         }
                         else
@@ -3734,7 +3734,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Revive:
+                case MirAction.复活动作:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3745,7 +3745,7 @@ namespace Client.MirObjects
                         {
                             FrameIndex = Frame.Count - 1;
                             ActionFeed.Clear();
-                            ActionFeed.Add(new QueuedAction { Action = MirAction.Standing, Direction = Direction, Location = CurrentLocation });
+                            ActionFeed.Add(new QueuedAction { Action = MirAction.站立动作, Direction = Direction, Location = CurrentLocation });
                             SetAction();
                         }
                         else
@@ -3756,14 +3756,14 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.Dead:
+                case MirAction.死后尸体:
                     break;
 
             }
 
-            if ((CurrentAction == MirAction.Standing || CurrentAction == MirAction.SitDown) && NextAction != null)
+            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐下动作) && NextAction != null)
                 SetAction();
-            else if (CurrentAction == MirAction.Dead && NextAction != null && (NextAction.Action == MirAction.Skeleton || NextAction.Action == MirAction.Revive))
+            else if (CurrentAction == MirAction.死后尸体 && NextAction != null && (NextAction.Action == MirAction.挖后尸骸 || NextAction.Action == MirAction.复活动作))
                 SetAction();
         }
 
@@ -4342,7 +4342,7 @@ namespace Client.MirObjects
                 case Monster.Scarecrow:
                     switch (CurrentAction)
                     {
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.Scarecrow].DrawBlend(224 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4350,7 +4350,7 @@ namespace Client.MirObjects
                 case Monster.CaveMaggot:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 1)
                                 Libraries.Monsters[(ushort)Monster.CaveMaggot].DrawBlend(175 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
                             break;
@@ -4364,7 +4364,7 @@ namespace Client.MirObjects
                 case Monster.BoneWhoo:
                     switch (CurrentAction)
                     {
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.Skeleton].DrawBlend(224 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4372,7 +4372,7 @@ namespace Client.MirObjects
                 case Monster.WoomaTaurus:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.WoomaTaurus].DrawBlend(224 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4380,7 +4380,7 @@ namespace Client.MirObjects
                 case Monster.Dung:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 1)
                                 Libraries.Monsters[(ushort)Monster.Dung].DrawBlend(223 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
                             break;
@@ -4389,7 +4389,7 @@ namespace Client.MirObjects
                 case Monster.WedgeMoth:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.WedgeMoth].DrawBlend(224 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4398,20 +4398,20 @@ namespace Client.MirObjects
                 case Monster.FrozenRedZuma:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.RedThunderZuma].DrawBlend(320 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
-                        case MirAction.Pushed:
+                        case MirAction.行走动作:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.RedThunderZuma].DrawBlend(352 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.RedThunderZuma].DrawBlend(400 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.RedThunderZuma].DrawBlend(448 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.RedThunderZuma].DrawBlend(464 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4419,7 +4419,7 @@ namespace Client.MirObjects
                 case Monster.KingHog:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.KingHog].DrawBlend(224 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4427,7 +4427,7 @@ namespace Client.MirObjects
                 case Monster.DarkDevil:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkDevil].DrawBlend(342 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4435,26 +4435,26 @@ namespace Client.MirObjects
                 case Monster.BoneLord:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(400 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
-                        case MirAction.Pushed:
+                        case MirAction.行走动作:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(432 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(480 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(528 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(576 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(624 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.BoneLord].DrawBlend(640 + FrameIndex + (int)Direction * 20, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4462,23 +4462,23 @@ namespace Client.MirObjects
                 case Monster.HolyDeva:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(226 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
-                        case MirAction.Pushed:
+                        case MirAction.行走动作:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(258 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(306 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(354 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             if (FrameIndex <= 6) Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(370 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Appear:
+                        case MirAction.召唤初现:
                             if (FrameIndex >= 5) Libraries.Monsters[(ushort)Monster.HolyDeva].Draw(418 + FrameIndex - 5, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4486,7 +4486,7 @@ namespace Client.MirObjects
                 case Monster.YinDevilNode:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.YinDevilNode].DrawBlend(22 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4494,7 +4494,7 @@ namespace Client.MirObjects
                 case Monster.YangDevilNode:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.YangDevilNode].DrawBlend(22 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4502,13 +4502,13 @@ namespace Client.MirObjects
                 case Monster.OmaKing:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.OmaKing].DrawBlend((624 + FrameIndex + (int)Direction * 4) - 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.OmaKing].DrawBlend(656 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.OmaKing].DrawBlend(304 + FrameIndex + (int)Direction * 20, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4516,7 +4516,7 @@ namespace Client.MirObjects
                 case Monster.BlackFoxman:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.BlackFoxman].DrawBlend((234 + FrameIndex + (int)Direction * 4) - 3, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4525,19 +4525,19 @@ namespace Client.MirObjects
                 case Monster.ManectricKing:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.ManectricKing].DrawBlend(360 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.ManectricKing].DrawBlend(392 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.ManectricKing].DrawBlend(440 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.ManectricKing].DrawBlend(576 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.ManectricKing].DrawBlend(488 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4545,7 +4545,7 @@ namespace Client.MirObjects
                 case Monster.ManectricStaff:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.ManectricStaff].DrawBlend(296 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4553,10 +4553,10 @@ namespace Client.MirObjects
                 case Monster.ManectricBlest:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 4) Libraries.Monsters[(ushort)Monster.ManectricBlest].DrawBlend((328 + FrameIndex + (int)Direction * 4) - 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack3:
+                        case MirAction.近距攻击3:
                             if (FrameIndex >= 2) Libraries.Monsters[(ushort)Monster.ManectricBlest].DrawBlend((360 + FrameIndex + (int)Direction * 5) - 2, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4564,28 +4564,28 @@ namespace Client.MirObjects
                 case Monster.KingGuard:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(392 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(424 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(472 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(616 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Pushed:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(352 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(520 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(664 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.KingGuard].DrawBlend(728 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4593,19 +4593,19 @@ namespace Client.MirObjects
                 case Monster.Jar2:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.Jar2].DrawBlend(312 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.Jar2].DrawBlend(392 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.Jar2].DrawBlend(440 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.Jar2].DrawBlend(520 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.Jar2].DrawBlend(544 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4613,31 +4613,31 @@ namespace Client.MirObjects
                 case Monster.SeedingsGeneral:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(536 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(568 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(704 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(776 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Dead:
+                        case MirAction.死后尸体:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(1015 + FrameIndex + (int)Direction * 1, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(984 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(1008 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(848 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.SeedingsGeneral].DrawBlend(912 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4646,7 +4646,7 @@ namespace Client.MirObjects
                 case Monster.HellSlasher:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 2 && FrameIndex < 6) Libraries.Monsters[(ushort)Monster.HellSlasher].DrawBlend((304 + FrameIndex + (int)Direction * 4) - 2, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4655,7 +4655,7 @@ namespace Client.MirObjects
                 case Monster.HellPirate:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.HellPirate].DrawBlend((280 + FrameIndex + (int)Direction * 4) - 3, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4664,7 +4664,7 @@ namespace Client.MirObjects
                 case Monster.HellCannibal:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.HellCannibal].DrawBlend(304 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4673,7 +4673,7 @@ namespace Client.MirObjects
                 case Monster.HellKeeper:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.HellKeeper].DrawBlend(40 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4681,7 +4681,7 @@ namespace Client.MirObjects
                 case Monster.Manticore:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.Manticore].DrawBlend((536 + FrameIndex + (int)Direction * 4) - 3, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4689,7 +4689,7 @@ namespace Client.MirObjects
                 case Monster.GuardianRock:
                     switch (CurrentAction)
                     {
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.GuardianRock].DrawBlend(8 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4697,20 +4697,20 @@ namespace Client.MirObjects
                 case Monster.ThunderElement:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.ThunderElement].DrawBlend(44 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
-                        case MirAction.Pushed:
+                        case MirAction.行走动作:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.ThunderElement].DrawBlend(54 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.ThunderElement].DrawBlend(64 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.ThunderElement].DrawBlend(74 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.ThunderElement].DrawBlend(78 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4718,20 +4718,20 @@ namespace Client.MirObjects
                 case Monster.CloudElement:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.CloudElement].DrawBlend(44 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
-                        case MirAction.Pushed:
+                        case MirAction.行走动作:
+                        case MirAction.推开动作:
                             Libraries.Monsters[(ushort)Monster.CloudElement].DrawBlend(54 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.CloudElement].DrawBlend(64 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.CloudElement].DrawBlend(74 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.CloudElement].DrawBlend(78 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4739,17 +4739,17 @@ namespace Client.MirObjects
                 case Monster.GreatFoxSpirit:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.GreatFoxSpirit].DrawBlend(Frame.Start + 30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
-                        case MirAction.AttackRange1:
+                        case MirAction.近距攻击1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.GreatFoxSpirit].DrawBlend(Frame.Start + 30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.GreatFoxSpirit].DrawBlend(Frame.Start + 30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.GreatFoxSpirit].DrawBlend(318 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4757,7 +4757,7 @@ namespace Client.MirObjects
                 case Monster.TaoistGuard:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.TaoistGuard].DrawBlend(80 + ((int)Direction * 3) + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4765,20 +4765,20 @@ namespace Client.MirObjects
                 case Monster.CyanoGhast: //mob glow effect
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.CyanoGhast].DrawBlend(448 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.CyanoGhast].DrawBlend(480 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.CyanoGhast].DrawBlend(528 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.CyanoGhast].DrawBlend(576 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
-                        case MirAction.Revive:
+                        case MirAction.死亡动作:
+                        case MirAction.复活动作:
                             Libraries.Monsters[(ushort)Monster.CyanoGhast].DrawBlend(592 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4786,10 +4786,10 @@ namespace Client.MirObjects
                 case Monster.MutatedManworm:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.MutatedManworm].DrawBlend(285 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.MutatedManworm].DrawBlend(333 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4797,7 +4797,7 @@ namespace Client.MirObjects
                 case Monster.CrazyManworm:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.CrazyManworm].DrawBlend(272 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4806,53 +4806,53 @@ namespace Client.MirObjects
                 case Monster.Behemoth:
                     switch (CurrentAction)
                     {
-                        case MirAction.Walking:
-                        case MirAction.Struck:
+                        case MirAction.行走动作:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(464 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Standing:
-                        case MirAction.Revive:
+                        case MirAction.站立动作:
+                        case MirAction.复活动作:
                             Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(512 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
-                        case MirAction.Attack3:
-                        case MirAction.AttackRange1:
-                        case MirAction.AttackRange2:
+                        case MirAction.近距攻击2:
+                        case MirAction.近距攻击3:
+                        case MirAction.远程攻击1:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(592 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 4) Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend((667 + FrameIndex + (int)Direction * 2) - 4, DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(592 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             if (FrameIndex >= 1) Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(658 + FrameIndex - 1, DrawLocation, Color.White, true);
                             break;
                     }
 
-                    if (CurrentAction != MirAction.Dead)
+                    if (CurrentAction != MirAction.死后尸体)
                         Libraries.Monsters[(ushort)Monster.Behemoth].DrawBlend(648 + FrameIndex, DrawLocation, Color.White, true);
                     break;
 
                 case Monster.DarkDevourer:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(272 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(304 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(352 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(540 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(400 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
-                        case MirAction.Revive:
+                        case MirAction.死亡动作:
+                        case MirAction.复活动作:
                             Libraries.Monsters[(ushort)Monster.DarkDevourer].DrawBlend(416 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4861,7 +4861,7 @@ namespace Client.MirObjects
                 case Monster.DreamDevourer:
                     switch (CurrentAction)
                     {
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.DreamDevourer].DrawBlend(320 + (FrameIndex + (int)Direction * 5) - 3, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4870,32 +4870,32 @@ namespace Client.MirObjects
                 case Monster.TurtleKing:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(456 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(488 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(536 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(616 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
-                        case MirAction.Revive:
+                        case MirAction.死亡动作:
+                        case MirAction.复活动作:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(632 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(704 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(752 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(800 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange3:
+                        case MirAction.远程攻击3:
                             Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(848 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4904,10 +4904,10 @@ namespace Client.MirObjects
                 case Monster.WingedTigerLord:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 2) Libraries.Monsters[(ushort)Monster.WingedTigerLord].DrawBlend(584 + (FrameIndex + (int)Direction * 6) - 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 2) Libraries.Monsters[(ushort)Monster.WingedTigerLord].DrawBlend(560 + (FrameIndex + (int)Direction * 3) - 2, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4915,13 +4915,13 @@ namespace Client.MirObjects
                 case Monster.StoningStatue:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex == 4)
                             {
                                 SoundManager.PlaySound(BaseSound + 5);
                             }
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.StoningStatue].DrawBlend(464 + FrameIndex + (int)Direction * 20, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4932,22 +4932,22 @@ namespace Client.MirObjects
                 case Monster.FlameAssassin:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(272 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(304 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(352 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(400 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(416 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(496 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             if (BaseImage == Monster.FlameScythe && (int)Direction > 0)
                             {
@@ -4963,22 +4963,22 @@ namespace Client.MirObjects
                 case Monster.FlameQueen:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(360 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(392 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(440 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(488 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(504 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.FlameQueen].DrawBlend(584 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                     }
@@ -4989,25 +4989,25 @@ namespace Client.MirObjects
                 case Monster.HellKnight4:
                     switch (CurrentAction)
                     {
-                        case MirAction.Appear:
+                        case MirAction.召唤初现:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(224 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(224 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(256 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(304 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(352 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(368 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)BaseImage].DrawBlend(400 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5015,15 +5015,15 @@ namespace Client.MirObjects
                 case Monster.HellLord:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
-                        case MirAction.Attack1:
-                        case MirAction.Struck:
+                        case MirAction.站立动作:
+                        case MirAction.近距攻击1:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.HellLord].Draw(15, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.HellLord].Draw(16 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Dead:
+                        case MirAction.死后尸体:
                             Libraries.Monsters[(ushort)Monster.HellLord].Draw(20, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5031,7 +5031,7 @@ namespace Client.MirObjects
                 case Monster.WaterGuard:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 4) Libraries.Monsters[(ushort)Monster.WaterGuard].DrawBlend(264 + (FrameIndex + (int)Direction * 3) - 4, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5039,7 +5039,7 @@ namespace Client.MirObjects
                 case Monster.HardenRhino:
                     switch (CurrentAction)
                     {
-                        case MirAction.Running:
+                        case MirAction.跑步动作:
                             Libraries.Monsters[(ushort)Monster.HardenRhino].DrawBlend(397 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5047,10 +5047,10 @@ namespace Client.MirObjects
                 case Monster.AncientBringer:
                     switch (CurrentAction)
                     {
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.AncientBringer].DrawBlend((648 + FrameIndex + (int)Direction * 5) - 3, DrawLocation, Color.White, true);
                             break; //on mob
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             if (FrameIndex >= 3) Libraries.Monsters[(ushort)Monster.AncientBringer].DrawBlend((730 + FrameIndex + (int)Direction * 10) - 3, DrawLocation, Color.White, true);
                             break; //on mob
                     }
@@ -5058,7 +5058,7 @@ namespace Client.MirObjects
                 case Monster.BurningZombie:
                     switch (CurrentAction)
                     {
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.BurningZombie].DrawBlend(352 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5066,7 +5066,7 @@ namespace Client.MirObjects
                 case Monster.MudZombie:
                     switch (CurrentAction)
                     {
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.MudZombie].DrawBlend(304 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5074,22 +5074,22 @@ namespace Client.MirObjects
                 case Monster.BlackHammerCat:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(336 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(368 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(416 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(472 + FrameIndex + (int)Direction * 12, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(568 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.BlackHammerCat].DrawBlend(589 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5097,7 +5097,7 @@ namespace Client.MirObjects
                 case Monster.StrayCat:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack3:
+                        case MirAction.近距攻击3:
                             Libraries.Monsters[(ushort)Monster.StrayCat].DrawBlend(632 + FrameIndex + (int)Direction * 12, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5105,26 +5105,26 @@ namespace Client.MirObjects
                 case Monster.CatShaman:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(360 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(392 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(472 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(520 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(576 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(746 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(632 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.CatShaman].DrawBlend(648 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5132,7 +5132,7 @@ namespace Client.MirObjects
                 case Monster.TucsonGeneral:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             if (FrameIndex >= 2) Libraries.Monsters[(ushort)Monster.TucsonGeneral].DrawBlend((504 + FrameIndex + (int)Direction * 5) - 2, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5140,7 +5140,7 @@ namespace Client.MirObjects
                 case Monster.RhinoWarrior:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.RhinoWarrior].DrawBlend(320 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5148,7 +5148,7 @@ namespace Client.MirObjects
                 case Monster.TreeGuardian:
                     switch (CurrentAction)
                     {
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             if (FrameIndex >= 5) Libraries.Monsters[(ushort)Monster.TreeGuardian].DrawBlend(608 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5156,25 +5156,25 @@ namespace Client.MirObjects
                 case Monster.OmaWitchDoctor:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(400 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(472 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(520 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(576 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(632 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(704 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.OmaWitchDoctor].DrawBlend(727 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5182,19 +5182,19 @@ namespace Client.MirObjects
                 case Monster.PlagueCrab:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.PlagueCrab].DrawBlend(248 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.PlagueCrab].DrawBlend(280 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.PlagueCrab].DrawBlend(328 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.PlagueCrab].DrawBlend(392 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.PlagueCrab].DrawBlend(423 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5202,19 +5202,19 @@ namespace Client.MirObjects
                 case Monster.ClawBeast:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.ClawBeast].DrawBlend(256 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.ClawBeast].DrawBlend(288 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.ClawBeast].DrawBlend(336 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.ClawBeast].DrawBlend(416 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.ClawBeast].DrawBlend(440 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5222,34 +5222,34 @@ namespace Client.MirObjects
                 case Monster.DarkCaptain:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(584 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(664 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(728 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(784 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(840 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(896 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack3:
+                        case MirAction.近距攻击3:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(952 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange3:
+                        case MirAction.远程攻击3:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(1008 + FrameIndex + (int)Direction * 7, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(1064 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.DarkCaptain].DrawBlend(1088 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5257,16 +5257,16 @@ namespace Client.MirObjects
                 case Monster.FrozenGolem:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.FrozenGolem].DrawBlend(264 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.FrozenGolem].DrawBlend(296 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.FrozenGolem].DrawBlend(344 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.FrozenGolem].DrawBlend(408 + FrameIndex + (int)Direction * 12, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5274,25 +5274,25 @@ namespace Client.MirObjects
                 case Monster.IcePhantom:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(320 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(352 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(400 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(472 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange2:
+                        case MirAction.远程攻击2:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(472 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(536 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.IcePhantom].DrawBlend(560 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5302,25 +5302,25 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((384 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Walking:
+                            case MirAction.行走动作:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((416 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack1:
+                            case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((464 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.AttackRange1:
+                            case MirAction.远程攻击1:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((528 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.AttackRange2:
+                            case MirAction.远程攻击2:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((600 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((664 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.HornedMage].DrawBlend((688 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5330,25 +5330,25 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((392 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Walking:
+                            case MirAction.行走动作:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((496 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack1:
+                            case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((544 + FrameIndex + (int)Direction * 7), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack2:
+                            case MirAction.近距攻击2:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((600 + FrameIndex + (int)Direction * 12), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack3:
+                            case MirAction.近距攻击3:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((696 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((744 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.Kirin].DrawBlend((744 + FrameIndex + (int)Direction * 1) - 1, DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5358,25 +5358,25 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((360 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Walking:
+                            case MirAction.行走动作:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((392 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack1:
+                            case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((440 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack2:
+                            case MirAction.近距攻击2:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((504 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack3:
+                            case MirAction.近距攻击3:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((584 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((616 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.DarkWraith].DrawBlend((640 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5386,19 +5386,19 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.DarkSpirit].DrawBlend((256 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Walking:
+                            case MirAction.行走动作:
                                 Libraries.Monsters[(ushort)Monster.DarkSpirit].DrawBlend((288 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.AttackRange1:
+                            case MirAction.远程攻击1:
                                 Libraries.Monsters[(ushort)Monster.DarkSpirit].DrawBlend((336 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.DarkSpirit].DrawBlend((408 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.DarkSpirit].DrawBlend((432 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5407,19 +5407,19 @@ namespace Client.MirObjects
                 case Monster.LightningBead:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.LightningBead].DrawBlend(30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.LightningBead].DrawBlend(37 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.LightningBead].DrawBlend(43 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.LightningBead].DrawBlend(50 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Appear:
+                        case MirAction.召唤初现:
                             Libraries.Monsters[(ushort)Monster.LightningBead].DrawBlend(58 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5427,19 +5427,19 @@ namespace Client.MirObjects
                 case Monster.HealingBead:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.HealingBead].DrawBlend(30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.HealingBead].DrawBlend(37 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.HealingBead].DrawBlend(43 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.HealingBead].DrawBlend(46 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Appear:
+                        case MirAction.召唤初现:
                             Libraries.Monsters[(ushort)Monster.HealingBead].DrawBlend(54 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5447,19 +5447,19 @@ namespace Client.MirObjects
                 case Monster.PowerUpBead:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.PowerUpBead].DrawBlend(30 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.PowerUpBead].DrawBlend(37 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.PowerUpBead].DrawBlend(43 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.PowerUpBead].DrawBlend(49 + FrameIndex, DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Appear:
+                        case MirAction.召唤初现:
                             Libraries.Monsters[(ushort)Monster.PowerUpBead].DrawBlend(58 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
@@ -5467,31 +5467,31 @@ namespace Client.MirObjects
                 case Monster.DarkOmaKing:
                     switch (CurrentAction)
                     {
-                        case MirAction.Standing:
+                        case MirAction.站立动作:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((784 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Walking:
+                        case MirAction.行走动作:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((864 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack1:
+                        case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((912 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack2:
+                        case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((984 + FrameIndex + (int)Direction * 34), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack3:
+                        case MirAction.近距攻击3:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1256 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Attack4:
+                        case MirAction.近距攻击4:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1320 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.AttackRange1:
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1392 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Struck:
+                        case MirAction.被击动作:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1464 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.Die:
+                        case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1488 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
@@ -5500,25 +5500,25 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((376 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Walking:
+                            case MirAction.行走动作:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((408 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack1:
+                            case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((456 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack2:
+                            case MirAction.近距攻击2:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((520 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack3:
+                            case MirAction.近距攻击3:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((592 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((656 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.HornedWarrior].DrawBlend((680 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5528,7 +5528,7 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.AttackRange1:
+                            case MirAction.远程攻击1:
                                 if (FrameIndex <= 6) Libraries.Monsters[(ushort)Monster.FloatingRock].DrawBlend(160 + (FrameIndex) + (int)Direction * 7, DrawLocation, Color.White, true);
                                 break;
                         }
@@ -5539,25 +5539,25 @@ namespace Client.MirObjects
                         if (Effect == 1)
                             switch (CurrentAction)
                             {
-                                case MirAction.Standing:
+                                case MirAction.站立动作:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((528 + FrameIndex + (int)Direction * 4), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.Walking:
+                                case MirAction.行走动作:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((560 + FrameIndex + (int)Direction * 6), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.Attack1:
+                                case MirAction.近距攻击1:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((608 + FrameIndex + (int)Direction * 6), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.Struck:
+                                case MirAction.被击动作:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((656 + FrameIndex + (int)Direction * 2), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.Die:
+                                case MirAction.死亡动作:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((672 + FrameIndex + (int)Direction * 10), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.AttackRange1:
+                                case MirAction.远程攻击1:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((752 + FrameIndex + (int)Direction * 6), DrawLocation, Color.Gray, true);
                                     break;
-                                case MirAction.SitDown:
+                                case MirAction.坐下动作:
                                     Libraries.Monsters[(ushort)Monster.ManTree].DrawBlend((800 + FrameIndex + (int)Direction * 4), DrawLocation, Color.Gray, true);
                                     break;
                             }
@@ -5567,25 +5567,25 @@ namespace Client.MirObjects
                     {
                         switch (CurrentAction)
                         {
-                            case MirAction.Show:
+                            case MirAction.石化苏醒:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(400 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Standing:
+                            case MirAction.站立动作:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(464 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.AttackRange1:
+                            case MirAction.远程攻击1:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(512 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Attack1:
+                            case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(576 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Struck:
+                            case MirAction.被击动作:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(656 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Die:
+                            case MirAction.死亡动作:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(680 + FrameIndex + (int)Direction * 15, DrawLocation, Color.White, true);
                                 break;
-                            case MirAction.Hide:
+                            case MirAction.切换LIB:
                                 Libraries.Monsters[(ushort)Monster.WaterDragon].DrawBlend(407 + (FrameIndex * -1) + (int)Direction * 8, DrawLocation, Color.White, true);
                                 break;
                         }

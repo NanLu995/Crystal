@@ -175,7 +175,7 @@ namespace Server.MirObjects
                         if (!ob.Dead && Envir.Random.Next(8) == 0)
                             ob.ApplyPoison(new Poison
                             {
-                                Duration = 5 + Envir.Random.Next(Caster.Stats[Stat.Freezing]),
+                                Duration = 5 + Envir.Random.Next(Caster.Stats[Stat.冰冻伤害]),
                                 Owner = Caster,
                                 PType = PoisonType.Slow,
                                 TickSpeed = 2000,

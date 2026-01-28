@@ -1051,7 +1051,7 @@ namespace Server.MirEnvir
                                         //Only targets
                                         if (target.IsFriendlyTarget(player))
                                         {
-                                            target.AddBuff(BuffType.Hiding, player, (Settings.Second * value), new Stats());
+                                            target.AddBuff(BuffType.隐身术, player, (Settings.Second * value), new Stats());
                                             target.OperateTime = 0;
                                             train = true;
                                         }
@@ -1073,7 +1073,7 @@ namespace Server.MirEnvir
                 case Spell.BlessedArmour:
                     value = (int)data[2];
                     location = (Point)data[3];
-                    BuffType type = magic.Spell == Spell.SoulShield ? BuffType.SoulShield : BuffType.BlessedArmour;
+                    BuffType type = magic.Spell == Spell.SoulShield ? BuffType.幽灵盾 : BuffType.神圣战甲术;
 
                     for (int y = location.Y - 3; y <= location.Y + 3; y++)
                     {
@@ -1105,7 +1105,7 @@ namespace Server.MirEnvir
                                         {
                                             var stats = new Stats
                                             {
-                                                [type == BuffType.SoulShield ? Stat.MaxMAC : Stat.MaxAC] = target.Level / 7 + 4
+                                                [type == BuffType.幽灵盾 ? Stat.MaxMAC : Stat.MaxAC] = target.Level / 7 + 4
                                             };
 
                                             target.AddBuff(type, player, Settings.Second * value, stats);
@@ -1578,7 +1578,7 @@ namespace Server.MirEnvir
                                                         target.ApplyPoison(new Poison
                                                         {
                                                             Owner = player,
-                                                            Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(player.Stats[Stat.Freezing]),
+                                                            Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(player.Stats[Stat.冰冻伤害]),
                                                             PType = PoisonType.Frozen,
                                                             TickSpeed = 1000,
                                                         }, player);
@@ -1899,13 +1899,13 @@ namespace Server.MirEnvir
 
                                             var stats = new Stats
                                             {
-                                                [Stat.MaxDCRatePercent] = value2 * -1,
-                                                [Stat.MaxMCRatePercent] = value2 * -1,
-                                                [Stat.MaxSCRatePercent] = value2 * -1,
-                                                [Stat.AttackSpeedRatePercent] = target.Race == ObjectType.Player ? value2 * -1 : 0
+                                                [Stat.物理攻击强化] = value2 * -1,
+                                                [Stat.魔法攻击强化] = value2 * -1,
+                                                [Stat.道术攻击强化] = value2 * -1,
+                                                [Stat.攻击速度强化] = target.Race == ObjectType.Player ? value2 * -1 : 0
                                             };
 
-                                            target.AddBuff(BuffType.Curse, player, Settings.Second * value, stats);
+                                            target.AddBuff(BuffType.诅咒术, player, Settings.Second * value, stats);
                                             target.OperateTime = 0;
                                             train = true;
                                         }
@@ -2128,8 +2128,8 @@ namespace Server.MirEnvir
                     value = (int)data[2];
                     location = (Point)data[3];
 
-                    bool hasVampBuff = (player.Buffs.Any(ex => ex.Type == BuffType.VampireShot));
-                    bool hasPoisonBuff = (player.Buffs.Any(ex => ex.Type == BuffType.PoisonShot));
+                    bool hasVampBuff = (player.Buffs.Any(ex => ex.Type == BuffType.吸血地闪));
+                    bool hasPoisonBuff = (player.Buffs.Any(ex => ex.Type == BuffType.毒魔闪));
 
                     for (int y = location.Y - 2; y <= location.Y + 2; y++)
                     {
@@ -2176,7 +2176,7 @@ namespace Server.MirEnvir
                                                 Owner = player,
                                                 PType = PoisonType.Green,
                                                 TickSpeed = 2000,
-                                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.PoisonAttack])
+                                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.毒素伤害])
                                             }, player);
                                             target.OperateTime = 0;
                                         }
@@ -2191,12 +2191,12 @@ namespace Server.MirEnvir
                     if (hasVampBuff)
                     {
                         //Expire
-                        player.AddBuff(BuffType.VampireShot, player, Settings.Second * 1, new Stats());
+                        player.AddBuff(BuffType.吸血地闪, player, Settings.Second * 1, new Stats());
                     }
                     if (hasPoisonBuff)
                     {
                         //Expire
-                        player.AddBuff(BuffType.PoisonShot, player, Settings.Second * 1, new Stats());
+                        player.AddBuff(BuffType.毒魔闪, player, Settings.Second * 1, new Stats());
                     }
                     break;
 

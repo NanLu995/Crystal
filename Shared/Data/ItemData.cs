@@ -111,36 +111,36 @@ public class ItemInfo
             Stats[Stat.MaxSC] = reader.ReadByte();
             Stats[Stat.HP] = reader.ReadUInt16();
             Stats[Stat.MP] = reader.ReadUInt16();
-            Stats[Stat.Accuracy] = reader.ReadByte();
-            Stats[Stat.Agility] = reader.ReadByte();
+            Stats[Stat.准确] = reader.ReadByte();
+            Stats[Stat.敏捷] = reader.ReadByte();
 
-            Stats[Stat.Luck] = reader.ReadSByte();
-            Stats[Stat.AttackSpeed] = reader.ReadSByte();
+            Stats[Stat.幸运] = reader.ReadSByte();
+            Stats[Stat.攻击速度] = reader.ReadSByte();
         }
 
         StartItem = reader.ReadBoolean();
 
         if (version <= 84)
         {
-            Stats[Stat.BagWeight] = reader.ReadByte();
-            Stats[Stat.HandWeight] = reader.ReadByte();
-            Stats[Stat.WearWeight] = reader.ReadByte();
+            Stats[Stat.背包负重] = reader.ReadByte();
+            Stats[Stat.腕力负重] = reader.ReadByte();
+            Stats[Stat.装备负重] = reader.ReadByte();
         }
 
         Effect = reader.ReadByte();
 
         if (version <= 84)
         {
-            Stats[Stat.Strong] = reader.ReadByte();
-            Stats[Stat.MagicResist] = reader.ReadByte();
-            Stats[Stat.PoisonResist] = reader.ReadByte();
-            Stats[Stat.HealthRecovery] = reader.ReadByte();
-            Stats[Stat.SpellRecovery] = reader.ReadByte();
-            Stats[Stat.PoisonRecovery] = reader.ReadByte();
-            Stats[Stat.HPRatePercent] = reader.ReadByte();
-            Stats[Stat.MPRatePercent] = reader.ReadByte();
-            Stats[Stat.CriticalRate] = reader.ReadByte();
-            Stats[Stat.CriticalDamage] = reader.ReadByte();
+            Stats[Stat.强度] = reader.ReadByte();
+            Stats[Stat.魔法躲避] = reader.ReadByte();
+            Stats[Stat.毒物躲避] = reader.ReadByte();
+            Stats[Stat.生命恢复] = reader.ReadByte();
+            Stats[Stat.法力恢复] = reader.ReadByte();
+            Stats[Stat.中毒恢复] = reader.ReadByte();
+            Stats[Stat.生命值数率] = reader.ReadByte();
+            Stats[Stat.法力值数率] = reader.ReadByte();
+            Stats[Stat.暴击率] = reader.ReadByte();
+            Stats[Stat.暴击伤害] = reader.ReadByte();
         }
 
 
@@ -158,19 +158,19 @@ public class ItemInfo
 
         if (version <= 84)
         {
-            Stats[Stat.MaxACRatePercent] = reader.ReadByte();
-            Stats[Stat.MaxMACRatePercent] = reader.ReadByte();
-            Stats[Stat.Holy] = reader.ReadByte();
-            Stats[Stat.Freezing] = reader.ReadByte();
-            Stats[Stat.PoisonAttack] = reader.ReadByte();
+            Stats[Stat.强化物理防御] = reader.ReadByte();
+            Stats[Stat.强化魔法防御] = reader.ReadByte();
+            Stats[Stat.神圣] = reader.ReadByte();
+            Stats[Stat.冰冻伤害] = reader.ReadByte();
+            Stats[Stat.毒素伤害] = reader.ReadByte();
         }
 
         Bind = (BindMode)reader.ReadInt16();
 
         if (version <= 84)
         {
-            Stats[Stat.Reflect] = reader.ReadByte();
-            Stats[Stat.HPDrainRatePercent] = reader.ReadByte();
+            Stats[Stat.反弹伤害] = reader.ReadByte();
+            Stats[Stat.吸血数率] = reader.ReadByte();
         }
 
         Unique = (SpecialItemMode)reader.ReadInt16();
@@ -362,13 +362,13 @@ public class UserItem
             AddedStats[Stat.MaxMC] = reader.ReadByte();
             AddedStats[Stat.MaxSC] = reader.ReadByte();
 
-            AddedStats[Stat.Accuracy] = reader.ReadByte();
-            AddedStats[Stat.Agility] = reader.ReadByte();
+            AddedStats[Stat.准确] = reader.ReadByte();
+            AddedStats[Stat.敏捷] = reader.ReadByte();
             AddedStats[Stat.HP] = reader.ReadByte();
             AddedStats[Stat.MP] = reader.ReadByte();
 
-            AddedStats[Stat.AttackSpeed] = reader.ReadSByte();
-            AddedStats[Stat.Luck] = reader.ReadSByte();
+            AddedStats[Stat.攻击速度] = reader.ReadSByte();
+            AddedStats[Stat.幸运] = reader.ReadSByte();
         }
 
         SoulBoundId = reader.ReadInt32();
@@ -378,16 +378,16 @@ public class UserItem
 
         if (version <= 84)
         {
-            AddedStats[Stat.Strong] = reader.ReadByte();
-            AddedStats[Stat.MagicResist] = reader.ReadByte();
-            AddedStats[Stat.PoisonResist] = reader.ReadByte();
-            AddedStats[Stat.HealthRecovery] = reader.ReadByte();
-            AddedStats[Stat.SpellRecovery] = reader.ReadByte();
-            AddedStats[Stat.PoisonRecovery] = reader.ReadByte();
-            AddedStats[Stat.CriticalRate] = reader.ReadByte();
-            AddedStats[Stat.CriticalDamage] = reader.ReadByte();
-            AddedStats[Stat.Freezing] = reader.ReadByte();
-            AddedStats[Stat.PoisonAttack] = reader.ReadByte();
+            AddedStats[Stat.强度] = reader.ReadByte();
+            AddedStats[Stat.魔法躲避] = reader.ReadByte();
+            AddedStats[Stat.毒物躲避] = reader.ReadByte();
+            AddedStats[Stat.生命恢复] = reader.ReadByte();
+            AddedStats[Stat.法力恢复] = reader.ReadByte();
+            AddedStats[Stat.中毒恢复] = reader.ReadByte();
+            AddedStats[Stat.暴击率] = reader.ReadByte();
+            AddedStats[Stat.暴击伤害] = reader.ReadByte();
+            AddedStats[Stat.冰冻伤害] = reader.ReadByte();
+            AddedStats[Stat.毒素伤害] = reader.ReadByte();
         }
 
         int count = reader.ReadInt32();

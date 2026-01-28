@@ -172,8 +172,8 @@ namespace Client.MirObjects
 
             switch (CurrentAction)
             {
-                case MirAction.Standing:
-                case MirAction.Harvest:
+                case MirAction.站立动作:
+                case MirAction.挖矿展示:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -231,9 +231,9 @@ namespace Client.MirObjects
             if (ActionFeed.Count == 0)
             {
                 if (CMain.Random.Next(2) == 0 && Frames.Count > 1)
-                    CurrentAction = MirAction.Harvest;
+                    CurrentAction = MirAction.挖矿展示;
                 else
-                    CurrentAction = MirAction.Standing;
+                    CurrentAction = MirAction.站立动作;
 
                 Frames.TryGetValue(CurrentAction, out Frame);
 
@@ -432,23 +432,23 @@ namespace Client.MirObjects
             {
                 switch (User.Class)
                 {
-                    case MirClass.Warrior:
+                    case MirClass.战士:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.战士))
                             return false;
                         break;
-                    case MirClass.Wizard:
+                    case MirClass.法师:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.法师))
                             return false;
                         break;
-                    case MirClass.Taoist:
+                    case MirClass.道士:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.道士))
                             return false;
                         break;
-                    case MirClass.Assassin:
+                    case MirClass.刺客:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.刺客))
                             return false;
                         break;
-                    case MirClass.Archer:
+                    case MirClass.弓箭:
                         if (!quest.ClassNeeded.HasFlag(RequiredClass.弓箭))
                             return false;
                         break;

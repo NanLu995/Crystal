@@ -239,7 +239,7 @@ namespace Server.MirObjects.Monsters
 
                 for (int i = 0; i < Buffs.Count; i++)
                 {
-                    if (Buffs[i].Type != BuffType.Hiding) continue;
+                    if (Buffs[i].Type != BuffType.隐身术) continue;
 
                     Buffs[i].ExpireTime = 0;
                     break;
@@ -324,7 +324,7 @@ namespace Server.MirObjects.Monsters
                 ObjectID = ObjectID,
                 Name = master != null ? master.Name : Name,
                 NameColour = NameColour,
-                Class = MirClass.Archer,
+                Class = MirClass.弓箭,
                 Gender = master != null ? master.Gender : Envir.Random.Next(2) == 0 ? MirGender.男性 : MirGender.女性,
                 Location = CurrentLocation,
                 Direction = Direction,

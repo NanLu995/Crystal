@@ -1272,7 +1272,7 @@ namespace Client.MirScenes
 
             if (!User.Dead) ShowReviveMessage = false;
 
-            if (ShowReviveMessage && CMain.Time > User.DeadTime && User.CurrentAction == MirAction.Dead)
+            if (ShowReviveMessage && CMain.Time > User.DeadTime && User.CurrentAction == MirAction.死后尸体)
             {
                 ShowReviveMessage = false;
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DiedTip), MirMessageBoxButtons.YesNo, false);
@@ -2221,7 +2221,7 @@ namespace Client.MirScenes
         {
             User = new UserObject(p.ObjectID);
             User.Load(p);
-            MainDialog.PModeLabel.Visible = User.Class == MirClass.Wizard || User.Class == MirClass.Taoist;
+            MainDialog.PModeLabel.Visible = User.Class == MirClass.法师 || User.Class == MirClass.道士;
             HasHero = p.HasHero;
             HeroBehaviourPanel.UpdateBehaviour(p.HeroBehaviour);
             Gold = p.Gold;
@@ -2259,7 +2259,7 @@ namespace Client.MirScenes
 
             for (int i = User.ActionFeed.Count - 1; i >= 0; i--)
             {
-                if (User.ActionFeed[i].Action == MirAction.Pushed) continue;
+                if (User.ActionFeed[i].Action == MirAction.推开动作) continue;
                 User.ActionFeed.RemoveAt(i);
             }
 
@@ -2296,7 +2296,7 @@ namespace Client.MirScenes
             if (p.ObjectID == User.ObjectID && !Observing) return;
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Standing, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.站立动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectWalk(S.ObjectWalk p)
@@ -2307,7 +2307,7 @@ namespace Client.MirScenes
                 Hero.CurrentLocation = p.Location;
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Walking, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.行走动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectRun(S.ObjectRun p)
@@ -2318,7 +2318,7 @@ namespace Client.MirScenes
                 Hero.CurrentLocation = p.Location;
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Running, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.跑步动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectChat(S.ObjectChat p)
@@ -3338,7 +3338,7 @@ namespace Client.MirScenes
             {
                 if (ob.Race == ObjectType.Player)
                 {
-                    action = new QueuedAction { Action = MirAction.Attack1, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                    action = new QueuedAction { Action = MirAction.近距攻击1, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                 }
                 else
                 {
@@ -3346,27 +3346,27 @@ namespace Client.MirScenes
                     {
                         default:
                             {
-                                action = new QueuedAction { Action = MirAction.Attack1, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                                action = new QueuedAction { Action = MirAction.近距攻击1, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                                 break;
                             }
                         case 1:
                             {
-                                action = new QueuedAction { Action = MirAction.Attack2, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                                action = new QueuedAction { Action = MirAction.近距攻击2, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                                 break;
                             }
                         case 2:
                             {
-                                action = new QueuedAction { Action = MirAction.Attack3, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                                action = new QueuedAction { Action = MirAction.近距攻击3, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                                 break;
                             }
                         case 3:
                             {
-                                action = new QueuedAction { Action = MirAction.Attack4, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                                action = new QueuedAction { Action = MirAction.近距攻击4, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                                 break;
                             }
                         case 4:
                             {
-                                action = new QueuedAction { Action = MirAction.Attack5, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                                action = new QueuedAction { Action = MirAction.近距攻击5, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                                 break;
                             }
                     }
@@ -3390,7 +3390,7 @@ namespace Client.MirScenes
             Point location = User.CurrentLocation;
 
             for (int i = 0; i < User.ActionFeed.Count; i++)
-                if (User.ActionFeed[i].Action == MirAction.Struck) return;
+                if (User.ActionFeed[i].Action == MirAction.被击动作) return;
 
 
             if (User.ActionFeed.Count > 0)
@@ -3399,24 +3399,24 @@ namespace Client.MirScenes
                 location = User.ActionFeed[User.ActionFeed.Count - 1].Location;
             }
 
-            if (User.Buffs.Any(a => a == BuffType.EnergyShield))
+            if (User.Buffs.Any(a => a == BuffType.先天气功))
             {
                 for (int j = 0; j < User.Effects.Count; j++)
                 {
                     BuffEffect effect = null;
                     effect = User.Effects[j] as BuffEffect;
 
-                    if (effect != null && effect.BuffType == BuffType.EnergyShield)
+                    if (effect != null && effect.BuffType == BuffType.先天气功)
                     {
                         effect.Clear();
                         effect.Remove();
 
-                        User.Effects.Add(effect = new BuffEffect(Libraries.Magic2, 1890, 6, 600, User, true, BuffType.EnergyShield) { Repeat = false });
+                        User.Effects.Add(effect = new BuffEffect(Libraries.Magic2, 1890, 6, 600, User, true, BuffType.先天气功) { Repeat = false });
                         SoundManager.PlaySound(20000 + (ushort)Spell.EnergyShield * 10 + 1);
 
                         effect.Complete += (o, e) =>
                         {
-                            User.Effects.Add(new BuffEffect(Libraries.Magic2, 1900, 2, 800, User, true, BuffType.EnergyShield) { Repeat = true });
+                            User.Effects.Add(new BuffEffect(Libraries.Magic2, 1900, 2, 800, User, true, BuffType.先天气功) { Repeat = true });
                         };
 
 
@@ -3427,7 +3427,7 @@ namespace Client.MirScenes
 
             QueuedAction action = new QueuedAction
             {
-                Action = MirAction.Struck,
+                Action = MirAction.被击动作,
                 Direction = dir,
                 Location = location,
                 Params = new List<object>()
@@ -3440,7 +3440,7 @@ namespace Client.MirScenes
             {
                 PlayerObject player = (PlayerObject)attacker;
                 weapon = player.Weapon;
-                if (player.Class == MirClass.Assassin && weapon > -1)
+                if (player.Class == MirClass.刺客 && weapon > -1)
                     weapon = 1;
             }
             action.Params.Add(weapon);
@@ -3454,13 +3454,13 @@ namespace Client.MirScenes
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
                 if (ob.SkipFrames) return;
-                if (ob.ActionFeed.Count > 0 && ob.ActionFeed[ob.ActionFeed.Count - 1].Action == MirAction.Struck) return;
+                if (ob.ActionFeed.Count > 0 && ob.ActionFeed[ob.ActionFeed.Count - 1].Action == MirAction.被击动作) return;
 
                 if (ob.Race == ObjectType.Player)
                     ((PlayerObject)ob).BlizzardStopTime = 0;
                 QueuedAction action = new QueuedAction
                 {
-                    Action = MirAction.Struck,
+                    Action = MirAction.被击动作,
                     Direction = p.Direction,
                     Location = p.Location,
                     Params = new List<object>()
@@ -3473,30 +3473,30 @@ namespace Client.MirScenes
                 {
                     PlayerObject player = (PlayerObject)attacker;
                     weapon = player.Weapon;
-                    if (player.Class == MirClass.Assassin && weapon > -1)
+                    if (player.Class == MirClass.刺客 && weapon > -1)
                         weapon = 1;
                 }
                 action.Params.Add(weapon);
                 ob.ActionFeed.Add(action);
 
-                if (ob.Buffs.Any(a => a == BuffType.EnergyShield))
+                if (ob.Buffs.Any(a => a == BuffType.先天气功))
                 {
                     for (int j = 0; j < ob.Effects.Count; j++)
                     {
                         BuffEffect effect = null;
                         effect = ob.Effects[j] as BuffEffect;
 
-                        if (effect != null && effect.BuffType == BuffType.EnergyShield)
+                        if (effect != null && effect.BuffType == BuffType.先天气功)
                         {
                             effect.Clear();
                             effect.Remove();
 
-                            ob.Effects.Add(effect = new BuffEffect(Libraries.Magic2, 1890, 6, 600, ob, true, BuffType.EnergyShield) { Repeat = false });
+                            ob.Effects.Add(effect = new BuffEffect(Libraries.Magic2, 1890, 6, 600, ob, true, BuffType.先天气功) { Repeat = false });
                             SoundManager.PlaySound(20000 + (ushort)Spell.EnergyShield * 10 + 1);
 
                             effect.Complete += (o, e) =>
                             {
-                                ob.Effects.Add(new BuffEffect(Libraries.Magic2, 1900, 2, 800, ob, true, BuffType.EnergyShield) { Repeat = true });
+                                ob.Effects.Add(new BuffEffect(Libraries.Magic2, 1900, 2, 800, ob, true, BuffType.先天气功) { Repeat = true });
                             };
 
                             break;
@@ -3780,7 +3780,7 @@ namespace Client.MirScenes
         {
             User.Dead = true;
 
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.Die, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.死亡动作, Direction = p.Direction, Location = p.Location });
             ShowReviveMessage = true;
 
             LogTime = 0;
@@ -3794,7 +3794,7 @@ namespace Client.MirScenes
                 switch (p.Type)
                 {
                     default:
-                        ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Die, Direction = p.Direction, Location = p.Location });
+                        ob.ActionFeed.Add(new QueuedAction { Action = MirAction.死亡动作, Direction = p.Direction, Location = p.Location });
                         ob.Dead = true;
                         break;
                     case 1:
@@ -3872,13 +3872,13 @@ namespace Client.MirScenes
         private void ObjectHarvest(S.ObjectHarvest p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Harvest, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.挖矿展示, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void ObjectHarvested(S.ObjectHarvested p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Skeleton, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.挖后尸骸, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void ObjectNPC(S.ObjectNPC p)
@@ -3934,13 +3934,13 @@ namespace Client.MirScenes
         private void ObjectHide(S.ObjectHide p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Hide, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.切换LIB, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void ObjectShow(S.ObjectShow p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Show, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.石化苏醒, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void Poisoned(S.Poisoned p)
@@ -4662,7 +4662,7 @@ namespace Client.MirScenes
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
-                QueuedAction action = new QueuedAction { Action = MirAction.Spell, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
+                QueuedAction action = new QueuedAction { Action = MirAction.施法动作, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                 action.Params.Add(p.Spell);
                 action.Params.Add(p.TargetID);
                 action.Params.Add(p.Target);
@@ -4694,7 +4694,7 @@ namespace Client.MirScenes
                             {
                                 var sender = (Missile)o;
 
-                                if (sender.Target.CurrentAction == MirAction.Dead) return;
+                                if (sender.Target.CurrentAction == MirAction.死后尸体) return;
                                 sender.Target.Effects.Add(new Effect(Libraries.Magic, 570, 10, 600, sender.Target));
                                 SoundManager.PlaySound(20000 + (ushort)Spell.GreatFireBall * 10 + 2);
                             };
@@ -4923,7 +4923,7 @@ namespace Client.MirScenes
 
         private void Pushed(S.Pushed p)
         {
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.Pushed, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.推开动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectPushed(S.ObjectPushed p)
@@ -4931,7 +4931,7 @@ namespace Client.MirScenes
             if (p.ObjectID == User.ObjectID) return;
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Pushed, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.推开动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectName(S.ObjectName p)
@@ -5036,7 +5036,7 @@ namespace Client.MirScenes
                 }
                 ob.Dead = false;
                 ob.ActionFeed.Clear();
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Revive, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.复活动作, Direction = ob.Direction, Location = ob.CurrentLocation });
             }
         }
         private void SpellToggle(S.SpellToggle p)
@@ -5139,16 +5139,16 @@ namespace Client.MirScenes
                 {
                     action = p.Type switch
                     {
-                        _ => new QueuedAction { Action = MirAction.AttackRange1, Direction = p.Direction, Location = p.Location, Params = new List<object>() }
+                        _ => new QueuedAction { Action = MirAction.远程攻击1, Direction = p.Direction, Location = p.Location, Params = new List<object>() }
                     };
                 }
                 else
                 {
                     action = p.Type switch
                     {
-                        1 => new QueuedAction { Action = MirAction.AttackRange2, Direction = p.Direction, Location = p.Location, Params = new List<object>() },
-                        2 => new QueuedAction { Action = MirAction.AttackRange3, Direction = p.Direction, Location = p.Location, Params = new List<object>() },
-                        _ => new QueuedAction { Action = MirAction.AttackRange1, Direction = p.Direction, Location = p.Location, Params = new List<object>() }
+                        1 => new QueuedAction { Action = MirAction.远程攻击2, Direction = p.Direction, Location = p.Location, Params = new List<object>() },
+                        2 => new QueuedAction { Action = MirAction.远程攻击3, Direction = p.Direction, Location = p.Location, Params = new List<object>() },
+                        _ => new QueuedAction { Action = MirAction.远程攻击1, Direction = p.Direction, Location = p.Location, Params = new List<object>() }
                     };
                 }
 
@@ -5225,7 +5225,7 @@ namespace Client.MirScenes
 
                     switch (BuffsDialog.Buffs[i].Type)
                     {
-                        case BuffType.SwiftFeet:
+                        case BuffType.轻身步:
                             User.Sprint = false;
                             break;
                         case BuffType.Transform:
@@ -5247,7 +5247,7 @@ namespace Client.MirScenes
 
                     switch (HeroBuffsDialog.Buffs[i].Type)
                     {
-                        case BuffType.SwiftFeet:
+                        case BuffType.轻身步:
                             Hero.Sprint = false;
                             break;
                         case BuffType.Transform:
@@ -5418,17 +5418,17 @@ namespace Client.MirScenes
                 MapControl.NextAction = 0;
                 return;
             }
-            MirAction action = User.CurrentAction == MirAction.DashL ? MirAction.DashR : MirAction.DashL;
+            MirAction action = User.CurrentAction == MirAction.左冲动作 ? MirAction.右冲动作 : MirAction.左冲动作;
             for (int i = User.ActionFeed.Count - 1; i >= 0; i--)
             {
-                if (User.ActionFeed[i].Action == MirAction.DashR)
+                if (User.ActionFeed[i].Action == MirAction.右冲动作)
                 {
-                    action = MirAction.DashL;
+                    action = MirAction.左冲动作;
                     break;
                 }
-                if (User.ActionFeed[i].Action == MirAction.DashL)
+                if (User.ActionFeed[i].Action == MirAction.左冲动作)
                 {
-                    action = MirAction.DashR;
+                    action = MirAction.右冲动作;
                     break;
                 }
             }
@@ -5439,7 +5439,7 @@ namespace Client.MirScenes
         private void UserDashFail(S.UserDashFail p)
         {
             MapControl.NextAction = 0;
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.DashFail, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.冲击失败, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectDash(S.ObjectDash p)
@@ -5448,7 +5448,7 @@ namespace Client.MirScenes
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
-                var action = ob.ActionFeed.Count > 0 && ob.ActionFeed[^1].Action == MirAction.DashL ? MirAction.DashR : MirAction.DashL;
+                var action = ob.ActionFeed.Count > 0 && ob.ActionFeed[^1].Action == MirAction.左冲动作 ? MirAction.右冲动作 : MirAction.左冲动作;
                 ob.ActionFeed.Add(new QueuedAction { Action = action, Direction = p.Direction, Location = p.Location });
             }
 
@@ -5459,7 +5459,7 @@ namespace Client.MirScenes
             if (p.ObjectID == User.ObjectID) return;
 
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.DashFail, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.冲击失败, Direction = p.Direction, Location = p.Location });
         }
 
         private void UserBackStep(S.UserBackStep p)
@@ -5469,7 +5469,7 @@ namespace Client.MirScenes
                 MapControl.NextAction = 0;
                 return;
             }
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.Jump, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.弓箭跳跃, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectBackStep(S.ObjectBackStep p)
@@ -5479,7 +5479,7 @@ namespace Client.MirScenes
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
                 ob.JumpDistance = p.Distance;
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.Jump, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.弓箭跳跃, Direction = p.Direction, Location = p.Location });
             }
         }
 
@@ -5491,7 +5491,7 @@ namespace Client.MirScenes
                 return;
             }
             //User.JumpDistance = p.Distance;
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.DashAttack, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.刺客冲击, Direction = p.Direction, Location = p.Location });
         }
 
         private void ObjectDashAttack(S.ObjectDashAttack p)
@@ -5501,7 +5501,7 @@ namespace Client.MirScenes
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
                 ob.JumpDistance = p.Distance;
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.DashAttack, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.刺客冲击, Direction = p.Direction, Location = p.Location });
             }
         }
 
@@ -5530,14 +5530,14 @@ namespace Client.MirScenes
 
             for (int i = User.ActionFeed.Count - 1; i >= 0; i--)
             {
-                if (User.ActionFeed[i].Action == MirAction.Pushed) continue;
+                if (User.ActionFeed[i].Action == MirAction.推开动作) continue;
                 User.ActionFeed.RemoveAt(i);
             }
 
 
             User.SetAction();
 
-            User.ActionFeed.Add(new QueuedAction { Action = MirAction.Standing, Direction = p.Direction, Location = p.Location });
+            User.ActionFeed.Add(new QueuedAction { Action = MirAction.站立动作, Direction = p.Direction, Location = p.Location });
         }
 
         private void SetConcentration(S.SetConcentration p)
@@ -5709,7 +5709,7 @@ namespace Client.MirScenes
             if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject ob) && ob.Race == ObjectType.Monster)
             {
                 ob.SitDown = p.Sitting;
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.SitDown, Direction = p.Direction, Location = p.Location });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.坐下动作, Direction = p.Direction, Location = p.Location });
             }
         }
 
@@ -6061,11 +6061,11 @@ namespace Client.MirScenes
 
         private void HeroCreateRequest(S.HeroCreateRequest p)
         {
-            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.Warrior];
-            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.Wizard];
-            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.Taoist];
-            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.Assassin];
-            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.Archer];
+            NewHeroDialog.WarriorButton.Visible = p.CanCreateClass[(int)MirClass.战士];
+            NewHeroDialog.WizardButton.Visible = p.CanCreateClass[(int)MirClass.法师];
+            NewHeroDialog.TaoistButton.Visible = p.CanCreateClass[(int)MirClass.道士];
+            NewHeroDialog.AssassinButton.Visible = p.CanCreateClass[(int)MirClass.刺客];
+            NewHeroDialog.ArcherButton.Visible = p.CanCreateClass[(int)MirClass.弓箭];
 
             NewHeroDialog.Show();
         }
@@ -6605,7 +6605,7 @@ namespace Client.MirScenes
 
         private void RequestReincarnation()
         {
-            if (CMain.Time > User.DeadTime && User.CurrentAction == MirAction.Dead)
+            if (CMain.Time > User.DeadTime && User.CurrentAction == MirAction.死后尸体)
             {
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WouldYouLikeToBeRevived), MirMessageBoxButtons.YesNo);
 
@@ -6925,7 +6925,7 @@ namespace Client.MirScenes
                     case ItemType.时装:
                     case ItemType.英雄封印:
                         break;
-                    case ItemType.宠物:
+                    case ItemType.灵物:
                         if ((HoverItem.Info.Shape == 26 || HoverItem.Info.Shape == 28) && HoverItem.CurrentDura > 0)//WonderDrug, Knapsack
                         {
                             string strTime = Functions.PrintTimeSpanFromSeconds((HoverItem.CurrentDura * 3600), false);
@@ -7048,7 +7048,7 @@ namespace Client.MirScenes
                 case ItemType.觉醒物品:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeAwakening);
                     break;
-                case ItemType.宠物:
+                case ItemType.灵物:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypePets);
                     break;
                 case ItemType.时装:
@@ -7057,7 +7057,7 @@ namespace Client.MirScenes
                 case ItemType.装饰:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeDeco);
                     break;
-                case ItemType.宠物蛋:
+                case ItemType.怪物蛋:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeMonsterSpawn);
                     break;
                 case ItemType.英雄封印:
@@ -7296,15 +7296,15 @@ namespace Client.MirScenes
 
             #region LUCK / SUCCESS
 
-            minValue = realItem.Stats[Stat.Luck];
+            minValue = realItem.Stats[Stat.幸运];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.Luck] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.幸运] : 0;
 
             if (minValue != 0 || addValue != 0)
             {
                 count++;
 
-                if (realItem.Type == ItemType.宠物 && realItem.Shape == 28)
+                if (realItem.Type == ItemType.灵物 && realItem.Shape == 28)
                 {
                     text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BagWeightPercent, minValue + addValue);
                 }
@@ -7342,9 +7342,9 @@ namespace Client.MirScenes
 
             #region ACC
 
-            minValue = realItem.Stats[Stat.Accuracy];
+            minValue = realItem.Stats[Stat.准确];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.Accuracy] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.准确] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -7372,7 +7372,7 @@ namespace Client.MirScenes
 
             #region HOLY
 
-            minValue = realItem.Stats[Stat.Holy];
+            minValue = realItem.Stats[Stat.神圣];
             maxValue = 0;
             addValue = 0;
 
@@ -7398,9 +7398,9 @@ namespace Client.MirScenes
 
             #region ASPEED
 
-            minValue = realItem.Stats[Stat.AttackSpeed];
+            minValue = realItem.Stats[Stat.攻击速度];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.AttackSpeed] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.攻击速度] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7438,9 +7438,9 @@ namespace Client.MirScenes
 
             #region FREEZING
 
-            minValue = realItem.Stats[Stat.Freezing];
+            minValue = realItem.Stats[Stat.冰冻伤害];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.Freezing] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.冰冻伤害] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -7470,9 +7470,9 @@ namespace Client.MirScenes
 
             #region POISON
 
-            minValue = realItem.Stats[Stat.PoisonAttack];
+            minValue = realItem.Stats[Stat.毒素伤害];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.PoisonAttack] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.毒素伤害] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -7503,9 +7503,9 @@ namespace Client.MirScenes
 
             #region CRITICALRATE / FLEXIBILITY
 
-            minValue = realItem.Stats[Stat.CriticalRate];
+            minValue = realItem.Stats[Stat.暴击率];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.CriticalRate] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.暴击率] : 0;
 
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
@@ -7535,9 +7535,9 @@ namespace Client.MirScenes
 
             #region CRITICALDAMAGE
 
-            minValue = realItem.Stats[Stat.CriticalDamage];
+            minValue = realItem.Stats[Stat.暴击伤害];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.CriticalDamage] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.暴击伤害] : 0;
 
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
@@ -7561,7 +7561,7 @@ namespace Client.MirScenes
 
             #region Reflect
 
-            minValue = realItem.Stats[Stat.Reflect];
+            minValue = realItem.Stats[Stat.反弹伤害];
             maxValue = 0;
             addValue = 0;
 
@@ -7586,7 +7586,7 @@ namespace Client.MirScenes
 
             #region Hpdrain
 
-            minValue = realItem.Stats[Stat.HPDrainRatePercent];
+            minValue = realItem.Stats[Stat.吸血数率];
             maxValue = 0;
             addValue = 0;
 
@@ -7611,9 +7611,9 @@ namespace Client.MirScenes
 
             #region Exp Rate
 
-            minValue = realItem.Stats[Stat.ExpRatePercent];
+            minValue = realItem.Stats[Stat.经验增长数率];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.ExpRatePercent] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.经验增长数率] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7642,9 +7642,9 @@ namespace Client.MirScenes
 
             #region Drop Rate
 
-            minValue = realItem.Stats[Stat.ItemDropRatePercent];
+            minValue = realItem.Stats[Stat.物品掉落数率];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.ItemDropRatePercent] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.物品掉落数率] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7673,9 +7673,9 @@ namespace Client.MirScenes
 
             #region Gold Rate
 
-            minValue = realItem.Stats[Stat.GoldDropRatePercent];
+            minValue = realItem.Stats[Stat.金币收益数率];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.GoldDropRatePercent] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.金币收益数率] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7876,7 +7876,7 @@ namespace Client.MirScenes
 
             #region MAXHP
 
-            if (HoverItem.Info.Type != ItemType.宠物蛋)
+            if (HoverItem.Info.Type != ItemType.怪物蛋)
             {
                 minValue = realItem.Stats[Stat.HP];
                 maxValue = 0;
@@ -7931,7 +7931,7 @@ namespace Client.MirScenes
 
             #region MAXHPRATE
 
-            minValue = realItem.Stats[Stat.HPRatePercent];
+            minValue = realItem.Stats[Stat.生命值数率];
             maxValue = 0;
             addValue = 0;
 
@@ -7956,7 +7956,7 @@ namespace Client.MirScenes
 
             #region MAXMPRATE
 
-            minValue = realItem.Stats[Stat.MPRatePercent];
+            minValue = realItem.Stats[Stat.法力值数率];
             maxValue = 0;
             addValue = 0;
 
@@ -7981,7 +7981,7 @@ namespace Client.MirScenes
 
             #region MAXACRATE
 
-            minValue = realItem.Stats[Stat.MaxACRatePercent];
+            minValue = realItem.Stats[Stat.强化物理防御];
             maxValue = 0;
             addValue = 0;
 
@@ -8006,7 +8006,7 @@ namespace Client.MirScenes
 
             #region MAXMACRATE
 
-            minValue = realItem.Stats[Stat.MaxMACRatePercent];
+            minValue = realItem.Stats[Stat.强化魔法防御];
             maxValue = 0;
             addValue = 0;
 
@@ -8031,9 +8031,9 @@ namespace Client.MirScenes
 
             #region HEALTH_RECOVERY
 
-            minValue = realItem.Stats[Stat.HealthRecovery];
+            minValue = realItem.Stats[Stat.生命恢复];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.HealthRecovery] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.生命恢复] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8056,9 +8056,9 @@ namespace Client.MirScenes
 
             #region MANA_RECOVERY
 
-            minValue = realItem.Stats[Stat.SpellRecovery];
+            minValue = realItem.Stats[Stat.法力恢复];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.SpellRecovery] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.法力恢复] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8082,9 +8082,9 @@ namespace Client.MirScenes
 
             #region POISON_RECOVERY
 
-            minValue = realItem.Stats[Stat.PoisonRecovery];
+            minValue = realItem.Stats[Stat.中毒恢复];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.PoisonRecovery] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.中毒恢复] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8108,9 +8108,9 @@ namespace Client.MirScenes
 
             #region AGILITY
 
-            minValue = realItem.Stats[Stat.Agility];
+            minValue = realItem.Stats[Stat.敏捷];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.Agility] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.敏捷] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8138,9 +8138,9 @@ namespace Client.MirScenes
 
             #region STRONG
 
-            minValue = realItem.Stats[Stat.Strong];
+            minValue = realItem.Stats[Stat.强度];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.Strong] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.强度] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8164,9 +8164,9 @@ namespace Client.MirScenes
 
             #region POISON_RESIST
 
-            minValue = realItem.Stats[Stat.PoisonResist];
+            minValue = realItem.Stats[Stat.毒物躲避];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.PoisonResist] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.毒物躲避] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8193,9 +8193,9 @@ namespace Client.MirScenes
 
             #region MAGIC_RESIST
 
-            minValue = realItem.Stats[Stat.MagicResist];
+            minValue = realItem.Stats[Stat.魔法躲避];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.MagicResist] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.魔法躲避] : 0;
 
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
@@ -8223,7 +8223,7 @@ namespace Client.MirScenes
 
             #region MAX_DC_RATE
 
-            minValue = realItem.Stats[Stat.MaxDCRatePercent];
+            minValue = realItem.Stats[Stat.物理攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8247,7 +8247,7 @@ namespace Client.MirScenes
 
             #region MAX_MC_RATE
 
-            minValue = realItem.Stats[Stat.MaxMCRatePercent];
+            minValue = realItem.Stats[Stat.魔法攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8271,7 +8271,7 @@ namespace Client.MirScenes
 
             #region MAX_SC_RATE
 
-            minValue = realItem.Stats[Stat.MaxSCRatePercent];
+            minValue = realItem.Stats[Stat.道术攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8295,7 +8295,7 @@ namespace Client.MirScenes
 
             #region DAMAGE_REDUCTION
 
-            minValue = realItem.Stats[Stat.DamageReductionPercent];
+            minValue = realItem.Stats[Stat.伤害减免数率];
             maxValue = 0;
             addValue = 0;
 
@@ -8358,7 +8358,7 @@ namespace Client.MirScenes
 
             #region HANDWEIGHT
 
-            minValue = realItem.Stats[Stat.HandWeight];
+            minValue = realItem.Stats[Stat.腕力负重];
             maxValue = 0;
             addValue = 0;
 
@@ -8384,7 +8384,7 @@ namespace Client.MirScenes
 
             #region WEARWEIGHT
 
-            minValue = realItem.Stats[Stat.WearWeight];
+            minValue = realItem.Stats[Stat.装备负重];
             maxValue = 0;
             addValue = 0;
 
@@ -8410,7 +8410,7 @@ namespace Client.MirScenes
 
             #region BAGWEIGHT
 
-            minValue = realItem.Stats[Stat.BagWeight];
+            minValue = realItem.Stats[Stat.背包负重];
             maxValue = 0;
             addValue = 0;
 
@@ -8812,23 +8812,23 @@ namespace Client.MirScenes
 
                 switch (MapObject.User.Class)
                 {
-                    case MirClass.Warrior:
+                    case MirClass.战士:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.战士))
                             colour = Color.Red;
                         break;
-                    case MirClass.Wizard:
+                    case MirClass.法师:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.法师))
                             colour = Color.Red;
                         break;
-                    case MirClass.Taoist:
+                    case MirClass.道士:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.道士))
                             colour = Color.Red;
                         break;
-                    case MirClass.Assassin:
+                    case MirClass.刺客:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.刺客))
                             colour = Color.Red;
                         break;
-                    case MirClass.Archer:
+                    case MirClass.弓箭:
                         if (!realItem.RequiredClass.HasFlag(RequiredClass.弓箭))
                             colour = Color.Red;
                         break;
@@ -11493,13 +11493,13 @@ namespace Client.MirScenes
                 {
                     GameScene.LogTime = CMain.Time + Globals.LogDelay;
 
-                    if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
+                    if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
                     {
                         if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                         {
                             if (CMain.Time > GameScene.AttackTime)
                             {
-                                User.QueuedAction = new QueuedAction { Action = MirAction.AttackRange1, Direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation), Location = User.CurrentLocation, Params = new List<object>() };
+                                User.QueuedAction = new QueuedAction { Action = MirAction.远程攻击1, Direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation), Location = User.CurrentLocation, Params = new List<object>() };
                                 User.QueuedAction.Params.Add(MapObject.TargetObject != null ? MapObject.TargetObject.ObjectID : (uint)0);
                                 User.QueuedAction.Params.Add(MapObject.TargetObject.CurrentLocation);
 
@@ -11521,7 +11521,7 @@ namespace Client.MirScenes
                     {
                         if (CMain.Time > GameScene.AttackTime && CanRideAttack() && !User.Poison.HasFlag(PoisonType.Dazed))
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Attack1, Direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation), Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.近距攻击1, Direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation), Location = User.CurrentLocation };
                             return;
                         }
                     }
@@ -11531,7 +11531,7 @@ namespace Client.MirScenes
             {
                 if (CMain.Time > GameScene.AttackTime)
                 {
-                    User.QueuedAction = new QueuedAction { Action = MirAction.Mine, Direction = User.Direction, Location = User.CurrentLocation };
+                    User.QueuedAction = new QueuedAction { Action = MirAction.挖矿动作, Direction = User.Direction, Location = User.CurrentLocation };
                     return;
                 }
             }
@@ -11554,18 +11554,18 @@ namespace Client.MirScenes
                         }
                         if (!fail)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.跑步动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
                             return;
                         }
                     }
                     if ((CanWalk(direction, out direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, direction, 1))))
                     {
-                        User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                        User.QueuedAction = new QueuedAction { Action = MirAction.行走动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                         return;
                     }
                     if (direction != User.Direction)
                     {
-                        User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
+                        User.QueuedAction = new QueuedAction { Action = MirAction.站立动作, Direction = direction, Location = User.CurrentLocation };
                         return;
                     }
                     return;
@@ -11579,7 +11579,7 @@ namespace Client.MirScenes
 
                         if (CMain.Alt && !User.RidingMount)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Harvest, Direction = direction, Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.挖矿展示, Direction = direction, Location = User.CurrentLocation };
                             return;
                         }
 
@@ -11590,7 +11590,7 @@ namespace Client.MirScenes
                                 MapObject target = null;
                                 if (MapObject.MouseObject is MonsterObject || MapObject.MouseObject is PlayerObject) target = MapObject.MouseObject;
 
-                                if (User.Class == MirClass.Archer && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
+                                if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Poison.HasFlag(PoisonType.Dazed))
                                 {
                                     if (target != null)
                                     {
@@ -11605,7 +11605,7 @@ namespace Client.MirScenes
                                         }
                                     }
 
-                                    User.QueuedAction = new QueuedAction { Action = MirAction.AttackRange1, Direction = MouseDirection(), Location = User.CurrentLocation, Params = new List<object>() };
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.远程攻击1, Direction = MouseDirection(), Location = User.CurrentLocation, Params = new List<object>() };
                                     User.QueuedAction.Params.Add(target != null ? target.ObjectID : (uint)0);
                                     User.QueuedAction.Params.Add(Functions.PointMove(User.CurrentLocation, MouseDirection(), 9));
                                     return;
@@ -11615,18 +11615,18 @@ namespace Client.MirScenes
                                 if (GameScene.User.DoubleSlash && (!User.HasClassWeapon && User.Weapon > -1)) return;
                                 if (User.Poison.HasFlag(PoisonType.Dazed)) return;
 
-                                User.QueuedAction = new QueuedAction { Action = MirAction.Attack1, Direction = direction, Location = User.CurrentLocation };
+                                User.QueuedAction = new QueuedAction { Action = MirAction.近距攻击1, Direction = direction, Location = User.CurrentLocation };
                             }
                             return;
                         }
 
-                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.Archer && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
+                        if (MapObject.MouseObject is MonsterObject && User.Class == MirClass.弓箭 && MapObject.TargetObject != null && !MapObject.TargetObject.Dead && User.HasClassWeapon && !User.RidingMount) //ArcherTest - range attack
                         {
                             if (Functions.InRange(MapObject.MouseObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                             {
                                 if (CMain.Time > GameScene.AttackTime)
                                 {
-                                    User.QueuedAction = new QueuedAction { Action = MirAction.AttackRange1, Direction = direction, Location = User.CurrentLocation, Params = new List<object>() };
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.远程攻击1, Direction = direction, Location = User.CurrentLocation, Params = new List<object>() };
                                     User.QueuedAction.Params.Add(MapObject.TargetObject.ObjectID);
                                     User.QueuedAction.Params.Add(MapObject.TargetObject.CurrentLocation);
                                 }
@@ -11659,7 +11659,7 @@ namespace Client.MirScenes
                             {
                                 if (direction != User.Direction)
                                 {
-                                    User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.站立动作, Direction = direction, Location = User.CurrentLocation };
                                     return;
                                 }
                                 AutoHit = true;
@@ -11669,12 +11669,12 @@ namespace Client.MirScenes
                         if ((CanWalk(direction, out direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, direction, 1))))
                         {
 
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.行走动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                             return;
                         }
                         if (direction != User.Direction)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.站立动作, Direction = direction, Location = User.CurrentLocation };
                             return;
                         }
 
@@ -11694,7 +11694,7 @@ namespace Client.MirScenes
                         {
                             if (direction != User.Direction)
                             {
-                                User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
+                                User.QueuedAction = new QueuedAction { Action = MirAction.站立动作, Direction = direction, Location = User.CurrentLocation };
                             }
                             return;
                         }
@@ -11712,18 +11712,18 @@ namespace Client.MirScenes
                             }
                             if (!fail)
                             {
-                                User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, User.RidingMount || (User.Sprint && !User.Sneaking) ? 3 : 2) };
+                                User.QueuedAction = new QueuedAction { Action = MirAction.跑步动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, User.RidingMount || (User.Sprint && !User.Sneaking) ? 3 : 2) };
                                 return;
                             }
                         }
                         if ((CanWalk(direction, out direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, direction, 1))))
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.行走动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                             return;
                         }
                         if (direction != User.Direction)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.站立动作, Direction = direction, Location = User.CurrentLocation };
                             return;
                         }
                         break;
@@ -11767,12 +11767,12 @@ namespace Client.MirScenes
 
                     if (GameScene.CanRun && CanRun(dir) && CMain.Time > GameScene.NextRunTime && User.HP >= 10 && CurrentPath.Count > (User.RidingMount ? 2 : 1))
                     {
-                        User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = dir, Location = Functions.PointMove(User.CurrentLocation, dir, User.RidingMount ? 3 : 2) };
+                        User.QueuedAction = new QueuedAction { Action = MirAction.跑步动作, Direction = dir, Location = Functions.PointMove(User.CurrentLocation, dir, User.RidingMount ? 3 : 2) };
                         return;
                     }
                     if (CanWalk(dir))
                     {
-                        User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = dir, Location = Functions.PointMove(User.CurrentLocation, dir, 1) };
+                        User.QueuedAction = new QueuedAction { Action = MirAction.行走动作, Direction = dir, Location = Functions.PointMove(User.CurrentLocation, dir, 1) };
 
                         return;
                     }
@@ -11783,12 +11783,12 @@ namespace Client.MirScenes
             if (((!MapObject.TargetObject.Name.EndsWith(")") && !(MapObject.TargetObject is PlayerObject)) || !CMain.Shift) &&
                 (MapObject.TargetObject.Name.EndsWith(")") || !(MapObject.TargetObject is MonsterObject))) return;
             if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, 1)) return;
-            if (User.Class == MirClass.Archer && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
+            if (User.Class == MirClass.弓箭 && User.HasClassWeapon && (MapObject.TargetObject is MonsterObject || MapObject.TargetObject is PlayerObject)) return; //ArcherTest - stop walking
             direction = Functions.DirectionFromPoint(User.CurrentLocation, MapObject.TargetObject.CurrentLocation);
 
             if (!CanWalk(direction, out direction)) return;
 
-            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+            User.QueuedAction = new QueuedAction { Action = MirAction.行走动作, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
         }
 
         public void UseMagic(ClientMagic magic, UserObject actor)
@@ -11816,15 +11816,15 @@ namespace Client.MirScenes
 
             if (magic.Spell == Spell.Teleport || magic.Spell == Spell.Blink || magic.Spell == Spell.StormEscape)
             {
-                if (actor.Stats[Stat.TeleportManaPenaltyPercent] > 0)
+                if (actor.Stats[Stat.传送技法力消耗数率] > 0)
                 {
-                    cost += (cost * actor.Stats[Stat.TeleportManaPenaltyPercent]) / 100;
+                    cost += (cost * actor.Stats[Stat.传送技法力消耗数率]) / 100;
                 }
             }
 
-            if (actor.Stats[Stat.ManaPenaltyPercent] > 0)
+            if (actor.Stats[Stat.法力值消耗数率] > 0)
             {
-                cost += (cost * actor.Stats[Stat.ManaPenaltyPercent]) / 100;
+                cost += (cost * actor.Stats[Stat.法力值消耗数率]) / 100;
             }
 
             if (cost > actor.MP)
@@ -12020,7 +12020,7 @@ namespace Client.MirScenes
 
             if (actor == User)
             {
-                User.QueuedAction = new QueuedAction { Action = MirAction.Spell, Direction = dir, Location = User.CurrentLocation, Params = new List<object>() };
+                User.QueuedAction = new QueuedAction { Action = MirAction.施法动作, Direction = dir, Location = User.CurrentLocation, Params = new List<object>() };
                 User.QueuedAction.Params.Add(magic.Spell);
                 User.QueuedAction.Params.Add(targetID);
                 User.QueuedAction.Params.Add(location);
@@ -12164,8 +12164,8 @@ namespace Client.MirScenes
         private bool CanRun(MirDirection dir)
         {
             if (User.InTrapRock) return false;
-            if (User.CurrentBagWeight > User.Stats[Stat.BagWeight]) return false;
-            if (User.CurrentWearWeight > User.Stats[Stat.BagWeight]) return false;
+            if (User.CurrentBagWeight > User.Stats[Stat.背包负重]) return false;
+            if (User.CurrentWearWeight > User.Stats[Stat.背包负重]) return false;
             if (CanWalk(dir) && EmptyCell(Functions.PointMove(User.CurrentLocation, dir, 2)))
             {
                 if (User.RidingMount || User.Sprint && !User.Sneaking)
@@ -12193,7 +12193,7 @@ namespace Client.MirScenes
         public bool CanFish(MirDirection dir)
         {
             if (!GameScene.User.HasFishingRod || GameScene.User.FishingTime + 1000 > CMain.Time) return false;
-            if (GameScene.User.CurrentAction != MirAction.Standing) return false;
+            if (GameScene.User.CurrentAction != MirAction.站立动作) return false;
             if (GameScene.User.Direction != dir) return false;
             if (GameScene.User.TransformType >= 6 && GameScene.User.TransformType <= 9) return false;
 

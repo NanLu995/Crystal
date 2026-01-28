@@ -74,10 +74,10 @@ namespace Client.MirScenes.Dialogs
                     Libraries.StateItems.Draw(Grid[(int)EquipmentSlot.头盔].Item.Info.Image, DisplayLocation, Color.White, true, 1F);
                 else
                 {
-                    int hair = 441 + actor.Hair + (actor.Class == MirClass.Assassin ? 20 : 0) + (actor.Gender == MirGender.男性 ? 0 : 40);
+                    int hair = 441 + actor.Hair + (actor.Class == MirClass.刺客 ? 20 : 0) + (actor.Gender == MirGender.男性 ? 0 : 40);
 
-                    int offSetX = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.男性 ? 6 : 4) : 0;
-                    int offSetY = actor.Class == MirClass.Assassin ? (actor.Gender == MirGender.男性 ? 25 : 18) : 0;
+                    int offSetX = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 6 : 4) : 0;
+                    int offSetY = actor.Class == MirClass.刺客 ? (actor.Gender == MirGender.男性 ? 25 : 18) : 0;
 
                     Libraries.Prguse.Draw(hair, new Point(DisplayLocation.X + offSetX, DisplayLocation.Y + offSetY), Color.White, true, 1F);
                 }
@@ -100,12 +100,12 @@ namespace Client.MirScenes.Dialogs
                 SCLabel.Text = string.Format("{0}-{1}", actor.Stats[Stat.MinSC], actor.Stats[Stat.MaxSC]);
                 HealthLabel.Text = string.Format("{0}/{1}", actor.HP, actor.Stats[Stat.HP]);
                 ManaLabel.Text = string.Format("{0}/{1}", actor.MP, actor.Stats[Stat.MP]);
-                CritRLabel.Text = string.Format("{0}%", actor.Stats[Stat.CriticalRate]);
-                CritDLabel.Text = string.Format("{0}", actor.Stats[Stat.CriticalDamage]);
-                AttkSpdLabel.Text = string.Format("{0}", actor.Stats[Stat.AttackSpeed]);
-                AccLabel.Text = string.Format("+{0}", actor.Stats[Stat.Accuracy]);
-                AgilLabel.Text = string.Format("+{0}", actor.Stats[Stat.Agility]);
-                LuckLabel.Text = string.Format("{0}", actor.Stats[Stat.Luck]);
+                CritRLabel.Text = string.Format("{0}%", actor.Stats[Stat.暴击率]);
+                CritDLabel.Text = string.Format("{0}", actor.Stats[Stat.暴击伤害]);
+                AttkSpdLabel.Text = string.Format("{0}", actor.Stats[Stat.攻击速度]);
+                AccLabel.Text = string.Format("+{0}", actor.Stats[Stat.准确]);
+                AgilLabel.Text = string.Format("+{0}", actor.Stats[Stat.敏捷]);
+                LuckLabel.Text = string.Format("{0}", actor.Stats[Stat.幸运]);
             };
 
             StatePage = new MirImageControl
@@ -119,17 +119,17 @@ namespace Client.MirScenes.Dialogs
             StatePage.BeforeDraw += (o, e) =>
             {
                 ExpPLabel.Text = string.Format("{0:0.##%}", actor.Experience / (double)actor.MaxExperience);
-                BagWLabel.Text = string.Format("{0}/{1}", actor.CurrentBagWeight, actor.Stats[Stat.BagWeight]);
-                WearWLabel.Text = string.Format("{0}/{1}", actor.CurrentWearWeight, actor.Stats[Stat.WearWeight]);
-                HandWLabel.Text = string.Format("{0}/{1}", actor.CurrentHandWeight, actor.Stats[Stat.HandWeight]);
-                MagicRLabel.Text = string.Format("+{0}", actor.Stats[Stat.MagicResist]);
-                PoisonResLabel.Text = string.Format("+{0}", actor.Stats[Stat.PoisonResist]);
-                HealthRLabel.Text = string.Format("+{0}", actor.Stats[Stat.HealthRecovery]);
-                ManaRLabel.Text = string.Format("+{0}", actor.Stats[Stat.SpellRecovery]);
-                PoisonRecLabel.Text = string.Format("+{0}", actor.Stats[Stat.PoisonRecovery]);
-                HolyTLabel.Text = string.Format("+{0}", actor.Stats[Stat.Holy]);
-                FreezeLabel.Text = string.Format("+{0}", actor.Stats[Stat.Freezing]);
-                PoisonAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.PoisonAttack]);
+                BagWLabel.Text = string.Format("{0}/{1}", actor.CurrentBagWeight, actor.Stats[Stat.背包负重]);
+                WearWLabel.Text = string.Format("{0}/{1}", actor.CurrentWearWeight, actor.Stats[Stat.装备负重]);
+                HandWLabel.Text = string.Format("{0}/{1}", actor.CurrentHandWeight, actor.Stats[Stat.腕力负重]);
+                MagicRLabel.Text = string.Format("+{0}", actor.Stats[Stat.魔法躲避]);
+                PoisonResLabel.Text = string.Format("+{0}", actor.Stats[Stat.毒物躲避]);
+                HealthRLabel.Text = string.Format("+{0}", actor.Stats[Stat.生命恢复]);
+                ManaRLabel.Text = string.Format("+{0}", actor.Stats[Stat.法力恢复]);
+                PoisonRecLabel.Text = string.Format("+{0}", actor.Stats[Stat.中毒恢复]);
+                HolyTLabel.Text = string.Format("+{0}", actor.Stats[Stat.神圣]);
+                FreezeLabel.Text = string.Format("+{0}", actor.Stats[Stat.冰冻伤害]);
+                PoisonAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.毒素伤害]);
             };
 
 
@@ -663,19 +663,19 @@ namespace Client.MirScenes.Dialogs
 
             switch (Actor.Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     ClassImage.Index = 100;// + offSet * 5;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     ClassImage.Index = 101;// + offSet * 5;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     ClassImage.Index = 102;// + offSet * 5;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     ClassImage.Index = 103;// + offSet * 5;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     ClassImage.Index = 104;// + offSet * 5;
                     break;
             }

@@ -23,14 +23,14 @@ namespace Server.MirObjects
             if (Target != null)
             {
                 UserMagic magic = GetMagic(Spell.MagicShield);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.MagicShield))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.魔法盾))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
                 }
 
                 magic = GetMagic(Spell.MagicBooster);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.MagicBooster))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.深延术))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
