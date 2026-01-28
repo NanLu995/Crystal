@@ -20,8 +20,8 @@ namespace Client.MirObjects
         public Spell Spell;
         public Point AnimationOffset = new(0, 0);
         public int FrameCount, FrameInterval, FrameIndex;
-        public bool Repeat, Ended;
-        
+        public bool Repeat, Ended, DrawBehind;
+
 
         public SpellObject(uint objectID) : base(objectID)
         {
@@ -36,6 +36,7 @@ namespace Client.MirObjects
             Direction = info.Direction;
             Repeat = true;
             Ended = false;
+            DrawBehind = false;
 
             switch (Spell)
             {
@@ -80,7 +81,7 @@ namespace Client.MirObjects
                     break;
                 case Spell.MeteorStrike:
                     AnimationOffset = new Point(0, -20);
-                    MapControl.Effects.Add(new Effect(Libraries.Magic2, 1600, 10, 800, CurrentLocation) { Repeat = true, RepeatUntil = CMain.Time + 3000 });
+                    MapControl.Effects.Add(new Effect(Libraries.Magic2, 1600, 10, 800, CurrentLocation) { DrawBehind = true, Repeat = true, RepeatUntil = CMain.Time + 3000 });
                     BodyLibrary = Libraries.Magic2;
                     DrawFrame = 1610;
                     FrameInterval = 100;
@@ -88,6 +89,17 @@ namespace Client.MirObjects
                     Light = 3;
                     Blend = true;
                     Repeat = false;
+                    break;
+                case Spell.HealingcircleRare:
+                    DrawColour = Color.FromArgb(100, 255, 200, 150); 
+                    BodyLibrary = Libraries.Magic3;
+                    DrawFrame = 630;
+                    FrameInterval = 100;
+                    FrameCount = 11;
+                    Light = 5;
+                    Blend = true;
+                    Repeat = true;
+                    DrawBehind = true;
                     break;
                 case Spell.Rubble:
                     if (Direction == 0)
@@ -210,6 +222,7 @@ namespace Client.MirObjects
                     FrameCount = 15;
                     Blend = false;
                     Repeat = false;
+                    DrawBehind = true;
                     SoundManager.PlaySound(8343);
                     break;
                 case Spell.TucsonGeneralRock:
@@ -230,6 +243,7 @@ namespace Client.MirObjects
                     Blend = true;
                     break;
                 case Spell.HealingCircle:
+                    DrawColour = Color.FromArgb(128, 255, 255, 100); 
                     BodyLibrary = Libraries.Magic3;
                     DrawFrame = 630;
                     FrameInterval = 80;

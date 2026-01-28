@@ -77,6 +77,8 @@ namespace Server.MirObjects
         public bool CoolEye;
         private bool _hidden;
 
+        public bool BuffNoDrug { get; set; }
+
         public bool Hidden
         {
             get
@@ -606,6 +608,19 @@ namespace Server.MirObjects
                                 }
                             }
                             break;
+                        case BuffStackType.AttrStackStat:
+                            if (stats != null)
+                            {
+                                foreach (var stat in stats.Values)
+                                {
+                                    if (buff.Stats.Values.ContainsKey(stat.Key))
+                                    {
+                                        continue;
+                                    }
+                                    buff.Stats[stat.Key] = stat.Value;
+                                }
+                            }
+                            break;
                         case BuffStackType.StackStatAndDuration:
                             {
                                 if (stats != null)
@@ -615,6 +630,20 @@ namespace Server.MirObjects
 
                                 buff.ExpireTime += duration;
                             }
+                            break;
+                        case BuffStackType.AttrStackStatAndDuration:
+                            if (stats != null)
+                            {
+                                foreach (var stat in stats.Values)
+                                {
+                                    if (buff.Stats.Values.ContainsKey(stat.Key))
+                                    {
+                                        continue;
+                                    }
+                                    buff.Stats[stat.Key] = stat.Value;
+                                }
+                            }
+                            buff.ExpireTime += duration;
                             break;
                         case BuffStackType.ResetStat:
                         {
@@ -664,6 +693,9 @@ namespace Server.MirObjects
                     Hidden = true;
                     HideFromTargets();
                     break;
+                case BuffType.绝对封锁:
+                    BuffNoDrug = true;
+                    break;
             }
 
             return buff;
@@ -687,6 +719,12 @@ namespace Server.MirObjects
                         if (!HasAnyBuffs(b, BuffType.隐身戒指, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
+                        }
+                        break;
+                    case BuffType.绝对封锁:
+                        if (!HasAnyBuffs(BuffType.绝对封锁))
+                        {
+                            BuffNoDrug = false;
                         }
                         break;
                 }

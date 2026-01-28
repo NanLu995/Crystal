@@ -27,7 +27,7 @@ namespace Client.MirObjects
         public byte Hair;
         public ushort Level;
 
-        public MLibrary WeaponLibrary1, WeaponEffectLibrary1, WeaponLibrary2, HairLibrary, WingLibrary, MountLibrary;
+        public MLibrary WeaponLibrary1, WeaponEffectLibrary1, WeaponLibrary2, WeaponEffectLibrary2, HairLibrary, WingLibrary, MountLibrary;
         public int Armour, Weapon, WeaponEffect, ArmourOffSet, HairOffSet, WeaponOffSet, WingOffset, MountOffset;
 
         public int DieSound, FlinchSound, AttackSound;
@@ -94,7 +94,7 @@ namespace Client.MirObjects
 
         public bool RidingMount, Sprint, FastRun, Fishing, FoundFish;
         public long StanceTime, MountTime, FishingTime;
-        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime;
+        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime, DimensionalSwordTime;
 
         public short MountType = -1, TransformType = -1;
 
@@ -291,6 +291,16 @@ namespace Client.MirObjects
                     case 36:
                     case 37:
                     case 38:
+                    case 43:
+                    case 44:
+                    case 45:
+                    case 46:
+                    case 47:
+                    case 48:
+                    case 49:
+                    case 50:
+                    case 51:
+                    case 52:
                         showFishing = false;
                         break;
                     case 6:
@@ -316,18 +326,29 @@ namespace Client.MirObjects
                     case MirAction.弓箭奔跑:
                         Frames.TryGetValue(MirAction.跑步动作, out Frame);
                         break;
+                    case MirAction.站立姿势:
+                        Frames.TryGetValue(MirAction.站立姿势, out Frame);
+                        break;
                     case MirAction.近距攻击1:
-                    case MirAction.近距攻击2:
-                    case MirAction.近距攻击3:
                     case MirAction.近距攻击4:
+                        Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                        break;
+                    case MirAction.近距攻击2:
+                    case MirAction.挖矿动作:
+                        Frames.TryGetValue(MirAction.近距攻击2, out Frame);
+                        break;
+                    case MirAction.近距攻击3:
+                        Frames.TryGetValue(MirAction.近距攻击3, out Frame);
+                        break;
+                    case MirAction.施法动作:
                     case MirAction.远程攻击1:
                     case MirAction.远程攻击2:
                     case MirAction.远程攻击3:
-                        Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                        Frames.TryGetValue(MirAction.施法动作, out Frame);
                         break;
                 }
 
-                if (MountType > 6 && RidingMount)
+                if (MountType >= 0 && RidingMount && TransformType <= 44)
                 {
                     ArmourOffSet = -416;
                     BodyLibrary = TransformType < Libraries.TransformMounts.Length ? Libraries.TransformMounts[TransformType] : Libraries.TransformMounts[0];
@@ -342,9 +363,21 @@ namespace Client.MirObjects
                 WeaponLibrary1 = null;
                 WeaponLibrary2 = null;
 
+                if (TransformType == 18)
+                {
+                    WingEffect = 19;
+                    WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
+                }
+                else
                 if (TransformType == 19)
                 {
-                    WingEffect = 2;
+                    WingEffect = 20;
+                    WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
+                }
+                else
+                if (TransformType == 45)
+                {
+                    WingEffect = 46;
                     WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
                 }
                 else
@@ -404,9 +437,23 @@ namespace Client.MirObjects
                             int Index = Weapon - 200;
 
                             if (altAnim)
+                            {
                                 WeaponLibrary2 = Index < Libraries.ARWeaponsS.Length ? Libraries.ARWeaponsS[Index] : null;
+
+                                if (WeaponEffect > 0)
+                                    WeaponEffectLibrary2 = WeaponEffect < Libraries.ARWeaponsEffectS.Length ? Libraries.ARWeaponsEffectS[WeaponEffect] : null;
+                                else
+                                    WeaponEffectLibrary2 = null;
+                            }
                             else
+                            {
                                 WeaponLibrary2 = Index < Libraries.ARWeapons.Length ? Libraries.ARWeapons[Index] : null;
+
+                                if (WeaponEffect > 0)
+                                    WeaponEffectLibrary2 = WeaponEffect < Libraries.ARWeaponsEffect.Length ? Libraries.ARWeaponsEffect[WeaponEffect] : null;
+                                else
+                                    WeaponEffectLibrary2 = null;
+                            }
 
                             WeaponLibrary1 = null;
                         }
@@ -500,6 +547,17 @@ namespace Client.MirObjects
 
                             WeaponLibrary1 = Index < Libraries.AWeaponsL.Length ? Libraries.AWeaponsR[Index] : null;
                             WeaponLibrary2 = Index < Libraries.AWeaponsR.Length ? Libraries.AWeaponsL[Index] : null;
+
+                            if (WeaponEffect >= 100 && WeaponEffect <= 199)
+                            {
+                                WeaponEffectLibrary1 = WeaponEffect - 100 < Libraries.AWeaponEffectL.Length ? Libraries.AWeaponEffectR[WeaponEffect - 100] : null;
+                                WeaponEffectLibrary2 = WeaponEffect - 100 < Libraries.AWeaponEffectR.Length ? Libraries.AWeaponEffectL[WeaponEffect - 100] : null;
+                            }
+                            else
+                            {
+                                WeaponEffectLibrary1 = null;
+                                WeaponEffectLibrary2 = null;
+                            }
                         }
                         else
                         {
@@ -647,19 +705,19 @@ namespace Client.MirObjects
                 Effects.Add(ShieldEffect = new Effect(Libraries.Magic, 3890, 3, 600, this) { Repeat = true });
             }
 
-            if (WingEffect >= 100)
+            if (WingEffect > 0) //if (WingEffect >= 100)
             {
                 switch(WingEffect)
                 {
+                    case 4:
+                        Effects.Add(new SpecialEffect(Libraries.CHumEffect[4], 0, 20, 3600, this, true, false, 0) { Repeat = true });
+                        break;
                     case 100: //Oma King Robe effect
                         Effects.Add(new SpecialEffect(Libraries.Effect, 352, 33, 3600, this, true, false, 0) { Repeat = true });
                         break;
-						case 101://Black Dragon Armour  Fire effect
-                        Effects.Add(new SpecialEffect(Libraries.CHumEffect[4], 0, 10, 1500, this, true, false, 0u)
-                       {
-                        Repeat = true
-                        });
-                      break;
+                    case 101://Black Dragon Armour  Fire effect
+                        Effects.Add(new SpecialEffect(Libraries.CHumEffect[4], 0, 10, 1500, this, true, false, 0u) { Repeat = true });
+                        break;
                 }
             }
 
@@ -747,7 +805,7 @@ namespace Client.MirObjects
                     GameScene.CanRun = false;
             }
 
-            SkipFrames = this != User && ActionFeed.Count > 0;
+            SkipFrames = this != User && ActionFeed.Count > 1;
 
             ProcessFrames();
 
@@ -785,7 +843,7 @@ namespace Client.MirObjects
 
                     var i = 0;
                     if (CurrentAction == MirAction.坐骑奔跑) i = 3;
-                    else if (CurrentAction == MirAction.跑步动作) 
+                    else if (CurrentAction == MirAction.跑步动作)
                         i = (Sprint && !Sneaking ? 3 : 2);
                     else i = 1;
 
@@ -909,7 +967,7 @@ namespace Client.MirObjects
             {
                 CurrentAction = MirAction.站立动作;
 
-                CurrentAction = CMain.Time > BlizzardStopTime ? CurrentAction : MirAction.站立姿势2;
+                CurrentAction = (CMain.Time > BlizzardStopTime && CMain.Time > GreatFireBallRareStopTime) ? CurrentAction : MirAction.站立姿势2;
 
                 if (RidingMount)
                 {
@@ -1022,6 +1080,8 @@ namespace Client.MirObjects
                         break;
                 }
 
+                temp = new Point(action.Location.X, temp.Y > CurrentLocation.Y ? temp.Y : CurrentLocation.Y);
+
                 if (MapLocation != temp)
                 {
                     GameScene.Scene.MapControl.RemoveObject(this);
@@ -1059,7 +1119,7 @@ namespace Client.MirObjects
                                 Frames.TryGetValue(CurrentAction, out Frame);
                                 break;
                             case MirClass.刺客:
-                                if(GameScene.User.DoubleSlash)
+                                if (GameScene.User.DoubleSlash)
                                     Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                                 else if (CMain.Shift)
                                     Frames.TryGetValue(CMain.Random.Next(100) >= 20 ? (CMain.Random.Next(100) > 40 ? MirAction.近距攻击1 : MirAction.近距攻击4) : (CMain.Random.Next(100) > 10 ? MirAction.近距攻击2 : MirAction.近距攻击3), out Frame);
@@ -1105,7 +1165,16 @@ namespace Client.MirObjects
                                 }
                                 break;
                             case Spell.SlashingBurst:
-                                 Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                                Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                                if (this == User)
+                                {
+                                    MapControl.NextAction = CMain.Time + 2000; // 80%
+                                    GameScene.SpellTime = CMain.Time + 1500; //Spell Delay
+                                }
+                                break;
+                            case Spell.DimensionalSword:
+                            case Spell.DimensionalSwordRare:
+                                Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                                 if (this == User)
                                 {
                                     MapControl.NextAction = CMain.Time + 2000; // 80%
@@ -1179,7 +1248,7 @@ namespace Client.MirObjects
                                     GameScene.SpellTime = CMain.Time + 1500; //Spell Delay
                                 }
                                 break;
-                            case Spell.DoubleShot:                          
+                            case Spell.DoubleShot:
                                 Frames.TryGetValue(MirAction.远程攻击2, out Frame);
                                 CurrentAction = MirAction.远程攻击2;
                                 if (this == User)
@@ -1658,6 +1727,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region HealingRare
+
+                            case Spell.HealingRare:
+                                Effects.Add(new Effect(Libraries.Magic, 200, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + 61 * 10); // M61-0
+                                break;
+
+                            #endregion
+
                             #region Repulsion
 
                             case Spell.Repulsion:
@@ -1690,6 +1768,17 @@ namespace Client.MirObjects
                             case Spell.GreatFireBall:
                                 Effects.Add(new Effect(Libraries.Magic, 400, 10, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
+                            #region GreatFireBallRare
+
+                            case Spell.GreatFireBallRare:
+                                GreatFireBallRareStopTime = CMain.Time + 4000;
+                                Effects.Add(new Effect(Libraries.Magic3, 4420, 10, 1200, this));
+                                Effects.Add(new Effect(Libraries.Magic3, 4430, 6, Frame.Count * FrameInterval, this) { Start = (CMain.Time + 1200), Repeat = true, RepeatUntil = (GreatFireBallRareStopTime) });
+                                SoundManager.PlaySound(20000 + 34 * 10);
                                 break;
 
                             #endregion
@@ -1733,6 +1822,15 @@ namespace Client.MirObjects
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
                             #endregion
+
+                            #region StormEscapeRare
+
+                            case Spell.StormEscapeRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 590, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + 55 * 10);
+                                break;
+                            #endregion
+
                             #region Teleport
 
                             case Spell.Teleport:
@@ -1784,6 +1882,25 @@ namespace Client.MirObjects
                             case Spell.ImmortalSkin:
                                 Effects.Add(new Effect(Libraries.Magic3, 550, 17, Frame.Count * FrameInterval * 4, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 570, 5, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + ((ushort)Spell * 10));
+                                break;
+
+                            #endregion
+
+                            #region ImmortalSkinRare
+
+                            case Spell.ImmortalSkinRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 550, 17, Frame.Count * FrameInterval * 4, this));
+                                Effects.Add(new Effect(Libraries.Magic3, 570, 5, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20170);
+                                break;
+
+                            #endregion
+
+                            #region HeavenlySecrets
+                            case Spell.HeavenlySecrets:
+                                Effects.Add(new Effect(Libraries.Magic3, 200, 8, Frame.Count * FrameInterval * 4, this));
+                                Effects.Add(new Effect(Libraries.Magic3, 210, 7, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
                             #endregion
@@ -2069,6 +2186,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region LionRoarRare
+
+                            case Spell.LionRoarRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 930, 21, 1200, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region TwinDrakeBlade
 
                             case Spell.TwinDrakeBlade:
@@ -2083,6 +2209,15 @@ namespace Client.MirObjects
                             case Spell.Entrapment:
                                 Effects.Add(new Effect(Libraries.Magic2, 990, 10, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
+                            #region EntrapmentRare
+
+                            case Spell.EntrapmentRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 4370, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20070);
                                 break;
 
                             #endregion
@@ -2106,9 +2241,57 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region DimensionalSword
+
+                            case Spell.DimensionalSword:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1160, 3, 300, this));
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1180 + (int)Direction * 10, 4, 4 * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+
+                                MapObject target = MapControl.GetObject(TargetID);
+
+                                if (target == null) return;
+
+                                if (target.Race == ObjectType.Monster || target.Race == ObjectType.Player)
+                                {
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 990 + ((int)Direction * 20), 11, 1000, this));
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 970, 8, 500, this, CMain.Time + 500) { Blend = true });
+                                    DimensionalSwordTime = CMain.Time + 2000;
+                                }
+                                break;
+
+                            #endregion
+
+                            #region DimensionalSwordRare
+
+                            case Spell.DimensionalSwordRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1160, 3, 300, this));
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1300 + (int)Direction * 10, 6, 6 * FrameInterval, this));
+                                SoundManager.PlaySound(20210);
+
+                                MapObject targetRare = MapControl.GetObject(TargetID);
+
+                                if (targetRare == null) return;
+
+                                if (targetRare.Race == ObjectType.Monster || targetRare.Race == ObjectType.Player)
+                                {
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 990 + ((int)Direction * 20), 11, 1000, this));
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 1270, 15, 500, this, CMain.Time + 500) { Blend = true });
+                                    SoundManager.PlaySound(20211);
+                                    DimensionalSwordTime = CMain.Time + 2000;
+                                }
+                                break;
+
+                            #endregion
+
                             #region CounterAttack
 
                             case Spell.CounterAttack:
+                                // Effects.Add(new Effect(Libraries.Magic3, 160, 10, Frame.Count * FrameInterval, this));
+                                // SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                // Effects.Add(new Effect(Libraries.Magic, 3480 + (int)Direction * 10, 6, 6 * FrameInterval, this));
+                                // Point location = Functions.PointMove(CurrentLocation, Direction, 1);
+                                // MapControl.Effects.Add(new Effect(Libraries.Magic3, 170, 6, 600, location, CMain.Time + 200));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 5);
                                 Effects.Add(new Effect(Libraries.Magic, 3480 + (int)Direction * 10, 10, 10 * FrameInterval, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 140, 2, 2 * FrameInterval, this));
@@ -2153,7 +2336,10 @@ namespace Client.MirObjects
                             case Spell.Blizzard:
                                 Effects.Add(new Effect(Libraries.Magic2, 1540, 8, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
-                                BlizzardStopTime = CMain.Time + 3000;
+                                int BlizzardTime = 0;
+                                if (!Buffs.Any(x => x == BuffType.天上秘术)) BlizzardTime = 0;
+                                if (!Buffs.Any(x => x == BuffType.天上秘术)) BlizzardTime = 3000;
+                                BlizzardStopTime = CMain.Time + BlizzardTime;
                                 break;
 
                             #endregion
@@ -2163,7 +2349,19 @@ namespace Client.MirObjects
                             case Spell.MeteorStrike:
                                 Effects.Add(new Effect(Libraries.Magic2, 1590, 10, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
-                                BlizzardStopTime = CMain.Time + 3000;
+                                int MeteorStrikeTime = 0;
+                                if (!Buffs.Any(x => x == BuffType.天上秘术)) MeteorStrikeTime = 0;
+                                if (!Buffs.Any(x => x == BuffType.天上秘术)) MeteorStrikeTime = 3000;
+                                BlizzardStopTime = CMain.Time + MeteorStrikeTime;
+                                break;
+
+                            #endregion
+
+                            #region HealingcircleRare
+
+                            case Spell.HealingcircleRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 610, 8, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 
                             #endregion
@@ -2171,6 +2369,8 @@ namespace Client.MirObjects
                             #region Reincarnation
 
                             case Spell.Reincarnation:
+                                Effects.Add(new Effect(Libraries.Magic2, 1680, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell.Reincarnation * 10);
                                 ReincarnationStopTime = CMain.Time + 6000;
                                 break;
 
@@ -2225,6 +2425,14 @@ namespace Client.MirObjects
                             case Spell.MeteorShower:
                                 Effects.Add(new Effect(Libraries.Magic, 400, 10, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell.GreatFireBall * 10);
+                                break;
+
+                            #endregion
+                            
+                            #region PetEnhancerRare
+
+                            case Spell.PetEnhancerRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 200, 8, Frame.Count * FrameInterval, this));
                                 break;
 
                             #endregion
@@ -2314,7 +2522,8 @@ namespace Client.MirObjects
                     GameScene.Scene.MapControl.TextureValid = false;
 
                     if (this == User) GameScene.Scene.MapControl.FloorValid = false;
-                    if (SkipFrames) FrameIndex = Frame.Count;
+                    // if (SkipFrames) FrameIndex = Frame.Count;
+                    if (SkipFrames) UpdateFrame();
 
                     if (UpdateFrame(false) >= Frame.Count)
                     {
@@ -2458,8 +2667,10 @@ namespace Client.MirObjects
                                         case MirAction.钓鱼等待:
                                             if (FoundFish)
                                             {
-                                                MapControl.Effects.Add(new Effect(Libraries.Effect, 671, 6, 720, FishingPoint) { Light = 0 });
-                                                MapControl.Effects.Add(new Effect(Libraries.Effect, 665, 6, 720, FishingPoint) { Light = 0 });
+                                                //MapControl.Effects.Add(new Effect(Libraries.Effect, 671, 6, 720, FishingPoint) { Light = 0 });
+                                                //MapControl.Effects.Add(new Effect(Libraries.Effect, 665, 6, 720, FishingPoint) { Light = 0 });
+                                                MapControl.Effects.Add(new Effect(Libraries.Effect, 670, 7, 720, FishingPoint) { Light = 0 }); //修正显示动作
+                                                MapControl.Effects.Add(new Effect(Libraries.Effect, 660, 7, 720, FishingPoint) { Light = 0 });
 
                                                 SoundManager.PlaySound(SoundList.Fishing);
                                                 Effects.Add(new Effect(Libraries.Prguse, 1350, 2, 720, this) { Light = 0, Blend = false });
@@ -2872,10 +3083,43 @@ namespace Client.MirObjects
 
                                     #endregion
 
+                                    #region GreatFireBallRare
+
+                                    case Spell.GreatFireBallRare:
+                                        SoundManager.PlaySound(20000 + 34 * 10 + 1);
+                                        missile = CreateProjectile(4430, Libraries.Magic3, true, 6, 30, 4, 0);
+                                        missile.SetStart(GreatFireBallRareStopTime);
+                                        if (missile.Target != null)
+                                        {
+                                            missile.Complete += (o, e) =>
+                                            {
+                                                if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4590, 15, 1000, missile.Target));
+                                                missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4610, 8, 1000, missile.Target) { Start = (CMain.Time + 1000), Repeat = true, RepeatUntil = (1000) });
+                                                missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4620, 5, 1000, missile.Target) { Start = (CMain.Time + 2000), Repeat = false });
+                                                SoundManager.PlaySound(20000 + 34 * 10 + 2);
+                                            };
+                                        }
+                                        break;
+
+                                    #endregion
+
                                     #region Healing
 
                                     case Spell.Healing:
                                         SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
+                                        if (ob == null)
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, TargetPoint));
+                                        else
+                                            ob.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, ob));
+                                        break;
+
+                                    #endregion
+
+                                    #region HealingRare
+
+                                    case Spell.HealingRare:
+                                        SoundManager.PlaySound(20000 + 61 * 10 + 1);// M61-1
                                         if (ob == null)
                                             MapControl.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, TargetPoint));
                                         else
@@ -3278,7 +3522,22 @@ namespace Client.MirObjects
                                     case Spell.MeteorStrike:
                                         SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
                                         SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 2);
-                                        //BlizzardFreezeTime = CMain.Time + 3000;
+                                        break;
+
+                                    #endregion
+
+                                    #region HealingcircleRare
+
+                                    case Spell.HealingcircleRare:
+                                        SoundManager.PlaySound(20860);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic3, 620, 10, 1200, TargetPoint));
+                                        };
+                                        ReincarnationStopTime = 0;
                                         break;
 
                                     #endregion
@@ -3286,6 +3545,16 @@ namespace Client.MirObjects
                                     #region Reincarnation
 
                                     case Spell.Reincarnation:
+
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic2, 1680, 10, 1200, TargetPoint));
+                                            SoundManager.PlaySound(20000 + (ushort)Spell.Reincarnation * 10 + 1);
+                                        };
                                         ReincarnationStopTime = 0;
                                         break;
 
@@ -3412,6 +3681,38 @@ namespace Client.MirObjects
                                             }
                                         }
                                         
+                                        break;
+
+                                    #endregion
+                                    
+                                    #region MultipleEffects
+
+                                    case Spell.MultipleEffects:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, 1700, 19, 1200, TargetPoint));
+                                            SoundManager.PlaySound(20000 + (ushort)Spell.MultipleEffects * 10 + 1);
+                                        };
+                                        break;
+
+                                    #endregion
+
+                                    #region MultipleEffectsRare
+
+                                    case Spell.MultipleEffectsRare:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, 1730, 26, 1200, TargetPoint));
+                                            SoundManager.PlaySound(20000 + (ushort)Spell.MultipleEffectsRare * 10 + 1);
+                                        };
                                         break;
 
                                     #endregion
@@ -4881,6 +5182,9 @@ namespace Client.MirObjects
             float oldOpacity = DXManager.Opacity;
             if (Hidden && !DXManager.Blending) DXManager.SetOpacity(0.5F);
 
+            DrawTransform();
+            {
+            }
             DrawMount();
 
             if (!RidingMount)
@@ -5053,6 +5357,174 @@ namespace Client.MirObjects
             if (HairLibrary != null)
                 HairLibrary.Draw(DrawFrame + HairOffSet, DrawLocation, DrawColour, true);
         }
+
+        public void DrawTransform()
+        {
+            switch (TransformType)
+            {
+                case 4:
+                    {
+                        if (TransformType == 4)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(5440 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 18:
+                    {
+                        if (TransformType == 18)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.站立动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(0 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.行走动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(32 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.跑步动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(80 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.站立姿势:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.近距攻击1:
+                                case MirAction.近距攻击4:                                
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.近距攻击2:
+                                case MirAction.挖矿动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(184 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.近距攻击3:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.施法动作:
+                                case MirAction.远程攻击1:
+                                case MirAction.远程攻击2:
+                                case MirAction.远程攻击3:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.挖矿展示:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.被击动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(360 + ((int)Direction * 3) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.死亡动作:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(384 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.死后尸体:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(387 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 28:
+                    {
+                        if (TransformType == 28)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(4880 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(120, 255, 255, 120), true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 31:
+                    {
+                        if (TransformType == 31)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(7580 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(255, 64, 255, 255), true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 32:
+                    {
+                        if (TransformType == 32)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(5530 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(255, 64, 255, 255), true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 43:
+                    {
+                        if (TransformType == 43)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(7430 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 45:
+                    {
+                        if (TransformType == 45)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.站立动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(0 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.行走动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(32 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.跑步动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(80 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.站立姿势:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.近距攻击1:
+                                case MirAction.近距攻击4:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.近距攻击2:
+                                case MirAction.挖矿动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(184 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.近距攻击3:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.施法动作:
+                                case MirAction.远程攻击1:
+                                case MirAction.远程攻击2:
+                                case MirAction.远程攻击3:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.挖矿展示:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.被击动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(360 + ((int)Direction * 3) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.死亡动作:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(384 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.死后尸体:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(387 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.刺客步刺:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend((139 + FrameIndex + (int)Direction * 1) - 5, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                                case MirAction.站立姿势2:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend((300 + FrameIndex + ((int)Direction * 1)) - 5, DrawLocation, Color.White, true, 0.7F);
+                                    break;
+                            }
+                    }
+                    break;
+            }
+        }
+
+
 		public void DrawWeapon()
 		{
 			if (Weapon < 0) return;
@@ -5070,7 +5542,13 @@ namespace Client.MirObjects
             if (Weapon == -1) return;
 
             if (WeaponLibrary2 != null)
+            {
                 WeaponLibrary2.Draw(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true);
+
+                if (WeaponEffectLibrary2 != null)
+                    WeaponEffectLibrary2.DrawBlend(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true, 0.4F);
+            }
+
         }
         public void DrawWings()
         {

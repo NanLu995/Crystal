@@ -1153,6 +1153,16 @@ namespace Client.MirScenes
                 };
                 messageBox.Show();
             }
+            else if (User.Dead)
+            {
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LogOutTip), MirMessageBoxButtons.YesNo);
+                messageBox.YesButton.Click += (o, e) =>
+                {
+                    Network.Enqueue(new C.LogOut());
+                    Enabled = false;
+                };
+                messageBox.Show();
+            }
             else
             {
                 ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.CannotLeaveGame), (LogTime - CMain.Time) / 1000), ChatType.System);
@@ -3282,7 +3292,10 @@ namespace Client.MirScenes
             AddItem(p.Item);
             User.RefreshStats();
 
-            OutputMessage(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.YouGainedItem), p.Item.FriendlyName));
+            if (p.Item.Info.Type != ItemType.特殊消耗品)
+            {
+            	OutputMessage(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.YouGainedItem), p.Item.FriendlyName));
+            }
         }
         private void GainedQuestItem(S.GainedQuestItem p)
         {
@@ -3525,6 +3538,12 @@ namespace Client.MirScenes
                         case DamageType.Critical:
                             obj.Damages.Add(
                                 new Damage(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Crit), 1000, obj.Race == ObjectType.Player ? Color.DarkRed : Color.DarkRed, 50) { Offset = 15 });
+                            break;
+                        case DamageType.HpRegen:
+                            obj.Damages.Add(new Damage(p.Damage.ToString("#,##0"), 1000, obj.Race == ObjectType.Player ? Color.OrangeRed : Color.OrangeRed, 50));
+                            break;
+                        case DamageType.Poisoning:
+                            obj.Damages.Add(new Damage(p.Damage.ToString("#,##0"), 1000, obj.Race == ObjectType.Player ? Color.Green : Color.Green, 50));
                             break;
                     }
                 }
@@ -4080,6 +4099,13 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
+                    case 12: //Behemoth
+                        {
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 810, 10, 1000, ob.CurrentLocation);
+                            SoundManager.PlaySound(((ushort)Monster.Behemoth) * 10 + 7);
+                            playDefaultSound = false;
+                            break;
+                        }
                     default:
                         {
                             effect = new Effect(Libraries.Magic, 250, 10, 500, ob.CurrentLocation);
@@ -4162,6 +4188,13 @@ namespace Client.MirScenes
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 571, 10, 1000, ob));
                             SoundManager.PlaySound(8455);
+                            playDefaultSound = false;
+                            break;
+                        }
+                    case 12: //Behemoth
+                        {
+                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 820, 5, 500, ob));
+                            SoundManager.PlaySound(((ushort)Monster.Behemoth) * 10 + 7);
                             playDefaultSound = false;
                             break;
                         }
@@ -4724,6 +4757,10 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Magic3, 610, 10, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
                         break;
+                    case SpellEffect.StormEscapeRare:
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 610, 8, 600, ob));
+                        SoundManager.PlaySound(SoundList.Teleport);
+                        break;
                     case SpellEffect.Teleport:
                         ob.Effects.Add(new Effect(Libraries.Magic, 1600, 10, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
@@ -4732,11 +4769,31 @@ namespace Client.MirScenes
                         SoundManager.PlaySound(20000 + (ushort)Spell.Healing * 10 + 1);
                         ob.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, ob));
                         break;
+                    case SpellEffect.HealingRare:
+                        SoundManager.PlaySound(20000 + (ushort)Spell.HealingRare * 10 + 1);
+                        ob.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, ob));
+                        break;
                     case SpellEffect.RedMoonEvil:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RedMoonEvil], 32, 6, 400, ob) { Blend = false });
                         break;
+                    case SpellEffect.BloodthirstySpike:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1188, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
+                        break;
+                    case SpellEffect.GroundBurstIce:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 544, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
+                        break;
+                    case SpellEffect.MirEmperor:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.MirEmperor], 62, 4, 400, ob) { Blend = false });
+                        SoundManager.PlaySound(5347);
+                        break;
                     case SpellEffect.TwinDrakeBlade:
                         ob.Effects.Add(new Effect(Libraries.Magic2, 380, 6, 800, ob));
+                        break;
+                    case SpellEffect.HealingcircleRare:
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 660, 10, 600, ob));
+                        break;
+                    case SpellEffect.HealingcircleRare1:
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 650, 10, 600, ob));
                         break;
                     case SpellEffect.MPEater:
                         if (MapControl.Objects.TryGetValue(p.EffectType, out var ob2))
@@ -4783,6 +4840,10 @@ namespace Client.MirScenes
                     case SpellEffect.Entrapment:
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1010, 10, 1500, ob));
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1020, 8, 1200, ob));
+                        break;
+                    case SpellEffect.EntrapmentRare:
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 4390, 10, 1500, ob));
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 4400, 8, 1200, ob));
                         break;
                     case SpellEffect.Critical:
                         //ob.Effects.Add(new Effect(Libraries.CustomEffects, 0, 12, 60, ob));
@@ -6127,6 +6188,7 @@ namespace Client.MirScenes
         {
             if (Hero == null) return;
             HeroBehaviourPanel.UpdateBehaviour(p.Behaviour);
+            //HeroAIDialog.UpdateBehaviour(p.Behaviour);
         }
 
         private void NewHero(S.NewHero p)
@@ -6205,7 +6267,8 @@ namespace Client.MirScenes
             HasHero = p.State > HeroSpawnState.None;
             MainDialog.HeroInfoPanel.Visible = p.State > HeroSpawnState.Unsummoned;
             MainDialog.HeroMenuButton.Visible = p.State > HeroSpawnState.Unsummoned;
-            HeroBehaviourPanel.Visible = p.State > HeroSpawnState.Unsummoned;
+            HeroBehaviourPanel.Visible = p.State > HeroSpawnState.Unsummoned;            
+            //HeroAIDialog.Visible = p.State > HeroSpawnState.Unsummoned;    
             HeroMenuPanel.Visible = HeroMenuPanel.Visible && MainDialog.HeroMenuButton.Visible;
 
             if (p.State < HeroSpawnState.Summoned)
@@ -9472,6 +9535,23 @@ namespace Client.MirScenes
             //        Math.Max(ItemLabel.Size.Height, CANTAWAKENINGLabel.DisplayRectangle.Bottom));
             //}
 
+            if (HoverItem.Info.CanAwakening == true)
+            {
+                count++;
+                MirLabel CANTAWAKENINGLabel = new MirLabel
+                {
+                    AutoSize = true,
+                    ForeColour = Color.Yellow,
+                    Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
+                    OutLine = true,
+                    Parent = ItemLabel,
+                    Text = string.Format("觉醒物品")
+                };
+
+                ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, CANTAWAKENINGLabel.DisplayRectangle.Right + 4),
+                    Math.Max(ItemLabel.Size.Height, CANTAWAKENINGLabel.DisplayRectangle.Bottom));
+            }
+
             #endregion
 
             #region EXPIRE
@@ -9825,6 +9905,220 @@ namespace Client.MirScenes
                 return null;
             }
         }
+        public MirControl GetSetLabel(UserItem item)
+        {
+            if (item?.Info?.Set == ItemSet.非套装) return null;
+
+            ItemSet set = item.Info.Set;
+            string setName = set.ToString();
+
+            var requiredTypes = ItemInfoList.Where(i => i.Set == set)
+                                            .Select(i => i.Type)
+                                            .Distinct()
+                                            .ToList();
+
+            var equippedInfos = MapObject.User.Equipment
+                .Where(e => e?.Info?.Set == set)
+                .Select(e => e.Info)
+                .ToList();
+
+            ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
+
+            int yOffset = ItemLabel.DisplayRectangle.Bottom;
+            void AddLabel(string text, Color color)
+            {
+                var lbl = new MirLabel
+                {
+                    AutoSize = true,
+                    ForeColour = color,
+                    Location = new Point(4, yOffset),
+                    OutLine = true,
+                    Parent = ItemLabel,
+                    Text = text.Trim()
+                };
+                yOffset = lbl.DisplayRectangle.Bottom + 4;
+                ItemLabel.Size = new Size(
+                    Math.Max(ItemLabel.Size.Width, lbl.DisplayRectangle.Right + 4),
+                    Math.Max(ItemLabel.Size.Height, yOffset));
+            }
+
+            AddLabel(setName, Color.Gold);
+            foreach (var t in requiredTypes)
+            {
+                bool on = equippedInfos.Any(i => i.Type == t);
+                AddLabel($"{(on ? "✔" : "✘")} {t}", on ? Color.LimeGreen : Color.Gray);
+            }
+
+            Dictionary<ItemSet, List<(ItemType[] Need, string[] Bonus)>> bonusDict = new()
+            {
+                [ItemSet.祈祷套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 2~5", "攻击速度 + 4", "魔法值数率 + 30", "死亡后不消失" }) },
+                [ItemSet.记忆套装] = new() { (Array.Empty<ItemType>(), new[] { "队长可召唤队友" }) },
+                [ItemSet.赤兰套装] = new() { (Array.Empty<ItemType>(), new[] { "准确 + 2", "吸血数率 + 10" }) },
+                [ItemSet.密火套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50", "魔法值 + 50" }) },
+                [ItemSet.破碎套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "攻击速度 + 2" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "物理攻击 + 1~3" })
+                },
+                [ItemSet.幻魔石套] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "装备负重 + 5", "背包负重 + 20" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "魔法攻击 + 1~2" })
+                },
+                [ItemSet.灵玉套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "神圣 + 3" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "道术攻击 + 1~2"})
+                },
+                [ItemSet.五玄套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值数率 + 30", "物理防御 + 2~2" }) },
+                [ItemSet.世轮套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50" }) },
+                [ItemSet.绿翠套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法值 + 50" }) },
+                [ItemSet.道护套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 30", "魔法值 + 30" }) },
+                [ItemSet.天龙套装] = new()
+                {
+                 (new[] { ItemType.盔甲, ItemType.武器 },new[] { "攻击强化 + 3" }),
+                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "强化防御 + 3" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "物理攻击 + 2~6", "魔法攻击 + 2~6", "道术攻击 + 2~6", "攻击速度 + 2", "腕力负重 + 30", "装备负重 + 30", "背包负重 + 60"}),
+                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2", "生命值 + 100", "物理防御 + 2~6", "魔法防御 + 1~4", "魔法值 + 100", "中毒恢复 + 2"})
+                },
+                [ItemSet.白骨套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~2", "魔法攻击 + 0~1", "道术攻击 + 0~1" }) },
+                [ItemSet.虫血套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "道术攻击 + 0~1", "魔法躲避 + 1", "毒物躲避 + 1" }) },
+                [ItemSet.白金套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~2", "物理防御 + 0~2", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.白金套装H] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~3", "攻击速度 + 2", "生命值 + 30", "装备负重 + 2" }) },
+                [ItemSet.红玉套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "魔法防御 + 0~2 ", "腕力负重 + 1 ", "装备负重 + 2" }) },
+                [ItemSet.红玉套装H] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "生命值 + 40", "敏捷 + 2", "装备负重 + 2" }) },
+                [ItemSet.软玉套装] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "物理防御 + 0~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.软玉套装H] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "神圣 + 1", "准确 + 1", "生命值 + 15", "魔法值 + 20", "敏捷 + 1", "装备负重 + 2" }) },
+                [ItemSet.贵人战套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 25" }) },
+                [ItemSet.贵人法套] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 1~1", "装备负重 + 17" }) },
+                [ItemSet.贵人道套] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 1~1", "装备负重 + 17" }) },
+                [ItemSet.贵人刺套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 20" }) },
+                [ItemSet.贵人弓套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "装备负重 + 20" }) },
+                [ItemSet.血龙套装] = new() { (Array.Empty<ItemType>(), new[] { "神圣 + 3" }) },
+                [ItemSet.监视套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法躲避 + 1", "毒物躲避 + 1" }) },
+                [ItemSet.暴压套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~1", "敏捷 + 1" }) },
+                [ItemSet.贝玉套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                [ItemSet.黑术套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                [ItemSet.青玉套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "魔法攻击 + 1~1", "物理防御 + 1~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.鏃未套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.手镯 },new[] { "生命值 + 25" }),
+                 (new[] { ItemType.项链, ItemType.手镯, ItemType.戒指 }, new[] { "魔法值 + 25", "攻击速度 + 2" })
+                },
+                [ItemSet.青宝套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                //[ItemSet.青宝套装H] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~2", "魔法攻击 + 0~2", "攻击速度 + 1", "准确 + 1", "生命值 + 50" }) },
+                [ItemSet.双戒套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.戒指 },new[] { "物理攻击 + 0~5", "魔法攻击 + 0~5", "道术攻击 + 0~5" })
+                },
+                [ItemSet.昆仑套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "物理攻击 + 0~8", "魔法攻击 + 0~8", "道术攻击 + 0~8" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "强化防御 + 20%" }),//20%几率降低20%的伤害持续15秒冷却时间120秒
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击强化 + 20%" }),//伤害增加20%持续15秒有20%几率攻击冷却时间120秒
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })//攻击时有7%的几率增加40%的暴击伤害
+                },
+            };
+
+            bool StageActivated(ItemType[] need, List<ItemInfo> equipped)
+            {
+                var needCnt = need.GroupBy(x => x)
+                                  .ToDictionary(g => g.Key, g => g.Count());
+
+                var eqCnt = equipped.GroupBy(i => i.Type)
+                                      .ToDictionary(g => g.Key, g => g.Count());
+
+                foreach (var (tp, cnt) in needCnt)
+                {
+                    if (!eqCnt.TryGetValue(tp, out int own) || own < cnt)
+                        return false;
+
+                    if (cnt >= 2)
+                    {
+                        var sameType = equipped.Where(i => i.Type == tp).ToList();
+                        var distinct = sameType.Select(i => i.Name).Distinct().Count();
+                        if (distinct < cnt) return false;
+                    }
+                }
+                return true;
+            }
+
+            var regex = new System.Text.RegularExpressions.Regex(
+                @"^\s*([\u4e00-\u9fa5A-Za-z\s]+)\+\s*(\d+)(?:\s*~\s*(\d+))?\s*$",
+                System.Text.RegularExpressions.RegexOptions.Compiled);
+
+            var merged = new Dictionary<string, (int min, int max)>();
+            var rawDict = new Dictionary<string, bool>();
+            var rangeTag = new HashSet<string>();
+
+            void Acc(string attr, int lo, int hi)
+            {
+                if (merged.TryGetValue(attr, out var cur))
+                    merged[attr] = (cur.min + lo, cur.max + hi);
+                else
+                    merged[attr] = (lo, hi);
+            }
+            void PutRaw(string txt, bool active)
+            {
+                txt = txt.Trim();
+                rawDict[txt] = rawDict.TryGetValue(txt, out var old) ? old || active : active;
+            }
+
+            if (bonusDict.TryGetValue(set, out var stages))
+            {
+                foreach (var (need, bonuses) in stages)
+                {
+                    bool stageOn = need.Length == 0
+                         ? requiredTypes.All(tp => equippedInfos.Any(i => i.Type == tp))
+                         : StageActivated(need, equippedInfos);
+
+                    foreach (string b in bonuses)
+                    {
+                        var m = regex.Match(b);
+                        if (m.Success)
+                        {
+                            string attr = m.Groups[1].Value.TrimEnd();
+                            int lo = int.Parse(m.Groups[2].Value);
+                            int hi = m.Groups[3].Success ? int.Parse(m.Groups[3].Value) : lo;
+                            if (m.Groups[3].Success) rangeTag.Add(attr);
+
+                            if (stageOn) Acc(attr, lo, hi);
+                            else PutRaw(b, false);
+                        }
+                        else
+                        {
+                            PutRaw(b, stageOn);
+                        }
+                    }
+                }
+            }
+
+            foreach (var (attr, rng) in merged)
+            {
+                bool forceRange = rangeTag.Contains(attr) || rng.min != rng.max;
+                string txt = forceRange
+                    ? $"{attr} + {rng.min}~{rng.max}"
+                    : $"{attr} + {rng.min}";
+                AddLabel(txt, Color.White);
+            }
+
+            foreach (var kv in rawDict)
+                AddLabel(kv.Key, kv.Value ? Color.White : Color.Gray);
+
+            var outline = new MirControl
+            {
+                BackColour = Color.FromArgb(255, 50, 50, 50),
+                Border = true,
+                BorderColour = Color.Gray,
+                NotControl = true,
+                Opacity = 0.4F,
+                Parent = ItemLabel,
+                Location = new Point(0, 0),
+                Size = ItemLabel.Size
+            };
+
+            return outline;
+        }
 
         public void CreateItemLabel(UserItem item, bool inspect = false, bool hideDura = false, bool hideAdded = false)
         {
@@ -9859,7 +10153,7 @@ namespace Client.MirScenes
             };
 
             //Name Info Label
-            MirControl[] outlines = new MirControl[11];
+            MirControl[] outlines = new MirControl[12];
             outlines[0] = NameInfoLabel(item, inspect, hideDura);
             //Attribute Info1 Label - Attack Info
             outlines[1] = AttackInfoLabel(item, inspect, hideAdded);
@@ -9881,6 +10175,8 @@ namespace Client.MirScenes
             outlines[9] = StoryInfoLabel(item, inspect);
             //GM Made
             outlines[10] = GMMadeLabel(item);
+            //Item Set
+            outlines[11] = GetSetLabel(item);
 
             foreach (var outline in outlines)
             {
@@ -10256,6 +10552,9 @@ namespace Client.MirScenes
                 RelationshipDialog = null;
                 CharacterDuraPanel = null;
                 DuraStatusPanel = null;
+
+                //GroupStatusPanel = null;
+                //GroupHealthPanel = null;
 
                 HoverItem = null;
                 SelectedCell = null;
@@ -11793,6 +12092,7 @@ namespace Client.MirScenes
 
         public void UseMagic(ClientMagic magic, UserObject actor)
         {
+            if (User.Dead) return;
             if (CMain.Time < GameScene.SpellTime || actor.Poison.HasFlag(PoisonType.Stun))
             {
                 actor.ClearMagic();
@@ -11814,7 +12114,7 @@ namespace Client.MirScenes
 
             int cost = magic.Level * magic.LevelCost + magic.BaseCost;
 
-            if (magic.Spell == Spell.Teleport || magic.Spell == Spell.Blink || magic.Spell == Spell.StormEscape)
+            if (magic.Spell == Spell.Teleport || magic.Spell == Spell.Blink || magic.Spell == Spell.StormEscape || magic.Spell == Spell.StormEscapeRare)
             {
                 if (actor.Stats[Stat.传送技法力消耗数率] > 0)
                 {
@@ -11847,6 +12147,7 @@ namespace Client.MirScenes
             {
                 case Spell.FireBall:
                 case Spell.GreatFireBall:
+                case Spell.GreatFireBallRare:
                 case Spell.ElectricShock:
                 case Spell.Poisoning:
                 case Spell.ThunderBolt:
@@ -11857,10 +12158,13 @@ namespace Client.MirScenes
                 case Spell.Vampirism:
                 case Spell.Revelation:
                 case Spell.Entrapment:
+                case Spell.EntrapmentRare:
                 case Spell.Hallucination:
                 case Spell.DarkBody:
                 case Spell.FireBounce:
                 case Spell.MeteorShower:
+                case Spell.DimensionalSword:
+                case Spell.DimensionalSwordRare:
                     if (actor.NextMagicObject != null)
                     {
                         if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)
@@ -11929,6 +12233,7 @@ namespace Client.MirScenes
                     break;
                 case Spell.Purification:
                 case Spell.Healing:
+                case Spell.HealingRare:
                 case Spell.UltimateEnhancer:
                 case Spell.EnergyShield:
                 case Spell.PetEnhancer:
@@ -11946,6 +12251,7 @@ namespace Client.MirScenes
                 case Spell.TrapHexagon:
                 case Spell.HealingCircle:
                 case Spell.CatTongue:
+				case Spell.HealingcircleRare:
                     if (actor.NextMagicObject != null)
                     {
                         if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)
@@ -12196,6 +12502,20 @@ namespace Client.MirScenes
             if (GameScene.User.CurrentAction != MirAction.站立动作) return false;
             if (GameScene.User.Direction != dir) return false;
             if (GameScene.User.TransformType >= 6 && GameScene.User.TransformType <= 9) return false;
+            switch (GameScene.User.TransformType)
+            {
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                case 38:
+                    return false;
+            }
 
             Point point = Functions.PointMove(User.CurrentLocation, dir, 3);
 
@@ -12473,6 +12793,40 @@ namespace Client.MirScenes
                         //   textures.Add(new ParticleImageInfo(Libraries.Prguse4, 642));
                         var fEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Bird);
                         GameScene.Scene.ParticleEngines.Add(fEmberEngine);
+                        break;
+
+                    case WeatherSetting.沙尘:
+                        textures = new List<ParticleImageInfo>();
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 830, 20, 100));
+
+                        ParticleEngine sandstorm = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Sand);
+
+                        for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
+                            for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
+                            {
+                                Particle part = sandstorm.GenerateNewParticle(ParticleType.Sand);
+                                part.Position = new Vector2(x, y);
+                            }
+
+                        sandstorm.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(sandstorm);
+                        break;
+
+                    case WeatherSetting.沙雾:
+                        textures = new List<ParticleImageInfo>();
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 850, 20, 200));
+
+                        ParticleEngine sandfogstorm = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Fog);
+
+                        for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
+                            for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
+                            {
+                                Particle part = sandfogstorm.GenerateNewParticle(ParticleType.Fog);
+                                part.Position = new Vector2(x, y);
+                            }
+
+                        sandfogstorm.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(sandfogstorm);
                         break;
 
 

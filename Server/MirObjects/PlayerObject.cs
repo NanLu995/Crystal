@@ -1313,6 +1313,11 @@ namespace Server.MirObjects
                 }
             }
 
+            if (!HeroSpawned)
+            {
+                RemoveBuff(BuffType.英雄灵气);
+            }
+
             if (HasHero && Info.HeroSpawned)
                 SummonHero();
 
@@ -2458,7 +2463,7 @@ namespace Server.MirObjects
                         ReceiveChat(hintstring, ChatType.Hint);
                         UpdateGMBuff();
                         break;
-                    case "ALLOWGUILD":
+                    case "加入行会":
                         EnableGuildInvite = !EnableGuildInvite;
                         hintstring = EnableGuildInvite ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GuildInvitesEnabled) : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GuildInvitesDisabled);
                         ReceiveChat(hintstring, ChatType.Hint);
@@ -2482,13 +2487,13 @@ namespace Server.MirObjects
 
                         player.AddObserver(Connection);
                         break;
-                    case "ENABLEGROUPRECALL":
+                    case "允许天人合一":
                         EnableGroupRecall = !EnableGroupRecall;
                         hintstring = EnableGroupRecall ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupRecallEnabled) : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupRecallDisabled);
                         ReceiveChat(hintstring, ChatType.Hint);
                         break;
 
-                    case "GROUPRECALL":
+                    case "天人合一":
                         if (GroupMembers == null || GroupMembers[0] != this || Dead)
                             return;
 
@@ -2569,7 +2574,7 @@ namespace Server.MirObjects
                         }
                         break;
 
-                    case "RECALLLOVER":
+                    case "心心相印":
                         if (Info.Married == 0)
                         {
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouAreNotMarried), ChatType.System);
@@ -2842,6 +2847,11 @@ namespace Server.MirObjects
                         if (!IsGM && CurrentMap.Info.NoPosition)
                         {
                             ReceiveChat((GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotPositionMoveOnMap)), ChatType.System);
+                            return;
+                        }
+                        if (Dead)
+                        {
+                            ReceiveChat("死亡状态无法使用传送戒指", ChatType.System);
                             return;
                         }
                         if (Envir.Time < LastTeleportTime)
@@ -3220,7 +3230,7 @@ namespace Server.MirObjects
                         player.RefreshStats();
                         break;
 
-                    case "FIND":
+                    case "探测":
                         if (!IsGM && !SpecialMode.HasFlag(SpecialItemMode.Probe)) return;
 
                         if (Envir.Time < LastProbeTime)
@@ -3243,7 +3253,7 @@ namespace Server.MirObjects
                         ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerLocationInfo), player.Name, player.CurrentMap.Info.Title, player.CurrentLocation.X, player.CurrentLocation.Y)), ChatType.System);
                         break;
 
-                    case "LEAVEGUILD":
+                    case "退出行会":
                         if (MyGuild == null) return;
                         if (MyGuildRank == null) return;
                         if (MyGuild.IsAtWar())
@@ -3301,7 +3311,7 @@ namespace Server.MirObjects
                         player.CanCreateGuild = false;
                         break;
 
-                    case "ALLOWTRADE":
+                    case "允许交易":
                         AllowTrade = !AllowTrade;
 
                         if (AllowTrade)
@@ -3693,21 +3703,44 @@ namespace Server.MirObjects
                         {
                             if (!HasHero) return;
 
-                        if (!HeroSpawned)
-                                SummonHero();
-                        else if (Hero != null)
-                        {
-                            long remaining = Hero.LogTime - Envir.Time;
-                            if (remaining > 0)
+                            if (!HeroSpawned)
                             {
-                                int remainingSeconds = (int)Math.Ceiling(remaining / 1000D);
-                                ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HeroDesummonCountdown, remainingSeconds), ChatType.System);
-                                return;
+                                SummonHero();
+                                switch (Class)
+                                {
+                                    case MirClass.战士:
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.HP] = 300, [Stat.物品掉落数率] = 5 });
+                                        break;
+                                    case MirClass.法师:
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.MP] = 300, [Stat.经验增长数率] = 5 });
+                                        break;
+                                    case MirClass.道士:
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.生命恢复] = 2, [Stat.武器增伤] = 3 });
+                                        break;
+                                    case MirClass.刺客:
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.法力恢复] = 2, [Stat.准确] = 3 });
+                                        break;
+                                    case MirClass.弓箭:
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.敏捷] = 2, [Stat.物理攻击强化] = 2, [Stat.魔法攻击强化] = 1 });
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
+	                        else if (Hero != null)
+	                        {
+	                            long remaining = Hero.LogTime - Envir.Time;
+	                            if (remaining > 0)
+	                            {
+	                                int remainingSeconds = (int)Math.Ceiling(remaining / 1000D);
+	                                ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HeroDesummonCountdown, remainingSeconds), ChatType.System);
+	                                return;
+	                            }
 
-                            DespawnHero();
-                            Info.HeroSpawned = false;
-                        }
+	                            DespawnHero();
+	                            Info.HeroSpawned = false;
+                                RemoveBuff(BuffType.英雄灵气);
+	                        }
                         }
                         break;
 
@@ -5831,6 +5864,12 @@ namespace Server.MirObjects
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
                                     AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+
+                                if (item.GetTotal(Stat.准确) > 0)
+                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+
+                                if (item.GetTotal(Stat.敏捷) > 0)
+                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
@@ -5843,6 +5882,20 @@ namespace Server.MirObjects
                             {
                                 int time = item.Info.Durability;
                                 AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                            }
+                            break;
+                        case 6:
+                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 7:
+                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 8:
+                            {
+                                int time = item.Info.Durability;
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 3 });
                             }
                             break;
                     }
@@ -6006,6 +6059,7 @@ namespace Server.MirObjects
                         case 13://Hero unlock autopot
                             if (!HeroSpawned || Hero.AutoPot)
                             {
+                            	ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.MustBeUsedOnHero), ChatType.Hint);
                                 Enqueue(p);
                                 return;
                             }
@@ -6024,8 +6078,20 @@ namespace Server.MirObjects
                             Array.Resize(ref Info.Heroes, Info.MaximumHeroCount);
                             break;
                         case 15: //Increase Hero Inventory
-                            ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.MustBeUsedOnHero), ChatType.Hint);
-                            Enqueue(p);
+                            if (!HeroSpawned)
+                            {
+                            	ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.MustBeUsedOnHero), ChatType.Hint);
+                                Enqueue(p);
+                                return;
+                            }
+                            if (Hero.Info.Inventory.Length >= 42)
+                            {
+                                ReceiveChat(string.Format("当前英雄背包格已达到上限"), ChatType.System);
+                                Enqueue(p);
+                                return;
+                            }
+                            Hero.Enqueue(new S.ResizeInventory { Size = Hero.Info.ResizeInventory() });
+                            ReceiveChat("当前英雄的背包格解锁成功", ChatType.Hint);
                             break;
                     }
                     break;
@@ -6752,11 +6818,13 @@ namespace Server.MirObjects
                 case 7: //slots
                     if (tempTo.Info.Bind.HasFlag(BindMode.DontUpgrade) || tempTo.Info.Unique != SpecialItemMode.None)
                     {
+                        ReceiveChat("无法对禁止升级类物品进行嵌孔操作", ChatType.Hint);
                         Enqueue(p);
                         return;
                     }
                     if (tempTo.RentalInformation != null && tempTo.RentalInformation.BindingFlags.HasFlag(BindMode.DontUpgrade))
                     {
+                        ReceiveChat("无法对租赁类物品进行嵌孔操作", ChatType.Hint);
                         Enqueue(p);
                         return;
                     }
@@ -6772,6 +6840,12 @@ namespace Server.MirObjects
                         Enqueue(p);
                         return;
                     }
+                    if (tempTo.Info.RandomStats.SlotMaxStat == 0)
+                    {
+                        ReceiveChat("该物品不能嵌孔", ChatType.Hint);
+                        Enqueue(p);
+                        return;
+                    }
                     if (tempTo.Info.RandomStats.SlotMaxStat <= tempTo.Slots.Length)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ItemMaxSockets), ChatType.Hint);
@@ -6784,6 +6858,7 @@ namespace Server.MirObjects
                 case 8: //Seal
                     if (tempTo.Info.Bind.HasFlag(BindMode.DontUpgrade) || tempTo.Info.Unique != SpecialItemMode.None)
                     {
+                        ReceiveChat("无法对禁止升级类物品进行锁定操作", ChatType.Hint);
                         Enqueue(p);
                         return;
                     }
@@ -12152,7 +12227,7 @@ namespace Server.MirObjects
                 MailInfo mail = new MailInfo(Info.Index)
                 {
                     MailID = ++Envir.NextMailID,
-                    Sender = "BlackStone",
+                    Sender = "黑铁矿石",
                     Message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.PetProducedBlackStoneInventoryFull),
                     Items = new List<UserItem> { item },
                 };
@@ -13801,7 +13876,7 @@ namespace Server.MirObjects
             MailInfo mail = new MailInfo(Info.Index)
             {
                 MailID = ++Envir.NextMailID,
-                Sender = "Gameshop",
+                Sender = "游戏商城",
                 Message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ThankYouPurchaseGameshop),
                 Items = mailItems,
             };

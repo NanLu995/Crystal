@@ -1396,23 +1396,29 @@ public enum BuffType : byte
     金刚不坏,
     魔法盾,
     金刚术,
+    
+    金刚不坏秘籍,
+    天上秘术,
+    万效符,
+    万效符秘籍,
 
     //Monster
     HornedArcherBuff = 50,
     ColdArcherBuff,
     GeneralMeowMeowShield,
-    RhinoPriestDebuff,
-    PowerBeadBuff,
+    惩戒真言,
+    御体之力,
     HornedWarriorShield,
     HornedCommanderShield,
-    Blindness,
+    失明状态,
+    绝对封锁,
 
     //Special
-    GameMaster = 100,
+    游戏管理 = 100,
     General,
     获取经验提升,
     物品掉落提升,
-    Gold,
+    金币辉煌,
     背包负重提升,
     变形效果,
     心心相印,
@@ -1424,6 +1430,8 @@ public enum BuffType : byte
     技巧项链,
     隐身戒指,
     新人特效,
+    技能经验提升,
+    英雄灵气,
 
     //Stats
     攻击力提升 = 200,
@@ -1436,6 +1444,10 @@ public enum BuffType : byte
     魔法防御提升,
     奇异药水,
     包容万斤,
+    龍之祝福,
+    准确命中提升,
+    敏捷躲避提升,
+    组队加成,
 }
 
 [Flags]

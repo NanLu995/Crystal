@@ -1,0 +1,15 @@
+弓箭英雄  差异   server/mirobject/hero/archerhero  差异
+
+Server\MirObjects\HumanObject.cs
+if (ReincarnationReady && Envir.Time >= ReincarnationExpireTime)
+复活 是否屏蔽
+
+复活 逻辑是否更改
+
+
+月影术
+技能计算
+// AddBuff(BuffType.月影术, this, (time + (magic.Level * 5000)), new Stats()); 
+
+
+buffinfo  stacktype 是否更新

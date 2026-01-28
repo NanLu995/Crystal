@@ -54,7 +54,7 @@ namespace Server.MirObjects
 
             if (Caster != null && Caster.Node == null) Caster = null;
 
-            if (Envir.Time > ExpireTime || ((Spell == Spell.FireWall || Spell == Spell.Portal || Spell == Spell.ExplosiveTrap || Spell == Spell.Reincarnation || Spell == Spell.HealingCircle) && Caster == null) || (Spell == Spell.TrapHexagon && Target != null) || (Spell == Spell.Trap && Target != null))
+            if (Envir.Time > ExpireTime || ((Spell == Spell.FireWall || Spell == Spell.Portal || Spell == Spell.ExplosiveTrap || Spell == Spell.Reincarnation || Spell == Spell.HealingCircle || Spell == Spell.HealingcircleRare) && Caster == null) || (Spell == Spell.TrapHexagon && Target != null) || (Spell == Spell.Trap && Target != null))
             {
                 if (Spell == Spell.TrapHexagon && Target != null || Spell == Spell.Trap && Target != null)
                 {
@@ -88,7 +88,15 @@ namespace Server.MirObjects
                     return;
                 }
             }
-
+            if (Spell == Spell.HealingcircleRare)
+            {
+                if (CurrentMap != null && (CurrentMap != Caster?.CurrentMap || CurrentMap.Info.Index != CurrentMapIndex))
+                {
+                    CurrentMap.RemoveObject(this);
+                    Despawn();
+                    return;
+                }
+            }
             if (Spell == Spell.Reincarnation && !((HumanObject)Caster).ActiveReincarnation)
             {
                 CurrentMap.RemoveObject(this);
@@ -191,6 +199,30 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
+                case Spell.HealingcircleRare:
+                    {
+                        if (ob == null) return;
+
+                        if (ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))
+                        {
+                            if (ob.IsAttackTarget(Caster)) return;
+                            if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth >= 100) return;
+
+                            ob.HealAmount += 25;
+                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
+                        }
+                        else if (ob.Race == ObjectType.Monster && ob.IsAttackTarget(Caster) && !ob.Dead)
+                        {
+                            ob.Attacked(Caster as HumanObject, Value, DefenceType.MAC, false);
+                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.HealingcircleRare });
+                            if (Envir.Random.Next(10) >= 2)
+                            {
+                                Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.HealingcircleRare1 });
+                                ob.ApplyPoison(new Poison { PType = PoisonType.Green, Duration = 2, TickSpeed = 1000 }, this);
+                            }
+                        }
+                    }
+                    break;
                 case Spell.ExplosiveTrap:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
@@ -208,7 +240,7 @@ namespace Server.MirObjects
                         {
                             if (player.Account.AdminAccount && player.Observer) return;
                             player.Struck(Value, DefenceType.MAC);
-                        }                 
+                        }
                     }
                     break;
                 case Spell.MapQuake1:
@@ -377,7 +409,7 @@ namespace Server.MirObjects
                     }
                     break;
                 case Spell.HealingCircle:
-                    if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
+                    if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
 
                     if (Caster == ob || (Caster.GroupMembers != null && Caster.GroupMembers.Contains(ob)) || (ob.Master != null && Caster.GroupMembers != null && Caster.GroupMembers.Contains(ob.Master)))
                     {
@@ -519,6 +551,7 @@ namespace Server.MirObjects
                 case Spell.HornedCommanderRockFall:
                 case Spell.HornedCommanderRockSpike:
                 case Spell.HealingCircle:
+                case Spell.HealingcircleRare:
                     if (!Show)
                         return null;
 
@@ -599,7 +632,7 @@ namespace Server.MirObjects
             if (Spell == Spell.Portal && Caster != null)
             {
                 var portal = Envir.Spells.SingleOrDefault(ob => ob.Node != null && ob != this
-                    && ob.Spell == Spell.Portal    
+                    && ob.Spell == Spell.Portal
                     && ob.Caster == Caster);
 
                 if (portal != null)

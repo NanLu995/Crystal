@@ -136,7 +136,7 @@ namespace Server.MirObjects.Monsters
                     var protect = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                     if (protect == 0) return;
 
-                    target.AddBuff(BuffType.PowerBeadBuff, this, Info.AttackSpeed, new Stats { [Stat.MaxAC] = protect, [Stat.MaxMAC] = protect });
+                    target.AddBuff(BuffType.御体之力, this, Info.AttackSpeed, new Stats { [Stat.MaxAC] = protect, [Stat.MaxMAC] = protect });
                     target.OperateTime = 0;
                 }
             }
