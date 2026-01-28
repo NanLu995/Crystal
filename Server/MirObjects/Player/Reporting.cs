@@ -24,7 +24,7 @@ namespace Server.MirObjects
 
         public void MapChange(MapInfo oldMap, MapInfo newMap, [CallerMemberName] string source = "")
         {
-            string message = $"Moved Map {oldMap.FileName} => {newMap.FileName}";
+            string message = $"从地图 {oldMap.FileName} 移动到地图 {newMap.FileName}";
 
             LogMessage(message, source);
         }
@@ -117,16 +117,16 @@ namespace Server.MirObjects
             switch (reason)
             {
                 case 1:
-                    msg = "Could not return item to bag after trade.";
+                    msg = "无法在交易后将物品再退回到背包";
                     break;
                 case 2:
-                    msg = "Item rental expired.";
+                    msg = "租赁物品到期";
                     break;
                 case 3:
-                    msg = "Could not return item to bag after rental.";
+                    msg = "租借后无法将物品再退回到背包";
                     break;
                 default:
-                    msg = "No reason provided.";
+                    msg = "未提供原因";
                     break;
             }
 
@@ -162,14 +162,14 @@ namespace Server.MirObjects
 
         public void KilledPlayer(PlayerObject obj, string info = "", [CallerMemberName] string source = "")
         {
-            string message = $"Killed Player {obj.Name} {info}";
+            string message = $"杀死玩家 {obj.Name} {info}";
 
             LogMessage(message, source);
         }
 
         public void KilledMonster(MonsterObject obj, string info = "", [CallerMemberName] string source = "")
         {
-            string message = $"Killed Monster {obj.Name} {info}";
+            string message = $"击杀怪物 {obj.Name} {info}";
 
             LogMessage(message, source);
         }
@@ -180,28 +180,28 @@ namespace Server.MirObjects
 
         public void Levelled(int level)
         {
-            string message = $"Levelled to {level}";
+            string message = $"等级提升 {level}";
 
             LogMessage(message, "");
         }
 
         public void Died(string map)
         {
-            string message = $"Died - Map {map}";
+            string message = $"死亡 - 地图 {map}";
 
             LogMessage(message, "");
         }
 
         public void Connected(string ipAddress)
         {
-            string message = $"Connected - {ipAddress}";
+            string message = $"连接 - {ipAddress}";
 
             LogMessage(message, "");
         }
 
         public void Disconnected(string reason)
         {
-            string message = $"Disconnected - {reason}";
+            string message = $"断开连接 - {reason}";
 
             LogMessage(message, "");
         }

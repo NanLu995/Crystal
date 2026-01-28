@@ -338,6 +338,7 @@ namespace Client.MirObjects
             for (int s = 0; s < splitName.Length; s++)
             {
                 CreateNPCLabel(splitName[s], s);
+                TempLabel.Text = splitName[s];
                 TempLabel.Location = new Point(DisplayRectangle.X + (48 - TempLabel.Size.Width) / 2, DisplayRectangle.Y - (32 - TempLabel.Size.Height / 2) + (Dead ? 35 : 8) - (((splitName.Length - 1) * 10) / 2) + (s * 12));
                 TempLabel.Draw();
             }

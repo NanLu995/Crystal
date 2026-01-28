@@ -42,7 +42,7 @@ namespace Server
         public static string VersionPath = Path.Combine(".", "Mir2.Exe");
         public static bool CheckVersion = true;
         public static List<byte[]> VersionHashes;
-        public static string GMPassword = "C#Mir 4.0";
+        public static string GMPassword = "@52C#Mir2";
         public static bool Multithreaded = true;
         public static int ThreadLimit = 2;
         public static bool TestServer = false;
@@ -157,7 +157,7 @@ namespace Server
                           RestedMaxBonus = 24,
                           NewbieGuildMaxSize = 1000;
 
-        public static string NewbieGuild = "新人行会",
+        public static string NewbieGuild = "新人公会",
                              SkeletonName = "变异骷髅", // BoneFamiliar
                              ShinsuName = "神兽", // Shinsu
                              BugBatName = "蝇蛾", // BugBat
@@ -165,8 +165,8 @@ namespace Server
                              Zuma2 = "祖玛卫士", // ZumaGuardian
                              Zuma3 = "祖玛弓箭手", // ZumaArcher
                              Zuma4 = "楔蛾", // WedgeMoth
-                             Zuma5 = "祖玛雕像3", // ZumaArcher3
-                             Zuma6 = "祖玛弓箭手3", // ZumaStatue3
+                             Zuma5 = "祖玛弓箭手3", // ZumaArcher3
+                             Zuma6 = "祖玛雕像3", // ZumaStatue3
                              Zuma7 = "祖玛卫士3", // ZumaGuardian3
                              Turtle1 = "红海龟", // RedTurtle
                              Turtle2 = "绿海龟", // GreenTurtle
@@ -196,8 +196,8 @@ namespace Server
                              ToadName = "蟾蜍", // SpittingToad
                              SnakeTotemName = "蛇图腾", // SnakeTotem
                              SnakesName = "鬼魅蛇", // CharmedSnake
-                             AncientBatName = "AncientBat", // AncientBat
-                             TucsonGeneralEgg = "GeneralTucson", // GeneralTucson
+                             AncientBatName = "恶魔蝙蝠", // AncientBat
+                             TucsonGeneralEgg = "瘟疫统领", // GeneralTucson
                              GeneralMeowMeowMob1 = "白锤猫卫", // StainHammerCat
                              GeneralMeowMeowMob2 = "黑锤猫卫", // BlackHammerCat
                              GeneralMeowMeowMob3 = "猫妖武士", // StrayCat
@@ -235,7 +235,7 @@ namespace Server
         public static int FishingSuccessMultiplier = 10;
         public static long FishingDelay = 0;
         public static int FishingMobSpawnChance = 5;
-        public static string FishingMonster = "GiantKeratoid";
+        public static string FishingMonster = "巨型多角虫";
 
         //Mail Settings
         public static bool MailAutoSendGold = false;
