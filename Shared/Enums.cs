@@ -1200,7 +1200,7 @@ public enum Spell : byte
     ThunderStorm = 42, // 地狱雷光
     MagicShield = 43, // 魔法盾
     TurnUndead = 44, // 圣言术
-    Vampirism = 45, // 嗜血术
+    Vampirism = 45, // 噬血术
     IceStorm = 46, // 冰咆哮
     FlameDisruptor = 47, // 灭天火
     Mirroring = 48, // 分身术
@@ -1239,11 +1239,11 @@ public enum Spell : byte
     Plague = 82, // 烦脑
     PoisonCloud = 83, // 毒雾
     EnergyShield = 84, // 先天气功
-    PetEnhancer = 85, // 血龙兽
+    PetEnhancer = 85, // 血龙水
     HealingCircle = 86, // 阴阳五行阵
     HealingRare = 87, // 治愈术秘笈
     HealingcircleRare = 88, // 阴阳五行阵秘笈
-    PetEnhancerRare = 89, // 血龙兽秘笈
+    PetEnhancerRare = 89, // 血龙水秘笈
     MultipleEffects = 90, // 万效符
     MultipleEffectsRare = 91, // 万效符秘笈
 
@@ -1273,7 +1273,7 @@ public enum Spell : byte
     ExplosiveTrap = 124, // 爆阱
     DelayedExplosion = 125, // 爆闪
     Meditation = 126, // 气功术
-    ElementalShot = 127, // 万金闪
+    ElementalShot = 127, // 万斤闪
     Concentration = 128, // 气流术
     ElementalBarrier = 129, // 金刚术
     BackStep = 130, // 风弹步
@@ -1392,7 +1392,7 @@ public enum BuffType : byte
     精神状态,
     先天气功,
     深延术,
-    血龙兽,
+    血龙水,
     金刚不坏,
     魔法盾,
     金刚术,

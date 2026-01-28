@@ -258,7 +258,7 @@ namespace Client.MirObjects
                 case BuffType.深延术:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 90, 6, 1200, this, true, type) { Repeat = true });
                     break;
-                case BuffType.血龙兽:
+                case BuffType.血龙水:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 230, 6, 1200, this, true, type) { Repeat = true });
                     break;
                 case BuffType.游戏管理:

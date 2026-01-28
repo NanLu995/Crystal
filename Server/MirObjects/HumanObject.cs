@@ -6889,7 +6889,7 @@ namespace Server.MirObjects
                             [Stat.MaxAC] = acInc
                         };
 
-                        target.AddBuff(BuffType.血龙兽, this, (Settings.Second * value), stats);
+                        target.AddBuff(BuffType.血龙水, this, (Settings.Second * value), stats);
                         LevelMagic(magic);
                     }
                     break;
