@@ -65,6 +65,8 @@
         CheckHeroItem,
         HasGT,
         CheckBuff,
-        CheckMapLight
+        CheckMapLight,
+        CheckTransform,
+        IsGuildLeader,
     }
 }

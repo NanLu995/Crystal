@@ -430,6 +430,14 @@ namespace Server.MirObjects
 
                     CheckList.Add(new NPCChecks(CheckType.CheckBuff, parts[1]));
                     break;
+                case "CHECKTRANSFORM":
+                    if (parts.Length < 2) return;
+
+                    CheckList.Add(new NPCChecks(CheckType.CheckTransform, parts[1]));
+                    break;
+                case "ISGUILDLEADER":
+                    CheckList.Add(new NPCChecks(CheckType.IsGuildLeader));
+                    break;
             }
 
         }
@@ -905,6 +913,7 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.Mov, parts[1], valueToStore));
 
                     break;
+
                 case "CALC":
                     if (parts.Length < 4) return;
 
@@ -921,18 +930,24 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.Calc, "%" + parts[1], parts[2], valueToStore, parts[1].Insert(1, "-")));
 
                     break;
+
                 case "GIVEBUFF":
                     if (parts.Length < 4) return;
 
-                    string visible = "";
-                    string infinite = "";
-                    string stackable = "";
+                    string visible = parts.Length > 3 ? parts[3] : "";
+                    string infinite = parts.Length > 4 ? parts[4] : "";
+                    string stackable = parts.Length > 5 ? parts[5] : "";
 
-                    if (parts.Length > 3) visible = parts[3];
-                    if (parts.Length > 4) infinite = parts[4];
-                    if (parts.Length > 5) stackable = parts[5];
+                    var additionalParams = new List<string>();
+                    for (int i = 6; i < parts.Length; i++)
+                    {
+                        additionalParams.Add(parts[i]);
+                    }
 
-                    acts.Add(new NPCActions(ActionType.GiveBuff, parts[1], parts[2], visible, infinite, stackable));
+                    var allParams = new List<string> { parts[1], parts[2], visible, infinite, stackable };
+                    allParams.AddRange(additionalParams);
+
+                    acts.Add(new NPCActions(ActionType.GiveBuff, allParams.ToArray()));
                     break;
 
                 case "REMOVEBUFF":
@@ -1223,6 +1238,11 @@ namespace Server.MirObjects
 
                     acts.Add(new NPCActions(ActionType.HeroRemoveSkill, parts[1]));
                     break;
+					case "GIVEGUILDEXP":
+                    if (parts.Length < 2) return;
+
+                    acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
+                    break;
             }
         }
 
@@ -1471,6 +1491,9 @@ namespace Server.MirObjects
                 case "MAP":
                     newValue = player.CurrentMap.Info.FileName;
                     break;
+                case "MAPNAME":
+                    newValue = player.CurrentMap.Info.Title;
+                    break;
                 case "X_COORD":
                     newValue = player.CurrentLocation.X.ToString();
                     break;
@@ -1670,6 +1693,9 @@ namespace Server.MirObjects
                     break;
                 case "MAP":
                     newValue = Monster.CurrentMap.Info.FileName;
+                    break;
+                case "MAPNAME":
+                    newValue = Monster.CurrentMap.Info.Title;
                     break;
                 case "X_COORD":
                     newValue = Monster.CurrentLocation.X.ToString();
@@ -2936,6 +2962,21 @@ namespace Server.MirObjects
                             failed = !player.HasBuff(buffType);
                         }
                         break;
+                    case CheckType.CheckTransform:
+                        {
+                            if (!short.TryParse(param[0], out short transformType))
+                            {
+                                failed = true;
+                                break;
+                            }
+                            failed = player.TransformType != transformType;
+                        }
+                        break;
+
+                    case CheckType.IsGuildLeader:
+                        failed = player.MyGuild == null || player.MyGuild.Ranks.Count == 0 || player.MyGuild.Ranks[0] != player.MyGuildRank;
+                        break;
+
                 }
 
                 if (!failed) continue;
@@ -3838,6 +3879,7 @@ namespace Server.MirObjects
                                     MapObject ob = cell.Objects[j];
 
                                     if (ob.Race != ObjectType.Monster) continue;
+                                    if (ob.Master != null && ob.Master.Race == ObjectType.Player) continue;
                                     if (ob.Dead) continue;
 
                                     if (!string.IsNullOrEmpty(param[2]) && string.Compare(param[2], ((MonsterObject)ob).Info.Name, true) != 0)
@@ -3919,14 +3961,95 @@ namespace Server.MirObjects
 
                     case ActionType.GiveBuff:
                         {
-                            if (!Enum.IsDefined(typeof(BuffType), param[0])) return;
+                            var path = Path.Combine(Settings.EnvirPath, "SetBuffs.txt");
+
+                            if (!File.Exists(path))
+                            {
+                                File.Create(path).Dispose();
+                            }
+
+                            var lines = File.ReadAllLines(path);
+
+                            if (!Enum.IsDefined(typeof(BuffType), param[0]))
+                            {
+                                return;
+                            }
 
                             int.TryParse(param[1], out int duration);
                             bool.TryParse(param[2], out bool infinite);
                             bool.TryParse(param[3], out bool visible);
                             bool.TryParse(param[4], out bool stackable);
 
-                            player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, new Stats(), visible);
+                            var matchedLine = lines.FirstOrDefault(l => l.StartsWith(param[0] + ";"));
+                            var buffStats = new Stats();
+                            var initialStats = new Dictionary<Stat, int>();
+                            bool canAddBuff = true;
+
+                            if (matchedLine != null)
+                            {
+                                var statsPart = matchedLine.Substring(matchedLine.IndexOf(';') + 1).Trim(';');
+                                var potionStats = statsPart.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                                foreach (var stat in potionStats)
+                                {
+                                    var statParts = stat.Split('=');
+                                    if (statParts.Length != 2) continue;
+
+                                    var statName = statParts[0].Trim();
+                                    var statValueString = statParts[1].Trim();
+
+                                    if (string.IsNullOrWhiteSpace(statValueString)) continue;
+
+                                    if (int.TryParse(statValueString, out var statValue))
+                                    {
+                                        if (Enum.TryParse(statName, out Stat enumValue))
+                                        {
+                                            buffStats[enumValue] = statValue;
+                                            initialStats[enumValue] = statValue;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (param.Count > 5)
+                            {
+                                for (int j = 5; j < param.Count; j++)
+                                {
+                                    var extraStatParts = param[j].Split('=');
+                                    if (extraStatParts.Length != 2) continue;
+
+                                    var extraStatName = extraStatParts[0].Trim();
+                                    var extraStatValueString = extraStatParts[1].Trim();
+
+                                    if (string.IsNullOrWhiteSpace(extraStatValueString)) continue;
+
+                                    if (!int.TryParse(extraStatValueString, out var extraStatValue)) continue;
+
+                                    if (!Enum.TryParse(extraStatName, out Stat extraEnumValue) || !Enum.IsDefined(typeof(Stat), extraEnumValue))
+                                    {
+                                        continue;
+                                    }
+
+                                    if (initialStats.TryGetValue(extraEnumValue, out var initialValue) && initialValue != 0)
+                                    {
+                                        canAddBuff = false;
+                                        break;
+                                    }
+
+                                    if (!initialStats.ContainsKey(extraEnumValue))
+                                    {
+                                        canAddBuff = false;
+                                        break;
+                                    }
+
+                                    buffStats[extraEnumValue] = extraStatValue;
+                                }
+                            }
+
+                            if (canAddBuff)
+                            {
+                                player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, buffStats, visible);
+                            }
                         }
                         break;
 
@@ -4746,6 +4869,15 @@ namespace Server.MirObjects
 
                             break;
                         }
+
+                    case ActionType.GiveGuildExp:
+                        {
+                            uint tempUint;
+                            if (!uint.TryParse(param[0], out tempUint)) return;
+                            player.MyGuild.GainExp(tempUint);
+                        }
+                        break;
+
                 }
             }
         }
