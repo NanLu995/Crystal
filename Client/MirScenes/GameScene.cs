@@ -9907,7 +9907,7 @@ namespace Client.MirScenes
         }
         public MirControl GetSetLabel(UserItem item)
         {
-            if (item?.Info?.Set == ItemSet.非套装) return null;
+            if (item?.Info?.Set == ItemSet.None) return null;
 
             ItemSet set = item.Info.Set;
             string setName = set.ToString();

@@ -1901,7 +1901,7 @@ namespace Server.MirObjects
 
                 RefreshSocketStats(temp, skillsToAdd);
 
-                if (realItem.Set == ItemSet.非套装) continue;
+                if (realItem.Set == ItemSet.None) continue;
 
                 ItemSets itemSet = ItemSets.Where(set => set.Set == realItem.Set && !set.Type.Contains(realItem.Type) && !set.SetComplete).FirstOrDefault();
 

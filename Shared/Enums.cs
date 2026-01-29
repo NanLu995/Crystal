@@ -1118,7 +1118,7 @@ public enum RequiredType : byte
 
 public enum ItemSet : byte
 {
-    非套装 = 0,
+    None = 0,
     祈祷套装 = 1,
     记忆套装 = 2,
     赤兰套装 = 3,
