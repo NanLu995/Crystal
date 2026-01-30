@@ -279,7 +279,13 @@ namespace Server
             Path = ofd.FileName;
 
             foreach (var m in File.ReadAllLines(Path).Skip(1))
-                QuestInfo.FromText(m);
+            {
+                try
+                {
+                    QuestInfo.FromText(m);
+                }
+                catch { }
+            }
 
             RefreshQuestList();
             UpdateInterface();

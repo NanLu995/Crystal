@@ -426,6 +426,9 @@ namespace Server.Database
 
                         int rowsEdited = 0;
 
+                        this.monsterInfoGridView.CurrentCell = this.monsterInfoGridView[1, 0];
+                        var formTitle = this.Text;
+
                         for (int i = 1; i < rows.Length; i++)
                         {
                             var row = rows[i];
@@ -448,7 +451,9 @@ namespace Server.Database
 
                             try
                             {
-                                monsterInfoGridView.BeginEdit(true);
+                                var progress = ((rowsEdited + 1) / (double)(rows.Length - 1)) * 100;
+                                Invoke(() => this.Text = $"{formTitle} - Importing Progress: {(int)progress}% ({rowsEdited + 1}/{rows.Length - 1})");
+                                Invoke(() => monsterInfoGridView.BeginEdit(true));
                                 bool isNew = false;
                                 if (dataRow == null)
                                 {
@@ -525,6 +530,7 @@ namespace Server.Database
                             monsterInfoGridView.Rows[rowsEdited].Selected = true;
                             monsterInfoGridView.CurrentCell = monsterInfoGridView.Rows[rowsEdited].Cells[0];
                         }
+                        this.Text = formTitle;
                     }
                 }
                 else

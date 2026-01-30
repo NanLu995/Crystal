@@ -131,11 +131,15 @@ namespace Server
 
             List<bool> selected = new List<bool>();
 
-            for (int i = 0; i < NPCInfoListBox.Items.Count; i++) selected.Add(NPCInfoListBox.GetSelected(i));
+            for (int i = 0; i < NPCInfoListBox.Items.Count; i++) 
+                selected.Add(NPCInfoListBox.GetSelected(i));
+
             NPCInfoListBox.Items.Clear();
 
-            for (int i = 0; i < Envir.NPCInfoList.Count; i++) NPCInfoListBox.Items.Add(Envir.NPCInfoList[i]);
-            for (int i = 0; i < selected.Count; i++) NPCInfoListBox.SetSelected(i, selected[i]);
+            for (int i = 0; i < Envir.NPCInfoList.Count; i++) 
+                NPCInfoListBox.Items.Add(Envir.NPCInfoList[i]);
+            for (int i = 0; i < selected.Count; i++) 
+                NPCInfoListBox.SetSelected(i, selected[i]);
 
             NPCInfoListBox.SelectedIndexChanged += NPCInfoListBox_SelectedIndexChanged;
         }
@@ -360,6 +364,7 @@ namespace Server
                 catch { }
             }
 
+            RefreshNPCList();
             UpdateInterface();
             MessageBox.Show("NPC数据导入完成");
         }
