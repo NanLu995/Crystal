@@ -2487,13 +2487,13 @@ namespace Server.MirObjects
 
                         player.AddObserver(Connection);
                         break;
-                    case "允许天人合一":
+                    case "允许天地合一":
                         EnableGroupRecall = !EnableGroupRecall;
                         hintstring = EnableGroupRecall ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupRecallEnabled) : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupRecallDisabled);
                         ReceiveChat(hintstring, ChatType.Hint);
                         break;
 
-                    case "天人合一":
+                    case "天地合一":
                         if (GroupMembers == null || GroupMembers[0] != this || Dead)
                             return;
 
@@ -2522,7 +2522,7 @@ namespace Server.MirObjects
                             }
                         }
                         break;
-                    case "RECALLMEMBER":
+                    case "召唤成员":
                         if (GroupMembers == null || GroupMembers[0] != this)
                         {
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NotGroupLeader), ChatType.System);
@@ -3861,7 +3861,7 @@ namespace Server.MirObjects
                         player.GetCompletedQuests();
                         break;
 
-                    case "TOGGLETRANSFORM":
+                    case "变身":
                         if (HasBuff(BuffType.变形效果, out Buff transform))
                         {
                             if (transform.Paused)
