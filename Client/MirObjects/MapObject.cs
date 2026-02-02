@@ -389,7 +389,7 @@ namespace Client.MirObjects
             }
 
             ChatLabel.ForeColour = Dead ? Color.Gray : Color.White;
-            ChatLabel.Location = new Point(DisplayRectangle.X + (48 - ChatLabel.Size.Width) / 2, DisplayRectangle.Y - (60 + ChatLabel.Size.Height) - (Dead ? 35 : 0));
+            ChatLabel.Location = new Point(DisplayRectangle.X + (48 - ChatLabel.Size.Width) / 2, DisplayRectangle.Y - (65 + ChatLabel.Size.Height) - (Dead ? 35 : 0));
             ChatLabel.Draw();
         }
 

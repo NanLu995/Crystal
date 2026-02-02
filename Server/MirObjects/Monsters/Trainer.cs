@@ -223,19 +223,19 @@ namespace Server.MirObjects.Monsters
             switch (type)
             {
                 case DefenceType.ACAgility:
-                    output = "Physical Agility";
+                    output = "物理攻击";
                     break;
                 case DefenceType.AC:
-                    output = "Physicial";
+                    output = "物理";
                     break;
                 case DefenceType.MACAgility:
-                    output = "Magical Agility";
+                    output = "魔法攻击";
                     break;
                 case DefenceType.MAC:
-                    output = "Magic";
+                    output = "魔法";
                     break;
                 case DefenceType.Agility:
-                    output = "Agility";
+                    output = "物理攻击";
                     break;
             }
             long timespend = Math.Max(1000,(Envir.Time - _StartTime));//avoid division by 0
