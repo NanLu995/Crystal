@@ -1627,9 +1627,7 @@ namespace Server.MirObjects
                 case "GUILDEXTENDFEE":
                     if (player.MyGuild != null && player.MyGuild.HasGT)
                     {
-                        newValue = GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ExpireOnExtendFee), player.MyGuild.GTRent.ToString(), Settings.ExtendGT.ToString())
-
-;
+                        newValue = GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ExpireOnExtendFee), player.MyGuild.GTRent.ToString(), Settings.ExtendGT.ToString());
                     }
                     else
                     {
