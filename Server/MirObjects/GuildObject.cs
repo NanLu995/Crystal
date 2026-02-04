@@ -821,7 +821,7 @@ namespace Server.MirObjects
                 RefreshAllStats();
             }
 
-            if (GTIndex > -1)
+            if (GTIndex > -1 && Envir.GTMapList.Count > 0)
             {
                 GTMap gt = Envir.GTMapList.First(x => x.Index == GTIndex);
                 if (GTBegin > Envir.Now)

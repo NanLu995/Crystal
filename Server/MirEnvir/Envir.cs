@@ -1580,6 +1580,24 @@ namespace Server.MirEnvir
 
                 GuildList.Clear();
 
+                // 在没有行会的时候，创建新人公会
+                if (GuildCount == 0)
+                {
+                    PlayerObject playerObject = new PlayerObject();
+                    CharacterInfo characterInfo = new CharacterInfo();
+                    characterInfo.Index = 0;
+                    characterInfo.Name = "-";
+                    playerObject.Info = characterInfo;
+
+                    var guildInfo = new GuildInfo(playerObject, Settings.NewbieGuild) { GuildIndex = 0 };
+                    GuildList.Add(guildInfo);
+
+                    new GuildObject(guildInfo);
+
+                    SaveAccounts();
+                    SaveGuilds(true);
+                }
+
                 for (var i = 0; i < GuildCount; i++)
                 {
                     GuildInfo guildInfo;
