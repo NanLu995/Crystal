@@ -79,7 +79,7 @@ namespace Server
                 label50.Text = "暴击率";
                 label52.Text = "反弹伤害";
                 label51.Text = "暴击伤害";
-                label49.Text = "吸血数率";
+                label49.Text = "吸血倍率";
                 BlinkcheckBox.Text = "瞬移技能";
             }
         }

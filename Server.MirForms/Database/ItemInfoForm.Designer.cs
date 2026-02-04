@@ -238,7 +238,7 @@
             label64.Name = "label64";
             label64.Size = new Size(80, 17);
             label64.TabIndex = 137;
-            label64.Text = "伤害减免数率";
+            label64.Text = "伤害减免倍率";
             // 
             // GoldRatetextBox
             // 
@@ -258,7 +258,7 @@
             label63.Name = "label63";
             label63.Size = new Size(80, 17);
             label63.TabIndex = 135;
-            label63.Text = "金币收益数率";
+            label63.Text = "金币收益倍率";
             // 
             // DropRatetextBox
             // 
@@ -278,7 +278,7 @@
             label62.Name = "label62";
             label62.Size = new Size(80, 17);
             label62.TabIndex = 133;
-            label62.Text = "物品掉落数率";
+            label62.Text = "物品掉落倍率";
             // 
             // ExpRatetextBox
             // 
@@ -298,7 +298,7 @@
             label61.Name = "label61";
             label61.Size = new Size(80, 17);
             label61.TabIndex = 130;
-            label61.Text = "经验增长数率";
+            label61.Text = "经验增长倍率";
             // 
             // MaxSCRatetextBox
             // 
@@ -1109,7 +1109,7 @@
             label49.Name = "label49";
             label49.Size = new Size(56, 17);
             label49.TabIndex = 115;
-            label49.Text = "吸血数率";
+            label49.Text = "吸血倍率";
             // 
             // ReflecttextBox
             // 
@@ -1169,7 +1169,7 @@
             label37.Name = "label37";
             label37.Size = new Size(104, 17);
             label37.TabIndex = 78;
-            label37.Text = "最大魔法防御数率";
+            label37.Text = "最大魔法防御倍率";
             // 
             // label14
             // 
@@ -1779,7 +1779,7 @@
             label36.Name = "label36";
             label36.Size = new Size(104, 17);
             label36.TabIndex = 76;
-            label36.Text = "最大物理防御数率";
+            label36.Text = "最大物理防御倍率";
             // 
             // label32
             // 
