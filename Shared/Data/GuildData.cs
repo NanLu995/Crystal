@@ -205,7 +205,7 @@ public class GuildBuffInfo
         {
             var c = val.Value < 0 ? "降低" : "提高";
 
-            var txt = $"{c} {val.Key} : {val.Value}{(val.Key.ToString().Contains("倍率") ? "%" : "")}\n";
+            var txt = $"{c} {val.Key} : {val.Value}{(val.Key.ToString().Contains("数率") ? "%" : "")}\n";
 
             text += txt;
         }

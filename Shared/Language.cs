@@ -3315,6 +3315,26 @@ public static class GameLanguage
                 "Slashing Burst\n\nActive Skill\nMana Cost: {2}\n\nAllows The Warrior to Jump 1 Space Over an Object or Monster.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
             {
+                nameof(ClientTextKeys.EntrapmentRareSkillDescription),
+                ""
+            },
+            {
+                nameof(ClientTextKeys.ImmortalSkinRareSkillDescription),
+                ""
+            },
+            {
+                nameof(ClientTextKeys.LionRoarRareSkillDescription),
+                ""
+            },
+            {
+                nameof(ClientTextKeys.DimensionalSwordSkillDescription),
+                ""
+            },
+            {
+                nameof(ClientTextKeys.DimensionalSwordRareSkillDescription),
+                ""
+            },
+            {
                 nameof(ClientTextKeys.BladeAvalancheSkillDescription),
                 "Blade Avalanche\n\nActive Skill\nMana Cost {2}\n\nHurls blades in three directions in front of the\ncaster, creating a deadly storm of metal\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
@@ -3413,6 +3433,9 @@ public static class GameLanguage
                 "Storm Escape\n\nChannelling Casting\nMana Cost {2}\n\nParalyze nearby enemies and teleport to the designated location.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
             { nameof(ClientTextKeys.BlinkSkillDescription), "Blink\n\nInstant Casting\nMana Cost {2}\n\nTeleport to a random spot near you.\n\nCurrent Skill Level {0}\nNext Level {1}" },
+            { nameof(ClientTextKeys.HeavenlySecretsDescription), "" },
+            { nameof(ClientTextKeys.GreatFireBallRareDescription), "" },
+            { nameof(ClientTextKeys.StormEscapeRareDescription), "" },
             {
                 nameof(ClientTextKeys.SpiritSwordSkillDescription),
                 "Spirit Sword\n\nIncreases the chance of hitting the target in\n melee combat.\nPassive Skill\n\nCurrent Skill Level {0}\nNext Level {1}"
@@ -3509,6 +3532,11 @@ public static class GameLanguage
             {
                 nameof(ClientTextKeys.PetEnhancerSkillDescription), "Pet Enhancer\n\nInstant Casting\nMana Cost {2}\n\nStrengthening pets defence and power.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
+            { nameof(ClientTextKeys.HealingRareDescription), "" },
+            { nameof(ClientTextKeys.HealingcircleRareDescription), "" },
+            { nameof(ClientTextKeys.PetEnhancerRareDescription), "" },
+            { nameof(ClientTextKeys.MultipleEffectsDescription), "" },
+            { nameof(ClientTextKeys.MultipleEffectsRareDescription), "" },
             {
                 nameof(ClientTextKeys.FatalSwordPassiveSkillDescription),
                 "Fatal Sword\n\nPassive Skill\n\nIncrease attack damage on the monsters.\nalso increases accuracy a little.\nPassive Skill\n\nCurrent Skill Level {0}\nNext Level {1}"
@@ -3560,6 +3588,7 @@ public static class GameLanguage
                 nameof(ClientTextKeys.MoonMistSkillDescription),
                 "Moon Mist\n\nBuff Skill\nMana Cost {2}\n\nAbility to hide your self from Monster\nYour first attack will be stronger than normal.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
+            { nameof(ClientTextKeys.CatTongueSkillDescription), "" },
             { nameof(ClientTextKeys.FocusSkillDescription), "Focus\n\nPassive Skill\n\nIncreases chance to hit with physical attacks.\n\nCurrent Skill Level {0}\nNext Level {1}" },
             {
                 nameof(ClientTextKeys.StraightShotSkillDescription),
@@ -3583,6 +3612,7 @@ public static class GameLanguage
                 nameof(ClientTextKeys.ElementalShotSkillDescription),
                 "Elemental Shot\n\nActive Skill\nMana Cost {2} \n\nHigh damage magical attack. Damage is increased\nper element. Generates 2 elements if none exist.\nPushes back target if archer is higher level.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
+            { nameof(ClientTextKeys.BindingShotSkillDescription), "" },
             {
                 nameof(ClientTextKeys.ConcentrationSkillDescription),
                 "Concentration\n\nBuff Skill\nMana Cost {2} \n\nIncrease the chance of gathering elements whilst active.\n\nCurrent Skill Level {0}\nNext Level {1}"
@@ -3624,6 +3654,7 @@ public static class GameLanguage
                 nameof(ClientTextKeys.OneWithNatureSkillDescription),
                 "One With Nature\n\nBuff Skill\nMana Cost {2}\n\nSummon an elemental ring around the caster that\ndeals damage to all targets within a 5×5 radius.\n\nCurrent Skill Level {0}\nNext Level {1}"
             },
+            { nameof(ClientTextKeys.MentalStateSkillDescription), "" },
             { nameof(ClientTextKeys.YouAlreadyHaveMentor), "You already have a Mentor." },
             { nameof(ClientTextKeys.CancellingMentorshipCausesCooldown), "Cancelling a Mentorship early will cause a cooldown. Are you sure?" },
             { nameof(ClientTextKeys.ONLINE), "ONLINE" },

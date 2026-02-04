@@ -22,7 +22,7 @@ namespace Client.MirScenes.Dialogs
             set { SetExpandedParameter(value); }
         }
 
-    protected const long FadeDelay = 55;
+        protected const long FadeDelay = 55;
         protected const float FadeRate = 0.2f;
 
         public BuffDialog()
@@ -173,7 +173,7 @@ namespace Client.MirScenes.Dialogs
             }
 
             if (IsMouseOver(CMain.MPoint))
-            { 
+            {
                 if (_buffCount == 0 || (!_fadedIn && CMain.Time <= _nextFadeTime))
                     return;
 
@@ -205,7 +205,7 @@ namespace Client.MirScenes.Dialogs
                     _fadedOut = true;
                     _fadedIn = false;
                 }
-                    
+
                 _nextFadeTime = CMain.Time + FadeDelay;
             }
         }
@@ -256,7 +256,7 @@ namespace Client.MirScenes.Dialogs
                 var oldWidth = Size.Width;
 
                 Index = 20;
-            
+
                 var newX = Location.X - Size.Width + oldWidth;
                 var newY = heightOffset;
                 Location = new Point(newX, newY);
@@ -350,12 +350,39 @@ namespace Client.MirScenes.Dialogs
                     var c = val.Value < 0 ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Decreases) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Increases);
                     var strKey = val.Key.ToLocalizedString();
 
+                    strKey = RegexFunctions.SeperateCamelCase(strKey.Replace("速率", "").Replace("倍率", "").Replace("数率", ""));
+
                     var sign = "";
 
-                    if (val.Key.ToString().Contains("Percent"))
-                        sign = "%";
-                    else if (val.Key.ToString().Contains("Multiplier"))
-                        sign = "x";
+                    // if (val.Key.ToString().Contains("Percent"))
+                    //     sign = "%";
+                    // else if (val.Key.ToString().Contains("Multiplier"))
+                    //     sign = "x";
+                    switch ((Stat)val.Value)
+                    {
+                        case Stat.暴击率:
+                        case Stat.技能熟练度倍率:
+                            sign = "倍";
+                            break;
+                        case Stat.生命值数率:
+                        case Stat.法力值数率:
+                        case Stat.经验增长数率:
+                        case Stat.物品掉落数率:
+                        case Stat.金币收益数率:
+                        case Stat.采矿出矿数率:
+                        case Stat.宝石成功数率:
+                        case Stat.钓鱼成功数率:
+                        case Stat.大师概率数率:
+                        case Stat.伴侣专享经验数率:
+                        case Stat.师徒专享伤害数率:
+                        case Stat.师徒专享经验数率:
+                        case Stat.伤害减免数率:
+                        case Stat.气功盾恢复数率:
+                        case Stat.法力值消耗数率:
+                        case Stat.传送技法力消耗数率:
+                            sign = "%";
+                            break;
+                    }
 
                     var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffEffect), c, strKey, val.Value, sign);
 
@@ -398,14 +425,41 @@ namespace Client.MirScenes.Dialogs
                 var c = val.Value < 0 ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Decreases) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Increases);
                 var strKey = val.Key.ToLocalizedString();
 
+                strKey = RegexFunctions.SeperateCamelCase(strKey.Replace("速率", "").Replace("倍率", "").Replace("数率", ""));
+
                 var sign = "";
 
-                if (val.Key.ToString().Contains("Percent"))
-                    sign = "%";
-                else if (val.Key.ToString().Contains("Multiplier"))
-                    sign = "x";
+                // if (val.Key.ToString().Contains("Percent"))
+                //     sign = "%";
+                // else if (val.Key.ToString().Contains("Multiplier"))
+                //     sign = "x";
+                switch ((Stat)val.Value)
+                {
+                    case Stat.暴击率:
+                    case Stat.技能熟练度倍率:
+                        sign = "倍";
+                        break;
+                    case Stat.生命值数率:
+                    case Stat.法力值数率:
+                    case Stat.经验增长数率:
+                    case Stat.物品掉落数率:
+                    case Stat.金币收益数率:
+                    case Stat.采矿出矿数率:
+                    case Stat.宝石成功数率:
+                    case Stat.钓鱼成功数率:
+                    case Stat.大师概率数率:
+                    case Stat.伴侣专享经验数率:
+                    case Stat.师徒专享伤害数率:
+                    case Stat.师徒专享经验数率:
+                    case Stat.伤害减免数率:
+                    case Stat.气功盾恢复数率:
+                    case Stat.法力值消耗数率:
+                    case Stat.传送技法力消耗数率:
+                        sign = "%";
+                        break;
+                }
 
-                var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffEffect), c, strKey, val.Value, sign);;
+                var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffEffect), c, strKey, val.Value, sign); ;
 
                 text += txt;
             }
