@@ -2328,7 +2328,7 @@ namespace Client.MirScenes.Dialogs
                         Library = Libraries.Items,
                         Parent = this,
                         Size = new Size(35, 32),
-                        Location = new Point(((x - _toolCount) * 40) + 52, 86),
+                        Location = new Point(((x - _toolCount) * 40) + 32, 86),
                         Border = true,
                         BorderColour = Color.Lime
                     };
@@ -2692,7 +2692,7 @@ namespace Client.MirScenes.Dialogs
             Recipe = GameScene.RecipeInfoList.SingleOrDefault(x => x.Item.ItemIndex == selectedItem.ItemIndex);
 
             RecipeLabel.Text = Recipe.Item.FriendlyName;
-            PossibilityLabel.Text = (UserObject.User.Stats[Stat.大师概率数率] > 0 ? $"{Math.Min(100, Recipe.Chance + UserObject.User.Stats[Stat.大师概率数率])}% (+{UserObject.User.Stats[Stat.大师概率数率]}%)" : $"{Recipe.Chance}%") + " Chance of Success";
+            PossibilityLabel.Text = (UserObject.User.Stats[Stat.大师概率数率] > 0 ? $"{Math.Min(100, Recipe.Chance + UserObject.User.Stats[Stat.大师概率数率])}% (+{UserObject.User.Stats[Stat.大师概率数率]}%)" : $"{Recipe.Chance}%") + " 成功几率";
             GoldLabel.Text = Recipe.Gold.ToString("###,###,##0");
 
             for (int i = 0; i < Slots.Length; i++)
