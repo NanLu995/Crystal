@@ -614,7 +614,7 @@
     "PetEnhancerRareDescription": "血龙兽-秘籍\n\n瞬间施放\n魔法消耗 {2}\n\n当拥有血龙水的能量时，你将能够一次性召唤所有召唤物，召唤物会受到怪物的伤害减免。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "MultipleEffectsDescription": "万效符\n\n瞬间施放\n魔法消耗 {2}\n\n为自己和队友提供幽灵盾、神圣战甲、先天气功、无极真气的效果，自身受到的伤害减少10%等效果。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "MultipleEffectsRareDescription": "万效符-秘籍\n\n瞬间施放\n魔法消耗 {2}\n\n为自己和队友提供幽灵盾、神圣战甲、先天气功、无极真气的效果，并施加净化术，自身受到的伤害减少20%等效果。\n\n当前技能等级 {0}\n下一级等级 {1}",
-    "FatalSwordPassiveSkillDescription": "绝命剑法\n\n被动技能\n\n增加对怪物的攻击伤害，并稍微提升准确度。\n\n当前技能等级 {0}\n下一级等级 {1}",
+    "FatalSwordPassiveSkillDescription": "绝命剑法\n\n被动技能\n\n增加对怪物的攻击伤害。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "DoubleSlashToggleSkillDescription": "风剑术\n\n切换技能\n每次攻击魔法消耗 {2}\n\n快速连续攻击怪物两次。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "HasteBuffSkillDescription": "体迅风\n\n增益技能\n魔法消耗 {2}\n\n使用风的力量来增加攻击速度。\n\n当前技能等级 {0}\n下一级等级 {1}",
     "FlashDashSkillDescription": "拔刀术\n\n主动技能\n魔法消耗 {2}\n\n以快速斩击攻击怪物并一定几率令其麻痹。\n\n当前技能等级 {0}\n下一级等级 {1}",
