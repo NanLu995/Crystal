@@ -1624,7 +1624,7 @@ namespace Server.MirObjects
             if (ExplosionInflictedStage == 1)
             {
                 if (Envir.Time > ExplosionInflictedTime)
-                    ExplosionInflictedTime = poison.TickTime + 3000;
+                    ExplosionInflictedTime = poison.TickTime + 2000;
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 1 });
                 return true;
             }
@@ -2859,7 +2859,7 @@ namespace Server.MirObjects
 
             if (p.PType == PoisonType.DelayedExplosion)
             {
-                ExplosionInflictedTime = Envir.Time + 4000;
+                ExplosionInflictedTime = Envir.Time + 3000;
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion });
             }
             else if (p.PType == PoisonType.Dazed)
