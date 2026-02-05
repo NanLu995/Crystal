@@ -1206,7 +1206,7 @@ namespace Server.MirObjects
             {
                 var quest = CurrentQuests[i];
                 quest.Init(this);
-                SendUpdateQuest(quest, QuestState.Add);
+                SendUpdateQuest(quest, QuestState.Add, true);
             }
 
             SendBaseStats();

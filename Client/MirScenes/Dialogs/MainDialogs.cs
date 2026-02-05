@@ -355,7 +355,8 @@ namespace Client.MirScenes.Dialogs
                 ForeColour = Color.Yellow,
                 OutLineColour = Color.Black,
                 Parent = this,
-                Location = new Point(Settings.Resolution != 800 ? 899 : 675, Settings.Resolution != 800 ? -448 : -280),
+                // Location = new Point(Settings.Resolution != 800 ? 899 : 675, Settings.Resolution != 800 ? -448 : -280),
+                Location = new Point(230, 115),
                 Visible = Settings.ModeView
             };
 
@@ -375,7 +376,8 @@ namespace Client.MirScenes.Dialogs
                 ForeColour = Color.LimeGreen,
                 OutLineColour = Color.Black,
                 Parent = this,
-                Location = new Point(Settings.Resolution != 800 ? 899 : 675, Settings.Resolution != 800 ? -463 : -295),
+                // Location = new Point(Settings.Resolution != 800 ? 899 : 675, Settings.Resolution != 800 ? -463 : -295),
+                Location = new Point(230, 100),
                 Visible = Settings.ModeView
             };
         }

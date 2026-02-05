@@ -150,7 +150,7 @@ namespace Client
             NameView = true,
             HPView = true,
             TransparentChat = false,
-            ModeView = false,
+            ModeView = true,
             DuraView = false,
             DisplayDamage = true,
             TargetDead = false,
