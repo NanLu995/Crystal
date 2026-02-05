@@ -3294,7 +3294,7 @@ namespace Client.MirScenes
 
             if (p.Item.Info.Type != ItemType.特殊消耗品)
             {
-            	OutputMessage(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.YouGainedItem), p.Item.FriendlyName));
+                OutputMessage(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.YouGainedItem), p.Item.FriendlyName));
             }
         }
         private void GainedQuestItem(S.GainedQuestItem p)
@@ -4777,10 +4777,10 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RedMoonEvil], 32, 6, 400, ob) { Blend = false });
                         break;
                     case SpellEffect.BloodthirstySpike:
-                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1188, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1188, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true });
                         break;
                     case SpellEffect.GroundBurstIce:
-                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 544, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 544, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true });
                         break;
                     case SpellEffect.MirEmperor:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.MirEmperor], 62, 4, 400, ob) { Blend = false });
@@ -5824,11 +5824,11 @@ namespace Client.MirScenes
         {
             MirInputBox inputBox = new MirInputBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EnterGuildNameLengthLimit));
             inputBox.InputTextBox.TextBox.KeyPress += (o, e) =>
-            {        
+            {
                 // string Allowed = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 // if (!Allowed.Contains(e.KeyChar) && e.KeyChar != (char)Keys.Back)
                 //     e.Handled = true;        
-				if (char.IsControl(e.KeyChar))
+                if (char.IsControl(e.KeyChar))
                 {
                     return;
                 }
@@ -6267,7 +6267,7 @@ namespace Client.MirScenes
             HasHero = p.State > HeroSpawnState.None;
             MainDialog.HeroInfoPanel.Visible = p.State > HeroSpawnState.Unsummoned;
             MainDialog.HeroMenuButton.Visible = p.State > HeroSpawnState.Unsummoned;
-            HeroBehaviourPanel.Visible = p.State > HeroSpawnState.Unsummoned;            
+            HeroBehaviourPanel.Visible = p.State > HeroSpawnState.Unsummoned;
             //HeroAIDialog.Visible = p.State > HeroSpawnState.Unsummoned;    
             HeroMenuPanel.Visible = HeroMenuPanel.Visible && MainDialog.HeroMenuButton.Visible;
 
@@ -11768,6 +11768,9 @@ namespace Client.MirScenes
                 MapObject.TargetObjectID = 0;
         }
 
+        private long _lastPathCalcTime = 0;
+        private const long PATH_CALC_INTERVAL = 500; // 500ms，可根据需求调整
+
         private void CheckInput()
         {
             if (AwakeningAction == true) return;
@@ -12037,34 +12040,43 @@ namespace Client.MirScenes
                     return;
                 }
 
-                var path = GameScene.Scene.MapControl.PathFinder.FindPath(MapObject.User.CurrentLocation, CurrentPath.Last().Location);
-
-                if (path != null && path.Count > 0)
-                    GameScene.Scene.MapControl.CurrentPath = path;
-                else
+                // 优化1：节流 - 短时间内不重复计算路径
+                long currentTime = CMain.Time;
+                if (currentTime - _lastPathCalcTime > PATH_CALC_INTERVAL)
                 {
-                    AutoPath = false;
-                    return;
+                    var path = GameScene.Scene.MapControl.PathFinder.FindPath(MapObject.User.CurrentLocation, CurrentPath.Last().Location);
+
+                    if (path != null && path.Count > 0)
+                    {
+                        GameScene.Scene.MapControl.CurrentPath = path;
+                        _lastPathCalcTime = currentTime; // 更新最后计算时间
+                    }
+                    else
+                    {
+                        AutoPath = false;
+                        return;
+                    }
                 }
 
-                Node currentNode = CurrentPath.SingleOrDefault(x => User.CurrentLocation == x.Location);
+                Node currentNode = CurrentPath.FirstOrDefault(x => User.CurrentLocation == x.Location); // 用FirstOrDefault替代SingleOrDefault（更高效）
                 if (currentNode != null)
                 {
-                    while (true)
+                    // 找到currentNode的索引，一次性裁剪前面的节点（避免循环Remove）
+                    int targetIndex = CurrentPath.IndexOf(currentNode);
+                    if (targetIndex >= 0)
                     {
-                        Node first = CurrentPath.First();
-                        CurrentPath.Remove(first);
-
-                        if (first == currentNode)
-                            break;
+                        CurrentPath.RemoveRange(0, targetIndex + 1); // 一次性移除，替代循环Remove
                     }
                 }
 
                 if (CurrentPath.Count > 0)
                 {
                     MirDirection dir = Functions.DirectionFromPoint(User.CurrentLocation, CurrentPath.First().Location);
+                    bool canRun = GameScene.CanRun && CanRun(dir) && CMain.Time > GameScene.NextRunTime && User.HP >= 10;
+                    int minPathCount = User.RidingMount ? 2 : 1;
 
-                    if (GameScene.CanRun && CanRun(dir) && CMain.Time > GameScene.NextRunTime && User.HP >= 10 && CurrentPath.Count > (User.RidingMount ? 2 : 1))
+                    // 优化3：合并条件判断，减少重复逻辑
+                    if (canRun && CurrentPath.Count > minPathCount)
                     {
                         User.QueuedAction = new QueuedAction { Action = MirAction.跑步动作, Direction = dir, Location = Functions.PointMove(User.CurrentLocation, dir, User.RidingMount ? 3 : 2) };
                         return;
@@ -12251,7 +12263,7 @@ namespace Client.MirScenes
                 case Spell.TrapHexagon:
                 case Spell.HealingCircle:
                 case Spell.CatTongue:
-				case Spell.HealingcircleRare:
+                case Spell.HealingcircleRare:
                     if (actor.NextMagicObject != null)
                     {
                         if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)
