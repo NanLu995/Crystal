@@ -1,5 +1,5 @@
 using System.Drawing;
-﻿using Server.MirDatabase;
+using Server.MirDatabase;
 using Server.MirObjects;
 using Shared;
 using S = ServerPackets;

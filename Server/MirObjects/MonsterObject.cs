@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-﻿using Server.MirDatabase;
+using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
 using System.Diagnostics.Eventing.Reader;
