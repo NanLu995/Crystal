@@ -497,9 +497,9 @@ namespace Server.MirObjects
         {
             get { return ObjectType.Monster; }
         }
-        
+
         public virtual bool IgnoresNoPetRestriction => false;
-        
+
         public MonsterInfo Info;
         public MapRespawn Respawn;
         public MonsterType MonsterType { get; private set; } = MonsterType.Normal;
@@ -601,11 +601,11 @@ namespace Server.MirObjects
         }
 
         public int HealthPercent
-        { 
-            get 
-            { 
-                return (Health * 100) / MaxHealth; 
-            } 
+        {
+            get
+            {
+                return (Health * 100) / MaxHealth;
+            }
         }
 
         public int HP;
@@ -679,13 +679,13 @@ namespace Server.MirObjects
         {
             get
             {
-                return 
-                    !Dead && 
-                    Envir.Time > MoveTime && 
-                    Envir.Time > ActionTime && 
+                return
+                    !Dead &&
+                    Envir.Time > MoveTime &&
+                    Envir.Time > ActionTime &&
                     Envir.Time > ShockTime &&
-                    (Master == null || Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.Both || Master.PMode == PetMode.FocusMasterTarget) && 
-                    !CurrentPoison.HasFlag(PoisonType.Paralysis) && 
+                    (Master == null || Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.Both || Master.PMode == PetMode.FocusMasterTarget) &&
+                    !CurrentPoison.HasFlag(PoisonType.Paralysis) &&
                     !CurrentPoison.HasFlag(PoisonType.LRParalysis) &&
                     !CurrentPoison.HasFlag(PoisonType.Frozen) &&
                     (!CurrentPoison.HasFlag(PoisonType.Stun) || (Info.Light == 10 || Info.Light == 5));
@@ -695,7 +695,7 @@ namespace Server.MirObjects
         {
             get
             {
-                return 
+                return
                     !Dead &&
                     Envir.Time > AttackTime &&
                     Envir.Time > ActionTime &&
@@ -781,7 +781,7 @@ namespace Server.MirObjects
 
             if (Info.HasSpawnScript && (Envir.MonsterNPC != null))
             {
-                Envir.MonsterNPC.Call(this,string.Format("[@_SPAWN({0})]",Info.Index));
+                Envir.MonsterNPC.Call(this, string.Format("[@_SPAWN({0})]", Info.Index));
             }
 
             base.Spawned();
@@ -1046,7 +1046,7 @@ namespace Server.MirObjects
             PoisonList.Clear();
             Envir.MonsterCount--;
             if (CurrentMap != null)
-            CurrentMap.MonsterCount--;
+                CurrentMap.MonsterCount--;
         }
 
         public MapObject GetAttacker(MapObject attacker)
@@ -1404,18 +1404,20 @@ namespace Server.MirObjects
             Target = null;
             PMode = PetMode.Both;
 
-            // Only teleport if needed
-            if (CurrentMap != Master.CurrentMap)
-            {
-                if (!Teleport(Master.CurrentMap, Master.Back))
-                    Teleport(Master.CurrentMap, Master.CurrentLocation);
+            /** 宠物距离过远不能召唤修复： 去掉不在一个地图上，才能召唤的判断 */
 
-                // Only show message if returning from frozen/waiting state
-                if (wasFrozen)
-                {
-                    Master.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HasReturnedToYourSide,Name), ChatType.System);
-                }
+            // Only teleport if needed
+            // if (CurrentMap != Master.CurrentMap)
+            // {
+            if (!Teleport(Master.CurrentMap, Master.Back))
+                Teleport(Master.CurrentMap, Master.CurrentLocation);
+
+            // Only show message if returning from frozen/waiting state
+            if (wasFrozen)
+            {
+                Master.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HasReturnedToYourSide, Name), ChatType.System);
             }
+            // }
         }
         protected virtual void CompleteAttack(IList<object> data)
         {
@@ -1988,16 +1990,16 @@ namespace Server.MirObjects
                                     if (ob.Hidden && (!CoolEye || Level < ob.Level)) continue;
                                     if (this is TrapRock && ob.InTrapRock) continue;
 
-                                    if (ob.Race == ObjectType.Monster && 
+                                    if (ob.Race == ObjectType.Monster &&
                                         ob is StoneTrap)
                                     {
-                                        if (Target is null || 
+                                        if (Target is null ||
                                             (Target is not null &&
                                             Target is not StoneTrap))
                                         {
                                             Target = ob;
                                         }
-                                        
+
                                         return;
                                     }
                                     else
@@ -2005,7 +2007,7 @@ namespace Server.MirObjects
                                         Target ??= ob;
                                     }
                                     continue;
-                                    
+
                                 case ObjectType.Player:
 
                                     if (Target != null)
@@ -2852,7 +2854,7 @@ namespace Server.MirObjects
                 if ((PoisonList[i].PType == PoisonType.Green) && (PoisonList[i].Value > p.Value)) return;//cant cast weak poison to cancel out strong poison
                 if ((PoisonList[i].PType != PoisonType.Green) && ((PoisonList[i].Duration - PoisonList[i].Time) > p.Duration)) return;//cant cast 1 second poison to make a 1minute poison go away!
                 if (p.PType == PoisonType.DelayedExplosion) return;
-                if ((PoisonList[i].PType == PoisonType.Frozen) || (PoisonList[i].PType == PoisonType.Slow) || (PoisonList[i].PType == PoisonType.Paralysis)|| (PoisonList[i].PType == PoisonType.LRParalysis)) return;//prevents mobs from being perma frozen/slowed
+                if ((PoisonList[i].PType == PoisonType.Frozen) || (PoisonList[i].PType == PoisonType.Slow) || (PoisonList[i].PType == PoisonType.Paralysis) || (PoisonList[i].PType == PoisonType.LRParalysis)) return;//prevents mobs from being perma frozen/slowed
                 PoisonList[i] = p;
                 return;
             }
@@ -2919,7 +2921,7 @@ namespace Server.MirObjects
                 BindingShotCenter = BindingShotCenter,
                 Buffs = Buffs.Where(d => d.Info.Visible).Select(e => e.Type).ToList(),
                 MasterObjectId = Master?.ObjectID ?? 0,
-                Rarity= MonsterType
+                Rarity = MonsterType
             };
         }
 
@@ -3702,7 +3704,7 @@ namespace Server.MirObjects
 
             var startPoints = new List<Point>
             {
-                CurrentLocation 
+                CurrentLocation
             };
 
             var half = (width - 1) / 2;
@@ -3872,9 +3874,9 @@ namespace Server.MirObjects
                         break;
                     }
                 }
-            }     
+            }
         }
-    
+
         protected virtual void ProjectileAttack(int damage, DefenceType type = DefenceType.ACAgility, int additionalDelay = 500)
         {
             int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + additionalDelay;
