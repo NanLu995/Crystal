@@ -795,14 +795,26 @@ namespace Server.MirEnvir
 
         private void AdjustLights()
         {
-            var oldLights = Lights;
+            // var oldLights = Lights;
 
-            var hours = Now.Hour * 2 % 24;
-            if (hours == 6 || hours == 7)
+            // var hours = Now.Hour * 2 % 24;
+            // if (hours == 6 || hours == 7)
+            //     Lights = LightSetting.Dawn;
+            // else if (hours >= 8 && hours <= 15)
+            //     Lights = LightSetting.Day;
+            // else if (hours == 16 || hours == 17)
+            //     Lights = LightSetting.Evening;
+            // else
+            //     Lights = LightSetting.Night;
+
+            /** 修改成 6小时一循环 白天3小时 黑夜2小时 */
+            var oldLights = Lights;
+            var hours = Now.Hour % 6;
+            if (hours == 0)
                 Lights = LightSetting.Dawn;
-            else if (hours >= 8 && hours <= 15)
+            else if (hours >= 1 && hours <= 3)
                 Lights = LightSetting.Day;
-            else if (hours == 16 || hours == 17)
+            else if (hours == 4)
                 Lights = LightSetting.Evening;
             else
                 Lights = LightSetting.Night;
