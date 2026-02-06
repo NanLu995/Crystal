@@ -111,7 +111,7 @@ namespace Server.MirObjects
         public MountInfo Mount
         {
             get { return Info.Mount; }
-        }        
+        }
 
         public Reporting Report;
         public virtual bool CanMove
@@ -749,8 +749,8 @@ namespace Server.MirObjects
             }
             if (ExplosionInflictedStage == 1)
             {
-                if (Envir.Time > ExplosionInflictedTime)
-                    ExplosionInflictedTime = poison.TickTime + 3000;
+                // if (Envir.Time > ExplosionInflictedTime)
+                //     ExplosionInflictedTime = poison.TickTime + 3000;
                 Enqueue(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 1 });
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion, EffectType = 1 });
                 return true;
@@ -853,8 +853,8 @@ namespace Server.MirObjects
             RefreshStats();
             SetHP(Stats[Stat.HP]);
             SetMP(Stats[Stat.MP]);
-            
-            Broadcast(new S.ObjectLeveled { ObjectID = ObjectID });          
+
+            Broadcast(new S.ObjectLeveled { ObjectID = ObjectID });
         }
         public virtual Color GetNameColour(HumanObject human)
         {
@@ -989,7 +989,7 @@ namespace Server.MirObjects
 
                 message = GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponCurse);
                 chatType = ChatType.System;
-                
+
             }
             else if (item.AddedStats[Stat.幸运] <= 0 || Envir.Random.Next(10 * item.GetTotal(Stat.幸运)) == 0)
             {
@@ -1080,7 +1080,7 @@ namespace Server.MirObjects
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
-                    } 
+                    }
                     break;
             }
 
@@ -1564,7 +1564,7 @@ namespace Server.MirObjects
                     if (item.Info.GlobalDropNotify)
                         foreach (var player in Envir.Players)
                         {
-                            player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerHasDroppedItem), Name, item.FriendlyName), ChatType.System2);;
+                            player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerHasDroppedItem), Name, item.FriendlyName), ChatType.System2); ;
                         }
 
                     Info.Inventory[i] = null;
@@ -1682,7 +1682,7 @@ namespace Server.MirObjects
         }
         public void CheckItem(UserItem item)
         {
-            Connection.CheckItem(item);         
+            Connection.CheckItem(item);
         }
         public void SetLevelEffects()
         {
@@ -1742,7 +1742,7 @@ namespace Server.MirObjects
         {
             if (HasUpdatedBaseStats == false)
             {
-                SendBaseStats();                
+                SendBaseStats();
                 HasUpdatedBaseStats = true;
             }
 
@@ -1937,7 +1937,7 @@ namespace Server.MirObjects
 
             if ((OldLooks_Armour != Looks_Armour) || (OldLooks_Weapon != Looks_Weapon) || (OldLooks_WeaponEffect != Looks_WeaponEffect) || (OldLooks_Wings != Looks_Wings) || (OldLight != Light))
             {
-                UpdateLooks(OldLooks_Weapon);                
+                UpdateLooks(OldLooks_Weapon);
             }
 
             if (Old_MountType != Mount.MountType)
@@ -2003,15 +2003,15 @@ namespace Server.MirObjects
                 {
                     if (!hasSmashSetBonus)
                     {
-	                    if (s.Type.Contains(ItemType.项链) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
-	                    {
-	                        Stats[Stat.MinDC] += 1;
-	                        Stats[Stat.MaxDC] += 3;
-	                    }
-	                    if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
-	                    {
-	                        Stats[Stat.攻击速度] += 2;
-	                    }
+                        if (s.Type.Contains(ItemType.项链) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
+                        {
+                            Stats[Stat.MinDC] += 1;
+                            Stats[Stat.MaxDC] += 3;
+                        }
+                        if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
+                        {
+                            Stats[Stat.攻击速度] += 2;
+                        }
                         hasSmashSetBonus = true;
                     }
                 }
@@ -2367,7 +2367,7 @@ namespace Server.MirObjects
 
                 var magic = new UserMagic(spelltype) { IsTempSpell = true };
                 Info.Magics.Add(magic);
-                SendMagicInfo(magic);                
+                SendMagicInfo(magic);
             }
         }
         public virtual void SendMagicInfo(UserMagic magic)
@@ -2589,8 +2589,8 @@ namespace Server.MirObjects
             Moved();
 
             CellTime = Envir.Time + 500;
-            ActionTime = Envir.Time + GetDelayTime(MoveDelay);          
-            
+            ActionTime = Envir.Time + GetDelayTime(MoveDelay);
+
             Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
             Broadcast(new S.ObjectWalk { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
             GetPlayerLocation();
@@ -2633,7 +2633,7 @@ namespace Server.MirObjects
                     concentration.Set("Interrupted", true);
                     UpdateConcentration(true, true);
                 }
-            }            
+            }
 
             if (Hidden && !Sneaking)
             {
@@ -2708,7 +2708,7 @@ namespace Server.MirObjects
                 InSafeZone = true;
             }
             else
-                InSafeZone = false;            
+                InSafeZone = false;
 
             CellTime = Envir.Time + 500;
             ActionTime = Envir.Time + GetDelayTime(MoveDelay);
@@ -2833,9 +2833,9 @@ namespace Server.MirObjects
             for (int i = 0; i < GroupMembers.Count; i++)
             {
                 PlayerObject member = GroupMembers[i];
-                
+
                 if (member.CurrentMap.Info.BigMap <= 0) continue;
-                  
+
                 member.Enqueue(new S.SendMemberLocation { MemberName = Name, MemberLocation = CurrentLocation });
                 Enqueue(new S.SendMemberLocation { MemberName = member.Name, MemberLocation = member.CurrentLocation });
             }
@@ -3354,7 +3354,7 @@ namespace Server.MirObjects
                     magic = GetMagic(spell);
                     damageFinal = magic.GetDamage(damageBase);
                     ob.Attacked(this, damageFinal,
-                        ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility, 
+                        ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility,
                         false);
                     break;
                 }
@@ -4190,7 +4190,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target == null || !target.IsAttackTarget(this)) return;
 
             if (Envir.Random.Next(4 - magic.Level) > 0)
@@ -4392,7 +4392,7 @@ namespace Server.MirObjects
         }
         private void TurnUndead(MapObject target, UserMagic magic)
         {
-            if(target != null &&
+            if (target != null &&
                target.Race == ObjectType.Monster &&
                target.Undead &&
                target.IsAttackTarget(this))
@@ -4404,8 +4404,8 @@ namespace Server.MirObjects
                         (master.BrownTime == 0 &&
                         !master.AtWar(this)))
                     {
-                            BrownTime = Envir.Time + Settings.Minute;
-                    }   
+                        BrownTime = Envir.Time + Settings.Minute;
+                    }
                 }
 
                 if (Envir.Random.Next(2) + Level - 1 <= target.Level)
@@ -4467,7 +4467,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             DelayedAction action;
             for (int i = 0; i < Pets.Count; i++)
@@ -4603,7 +4603,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -4652,7 +4652,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -4961,7 +4961,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             MonsterObject monster;
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -5281,10 +5281,10 @@ namespace Server.MirObjects
                                 //Only targets
                                 if (target.IsAttackTarget(this))
                                 {
-                                        if (target.Attacked(this, j <= 1 ? damageFinal : (int)(damageFinal * 0.6),
-                                            target is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.MAC,
-                                            false) > 0)
-                                            train = true;
+                                    if (target.Attacked(this, j <= 1 ? damageFinal : (int)(damageFinal * 0.6),
+                                        target is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.MAC,
+                                        false) > 0)
+                                        train = true;
                                 }
                                 break;
                         }
@@ -5370,14 +5370,14 @@ namespace Server.MirObjects
                                 break;
                             }
 
-                            if(ob.Blocking)
+                            if (ob.Blocking)
                             {
                                 _blocking = true;
                                 break;
                             }
                         }
                     }
-                    
+
                     if (_blocking)
                     {
                         break;
@@ -5405,7 +5405,7 @@ namespace Server.MirObjects
                             }
                         }
 
-                        if(!_blocking)
+                        if (!_blocking)
                         {
                             _canDash = true;
                         }
@@ -5454,7 +5454,7 @@ namespace Server.MirObjects
                                     case Spell.FireWall:
                                         if (Attacked((PlayerObject)ob.Caster, ob.Value, DefenceType.MAC, false) > 0)
                                         {
-                                        	_blocking = true;
+                                            _blocking = true;
                                         }
                                         break;
                                 }
@@ -5664,10 +5664,10 @@ namespace Server.MirObjects
         }
         private void MoonLight(UserMagic magic)
         {
-			//var time = Settings.Second * 15; 
+            //var time = Settings.Second * 15; 
             var time = GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]);
 
-			// AddBuff(BuffType.月影术, this, (time + (magic.Level * 5000)), new Stats()); 
+            // AddBuff(BuffType.月影术, this, (time + (magic.Level * 5000)), new Stats()); 
             AddBuff(BuffType.月影术, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
 
             LevelMagic(magic);
@@ -5738,7 +5738,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target == null) return;
 
             MonsterObject monster;
@@ -6134,7 +6134,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (target != null && target.IsAttackTarget(this))
                 location = target.CurrentLocation;
             if (!CanFly(location)) return;
@@ -6156,7 +6156,7 @@ namespace Server.MirObjects
                 ReceiveChat("You cannot summon pets on this map.", ChatType.System);
                 return;
             }
-            
+
             if (!CurrentMap.ValidPoint(location) ||
                 !CanFly(location))
             {
@@ -6536,7 +6536,7 @@ namespace Server.MirObjects
                 #endregion
 
                 #region Teleport
-                case Spell.Teleport:                                 
+                case Spell.Teleport:
                     if (CurrentMap.Info.NoTeleport)
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouCannotTeleportOnMap), ChatType.System);
@@ -6544,7 +6544,7 @@ namespace Server.MirObjects
                     }
 
                     if (!MagicTeleport(magic))
-                        return;                    
+                        return;
 
                     AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
                     LevelMagic(magic);
@@ -7536,7 +7536,7 @@ namespace Server.MirObjects
                 InSafeZone = true;
             }
             else
-                InSafeZone = false;            
+                InSafeZone = false;
 
             return true;
         }
@@ -7586,7 +7586,7 @@ namespace Server.MirObjects
             return true;
         }
         public override bool IsAttackTarget(MonsterObject attacker)
-        {            
+        {
             return true;
         }
 
@@ -7595,7 +7595,7 @@ namespace Server.MirObjects
             return true;
         }
         public override bool IsFriendlyTarget(MonsterObject ally)
-        {            
+        {
             return true;
         }
         public override void ReceiveChat(string text, ChatType type) { }
@@ -7915,7 +7915,7 @@ namespace Server.MirObjects
                     ownerBrowns = false;
 
                 if (ownerBrowns && !player.WarZone)
-                        p.Owner.BrownTime = Envir.Time + Settings.Minute;
+                    p.Owner.BrownTime = Envir.Time + Settings.Minute;
             }
 
             if ((p.PType == PoisonType.Green) || (p.PType == PoisonType.Red)) p.Duration = Math.Max(0, p.Duration - Stats[Stat.中毒恢复]);
@@ -7939,7 +7939,7 @@ namespace Server.MirObjects
             {
                 case PoisonType.DelayedExplosion:
                     {
-                        ExplosionInflictedTime = Envir.Time + 4000;
+                        ExplosionInflictedTime = Envir.Time + 2000;
                         Enqueue(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion });
                         Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.DelayedExplosion });
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouAreWalkingExplosive), ChatType.System);
@@ -8317,7 +8317,7 @@ namespace Server.MirObjects
             }
             else
                 if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.装备负重])
-                return false;
+                    return false;
 
             if (RidingMount && item.Info.Type != ItemType.照明物)
             {
@@ -8993,7 +8993,7 @@ namespace Server.MirObjects
             //MessageQueue.EnqueueDebugging(((ServerPacketIds)p.Index).ToString());
         }
         public virtual void Enqueue(Packet p, MirConnection c)
-        {            
+        {
             if (c == null)
             {
                 Enqueue(p);

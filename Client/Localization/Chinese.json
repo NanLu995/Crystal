@@ -807,7 +807,7 @@
     "NothingFound": "未找到任何东西。",
     "PlayerShareQuestRequest": "{0} 想与你分享一个任务，你是否接受？",
     "ObservedPlayerLoggedOff": "你正在观察的人已下线。",
-    "Miss": "未命中",
+    "Miss": "miss",
     "Crit": "暴击",
     "FriendlyNoLongerLoyal": "{0} 不再忠于你。",
     "FriendlyDuraDroppedToZero": "{0} 的耐久度已降至 0。",
