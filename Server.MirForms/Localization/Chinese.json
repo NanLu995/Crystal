@@ -300,7 +300,7 @@
     "SoloMapCannotAccept": "你无法在单人地图中接受邀请。",
     "HeroCannotReviveOnMap": "你无法在此地图中复活你的英雄。",
     "LevelNotEnoughCreateGuild": "你的等级不足以创建公会，需达到：{0}。",
-    "CannotCreateNewbieGuild": "你不能创建新手公会。凡人，别妄想了。",
+    "CannotCreateNewbieGuild": "不能使用：新人公会 这个名字。凡人，别妄想了。",
     "InsufficientGoldCreateGuild": "金币不足。创建公会需要 {0} 金币。",
     "RequiredToCreateGuild": "创建公会需要 {0}。",
     "ItemPurityRequiredForGuildCreation": "创建公会需要纯度为 {1} 的 {0}。",

@@ -9810,6 +9810,8 @@ namespace Server.MirObjects
             BroadcastInfo();
             MyGuild.SendGuildStatus(this);
 
+            ReceiveChat("公会创建成功！", ChatType.System);
+
             return true;
         }
 
