@@ -5963,11 +5963,19 @@ namespace Server.MirObjects
             int delay = distance * 50 + 500; //50 MS per Step
 
             DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, magic, damage, target, target.CurrentLocation);
-
             ActionList.Add(action);
 
             action = new DelayedAction(DelayedType.Magic, Envir.Time + delay + 50, magic, damage, target, target.CurrentLocation);
+            ActionList.Add(action);
 
+            // 带两次物理普通攻击
+            damage = GetRangeAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC], distance);
+            damage = ApplyArcherState(damage);
+            
+            action = new DelayedAction(DelayedType.Damage, Envir.Time  + delay + 50, target, damage, DefenceType.ACAgility, true);
+            ActionList.Add(action);
+
+            action = new DelayedAction(DelayedType.Damage, Envir.Time  + delay + 50, target, damage, DefenceType.ACAgility, true);
             ActionList.Add(action);
 
             return true;
