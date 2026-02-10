@@ -2463,7 +2463,7 @@ namespace Server.MirObjects
                         ReceiveChat(hintstring, ChatType.Hint);
                         UpdateGMBuff();
                         break;
-                    case "加入行会":
+                    case "加入公会":
                         EnableGuildInvite = !EnableGuildInvite;
                         hintstring = EnableGuildInvite ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GuildInvitesEnabled) : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GuildInvitesDisabled);
                         ReceiveChat(hintstring, ChatType.Hint);
@@ -3253,7 +3253,7 @@ namespace Server.MirObjects
                         ReceiveChat((GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerLocationInfo), player.Name, player.CurrentMap.Info.Title, player.CurrentLocation.X, player.CurrentLocation.Y)), ChatType.System);
                         break;
 
-                    case "退出行会":
+                    case "退出公会":
                         if (MyGuild == null) return;
                         if (MyGuildRank == null) return;
                         if (MyGuild.IsAtWar())
