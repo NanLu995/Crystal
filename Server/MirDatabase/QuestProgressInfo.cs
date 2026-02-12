@@ -26,7 +26,7 @@ namespace Server.MirDatabase
         public List<string> TaskList = new List<string>();
 
         public bool IsOrphan { get; private set; }
-        
+
         public bool Taken
         {
             get { return StartDateTime > DateTime.MinValue; }
@@ -53,7 +53,7 @@ namespace Server.MirDatabase
                 IsOrphan = true;
                 return;
             }
-            
+
             foreach (var kill in Info.KillTasks)
             {
                 KillTaskCount.Add(new QuestKillTaskProgress
@@ -131,7 +131,7 @@ namespace Server.MirDatabase
 
                 return; // Skip rest of constructor if quest is missing
             }
-            
+
             if (version < 90)
             {
                 int count = reader.ReadInt32();
@@ -356,7 +356,7 @@ namespace Server.MirDatabase
                     Owner.ExpireTimer($"Quest-{Index}");
                 }
             }
-// updatetask again to show gototask
+            // 再次更新任务以显示跳转至任务
             UpdateTasks();
             return true;
         }
@@ -429,15 +429,15 @@ namespace Server.MirDatabase
         {
             TaskList = new List<string>();
 
-            UpdateKillTasks();
-            UpdateItemTasks();
-            UpdateFlagTasks();
-            UpdateGotoTask();
+            UpdateGotoTask();   // 任务指引（进行中或完成）
+            UpdateKillTasks();  // 杀怪类任务
+            UpdateItemTasks();  // 收集类任务
+            UpdateFlagTasks();  // 标志类任务
         }
 
         public void UpdateKillTasks()
         {
-            if(Info.KillMessage.Length > 0 && Info.KillTasks.Count > 0) 
+            if (Info.KillMessage.Length > 0 && Info.KillTasks.Count > 0)
             {
                 bool allComplete = true;
                 for (int i = 0; i < KillTaskCount.Count; i++)
@@ -476,9 +476,12 @@ namespace Server.MirDatabase
 
                     allComplete = false;
                 }
-                
-                TaskList.Add(string.Format("{0} {1}", Info.ItemMessage, allComplete ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaskCompleted) : ""));
-                return;
+
+                if (allComplete)
+                {
+                    TaskList.Add(string.Format("{0} {1}", Info.ItemMessage, allComplete ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaskCompleted) : ""));
+                    return;
+                }
             }
 
             for (int i = 0; i < ItemTaskCount.Count; i++)
@@ -502,13 +505,16 @@ namespace Server.MirDatabase
                 bool allComplete = true;
                 for (int i = 0; i < FlagTaskSet.Count; i++)
                 {
-                    if (FlagTaskSet[i].State) continue;
+                    if (FlagTaskSet[i].Complete) continue;
 
                     allComplete = false;
                 }
-                
-                TaskList.Add(string.Format("{0} {1}", Info.FlagMessage, allComplete ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaskCompleted) : ""));
-                return;
+
+                if (allComplete)
+                {
+                    TaskList.Add(string.Format("{0} {1}", Info.FlagMessage, allComplete ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TaskCompleted) : ""));
+                    return;
+                }
             }
 
             for (int i = 0; i < FlagTaskSet.Count; i++)
@@ -526,9 +532,23 @@ namespace Server.MirDatabase
 
         public void UpdateGotoTask()
         {
-            if (Info.GotoMessage.Length <= 0 || !Completed) return;
-            
-            TaskList.Add(Info.GotoMessage);
+            if (string.IsNullOrEmpty(Info.GotoMessage)) return;
+
+            string[] parts = Info.GotoMessage.Split('|');
+            bool hasSeparator = parts.Length >= 2;
+
+            if (!Completed) // 任务进行中
+            {
+                string guide = hasSeparator ? parts[0].Trim() : Info.GotoMessage.Trim();
+                if (!string.IsNullOrEmpty(guide))
+                    TaskList.Add(guide);
+            }
+            else // 任务已完成
+            {
+                if (hasSeparator && !string.IsNullOrEmpty(parts[1].Trim()))
+                    TaskList.Add(parts[1].Trim());
+                // 无分隔符 → 完成后不显示任何指引
+            }
         }
 
         #endregion

@@ -38,7 +38,7 @@ namespace Server.MirDatabase
         {
             get
             {
-                return Envir.NPCs.Single(x => x.ObjectID == FinishNpcIndex);
+                return Envir.NPCs.FirstOrDefault(x => x.ObjectID == FinishNpcIndex);
             }
         }
 
