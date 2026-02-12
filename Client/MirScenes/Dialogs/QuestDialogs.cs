@@ -309,7 +309,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Rows.Length; i++)
             {
-                if(Rows[i] != null) Rows[i].Dispose();
+                if (Rows[i] != null) Rows[i].Dispose();
 
                 Rows[i] = null;
             }
@@ -350,7 +350,7 @@ namespace Client.MirScenes.Dialogs
                 };
                 Rows[i].Click += (o, e) =>
                 {
-                    QuestRow row = (QuestRow) o;
+                    QuestRow row = (QuestRow)o;
 
                     if (row.Quest != SelectedQuest)
                     {
@@ -446,7 +446,7 @@ namespace Client.MirScenes.Dialogs
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            
+
             Quests.Clear();
 
             SelectedQuest = null;
@@ -1071,7 +1071,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = TopLine; i < BottomLine; i++)
             {
-                if (i != 0 && CurrentLines[i] != TaskTitle && CurrentLines[i] != ProgressTitle && CurrentLines[i] != ReturnTitle && CurrentLines[i]  != TimeLimitTitle) continue;
+                if (i != 0 && CurrentLines[i] != TaskTitle && CurrentLines[i] != ProgressTitle && CurrentLines[i] != ReturnTitle && CurrentLines[i] != TimeLimitTitle) continue;
 
                 Libraries.Prguse.Draw(919, new Point(DisplayLocation.X + 5, DisplayLocation.Y + 5 + (i - TopLine) * 15 + adjust), Color.White);
 
@@ -1281,7 +1281,7 @@ namespace Client.MirScenes.Dialogs
                 matchList.AddRange(NPCDialog.MonsterLink.Matches(currentLine).Cast<Match>());
                 matchList.AddRange(NPCDialog.NPCLink.Matches(currentLine).Cast<Match>());
                 matchList.AddRange(NPCDialog.ItemLink.Matches(currentLine).Cast<Match>());
-                
+
                 int oldLength = currentLine.Length;
 
                 foreach (Match match in matchList.OrderBy(o => o.Index).ToList())
@@ -1395,7 +1395,7 @@ namespace Client.MirScenes.Dialogs
     }
     public sealed class QuestRewards : MirControl
     {
-        private readonly MirLabel _goldLabel,  _expLabel, _creditLabel;
+        private readonly MirLabel _goldLabel, _expLabel, _creditLabel;
 
         public ClientQuestProgress Quest;
 
@@ -1456,7 +1456,7 @@ namespace Client.MirScenes.Dialogs
                 goldXOffset = -90;
                 creditXOffset -= 90;
             }
-                
+
 
             if (quest.RewardGold > 0)
                 Libraries.Prguse.Draw(965, DisplayLocation.X + 100 + goldXOffset, DisplayLocation.Y + 2);
