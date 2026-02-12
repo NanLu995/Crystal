@@ -532,23 +532,9 @@ namespace Server.MirDatabase
 
         public void UpdateGotoTask()
         {
-            if (string.IsNullOrEmpty(Info.GotoMessage)) return;
+            if (Info.GotoMessage.Length <= 0) return;
 
-            string[] parts = Info.GotoMessage.Split('|');
-            bool hasSeparator = parts.Length >= 2;
-
-            if (!Completed) // 任务进行中
-            {
-                string guide = hasSeparator ? parts[0].Trim() : Info.GotoMessage.Trim();
-                if (!string.IsNullOrEmpty(guide))
-                    TaskList.Add(guide);
-            }
-            else // 任务已完成
-            {
-                if (hasSeparator && !string.IsNullOrEmpty(parts[1].Trim()))
-                    TaskList.Add(parts[1].Trim());
-                // 无分隔符 → 完成后不显示任何指引
-            }
+            TaskList.Add(Info.GotoMessage);
         }
 
         #endregion
