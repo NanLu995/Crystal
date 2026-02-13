@@ -251,26 +251,38 @@ namespace Client.MirScenes
             _character.Show();
         }
 
-
+        /// <summary>
+        /// 开始游戏的逻辑
+        /// </summary>
+        public long delayDisplay = CMain.Time + 6000;
         public void StartGame()
         {
-            if (!Libraries.Loaded)
+            if (!Libraries.Loaded || delayDisplay > CMain.Time)
             {
-                MirAnimatedControl loadProgress = new MirAnimatedControl
+                Random random = new Random();//随机动画载入构建
+                MirImageControl loadingOverlay = new MirImageControl
                 {
-                    Library = Libraries.Prguse,
-                    Index = 940,
-                    Visible = true,
-                    Parent = this,
-                    Location = new Point(470, 680),
-                    Animated = true,
-                    AnimationCount = 9,
-                    AnimationDelay = 100,
-                    Loop = true,
+                    Library = Libraries.Prguse, // 图片资源库
+                    Index = 930 + random.Next(0, 10), //载入的随机图片总数量
+                    Visible = true, // 显示控件
+                    Parent = this // 设置父控件为当前场景
+
+                };
+                MirAnimatedControl loadProgress = new MirAnimatedControl // 创建加载进度动画控件
+                {
+                    Library = Libraries.Prguse, // 图片资源库
+                    Index = 940,  //载入的动画图片-loading动画起始号
+                    Visible = true, // 显示控件
+                    Parent = loadingOverlay,
+                    Location = new Point(599, 700), // 控件位置
+                    Animated = true, // 启用动画
+                    AnimationCount = 9,   // 动画延迟时间
+                    AnimationDelay = 100,  // 动画延迟时间
+                    Loop = true, // 循环播放动画
                 };
                 loadProgress.AfterDraw += (o, e) =>
                 {
-                    if (!Libraries.Loaded) return;
+                    if (!Libraries.Loaded || delayDisplay > CMain.Time) return;
                     loadProgress.Dispose();
                     StartGame();
                 };
@@ -439,30 +451,47 @@ namespace Client.MirScenes
 
             message.Show();
         }
+
+        /// <summary>
+        /// 处理开始游戏被封禁的响应
+        /// </summary>
+        /// <param name="p">开始游戏被封禁响应数据包</param>
         public void StartGame(S.StartGameBanned p)
         {
+            // 启用开始游戏按钮
             StartGameButton.Enabled = true;
 
+            // 计算封禁剩余时间
             TimeSpan d = p.ExpiryDate - CMain.Now;
+            // 显示账户被封禁的提示框
             MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AccountBannedReasonExpiryDuration), p.Reason,
                                              p.ExpiryDate, Math.Floor(d.TotalHours), d.Minutes, d.Seconds));
         }
+
+        /// <summary>
+        /// 处理开始游戏请求的响应
+        /// </summary>
+        /// <param name="p">开始游戏响应数据包</param>
         public void StartGame(S.StartGame p)
         {
+            // 启用开始游戏按钮
             StartGameButton.Enabled = true;
 
             switch (p.Result)
             {
                 case 0:
+                    // 服务器维护禁止登录
                     MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.StartingGameDisabled));
                     break;
                 case 1:
                     MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouNotLoggedIn));
                     break;
                 case 2:
+                    // 没有激活角色
                     MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YourCharacterNotFound));
                     break;
                 case 3:
+                    // 无效地图或没有新手出生点
                     MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NoActiveMapOrStartPointFound));
                     break;
                 case 4:
@@ -492,19 +521,25 @@ namespace Client.MirScenes
                     break;
             }
         }
+        /// <summary>
+        /// 更新界面显示，根据当前选中的角色更新角色选择按钮、角色显示动画和上次登录时间标签
+        /// </summary>
         private void UpdateInterface()
         {
+            // 遍历角色选择按钮数组，更新按钮的选中状态和显示信息
             for (int i = 0; i < CharacterButtons.Length; i++)
             {
                 CharacterButtons[i].Selected = i == _selected;
                 CharacterButtons[i].Update(i >= Characters.Count ? null : Characters[i]);
             }
 
+            // 如果当前有选中角色
             if (_selected >= 0 && _selected < Characters.Count)
             {
+                // 显示角色显示动画控件
                 CharacterDisplay.Visible = true;
                 //CharacterDisplay.Index = ((byte)Characters[_selected].Class + 1) * 20 + (byte)Characters[_selected].Gender * 280; 
-
+                // 根据角色职业和性别设置角色显示动画的图片索引
                 switch ((MirClass)Characters[_selected].Class)
                 {
                     case MirClass.战士:
@@ -524,39 +559,62 @@ namespace Client.MirScenes
                         break;
                 }
 
+                // 显示上次登录时间，如果角色未曾登录则显示 "未曾登录"
                 LastAccessLabel.Text = Characters[_selected].LastAccess == DateTime.MinValue ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Never) : Characters[_selected].LastAccess.ToString("yyyy/MM/dd HH:mm:ss");
+                // 显示上次登录时间标签和其标题标签
                 LastAccessLabel.Visible = true;
                 LastAccessLabelLabel.Visible = true;
+                // 启用开始游戏按钮
                 StartGameButton.Enabled = true;
             }
             else
             {
+                // 隐藏角色显示动画控件
                 CharacterDisplay.Visible = false;
+                // 隐藏上次登录时间标签和其标题标签
                 LastAccessLabel.Visible = false;
                 LastAccessLabelLabel.Visible = false;
+                // 禁用开始游戏按钮
                 StartGameButton.Enabled = false;
             }
         }
 
 
         #region Disposable
+        /// <summary>
+        /// 释放资源的方法
+        /// </summary>
+        /// <param name="disposing">是否释放托管资源</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+                // 释放背景图片控件
                 Background = null;
+                // 释放新建角色对话框
                 _character = null;
 
+                // 释放服务器标签控件
                 ServerLabel = null;
+                // 释放角色显示动画控件
                 CharacterDisplay = null;
+                // 释放开始游戏按钮
                 StartGameButton = null;
+                // 释放新建角色按钮
                 NewCharacterButton = null;
+                // 释放删除角色按钮
                 DeleteCharacterButton = null;
+                // 释放显示信息按钮
                 CreditsButton = null;
+                // 释放退出游戏按钮
                 ExitGame = null;
+                // 释放角色选择按钮数组
                 CharacterButtons = null;
+                // 释放上次登录时间标签和其标题标签
                 LastAccessLabel = null; LastAccessLabelLabel = null;
+                // 释放角色信息列表
                 Characters = null;
+                // 重置当前选中的角色索引
                 _selected = 0;
             }
 
@@ -618,9 +676,9 @@ namespace Client.MirScenes
 
                 Library = Libraries.Title;
 
-                Index = 660 + (byte)info.Class;
+                Index = 658 + (byte)info.Class; // 起始图片658
 
-                if (Selected) Index += 5;
+                if (Selected) Index += 6; //原来5 因为有武僧的图 要加一
 
 
 

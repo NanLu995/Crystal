@@ -4187,7 +4187,7 @@ namespace Server.MirObjects
         {
             if (CurrentMap.Info.NoPets)
             {
-                ReceiveChat("You cannot summon pets on this map.", ChatType.System);
+                ReceiveChat("您无法在此地图上召唤宠物", ChatType.System);
                 return;
             }
 
