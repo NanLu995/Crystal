@@ -747,6 +747,101 @@ namespace LibraryEditor
             }
         }
 
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+            if (_library == null) return;
+
+            // 选择导出的文件夹（应包含图像文件及 Placements 子文件夹）
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() != DialogResult.OK) return;
+                string importFolder = fbd.SelectedPath;
+
+                // 获取所有图像文件（支持 png、bmp 等导出格式）
+                string[] imageFiles = Directory.GetFiles(importFolder, "*.*")
+                                               .Where(f => f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                                           f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                               .ToArray();
+                if (imageFiles.Length == 0)
+                {
+                    MessageBox.Show("未找到任何图像文件。");
+                    return;
+                }
+
+                // 询问用户是否允许覆盖现有图像（替换模式）
+                DialogResult replaceResult = MessageBox.Show("是否用导入的图像替换库中对应索引的图像？\n\n是：替换\n否：追加到库末尾",
+                                                              "导入模式", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (replaceResult == DialogResult.Cancel) return;
+
+                bool replaceMode = (replaceResult == DialogResult.Yes);
+
+                // 准备进度条
+                toolStripProgressBar.Value = 0;
+                toolStripProgressBar.Maximum = imageFiles.Length;
+
+                // 根据文件名排序，确保按索引顺序处理
+                var sortedFiles = imageFiles.OrderBy(f => int.Parse(Path.GetFileNameWithoutExtension(f))).ToList();
+
+                foreach (string imageFile in sortedFiles)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(imageFile);
+                    if (!int.TryParse(fileName, out int index))
+                    {
+                        // 如果文件名不是纯数字，则跳过（或警告）
+                        toolStripProgressBar.Value++;
+                        continue;
+                    }
+
+                    Bitmap newBmp;
+                    try
+                    {
+                        newBmp = new Bitmap(imageFile);
+                    }
+                    catch
+                    {
+                        toolStripProgressBar.Value++;
+                        continue;
+                    }
+
+                    // 读取坐标文件（Placements\索引.txt）
+                    string placementFile = Path.Combine(importFolder, "Placements", fileName + ".txt");
+                    short x = 0, y = 0;
+                    if (File.Exists(placementFile))
+                    {
+                        string[] lines = File.ReadAllLines(placementFile);
+                        if (lines.Length > 0) short.TryParse(lines[0], out x);
+                        if (lines.Length > 1) short.TryParse(lines[1], out y);
+                    }
+
+                    if (replaceMode)
+                    {
+                        // 替换模式：根据索引替换已有图像（如果索引超出范围则跳过）
+                        if (index >= 0 && index < _library.Images.Count)
+                        {
+                            _library.ReplaceImage(index, newBmp, x, y, checkboxRemoveBlackOnImport.Checked);
+                        }
+                        // 可以提示索引越界，但这里简单跳过
+                    }
+                    else
+                    {
+                        // 追加模式：将所有图像按顺序追加到库末尾（忽略文件名索引）
+                        _library.AddImage(newBmp, x, y, checkboxRemoveBlackOnImport.Checked);
+                    }
+
+                    toolStripProgressBar.Value++;
+                }
+
+                // 刷新界面
+                ImageList.Images.Clear();
+                _indexList.Clear();
+                PreviewListView.VirtualListSize = _library.Images.Count;
+                PreviewListView.Invalidate();
+                toolStripProgressBar.Value = 0;
+
+                MessageBox.Show("批量导入完成！");
+            }
+        }
+
         // Export a single image.
         private void ExportButton_Click(object sender, EventArgs e)
         {
@@ -902,9 +997,24 @@ namespace LibraryEditor
 
             Bitmap newBmp = new Bitmap(ofd.FileName);
 
+            string placementFilePath = Path.Combine(Path.GetDirectoryName(ofd.FileName), "Placements", Path.GetFileNameWithoutExtension(ofd.FileName));
+            placementFilePath = Path.ChangeExtension(placementFilePath, ".txt");
+
+            short x = 0;
+            short y = 0;
+
+            if (File.Exists(placementFilePath))
+            {
+                string[] placements = File.ReadAllLines(placementFilePath);
+                if (placements.Length > 0)
+                    short.TryParse(placements[0], out x);
+                if (placements.Length > 1)
+                    short.TryParse(placements[1], out y);
+            }
+
             ImageList.Images.Clear();
             _indexList.Clear();
-            _library.ReplaceImage(PreviewListView.SelectedIndices[0], newBmp, 0, 0, checkboxRemoveBlackOnImport.Checked);
+            _library.ReplaceImage(PreviewListView.SelectedIndices[0], newBmp, x, y, checkboxRemoveBlackOnImport.Checked);
             PreviewListView.VirtualListSize = _library.Images.Count;
 
             try

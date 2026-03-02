@@ -59,6 +59,7 @@ namespace LibraryEditor
             skinToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
+            ImportButton = new Button();
             numericUpDownY = new NumericUpDown();
             numericUpDownX = new NumericUpDown();
             BulkButton = new Button();
@@ -243,7 +244,7 @@ namespace LibraryEditor
             // 
             copyToToolStripMenuItem.Image = (Image)resources.GetObject("copyToToolStripMenuItem.Image");
             copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
-            copyToToolStripMenuItem.Size = new Size(130, 22);
+            copyToToolStripMenuItem.Size = new Size(169, 22);
             copyToToolStripMenuItem.Text = "所选图片复制到...";
             copyToToolStripMenuItem.ToolTipText = "复制到新的LIB文件或已有的LIB文件末尾";
             copyToToolStripMenuItem.Click += copyToToolStripMenuItem_Click;
@@ -252,7 +253,7 @@ namespace LibraryEditor
             // 
             countBlanksToolStripMenuItem.Image = (Image)resources.GetObject("countBlanksToolStripMenuItem.Image");
             countBlanksToolStripMenuItem.Name = "countBlanksToolStripMenuItem";
-            countBlanksToolStripMenuItem.Size = new Size(130, 22);
+            countBlanksToolStripMenuItem.Size = new Size(169, 22);
             countBlanksToolStripMenuItem.Text = "空白计数";
             countBlanksToolStripMenuItem.ToolTipText = "对LIB文件中的空白图片计数";
             countBlanksToolStripMenuItem.Click += countBlanksToolStripMenuItem_Click;
@@ -262,7 +263,7 @@ namespace LibraryEditor
             removeBlanksToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { safeToolStripMenuItem });
             removeBlanksToolStripMenuItem.Image = (Image)resources.GetObject("removeBlanksToolStripMenuItem.Image");
             removeBlanksToolStripMenuItem.Name = "removeBlanksToolStripMenuItem";
-            removeBlanksToolStripMenuItem.Size = new Size(130, 22);
+            removeBlanksToolStripMenuItem.Size = new Size(169, 22);
             removeBlanksToolStripMenuItem.Text = "删除空白";
             removeBlanksToolStripMenuItem.ToolTipText = "快速清除空白图片";
             removeBlanksToolStripMenuItem.Click += removeBlanksToolStripMenuItem_Click;
@@ -280,7 +281,7 @@ namespace LibraryEditor
             // 
             convertToolStripMenuItem.Image = (Image)resources.GetObject("convertToolStripMenuItem.Image");
             convertToolStripMenuItem.Name = "convertToolStripMenuItem";
-            convertToolStripMenuItem.Size = new Size(130, 22);
+            convertToolStripMenuItem.Size = new Size(169, 22);
             convertToolStripMenuItem.Text = "转换为LIB";
             convertToolStripMenuItem.ToolTipText = "转换 Wil/Wzl/Miz 到LIB文件";
             convertToolStripMenuItem.Click += convertToolStripMenuItem_Click;
@@ -290,7 +291,7 @@ namespace LibraryEditor
             populateFramesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { defaultMonsterFramesToolStripMenuItem, defaultNPCFramesToolStripMenuItem, defaultPlayerFramesToolStripMenuItem, autofillFromCodeToolStripMenuItem });
             populateFramesToolStripMenuItem.Image = (Image)resources.GetObject("populateFramesToolStripMenuItem.Image");
             populateFramesToolStripMenuItem.Name = "populateFramesToolStripMenuItem";
-            populateFramesToolStripMenuItem.Size = new Size(130, 22);
+            populateFramesToolStripMenuItem.Size = new Size(169, 22);
             populateFramesToolStripMenuItem.Text = "动作填充";
             // 
             // defaultMonsterFramesToolStripMenuItem
@@ -328,7 +329,7 @@ namespace LibraryEditor
             // importShadowsToolStripMenuItem
             // 
             importShadowsToolStripMenuItem.Name = "importShadowsToolStripMenuItem";
-            importShadowsToolStripMenuItem.Size = new Size(130, 22);
+            importShadowsToolStripMenuItem.Size = new Size(169, 22);
             importShadowsToolStripMenuItem.Text = "导入阴影";
             importShadowsToolStripMenuItem.Click += importShadowsToolStripMenuItem_Click;
             // 
@@ -375,6 +376,7 @@ namespace LibraryEditor
             // 
             // splitContainer2.Panel1
             // 
+            splitContainer2.Panel1.Controls.Add(ImportButton);
             splitContainer2.Panel1.Controls.Add(numericUpDownY);
             splitContainer2.Panel1.Controls.Add(numericUpDownX);
             splitContainer2.Panel1.Controls.Add(BulkButton);
@@ -409,6 +411,22 @@ namespace LibraryEditor
             splitContainer2.SplitterDistance = 240;
             splitContainer2.SplitterWidth = 5;
             splitContainer2.TabIndex = 0;
+            // 
+            // ImportButton
+            // 
+            ImportButton.ForeColor = SystemColors.ControlText;
+            ImportButton.Image = (Image)resources.GetObject("ImportButton.Image");
+            ImportButton.ImageAlign = ContentAlignment.MiddleRight;
+            ImportButton.Location = new Point(16, 229);
+            ImportButton.Margin = new Padding(4, 3, 4, 3);
+            ImportButton.Name = "ImportButton";
+            ImportButton.Size = new Size(93, 34);
+            ImportButton.TabIndex = 28;
+            ImportButton.Tag = "";
+            ImportButton.Text = "导入图像";
+            ImportButton.TextImageRelation = TextImageRelation.TextBeforeImage;
+            ImportButton.UseVisualStyleBackColor = true;
+            ImportButton.Click += ImportButton_Click;
             // 
             // numericUpDownY
             // 
@@ -701,7 +719,7 @@ namespace LibraryEditor
             HeightLabel.Location = new Point(144, 34);
             HeightLabel.Margin = new Padding(4, 0, 4, 0);
             HeightLabel.Name = "HeightLabel";
-            HeightLabel.Size = new Size(74, 17);
+            HeightLabel.Size = new Size(38, 17);
             HeightLabel.TabIndex = 10;
             HeightLabel.Text = "<空>";
             // 
@@ -723,7 +741,7 @@ namespace LibraryEditor
             WidthLabel.Location = new Point(144, 11);
             WidthLabel.Margin = new Padding(4, 0, 4, 0);
             WidthLabel.Name = "WidthLabel";
-            WidthLabel.Size = new Size(74, 17);
+            WidthLabel.Size = new Size(38, 17);
             WidthLabel.TabIndex = 8;
             WidthLabel.Text = "<空>";
             // 
@@ -1078,6 +1096,7 @@ namespace LibraryEditor
         private Button BulkButton;
         private NumericUpDown numericUpDownY;
         private NumericUpDown numericUpDownX;
+        private Button ImportButton;
     }
 }
 
