@@ -3,6 +3,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
+    /** 采集怪 */
     public class HarvestMonster : MonsterObject
     {
         protected short Quality;

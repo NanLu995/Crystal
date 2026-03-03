@@ -452,7 +452,7 @@
             label2.Name = "label2";
             label2.Size = new Size(44, 17);
             label2.TabIndex = 66;
-            label2.Text = "特殊AI";
+            label2.Text = "技能效果";
             // 
             // AITextBox
             // 

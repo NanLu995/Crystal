@@ -165,7 +165,7 @@ namespace Launcher
                     //assume we got a html page back with an error code so it's not a patchlist
                     return;
                 }
-                reader.BaseStream.Seek(0,SeekOrigin.Begin);
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 int count = reader.ReadInt32();
 
                 for (int i = 0; i < count; i++)
@@ -259,7 +259,7 @@ namespace Launcher
 
                     //first remove the original file if needed
                     string[] specialfiles = { ".dll", ".exe", ".pdb" };
-                    if (File.Exists(fileNameOut) && ( specialfiles.Contains( Path.GetExtension(fileNameOut).ToLower() )))
+                    if (File.Exists(fileNameOut) && (specialfiles.Contains(Path.GetExtension(fileNameOut).ToLower())))
                     {
                         string oldFilename = Path.Combine(Path.GetDirectoryName(fileNameOut), ("Old__" + Path.GetFileName(fileNameOut)));
 
@@ -329,37 +329,44 @@ namespace Launcher
 
         public byte[] Download(string fileName)
         {
-            using (HttpClient client = new())
+            try
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.AcceptCharset.Clear();
-                client.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("utf-8"));
-
-                if (Settings.P_NeedLogin)
+                using (HttpClient client = new())
                 {
-                    string authInfo = Settings.P_Login + ":" + Settings.P_Password;
-                    authInfo = Convert.ToBase64String(System.Text.Encoding.Default.GetBytes(authInfo));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
-                }
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.AcceptCharset.Clear();
+                    client.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("utf-8"));
 
-                string uriString = Settings.P_Host + Path.ChangeExtension(fileName, ".gz");
+                    if (Settings.P_NeedLogin)
+                    {
+                        string authInfo = Settings.P_Login + ":" + Settings.P_Password;
+                        authInfo = Convert.ToBase64String(System.Text.Encoding.Default.GetBytes(authInfo));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
+                    }
 
-                if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
-                {
-                    var task = Task.Run(() => client.GetAsync(new Uri(uriString), HttpCompletionOption.ResponseHeadersRead));
-                    var response = task.Result;
-                    using Stream sm = response.Content.ReadAsStream();
-                    using MemoryStream ms = new();
-                    sm.CopyTo(ms);
-                    byte[] data = ms.ToArray();
-                    return data;
+                    string uriString = Settings.P_Host + Path.ChangeExtension(fileName, ".gz");
+
+                    if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
+                    {
+                        var task = Task.Run(() => client.GetAsync(new Uri(uriString), HttpCompletionOption.ResponseHeadersRead));
+                        var response = task.Result;
+                        using Stream sm = response.Content.ReadAsStream();
+                        using MemoryStream ms = new();
+                        sm.CopyTo(ms);
+                        byte[] data = ms.ToArray();
+                        return data;
+                    }
+                    else
+                    {
+                        MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherHostSettingFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadHostFormat));
+                        return null;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherHostSettingFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadHostFormat));
-                    return null;
-                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
